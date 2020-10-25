@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "658778667051",
+    "firebase_url": "https://betterlearning-88c6f.firebaseio.com",
+    "project_id": "betterlearning-88c6f",
+    "storage_bucket": "betterlearning-88c6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658778667051:android:70dc1c994a342a0d7ad26e",
+        "android_client_info": {
+          "package_name": "com.betterlearning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658778667051-95bgorir5m0mf3096hoq00sl7atcmjmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.betterlearning",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "658778667051-hlvcb3d967c6k8m8mtlfm9erpr6pulo3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.betterlearning",
+            "certificate_hash": "c98f3e4605184dde28d7c887c10a4fdfda42d5de"
+          }
+        },
+        {
+          "client_id": "658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIJsa7Yci1Q20D9HXiycgrU4xHcCBTja4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
