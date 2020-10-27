@@ -1,7 +1,9 @@
 {
     "strict": {
       "text-font-family": "OpenSans-Regular",
-  
+      
+
+    
       "text-heading-1-font-size": 36,
       "text-heading-1-font-weight": "800",
       "text-heading-1-font-family": "OpenSans-Bold",
@@ -10,7 +12,7 @@
   
       "text-subtitle-1-font-size": 15,
       "text-subtitle-1-font-weight": "600",
-      "text-subtitle-1-font-family": "OpenSans-SemiBold",
+      "text-subtitle-1-font-family": "OpenSans-SemiBold", 
 
       "text-paragraph-1-font-size": 15,
       "text-paragraph-1-font-weight": "400",

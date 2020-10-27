@@ -2,7 +2,7 @@ import React from 'react'
 import { TextInput, View, SafeAreaView, Dimensions} from 'react-native'
 import auth from '@react-native-firebase/auth';
 
-
+import { v4 as uuid } from 'uuid'
 import { GoogleSignin, GoogleSigninButton, statusCodes  } from '@react-native-community/google-signin';
 
 import styles from '../styles'
@@ -11,6 +11,7 @@ import { firebase } from '@react-native-firebase/firestore';
 import appleAuth, {
   AppleAuthRequestScope,
   AppleAuthRequestOperation,
+  appleAuthAndroid,
 } from '@invertase/react-native-apple-authentication';
 
 import { AppleButton } from '@invertase/react-native-apple-authentication';
@@ -24,23 +25,34 @@ import { Button, Text ,Icon, Input, Divider} from '@ui-kitten/components';
 
 
 async function onAppleButtonPress() {
-  // Start the sign-in request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: AppleAuthRequestOperation.LOGIN,
-    requestedScopes: [AppleAuthRequestScope.EMAIL, AppleAuthRequestScope.FULL_NAME],
+ 
+  const rawNonce = uuid();
+  const state = uuid();
+
+
+  appleAuthAndroid.configure({
+
+    clientId: 'com.shing.betterlearning',
+ 
+    redirectUri: 'https://betterlearning-88c6f.firebaseapp.com/__/auth/handler',
+    responseType: appleAuthAndroid.ResponseType.ALL,
+    scope: appleAuthAndroid.Scope.ALL,
+    nonce: rawNonce,
+    state,
   });
 
-  // Ensure Apple returned a user identityToken
-  if (!appleAuthRequestResponse.identityToken) {
-    throw 'Apple Sign-In failed - no identify token returned';
+
+  const response = await appleAuthAndroid.signIn();
+
+  if (response.state === state) {
+    const credentials = auth.AppleAuthProvider.credential(
+      response.id_token,
+      rawNonce, 
+    )
+    return auth().signInWithCredential(credentials)
   }
 
-  // Create a Firebase credential from the response
-  const { identityToken, nonce } = appleAuthRequestResponse;
-  const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 
-  // Sign the user in with the credential
-  return auth().signInWithCredential(appleCredential);
 }
    
 async function onGoogleButtonPress() {
