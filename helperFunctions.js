@@ -58,14 +58,21 @@ export async function addNotesCollection(userID,subject) {
 
 
 export async function addNote(userID, subjectID, text) {
-
+    const increment = firestore.FieldValue.increment(1);
     const ref = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID).collection('Notes')
+    const subjectRef = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID)
+
     await ref.add({
       
       text: text,
       timeStamp: firestore.FieldValue.serverTimestamp()
       
     });
+
+    await subjectRef.update({
+      noteCount: increment
+    });
+  
    
 }
 

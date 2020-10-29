@@ -4,6 +4,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Card, List, Text, Button, Icon } from '@ui-kitten/components';
+import TopHeader from '../UtilComponents/TopHeader'
 
 const data = [{title:'Theme', route:'ThemeSettings'}, {title:'Terms and Conditions', route:'TermsOfService'}, {title:'Privacy Policy', route:'PrivacyPolicy'}]
 
@@ -16,8 +17,12 @@ function signOut(){
 
     
 const renderListFooter = () => (
-  <View>
-      <Button style={{margin:16}} onPress={()=>signOut()}/>
+  <View   style={styles.item}>
+  
+  <TouchableOpacity onPress={()=>signOut()}>
+      <Text category='label'>Sign Out</Text>
+</TouchableOpacity>
+      
   </View>
 );
 
@@ -37,7 +42,7 @@ function SettingsOptions(){
       style={styles.item}
       status='basic'
       >
-      <Text>
+      <Text category='label'>
         {info.item.title}
       </Text>
     </View>
@@ -45,6 +50,8 @@ function SettingsOptions(){
   );
 
   return (
+    <View>
+    <TopHeader/>
     <List
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
@@ -53,7 +60,7 @@ function SettingsOptions(){
       ListFooterComponent={renderListFooter}
       
     />
-   
+     </View>
   );
 };
 
@@ -61,13 +68,16 @@ export default SettingsOptions
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal:12
+    paddingHorizontal:12,
+  
   },
   contentContainer: {
     paddingHorizontal: 8,
     paddingVertical: 4,
+    
   },
   item: {
-    marginVertical: 8,
+
+    marginVertical: 20,
   },
 });

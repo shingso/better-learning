@@ -5,8 +5,20 @@ import { addNotesCollection } from '../helperFunctions';
 import { Button, Text ,Icon , Modal, Input, Card} from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
+import * as Yup from 'yup';
+import TopHeader from '../UtilComponents/TopHeader'
 //background timer module
 //sign up
+
+
+const SubjectSchema = Yup.object().shape({
+  subject: Yup.string()
+    .min(1, 'Too Short!')
+    .max(80, 'Too Long!')
+    .required('Required'),
+
+});
+
 
 function AddSubject(){
   const [visible, setVisible] = React.useState(false);
@@ -17,7 +29,7 @@ function AddSubject(){
     <View style={{ flex: 1, justifyContent:'center', padding:16}}>
     <Formik
     initialValues={{ subject:''}}
- 
+    validationSchema={SubjectSchema}
     onSubmit={(values, actions) => {
      addNotesCollection( user.uid,values.subject)
      actions.setSubmitting(false);
@@ -28,6 +40,7 @@ function AddSubject(){
     {formikProps => (
    
    <React.Fragment>
+     <TopHeader/>
     <Input
     label='Subject'
     placeholder='Enter subject title'

@@ -5,13 +5,14 @@ import { addNote } from '../helperFunctions';
 import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
 import {AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
+import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
 //background timer module
 //sign up
 
 const TextSchema = Yup.object().shape({
   text: Yup.string()
-    .min(2, 'Too Short!')
+    .min(1, 'Too Short!')
     .max(200, 'Too Long!')
     .required('Required'),
 
@@ -69,6 +70,7 @@ function AddNotes({ route }){
 
    
    <React.Fragment>
+   <TopHeader/>
    {formikProps.errors.text && formikProps.touched.text ? <Text>{formikProps.errors.text}</Text> : null}
     <Input
     label='Add A Note'

@@ -57,7 +57,7 @@ useEffect(() => {
  
   if (route.params.mode == 'BASIC') {
     setMode(route.params.mode);
-    setInitialTimeSet(5000)
+    setInitialTimeSet(1500000)
     setTimeElaspased(0)
   }
 
