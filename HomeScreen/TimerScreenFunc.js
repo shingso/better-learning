@@ -9,6 +9,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import { UserDataContext } from '../UserDataContext'
 import { updateUserStreakData } from '../helperFunctions'
 import { AuthContext } from '../AuthContext'
+import TopHeader from '../UtilComponents/TopHeader'
 
 const PauseIcon = (props) => (
   <Icon name='pause-circle-outline' width={80} height={80} {...props} />
@@ -182,7 +183,7 @@ return (
        
   <View style={{ flex: 1, padding:16}}>
   
-  <TopNavigation  accessoryLeft={BackAction}/>
+  <TopHeader/>
 
   <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between' }}>
   
@@ -219,17 +220,17 @@ return (
     backdropStyle={styles.backdrop}
     >
       
-      <Card disabled={true}>
-        <Text>Completed!</Text>
-        <Button size='small' onPress={()=>confirmAddNote()}>
-          ADD NOTE
-        </Button>
+    <Card disabled={true}>
+    <Text>Completed!</Text>
+    <Button size='small' onPress={()=>confirmAddNote()}>
+    ADD NOTE
+    </Button>
      
-      </Card>
+    </Card>
     </Modal>      
              
     </View>
-   </View>
+    </View>
   
        
           )

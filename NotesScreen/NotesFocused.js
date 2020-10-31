@@ -8,6 +8,7 @@ import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import Empty from '../UtilComponents/EmptyList'
+import TopHeader from '../UtilComponents/TopHeader'
 
 
 const BackIcon = (props) => (
@@ -20,28 +21,17 @@ function NotesFocused({ route, navigation }){
     const userID = user.uid
   
     const { id } = route.params
-
+    const { title } = route.params
     const [ loading, setLoading ] = useState(true);
     const [ todos, setTodos ] = useState([]);
     
-    const navigateBack = () => {
-      navigation.goBack();
-    };
-    
-    const BackAction = () => (
-      <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
-    );
-
     const renderItem = (info) => (
       
-      <View
-        style={styles.item}
-       
-       >
-        <View style={{}}>
-       <Text style={styles.timeText}>{format(new Date(info.item.timeStamp.toDate()), 'MMMM do yyyy')}</Text>
-        <Text style={styles.noteText}>{info.item.text}</Text>
-        </View>
+      <View style={styles.item}>
+      <View>
+      <Text style={{marginBottom:12}} category='label'>{format(new Date(info.item.timeStamp.toDate()), 'MMMM do yyyy')}</Text>
+      <Text>{info.item.text}</Text>
+      </View>
       </View>
     );
 
@@ -82,10 +72,12 @@ function NotesFocused({ route, navigation }){
 
        
 
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, paddingHorizontal:16, paddingVertical:8}}>
       
-      <TopNavigation title={id} alignment='center' accessoryLeft={BackAction}/>
-    
+      <View style={{flexDirection:'row', alignItems:'center'}}>
+      <TopHeader/>
+      <Text category='label'>{title}</Text>
+      </View>
       <List
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
@@ -107,31 +99,17 @@ function NotesFocused({ route, navigation }){
 export default NotesFocused
 
 const styles = StyleSheet.create({
-  contentContainer: {
-   
-  },
-
-  item: {
   
-  },
- 
   
-  timeText: {
-   fontWeight:'bold'
-  },
 
-    
-  noteText: {
-    
-  },
 
 
   container: {
-    padding:16
+    
   },
   
   item: {
-    marginVertical:4
+    marginVertical:16
   },
 
 });

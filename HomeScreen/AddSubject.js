@@ -26,7 +26,7 @@ function AddSubject(){
   const navigation = useNavigation();
   return(
            
-    <View style={{ flex: 1, justifyContent:'center', padding:16}}>
+    <View style={{ flex: 1, justifyContent:'space-between',padding:16}}>
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}

@@ -6,11 +6,11 @@ import { Card, List, Text, Button, Icon, Divider } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 
 const EditIcon = (props) => (
-    <Icon {...props} name='edit-2'/>
+    <Icon {...props} name='edit-outline'/>
   );
 
   const PlayIcon = (props) => (
-    <Icon {...props}  name='play-circle'/>
+    <Icon {...props}  name='chevron-right-outline'/>
   );
   
   const renderHeader = () => (
@@ -33,8 +33,8 @@ function HomeScreen(){
     
     const renderListFooter = () => (
       <View>
-          <Button style={{margin:16}} onPress={()=>navigation.navigate('AddSubject')}>
-            ADD 
+          <Button style={{marginVertical:60}} onPress={()=>navigation.navigate('AddSubject')}>
+            Add Subject
           </Button>
         
       </View>

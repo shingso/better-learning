@@ -3,6 +3,7 @@ import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet} from '
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import TopHeader from '../UtilComponents/TopHeader'
 
 const Header = (props) => (
     <View {...props}>
@@ -21,16 +22,7 @@ function SetTimer({ route }){
   
     const navigation = useNavigation();
     const { id } = route.params
-    const navigateBack = () => {
-      navigation.goBack();
-    };
-    
-    const BackAction = () => (
-      <TopNavigationAction icon={BackIcon} onPress={()=>navigateBack()}/>
-    );
-    
-
-
+ 
     const Footer = (props) => (
 
     
@@ -40,7 +32,7 @@ function SetTimer({ route }){
           onPress={()=>navigation.navigate("TimerScreen", { mode: props.mode, subjectID: id })}
           style={styles.footerControl}
           size='small'>
-          {id}
+        
          {props.title}
         </Button>
       </View>
@@ -51,21 +43,20 @@ function SetTimer({ route }){
         //onPress={()=>navigation.navigate("TimerScreen",{mode:"ADVANCED"},
 
         <View style={{flex: 1, padding:16}}>
-        <TopNavigation accessoryLeft={BackAction}/>
-        <Text style={{marginBottom:8}}  category='h5'>Choose a study session</Text>    
+        <TopHeader/>
+        <Text style={{marginBottom:8}}  category='h2'>Choose a study session</Text>    
+        <Card style={styles.card} header={(props)=><Header {...props} title='Starter Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='BASIC'/>}>
+        <Text>
+         A quick and simple 25 minute study session
+        </Text>
+        </Card>
 
-            <Card style={styles.card} header={(props)=><Header {...props} title='Starter Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='BASIC'/>}>
-            <Text>
-                A quick and simple 25 minute study session
-            </Text>
-            </Card>
 
-
-            <Card style={styles.card} header={(props)=><Header {...props} title='Advanced Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='ADVANCED'/>}>
-            <Text>
-                One hour study session. Two twenty five minute studys with a break inbetween.
-            </Text>
-            </Card>
+        <Card style={styles.card} header={(props)=><Header {...props} title='Advanced Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='ADVANCED'/>}>
+        <Text>
+        One hour study session. Two twenty five minute studys with a break inbetween.
+        </Text>
+        </Card>
 
 
 

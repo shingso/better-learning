@@ -22,6 +22,7 @@ function TopHeader(){
     
     const BackAction = () => (
       <TopNavigationAction icon={BackIcon} onPress={()=>navigateBack()}/>
+      
     );
     
 
@@ -30,8 +31,8 @@ function TopHeader(){
     return (
        
  
-        <View style={{alignSelf:'flex-start'}}>
-        <TopNavigation accessoryLeft={BackAction}/>
+        <View style={{alignSelf:'flex-start', marginLeft:-20}}>
+         <Button appearance='ghost' accessoryLeft={BackIcon} onPress={() => navigateBack()}></Button>
       </View>
       
       

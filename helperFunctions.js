@@ -44,10 +44,11 @@ export async function updateUserStreakData(userID, IQ, currentStreak, highestStr
 
 
 export async function addNotesCollection(userID,subject) {
-    //const increment = firebase.firestore.FieldValue.increment(1);
+    
     const ref = firestore().collection('Users').doc(userID).collection('NotesCollection')
     await ref.add({
       title: subject,
+      noteCount: 0,
       timeStamp: firestore.FieldValue.serverTimestamp(),
     
     });

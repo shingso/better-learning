@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, View, SafeAreaView, Dimensions} from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, Platform} from 'react-native'
 import auth from '@react-native-firebase/auth';
 
 import { v4 as uuid } from 'uuid'
@@ -33,7 +33,6 @@ async function onAppleButtonPress() {
   appleAuthAndroid.configure({
 
     clientId: 'com.shing.betterlearning',
- 
     redirectUri: 'https://betterlearning-88c6f.firebaseapp.com/__/auth/handler',
     responseType: appleAuthAndroid.ResponseType.ALL,
     scope: appleAuthAndroid.Scope.ALL,
@@ -53,6 +52,27 @@ async function onAppleButtonPress() {
   }
 
 
+}
+
+
+async function onAppleButtonPressApple() {
+  // Start the sign-in request
+  const appleAuthRequestResponse = await appleAuth.performRequest({
+    requestedOperation: appleAuth.Operation.LOGIN,
+    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+  });
+
+  // Ensure Apple returned a user identityToken
+  if (!appleAuthRequestResponse.identityToken) {
+    throw 'Apple Sign-In failed - no identify token returned';
+  }
+
+  // Create a Firebase credential from the response
+  const { identityToken, nonce } = appleAuthRequestResponse;
+  const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+
+  // Sign the user in with the credential
+  return auth().signInWithCredential(appleCredential);
 }
    
 async function onGoogleButtonPress() {
@@ -75,7 +95,9 @@ function AppleSignIn() {
         
         height: 45,
       }}
-      onPress={() => onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))}
+
+      
+      onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
     />
   );
 } 
@@ -163,20 +185,17 @@ export default class Login extends React.Component {
 
       )}
     </Formik>
-    <GoogleSigninButton   onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
-    
-    style={{marginBottom:20, width:'100%'}}/>
+    <GoogleSigninButton   onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))} style={{marginBottom:20, width:'100%'}}/>
              
            
-                <AppleSignIn/>
+    <AppleSignIn/>
              
-          
-                <Button appearance={'ghost'}  onPress={() => this.props.navigation.navigate('SignUp')}>
-                Sign Up with Email
-                </Button>
+      <Button appearance={'ghost'}  onPress={() => this.props.navigation.navigate('SignUp')}>
+      Sign Up with Email
+      </Button>
 
              
-                </View>
+      </View>
          
             )
      

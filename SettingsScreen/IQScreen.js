@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, SafeAreaView } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -28,7 +28,8 @@ function IQScreen(){
   };
     
   const SettingsAction = () => (
-      <TopNavigationAction icon={SettingsIcon} onPress={navigateSettings}/>
+      <TopNavigationAction  icon={SettingsIcon} onPress={navigateSettings}/>
+      
   );
 
   const renderToggleButton = () => (
@@ -43,10 +44,10 @@ function IQScreen(){
 
        
 
-    <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-    <TopNavigation style={{alignSelf:'flex-end'}}  alignment='center' accessoryRight={SettingsAction}/>
+    <SafeAreaView style={{flex: 1}}>
+    <Button appearance='ghost' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
     <Tooltip
-  
+     
       anchor={renderToggleButton}
       visible={visible}
       accessoryLeft={InfoIcon}
@@ -57,18 +58,16 @@ function IQScreen(){
       IQ is just for fun!
       Everytime you finish a study session your IQ will go up by your current streak.
     </Tooltip>
-    <Text>IQ</Text>
+    <View style={{padding:16}}>
+    <Text category={'s1'}>IQ</Text>
     <Text>{userData.IQ}</Text>
-    <Text>Current Streak</Text>
+    <Text category={'s1'}>Current Streak</Text>
     <Text>{userData.currentStreak}</Text>
-    <Text>Highest Streak</Text>
+    <Text category={'s1'}>Highest Streak</Text>
     <Text>{userData.highestStreak}</Text>
    
-    <View style={{flex:1 , justifyContent:'center', alignItems:'center'}}>
-
     </View>
-  
-       </View>
+    </SafeAreaView>
       
       
       );

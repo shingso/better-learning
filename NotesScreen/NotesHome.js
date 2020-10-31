@@ -39,9 +39,11 @@ function NotesHome(){
       <TouchableOpacity onPress={()=>navigation.navigate('NotesFocused',{id:info.item.id})}>
       <View style={styles.item}>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-      <Text>{info.item.title}</Text>
-      <Text>{info.item.noteCount}</Text>
-      <Button appearance='filled' accessoryRight={NoteIcon} onPress={()=>navigation.navigate('NotesFocused',{id:info.item.id})}/>
+      <Text category='s1'>{info.item.title}</Text>
+      <View style={{flexDirection:'row', alignItems:'center'}}>
+      <Text category='label'>{info.item.noteCount}</Text>
+      <Button appearance='ghost' accessoryRight={NoteIcon} onPress={()=>navigation.navigate('NotesFocused',{id:info.item.id, title:info.item.title})}/>
+      </View>
       </View>
       </View>
       </TouchableOpacity>
