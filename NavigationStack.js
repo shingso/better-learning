@@ -12,14 +12,19 @@ import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/componen
 
 
 import AddNotes from './HomeScreen/AddNotes';
-import NotesHome from './NotesScreen/NotesHome'
+
 import NotesFocused from './NotesScreen/NotesFocused'
 
 import HomeScreen from './HomeScreen/HomeScreen'
 
+import GuidesHome from './GuidesScreen/GuidesHome'
+import HowToLearn from './GuidesScreen/HowToLearn'
+
 import TimerScreenFunc from './HomeScreen/TimerScreenFunc'
 import SetTimer from './HomeScreen/SetTimer'
 import AddSubject from './HomeScreen/AddSubject'
+import TipsPage from './HomeScreen/TipsPage'
+
 
 import SignUp from './LoginScreen/SignUp';
 import Login from './LoginScreen/Login';
@@ -74,11 +79,12 @@ const TimerScreenWithContext = (props) => {
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
+  
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
     <BottomNavigationTab icon={HomeIcon}/>
-    <BottomNavigationTab icon={BookIcon}/>
     <BottomNavigationTab icon={ChartIcon}/>
+    <BottomNavigationTab icon={BookIcon}/>
   </BottomNavigation>
 );
 
@@ -93,6 +99,8 @@ function HomeStack() {
         <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="SetTimer" component={SetTimer} />
         <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />
+        <Stack.Screen name="TipsPage" component={TipsPage} />
+        <Stack.Screen name="NotesFocused" component={NotesFocused} />
         </Stack.Navigator>
     );
   }
@@ -108,16 +116,17 @@ function HomeStack() {
   }
 
 
-
-function NotesStack() {
+  function GuidesStack() {
     return (
         <Stack.Navigator headerMode='none'>
-        <Stack.Screen name="NotesHome" component={NotesHome} />
-        <Stack.Screen name="NotesFocused" component={NotesFocused} />
-        <Stack.Screen name="AddNotes" component={AddNotes} />
+        <Stack.Screen name="GuidesHome" component={GuidesHome} />
+        <Stack.Screen name="HowToLearn" component={HowToLearn} />
         </Stack.Navigator>
     );
   }
+
+
+
 
 function SettingsStack() {
     return (
@@ -143,8 +152,8 @@ const user = useContext(AuthContext)
   
       <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="NotesHome" component={NotesStack} />
         <Tab.Screen name="SettingsStack" component={SettingsStack} />
+        <Tab.Screen name="GuidesStack" component={GuidesStack} />
       </Tab.Navigator>
   
     </NavigationContainer>

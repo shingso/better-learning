@@ -12,7 +12,7 @@ const Header = (props) => (
 
 
 
-function TipsPage(){
+function HowToLearn(){
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const options = [
@@ -127,4 +127,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default TipsPage
+export default HowToLearn

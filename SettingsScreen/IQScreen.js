@@ -9,7 +9,7 @@ import { UserDataContext } from '../UserDataContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip} from '@ui-kitten/components';
 
 const SettingsIcon = (props) => (
-  <Icon {...props} name='settings-outline' />
+  <Icon {...props} width='25' height='25' name='settings-outline' />
 );
 
 const InfoIcon = (props) => (
@@ -27,14 +27,9 @@ function IQScreen(){
       navigation.navigate('SettingsOptions');
   };
     
-  const SettingsAction = () => (
-      <TopNavigationAction  icon={SettingsIcon} onPress={navigateSettings}/>
-      
-  );
 
   const renderToggleButton = () => (
     <Button appearance='ghost' accessoryRight={InfoIcon} onPress={() => setVisible(true)}>
-    
     </Button>
   );
 
@@ -44,8 +39,15 @@ function IQScreen(){
 
        
 
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, padding:16}}>
+      
+    <View style={{ flexDirection:'row' , justifyContent:'space-between'}}>
+    <Text category='h1'>Progress</Text>
     <Button appearance='ghost' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
+    </View>
+ 
+
+    <View style={{alignItems:'flex-end'}}>
     <Tooltip
      
       anchor={renderToggleButton}
@@ -53,12 +55,13 @@ function IQScreen(){
       accessoryLeft={InfoIcon}
       placement={'bottom end'}
       onBackdropPress={() => setVisible(false)}>
-
       What is IQ?
       IQ is just for fun!
       Everytime you finish a study session your IQ will go up by your current streak.
     </Tooltip>
-    <View style={{padding:16}}>
+    </View>
+ 
+    <View>
     <Text category={'s1'}>IQ</Text>
     <Text>{userData.IQ}</Text>
     <Text category={'s1'}>Current Streak</Text>

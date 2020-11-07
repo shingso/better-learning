@@ -13,11 +13,9 @@ const EditIcon = (props) => (
     <Icon {...props}  name='chevron-right-outline'/>
   );
   
-  const renderHeader = () => (
-    
-    <View>
-    <Text category='h1'>Home</Text>
-    </View>
+
+  const BookIcon = (props) => (
+    <Icon {...props} name='book-outline'/>
   );
 
 function HomeScreen(){
@@ -32,37 +30,49 @@ function HomeScreen(){
     
     
     const renderListFooter = () => (
-      <View>
-          <Button style={{marginVertical:60}} onPress={()=>navigation.navigate('AddSubject')}>
-            Add Subject
+      <View style={{alignItems:'flex-start'}}> 
+          <Button appearance='outline' style={{marginVertical:12}} onPress={()=>navigation.navigate('AddSubject')}>
+          ADD SUBJECT
           </Button>
         
       </View>
   );
   
+  //<Text category='h1'>Home</Text>
+  const renderHeader = () => (
+    
+    <View style={{marginBottom:16}}>
+
+    <Button appearance='outline' style={{marginVertical:12}} onPress={()=>navigation.navigate('TipsPage')}>
+      TIPS
+    </Button>
+    </View>
+  );
 
     const renderItem = (info) => (
       
-      <View
+      <Card
         style={styles.item}
+        disabled={true}
        >
 
-        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+      <View style={{ justifyContent:'space-between' }}>
       <View>
       <Text category='s1'>
         {info.item.title} 
       </Text>
-      <Text category='s2'>
-        Last Studied: {info.item.title} 
-      </Text>
+     
       </View>
 
+        <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:40}}>
+        <Button accessoryLeft={BookIcon} style={{marginRight:16}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {id:info.item.id, title:info.item.title})}/>
         <View style={{flexDirection:'row'}}>
-        <Button accessoryLeft={EditIcon} appearance={'ghost'} onPress={()=>navigation.navigate('AddNotes', {id:info.item.id})}/>
-        <Button accessoryLeft={PlayIcon} appearance={'ghost'} onPress={()=>navigation.navigate('SetTimer', {id:info.item.id})}/>
+        <Button accessoryLeft={EditIcon} style={{marginRight:16}} appearance={'outline'} onPress={()=>navigation.navigate('AddNotes', {id:info.item.id, mode:'ADD'})}/>
+        <Button accessoryLeft={PlayIcon}  onPress={()=>navigation.navigate('SetTimer', {id:info.item.id})}/>
         </View>
         </View>
-      </View>
+        </View>
+      </Card>
     );
     
     useEffect(() => {
@@ -95,11 +105,8 @@ function HomeScreen(){
 
     return (
        
-
-        <View style={{flex: 1}}>
-    
-      
-     <List
+    <SafeAreaView style={{flex: 1}}>
+    <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
         data={todos}
@@ -108,11 +115,10 @@ function HomeScreen(){
         ListHeaderComponent={renderHeader}
         />
 
-
-      </View>
+    </SafeAreaView>
       
       
-      );
+    );
 
       //we need to update state when we add an item
     
@@ -121,22 +127,20 @@ function HomeScreen(){
 
 const styles = StyleSheet.create({
   item: {
-    height:100,
-    justifyContent:'center',
- 
-    flex:1
-  
-  },
 
+    marginVertical:8,
+    
+  },
+  //contanier that holds everything 
   contentContainer: {
+
     paddingHorizontal: 20,
-    paddingVertical: 8,
-  
+    paddingVertical: 12,
    
   },
   
   container:{
-    paddingVertical:12
+  
   }
 });
 export default HomeScreen

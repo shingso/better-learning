@@ -31,8 +31,8 @@ function TopHeader(){
     return (
        
  
-        <View style={{alignSelf:'flex-start', marginLeft:-20}}>
-         <Button appearance='ghost' accessoryLeft={BackIcon} onPress={() => navigateBack()}></Button>
+        <View style={{alignSelf:'flex-start', marginLeft:-20,}}>
+         <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={() => navigateBack()}></Button>
       </View>
       
       

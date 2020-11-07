@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet} from 'react-native'
-import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
+import { Button, Icon,  Card, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import TopHeader from '../UtilComponents/TopHeader'
 
 const Header = (props) => (
     <View {...props}>
-      <Text category='h6'>{props.title}</Text>
+      <Text category='s1'>{props.title}</Text>
 
     </View>
   );
 
-  const BackIcon = (props) => (
-    <Icon {...props} width={30} height={30} name='arrow-back' />
+
+  const ClockIcon = (props) => (
+    <Icon {...props} width={30} height={30} name='clock-outline' />
   );
 
 
 function SetTimer({ route }){
  
-  
+    const [mode, setMode] = React.useState('BASIC');
     const navigation = useNavigation();
     const { id } = route.params
  
@@ -27,7 +27,7 @@ function SetTimer({ route }){
 
     
       <View {...props} style={[props.style, styles.footerContainer]}>
-       
+        <ClockIcon/>
         <Button
           onPress={()=>navigation.navigate("TimerScreen", { mode: props.mode, subjectID: id })}
           style={styles.footerControl}
@@ -42,10 +42,34 @@ function SetTimer({ route }){
        
         //onPress={()=>navigation.navigate("TimerScreen",{mode:"ADVANCED"},
 
-        <View style={{flex: 1, padding:16}}>
+        <SafeAreaView style={{flex: 1, padding:16}}>
         <TopHeader/>
-        <Text style={{marginBottom:8}}  category='h2'>Choose a study session</Text>    
-        <Card style={styles.card} header={(props)=><Header {...props} title='Starter Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='BASIC'/>}>
+        <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
+
+        <Text style={{marginBottom:12}} category='h2'>{mode == 'BASIC' ? 'Starter' : 'Advanced'}</Text>  
+        <Text>
+  
+        {mode == 'BASIC' ? ' A quick and simple 25 minute study session' : 'Advanced'}
+        </Text>
+        
+      <View style={{ flex:1, marginBottom:36 , justifyContent:'flex-end'}}>
+      <Button style={{marginBottom:30}} appearance={'outline'} onPress={()=>navigation.navigate("TimerScreen", { mode:mode, subjectID: id })}>
+      START
+    </Button>
+
+    <View style={{ flexDirection:'row' }}>
+      <Button style={styles.button} appearance={mode == 'BASIC' ? 'outline' : 'ghost'} onPress={()=>setMode('BASIC')}>
+      STARTER
+    </Button>
+
+    <Button style={styles.button} appearance={mode == 'ADVANCED' ? 'outline' : 'ghost'} onPress={()=>setMode('ADVANCED')}>
+      ADVANCED
+    </Button>
+    
+    </View>
+    </View>
+
+      {/*   <Card style={styles.card} header={(props)=><Header {...props} title='Starter Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='BASIC'/>}>
         <Text>
          A quick and simple 25 minute study session
         </Text>
@@ -56,12 +80,12 @@ function SetTimer({ route }){
         <Text>
         One hour study session. Two twenty five minute studys with a break inbetween.
         </Text>
-        </Card>
+        </Card> */}
 
 
 
       
-      </View>
+      </SafeAreaView>
       
       
       );
@@ -84,6 +108,7 @@ const styles = StyleSheet.create({
     footerContainer: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
+
     },
     footerControl: {
       marginHorizontal: 2,

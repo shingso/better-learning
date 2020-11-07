@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, TouchableOpacity} from 'react-native'
+import {  View, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation, useNavigationBuilder } from '@react-navigation/native';
@@ -10,13 +10,13 @@ import Empty from '../UtilComponents/EmptyList'
 
 const NoteIcon = (props) => (
 
-  <Icon {...props} name='file-text-outline'/>
+  <Icon {...props} fill='#8F9BB3' name='menu-outline'/>
 
 );
  
 const renderHeader = () => (
     
-  <View>
+  <View style={{marginBottom:20}}>
   <Text category='h1'>Notes</Text>
   </View>
 );
@@ -36,16 +36,18 @@ function NotesHome(){
 
     const renderItem = (info) => (
     
-      <TouchableOpacity onPress={()=>navigation.navigate('NotesFocused',{id:info.item.id})}>
-      <View style={styles.item}>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+      <TouchableOpacity onPress={()=>navigation.navigate('NotesFocused',{id:info.item.id, title:info.item.title})}>
+      <Card style={styles.item}>
+      <View style={{justifyContent:'space-between'}}>
       <Text category='s1'>{info.item.title}</Text>
-      <View style={{flexDirection:'row', alignItems:'center'}}>
-      <Text category='label'>{info.item.noteCount}</Text>
-      <Button appearance='ghost' accessoryRight={NoteIcon} onPress={()=>navigation.navigate('NotesFocused',{id:info.item.id, title:info.item.title})}/>
+    
+      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'flex-end', marginTop:12}}>
+      <Text style={{marginRight:8}} category='s1'>{info.item.noteCount}</Text>
+      <Icon fill='#8F9BB3' width='25' height='25' name='menu-outline'/>
       </View>
+   
       </View>
-      </View>
+      </Card>
       </TouchableOpacity>
     );
 
@@ -84,7 +86,7 @@ function NotesHome(){
     return (
        
 
-        <View style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
      
         <List
         style={styles.container}
@@ -97,7 +99,7 @@ function NotesHome(){
       
         />
 
-      </View>
+      </SafeAreaView>
       
       
       );
@@ -111,15 +113,21 @@ export default NotesHome
 
 const styles = StyleSheet.create({
     container: {
-      paddingVertical:12
+      paddingVertical:12,
+  
     },
+
     contentContainer: {
       paddingHorizontal: 20,
-    paddingVertical: 8,
-  
+      paddingVertical: 8,
+    
      
     },
     item: {
-      marginVertical: 16,
+      marginVertical: 8,
+      paddingVertical:8,
+    
+      
+    
     },
   });

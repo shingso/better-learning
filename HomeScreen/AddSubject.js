@@ -26,7 +26,7 @@ function AddSubject(){
   const navigation = useNavigation();
   return(
            
-    <View style={{ flex: 1, justifyContent:'space-between',padding:16}}>
+    <View style={{ flex: 1,padding:16}}>
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
@@ -40,7 +40,8 @@ function AddSubject(){
     {formikProps => (
    
    <React.Fragment>
-     <TopHeader/>
+    <TopHeader/>
+    <Text category='h1' style={{marginBottom:40}} >Add a Subject</Text>
     <Input
     label='Subject'
     placeholder='Enter subject title'
@@ -56,7 +57,7 @@ function AddSubject(){
         onBackdropPress={() => navigation.navigate('Home')}
         >
         <Card disabled={true}>
-          <Text>Study Subject Added!</Text>
+          <Text>Subject Added!</Text>
           <Button size='small' onPress={() => navigation.navigate('Home')}>
             DISMISS
           </Button>

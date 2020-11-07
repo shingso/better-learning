@@ -7,8 +7,7 @@ import {AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
-//background timer module
-//sign up
+
 
 const TextSchema = Yup.object().shape({
   text: Yup.string()
@@ -51,7 +50,7 @@ function AddNotes({ route }){
 
   return(
            
-    <View style={{ flex: 1, justifyContent:'center', padding:16}}>
+    <View style={{ flex: 1, justifyContent:'space-between', padding:16}}>
     <Formik
     initialValues={{ text:''}}
     validationSchema={TextSchema}
@@ -63,25 +62,22 @@ function AddNotes({ route }){
     }}
    >
 
-
-
     {formikProps => (
 
-
-   
    <React.Fragment>
    <TopHeader/>
    {formikProps.errors.text && formikProps.touched.text ? <Text>{formikProps.errors.text}</Text> : null}
     <Input
-    label='Add A Note'
+  
+    height={80}
+    multiline={true}
     placeholder='What did you learn about today?'
-
     size='large'
     onChangeText={formikProps.handleChange('text')}
       />
 
-    <Text>{mode}</Text>
-  
+   
+
     <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()} >
       SUBMIT
     </Button>
@@ -93,11 +89,13 @@ function AddNotes({ route }){
         >
         <Card disabled={true}>
           <Text>Note Added!</Text>
-          {mode == 'BASIC' &&
+          {mode == 'BASIC' || mode =='ADD' &&
           <Button size='small' onPress={() => confirmAddNote()}>
             DISMISS
           </Button>
           }
+
+
 
         {mode == 'ADVANCED' &&
           <Button size='small' onPress={() => confirmAddNoteReset()}>

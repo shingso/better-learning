@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
@@ -50,7 +50,7 @@ function SettingsOptions(){
   );
 
   return (
-    <View>
+    <SafeAreaView>
     <TopHeader/>
     <List
       style={styles.container}
@@ -60,7 +60,7 @@ function SettingsOptions(){
       ListFooterComponent={renderListFooter}
       
     />
-     </View>
+    </SafeAreaView>
   );
 };
 

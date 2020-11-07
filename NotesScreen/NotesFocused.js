@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet } from 'react-native'
-
+import { View, StyleSheet, SafeAreaView } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
-import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns'
-
 import { AuthContext } from '../AuthContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import Empty from '../UtilComponents/EmptyList'
@@ -17,6 +14,7 @@ const BackIcon = (props) => (
 
 
 function NotesFocused({ route, navigation }){
+  
     const user = useContext(AuthContext)
     const userID = user.uid
   
@@ -34,6 +32,16 @@ function NotesFocused({ route, navigation }){
       </View>
       </View>
     );
+
+   
+    const renderHeader = () => (
+        
+      <View>
+      <TopHeader/>
+      <Text category='s1'>{title}</Text>
+      </View>
+    );
+ 
 
  
     
@@ -72,22 +80,20 @@ function NotesFocused({ route, navigation }){
 
        
 
-      <View style={{flex: 1, paddingHorizontal:16, paddingVertical:8}}>
+      <SafeAreaView style={{flex: 1}}>
       
-      <View style={{flexDirection:'row', alignItems:'center'}}>
-      <TopHeader/>
-      <Text category='label'>{title}</Text>
-      </View>
+   
       <List
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
          data={todos}
          renderItem={renderItem}
          ListEmptyComponent={<Empty message={'hello'}/>}
+         ListHeaderComponent={renderHeader}
          />
  
   
-       </View>
+       </SafeAreaView>
       
       
       );
@@ -105,11 +111,17 @@ const styles = StyleSheet.create({
 
 
   container: {
-    
+  
+  },
+
+  contentContainer: {
+    marginVertical:8,
+    marginHorizontal:16
   },
   
+  
   item: {
-    marginVertical:16
+    marginVertical:20
   },
 
 });
