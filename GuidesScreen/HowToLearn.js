@@ -43,12 +43,12 @@ function HowToLearn(){
       onSelect={index => setSelectedIndex(index)}>
       
       <Layout
-        style={styles.tab}
+        style={{ alignItems:'center', flex:1, borderWidth:1, paddingTop:40}}
         level='2'>
         
-        <Text category='h5'>USERS</Text>
-     
-     <Button/>
+      <Text style={{marginBottom:20}} category='h1'>How should I study?</Text>
+      <Text>Any of the following</Text>
+
   
       </Layout>
       
@@ -69,7 +69,7 @@ function HowToLearn(){
       </Layout>
     </ViewPager>
 
-    <Layout level='2' style={{flexDirection:'row', alignSelf:'center', marginBottom:40 }}>
+    <Layout level='2' style={{flexDirection:'row', alignSelf:'center', marginBottom:28 }}>
 				{options.map(item => {
 					return (
 						<Layout key={item.key} style={styles.buttonContainer}>
@@ -96,6 +96,8 @@ const styles = StyleSheet.create({
   tab: {
     flex:1,
     alignItems: 'center',
+    borderWidth:1,
+    
 
   },
 
@@ -108,8 +110,8 @@ const styles = StyleSheet.create({
 
   circle: {
 
-    height: 10,
-    width: 10,
+    height: 8,
+    width: 8,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#ACACAC',
@@ -119,8 +121,8 @@ const styles = StyleSheet.create({
 
   checkedCircle: {
 
-    width: 12,
-    height: 12,
+    width: 9,
+    height: 9,
     borderRadius: 20,
     backgroundColor:'blue'
   },

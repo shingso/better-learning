@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, View, SafeAreaView, Dimensions, Platform} from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, Platform } from 'react-native'
 import auth from '@react-native-firebase/auth';
 
 import { v4 as uuid } from 'uuid'
@@ -89,10 +89,10 @@ async function onGoogleButtonPress() {
 function AppleSignIn() {
   return (
     <AppleButton
-      buttonStyle={AppleButton.Style.WHITE}
+      buttonStyle={AppleButton.Style.WHITE_OUTLINE}
       buttonType={AppleButton.Type.SIGN_IN}
       style={{
-        
+        width:'100%',
         height: 45,
       }}
 
@@ -143,6 +143,12 @@ export default class Login extends React.Component {
 
        
       <View style={{ flex: 1, justifyContent:'center', padding:16}}>
+      
+      <View style={{flex:2}}>
+      <Text category='h1' style={{marginBottom:12, marginTop:20}}>A Better Way to Learn</Text>
+      <Text category='s1'>Learn more in less time</Text>
+      </View>
+
       <Formik
       initialValues={{ email:'', password:''}}
       //validationSchema={validationSchema}
@@ -153,23 +159,25 @@ export default class Login extends React.Component {
     >
 
       
-      {formikProps => (
-        <React.Fragment>
+    {formikProps => (
+    <React.Fragment>
    
 
     <Input
-     label='Email'
-          placeholder='Enter Email'
+
+          placeholder='Email address'
           value={formikProps.values.email}
           size='large'
           onChangeText={formikProps.handleChange('email')}
+          textStyle={{fontSize:14}}
+          style={{marginVertical:8}}
         />
 
       <Input
           value={formikProps.values.password}
-          label='Password'
+          textStyle={{fontSize:14}}
           placeholder='Password'
-          caption='Should contain at least 8 symbols'
+          
           //accessoryRight={this.renderIcon}
           //captionIcon={AlertIcon}
           size='large'
@@ -178,26 +186,39 @@ export default class Login extends React.Component {
         />
 
       <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
-      LOGIN
+      Login
       </Button>
         </React.Fragment>
 
 
       )}
     </Formik>
-    <GoogleSigninButton   onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))} style={{marginBottom:20, width:'100%'}}/>
-             
-           
+    
+    <View style={{marginVertical:20, flex:1, borderWidth:0, justifyContent:'center'}}>
+    <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
+    Sign in with the following
+    </Text>
+    <Button appearance={'outline'}  onPress={() => onGoogleButtonPress()} style={{marginBottom:20}}> 
+    Sign in with Google 
+    </Button>
+               
     <AppleSignIn/>
-             
-      <Button appearance={'ghost'}  onPress={() => this.props.navigation.navigate('SignUp')}>
-      Sign Up with Email
-      </Button>
+    </View>
 
+
+    <View style={{flex: 1, borderWidth:0,justifyContent: 'flex-end', marginBottom:36}}>
+    <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
+    Don't have an account?
+    </Text>
+
+    <Button appearance={'outline'} onPress={() => this.props.navigation.navigate('SignUp')}>
+    Sign Up with Email
+    </Button>
+    </View>
              
-      </View>
+    </View>
          
-            )
+    )
      
   }
 }

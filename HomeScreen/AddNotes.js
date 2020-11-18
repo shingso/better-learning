@@ -3,7 +3,7 @@ import { View , StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
 import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
-import {AuthContext } from '../AuthContext'
+import { AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 
 const TextSchema = Yup.object().shape({
   text: Yup.string()
-    .min(1, 'Too Short!')
+    .min(1, 'Its crucial to recall inorder to learn')
     .max(200, 'Too Long!')
     .required('Required'),
 
@@ -50,7 +50,8 @@ function AddNotes({ route }){
 
   return(
            
-    <View style={{ flex: 1, justifyContent:'space-between', padding:16}}>
+    <View style={{ flex: 1, padding:16}}>
+      
     <Formik
     initialValues={{ text:''}}
     validationSchema={TextSchema}
@@ -65,21 +66,30 @@ function AddNotes({ route }){
     {formikProps => (
 
    <React.Fragment>
+   <View>
    <TopHeader/>
-   {formikProps.errors.text && formikProps.touched.text ? <Text>{formikProps.errors.text}</Text> : null}
-    <Input
+   <Text category='h1' style={{marginBottom:20}}>Recall</Text>
+   <Text category='s1'>Take some time and think about what you have just studied or practiced.</Text>
+   <Text category='s1' style={{marginVertical:12}}>Type out what you have learned.</Text>
+   <Text category='s1'>Everything you type out here should be from memory and be done without looking at any material.</Text>
+   </View>
+
+   <View style={{marginVertical:20}}>
+   {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null}
+   <Input
   
-    height={80}
+    textStyle={{fontSize:16, height:100}}
+ 
     multiline={true}
     placeholder='What did you learn about today?'
-    size='large'
+    size={'large'}
     onChangeText={formikProps.handleChange('text')}
       />
 
-   
+   </View>
 
     <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()} >
-      SUBMIT
+      Done
     </Button>
       
     <Modal

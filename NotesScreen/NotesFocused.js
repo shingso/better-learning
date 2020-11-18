@@ -88,7 +88,8 @@ function NotesFocused({ route, navigation }){
          contentContainerStyle={styles.contentContainer}
          data={todos}
          renderItem={renderItem}
-         ListEmptyComponent={<Empty message={'hello'}/>}
+         ListEmptyComponent={<Empty message={'Your notes will be placed here'}/>}
+         
          ListHeaderComponent={renderHeader}
          />
  
@@ -116,7 +117,8 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     marginVertical:8,
-    marginHorizontal:16
+    marginHorizontal:16,
+    flexGrow: 1
   },
   
   

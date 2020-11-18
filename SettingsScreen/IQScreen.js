@@ -1,25 +1,49 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns'
+import { format, endOfMonth } from 'date-fns'
 
 import { UserDataContext } from '../UserDataContext'
-import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip} from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
+import { ContributionGraph } from "react-native-chart-kit";
+import { AuthContext } from '../AuthContext'
 
-const SettingsIcon = (props) => (
-  <Icon {...props} width='25' height='25' name='settings-outline' />
-);
 
 const InfoIcon = (props) => (
   <Icon {...props} name='info'/>
 );
 
-function IQScreen(){
- 
 
+const commitsData = [
+  { date: '2010-11-01', count: 0 },
+
+  { date: '2020-11-11', count: 1 },
+  { date: '2020-11-02', count: 2 },
+  { date: '2020-11-05', count: 1 },
+  { date: '2020-11-13', count: 2 }
+
+];
+
+
+const getCurrentEndOfMonth = () => {
+   let currentDate = new Date()
+
+};
+
+// or we can keep a centrilized doc which would reduce reads, but increased writes...which seems fine
+
+function IQScreen(){
+
+
+
+  const user = useContext(AuthContext)
+
+  const userID = user.uid
   const [visible, setVisible] = React.useState(false);
+
+  const [dates, setDates] = React.useState([]);
   const userData = useContext(UserDataContext)
   const navigation = useNavigation();
 
@@ -27,28 +51,71 @@ function IQScreen(){
       navigation.navigate('SettingsOptions');
   };
     
+  const windowWidth = Dimensions.get('window').width;
+      
+  useEffect(() => {
+
+    const ref = firestore().collection('Users').doc(userID).collection('DatesStudied')
+ 
+    return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
+      const list = [];
+      const datesDict = {}
+      querySnapshot.forEach(doc => {
+        const { timeStamp } = doc.data();
+        const currentDate = format(new Date(timeStamp.toDate()), 'yyyy-MM-dd')
+        // take the timestamp and convert it into and array
+        if(currentDate in datesDict){
+          datesDict[currentDate] += 1
+        } else {
+          datesDict[currentDate] = 1
+        }
+      });
+      for (var date in datesDict) {
+        let item = {};
+        item.date = date;
+        item.count = datesDict[date];
+        
+        list.push(item)
+     }
+      // take the dict and convert it into objects
+
+      setDates(list);
+
+
+
+    });
+  }, []);
 
   const renderToggleButton = () => (
     <Button appearance='ghost' accessoryRight={InfoIcon} onPress={() => setVisible(true)}>
     </Button>
   );
+  // the glitch is that the color is messed up 
+  const chartConfig = {
+    backgroundGradientFrom: "white",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "white",
+    backgroundGradientToOpacity: 'green',
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    strokeWidth: 3, // optional, default 3
+
+    useShadowColorFromDataset: false // optional
+  };
+
 
 
   return (
-       
 
-       
 
     <SafeAreaView style={{flex: 1, padding:16}}>
       
-    <View style={{ flexDirection:'row' , justifyContent:'space-between'}}>
-    <Text category='h1'>Progress</Text>
-    <Button appearance='ghost' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
+    <View style={{ justifyContent:'space-between'}}>
     </View>
  
-
-    <View style={{alignItems:'flex-end'}}>
-    <Tooltip
+    <View style={{justifyContent:'space-between', flexDirection:'row'}}>
+   
+    </View>
+{/*     <Tooltip
      
       anchor={renderToggleButton}
       visible={visible}
@@ -58,18 +125,69 @@ function IQScreen(){
       What is IQ?
       IQ is just for fun!
       Everytime you finish a study session your IQ will go up by your current streak.
-    </Tooltip>
-    </View>
- 
-    <View>
+    </Tooltip> */}
+
+    <Text category='s1' style={{marginVertical:8, marginBottom:16}}>Learning is a journey</Text>
+    <Card>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>IQ</Text>
     <Text>{userData.IQ}</Text>
-    <Text category={'s1'}>Current Streak</Text>
+    </View>
+    </Card>
+      
+    <Card style={{marginVertical:12}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Text category={'s1'}>Started</Text>
+    <Text>{userData.totalTimesStudied}</Text>
+    </View>
+    </Card>
+
+    <Card>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Text category={'s1'}>Total Studied</Text>
+    <Text>{userData.totalTimesStudied}</Text>
+    </View>
+    </Card>
+
+    <Card style={{marginVertical:12}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Text category={'s1'}>Study Strength</Text>
+    <Text>{userData.totalTimesStudied}</Text>
+    </View>
+    </Card>
+
+    
+
+    <Card style={{marginVertical:12}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Text category={'s1'}>Times Studied this Month</Text>
+    <Text>{userData.totalTimesStudied}</Text>
+    </View>
+    </Card>
+
+    
+  
+
+   
+   {/*  <Text category={'s1'}>Current Streak</Text>
     <Text>{userData.currentStreak}</Text>
     <Text category={'s1'}>Highest Streak</Text>
-    <Text>{userData.highestStreak}</Text>
+    <Text>{userData.highestStreak}</Text> */}
+
+   {/*  <ContributionGraph
+      values={commitsData}
+      endDate={endOfMonth(new Date())}
+      numDays={93}
+      width={windowWidth}
+      height={230}
+      chartConfig={chartConfig}
+
+      
    
-    </View>
+    />
+    
+ */}
+
     </SafeAreaView>
       
       

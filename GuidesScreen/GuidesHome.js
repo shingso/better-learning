@@ -7,23 +7,34 @@ import { Card, List, Text, Button, Icon } from '@ui-kitten/components';
 
 
 
- 
-const renderHeader = () => (
-    
-  <View style={{marginBottom:20}}>
-  <Text category='h1'>Guides</Text>
-  </View>
-);
-  
 function GuidesHome(){
  
  
 
     const navigation = useNavigation();
-
-
-    const todos = [{title:'Lorem ipsum dolor sit amet', path:'HowToLearn', bodyText:'empor incididunt ut labore et dolore magna aliqua'},
-     {title:'test', path:'LearningTips', bodyText:'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id es'}
+   
+    const navigateSettings = () => {
+      navigation.navigate('SettingsOptions');
+  };
+    
+  const SettingsIcon = (props) => (
+    <Icon {...props} width='25' height='25' name='settings-outline' />
+  );
+  
+   
+  const renderHeader = () => (
+      
+    <View style={{marginBottom:20, flexDirection:'row', justifyContent:'space-between'}}>
+    <Text category='h1'>Tips</Text>
+    <Button appearance='outline' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
+    </View>
+  );
+    
+    const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to learn'},
+     {title:'What is Learning?', path:'LearningTips', bodyText:'The basics of learning'},
+     {title:'Im just not getting it...', path:'LearningTips', bodyText:'Procrastination issues or discouraged?'},
+     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning'},
+     {title:'Some inspiration!', path:'LearningTips', bodyText:'The more often you study the smarter you get!'}
     ]
 
     const renderItem = (info) => (

@@ -37,15 +37,36 @@ function HomeScreen(){
         
       </View>
   );
+
+     
+  const renderWelcome = () => (
+      
+    <View style={{marginBottom:20, justifyContent:'space-between'}}>
+    <Text category='h1'>Welcome!</Text>
+    <Text category='s1' style={{marginVertical:20}}>Check out our guides to effectively use this application</Text>
+    <Card style={{marginBottom:16}}>
+    <Text style={{marginBottom:8}} category='s1'>What is Learning?</Text>
+    <Text>A quick explanation on the goals when studying and common misconceptions about learning.</Text>
+    </Card>
+
+    <Card style={{marginVertical:8, marginBottom:28}}>
+    <Text style={{marginBottom:8}} category='s1'>How should I be learning?</Text>
+    <Text>How to use this app to learn quicker.</Text>
+    </Card>
+    <Text category='s1'>When youre ready to start your studying journey...</Text>
+    </View>
+  );
   
   //<Text category='h1'>Home</Text>
   const renderHeader = () => (
     
-    <View style={{marginBottom:16}}>
+   /*  <View style={{marginBottom:16}}>
 
     <Button appearance='outline' style={{marginVertical:12}} onPress={()=>navigation.navigate('TipsPage')}>
       TIPS
     </Button>
+    </View> */
+    <View style={{marginBottom:16}}>
     </View>
   );
 
@@ -109,10 +130,11 @@ function HomeScreen(){
     <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-        data={todos}
+        data={[]}
         renderItem={renderItem}
         ListFooterComponent={renderListFooter}
         ListHeaderComponent={renderHeader}
+        ListEmptyComponent={renderWelcome}
         />
 
     </SafeAreaView>
@@ -136,7 +158,7 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 20,
     paddingVertical: 12,
-   
+    flexGrow:1
   },
   
   container:{

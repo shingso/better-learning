@@ -114,7 +114,7 @@ export default class SignUp extends React.Component {
 
 
         
-          <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()} />
+          <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
        
           <Button appearance={'ghost'}  onPress={() => this.props.navigation.navigate('Login')}>
            GO TO LOGIN

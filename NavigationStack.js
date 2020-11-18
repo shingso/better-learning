@@ -121,6 +121,11 @@ function HomeStack() {
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="GuidesHome" component={GuidesHome} />
         <Stack.Screen name="HowToLearn" component={HowToLearn} />
+
+        <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
+        <Stack.Screen name="TermsOfService" component={TermsOfService} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+        <Stack.Screen name="ThemeSettings" component={ThemeSettings} />
         </Stack.Navigator>
     );
   }
@@ -135,10 +140,6 @@ function SettingsStack() {
     
         <Stack.Screen name="IQScreen" component={IQScreenWithContext} />
 
-        <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
-        <Stack.Screen name="TermsOfService" component={TermsOfService} />
-        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-        <Stack.Screen name="ThemeSettings" component={ThemeSettings} />
         </Stack.Navigator>
     );
   }

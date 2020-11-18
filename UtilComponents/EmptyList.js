@@ -12,7 +12,7 @@ function EmptyList(props){
 
        
 
-      <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+      <View style={{flex: 1, justifyContent:'center',alignItems:'center'}}>
        <Text>{props.message}</Text>
        </View>
       
