@@ -5934,6 +5934,11 @@ react-native-background-timer@^2.4.0:
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.4.0.tgz#b659fdc8ce8ddbed04fbb296e2ec9f4ad8e1659f"
   integrity sha512-00DphusbzXUuJDP+SSRe7FJczFWzrCErr+2TdRxYfbQjpDaRk3rXw8nhlQXI5U6KthquEQOrCRMq2F2hi/HKLg==
 
+react-native-calendar-heatmap@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-calendar-heatmap/-/react-native-calendar-heatmap-0.2.4.tgz#ab91f4b41f6137cb28faf5123f483703d12db939"
+  integrity sha512-1+fJLP5vKPlTA0YFdHNVgCWAYywLRr6QVNqjgM78B+Y87NT+sjkuoxW6PtZCk53N08qXte6jdZFvs70MEldBqg==
+
 react-native-chart-kit@^6.6.1:
   version "6.6.1"
   resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-6.6.1.tgz#cd49bfdad88aaf6e33115f62a8cdf9df53d34563"

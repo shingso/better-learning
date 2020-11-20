@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { Layout, Tab, TabView, Text, View, ViewPager, Button  } from '@ui-kitten/components';
 
 const Header = (props) => (
@@ -43,30 +43,35 @@ function HowToLearn(){
       onSelect={index => setSelectedIndex(index)}>
       
       <Layout
-        style={{ alignItems:'center', flex:1, borderWidth:1, paddingTop:40}}
+        style={{ alignItems:'center', flex:1, borderWidth:1, paddingTop:40,padding:16}}
         level='2'>
         
       <Text style={{marginBottom:20}} category='h1'>How should I study?</Text>
-      <Text>Any of the following</Text>
-
+      <Text style={{}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</Text>
+      <Image
+        style={{width: 650,
+          height: 400}}
+        source={require('../assets/images/studying.png')}
+      
+      />
   
       </Layout>
       
       <Layout
         style={styles.tab}
         level='2'>
-        <Text style={{marginTop:12}} category='h5'>ORDERS</Text>
+           <Text style={{marginBottom:20}} category='h1'>How should I study?</Text>
+      <Text>Any of the following</Text>
+
       </Layout>
       <Layout
         style={styles.tab}
         level='2'>
-        <Text category='h5'>TRANSACTIONS</Text>
+           <Text style={{marginBottom:20}} category='h1'>How should I study?</Text>
+           <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</Text>
+
       </Layout>
-      <Layout
-        style={styles.tab}
-        level='2'>
-        <Text category='h5'>TRANSACTIONS</Text>
-      </Layout>
+  
     </ViewPager>
 
     <Layout level='2' style={{flexDirection:'row', alignSelf:'center', marginBottom:28 }}>

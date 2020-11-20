@@ -10,7 +10,8 @@ import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , To
 import { ContributionGraph } from "react-native-chart-kit";
 import { AuthContext } from '../AuthContext'
 
-
+import CalendarHeatmap from 'react-native-calendar-heatmap';
+import { ScrollView } from 'react-native-gesture-handler';
 const InfoIcon = (props) => (
   <Icon {...props} name='info'/>
 );
@@ -47,10 +48,7 @@ function IQScreen(){
   const userData = useContext(UserDataContext)
   const navigation = useNavigation();
 
-  const navigateSettings = () => {
-      navigation.navigate('SettingsOptions');
-  };
-    
+
   const windowWidth = Dimensions.get('window').width;
       
   useEffect(() => {
@@ -73,12 +71,12 @@ function IQScreen(){
       for (var date in datesDict) {
         let item = {};
         item.date = date;
-        item.count = datesDict[date];
+        //item.count = datesDict[date];
         
         list.push(item)
      }
       // take the dict and convert it into objects
-
+      console.log(list)
       setDates(list);
 
 
@@ -91,22 +89,11 @@ function IQScreen(){
     </Button>
   );
   // the glitch is that the color is messed up 
-  const chartConfig = {
-    backgroundGradientFrom: "white",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "white",
-    backgroundGradientToOpacity: 'green',
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    strokeWidth: 3, // optional, default 3
-
-    useShadowColorFromDataset: false // optional
-  };
-
 
 
   return (
 
-
+    <ScrollView showsVerticalScrollIndicator={false}>
     <SafeAreaView style={{flex: 1, padding:16}}>
       
     <View style={{ justifyContent:'space-between'}}>
@@ -166,30 +153,19 @@ function IQScreen(){
     </Card>
 
     
-  
+    <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center'}}>
+    <Text style={{marginBottom:12}}>Study Frequency</Text>
+    <CalendarHeatmap
+    endDate={endOfMonth(new Date())}
+    numDays={99}
 
-   
-   {/*  <Text category={'s1'}>Current Streak</Text>
-    <Text>{userData.currentStreak}</Text>
-    <Text category={'s1'}>Highest Streak</Text>
-    <Text>{userData.highestStreak}</Text> */}
-
-   {/*  <ContributionGraph
-      values={commitsData}
-      endDate={endOfMonth(new Date())}
-      numDays={93}
-      width={windowWidth}
-      height={230}
-      chartConfig={chartConfig}
-
-      
-   
+    values={dates}
+    headerStyle={{fontSize:13, fontFamily:'OpenSans-SemiBold'}}
     />
-    
- */}
-
+</Card>
+   
     </SafeAreaView>
-      
+    </ScrollView>
       
       );
 
