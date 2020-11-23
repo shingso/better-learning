@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet } from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Divider } from '@ui-kitten/components';
@@ -31,8 +31,8 @@ function HomeScreen(){
     
     const renderListFooter = () => (
       <View style={{alignItems:'flex-start'}}> 
-          <Button appearance='outline' style={{marginVertical:12}} onPress={()=>navigation.navigate('AddSubject')}>
-          ADD SUBJECT
+          <Button   style={{marginVertical:12}} onPress={()=>navigation.navigate('AddSubject')}>
+          Add A Subject to Study
           </Button>
         
       </View>
@@ -43,16 +43,30 @@ function HomeScreen(){
       
     <View style={{marginBottom:20, justifyContent:'space-between'}}>
     <Text category='h1'>Welcome!</Text>
-    <Text category='s1' style={{marginVertical:20}}>Check out our guides to effectively use this application</Text>
+    <Text category='s1' style={{marginVertical:20}}>Get started by learning a better way to learn</Text>
     <Card style={{marginBottom:16}}>
+    <ImageBackground opacity={0.2} resizeMode='cover' width={500} source={require('../assets/images/8600.5.png')} style={styles.image}>
     <Text style={{marginBottom:8}} category='s1'>What is Learning?</Text>
-    <Text>A quick explanation on the goals when studying and common misconceptions about learning.</Text>
+    <Text>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</Text>
+    </ImageBackground>
     </Card>
 
     <Card style={{marginVertical:8, marginBottom:28}}>
+    <ImageBackground opacity={0.2} resizeMode='cover' width={500} source={require('../assets/images/8600.5.png')} style={styles.image}>
     <Text style={{marginBottom:8}} category='s1'>How should I be learning?</Text>
-    <Text>How to use this app to learn quicker.</Text>
+    <Text>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</Text>
+    </ImageBackground>
     </Card>
+
+    <Card style={{marginBottom:28}}>
+    <ImageBackground opacity={0.2} resizeMode='cover' width={500} source={require('../assets/images/8600.5.png')} style={styles.image}>
+    <Text style={{marginBottom:8}} category='s1'>Want to know more?</Text>
+    <Text>Duis aute irure dolor in reprehenderit</Text>
+
+    </ImageBackground>
+    </Card>
+
+
     <Text category='s1'>When youre ready to start your studying journey...</Text>
     </View>
   );
@@ -130,7 +144,7 @@ function HomeScreen(){
     <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-        data={[]}
+        data={todos}
         renderItem={renderItem}
         ListFooterComponent={renderListFooter}
         ListHeaderComponent={renderHeader}
@@ -163,7 +177,15 @@ const styles = StyleSheet.create({
   
   container:{
   
-  }
+  },
+  image: {
+    flex: 1,
+    resizeMode: "center",
+    justifyContent: "flex-end",
+  
+    margin:-24,
+    padding:24
+  },
 });
 export default HomeScreen
 

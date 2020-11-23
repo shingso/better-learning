@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {  View, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native'
+import {  View, SafeAreaView, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation, useNavigationBuilder } from '@react-navigation/native';
@@ -24,31 +24,35 @@ function GuidesHome(){
    
   const renderHeader = () => (
       
-    <View style={{marginBottom:20, flexDirection:'row', justifyContent:'space-between'}}>
-    <Text category='h1'>Tips</Text>
-    <Button appearance='outline' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
+    <View style={{marginBottom:12, flexDirection:'row', justifyContent:'space-between'}}>
+    <Text category='h1'></Text>
+    <Button size='small' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
     </View>
   );
     
-    const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to learn'},
-     {title:'What is Learning?', path:'LearningTips', bodyText:'The basics of learning'},
-     {title:'Im just not getting it...', path:'LearningTips', bodyText:'Procrastination issues or discouraged?'},
-     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning'},
-     {title:'Some inspiration!', path:'LearningTips', bodyText:'The more often you study the smarter you get!'}
+    const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to Learn!', imagePath:require('../assets/images/teaching.png')},
+     {title:'What is Learning?', path:'LearningTips', bodyText:'The basics of learning', imagePath:require('../assets/images/studying.png')},
+     {title:'How often should I study?', path:'LearningTips', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendar.png')},
+     {title:'Im just not getting it...', path:'LearningTips', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged.png')},
+     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning', imagePath:require('../assets/images/progress.png')},
+     {title:'Some inspiration!', path:'LearningTips', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/progress.png')}
     ]
 
     const renderItem = (info) => (
-    
+    //'../assets/images/studying.png'
+    //
       
       <Card style={styles.item}
        onPress={()=>navigation.navigate('HowToLearn')}
       >
-        
+      <ImageBackground opacity={0.20} resizeMode='cover' width={500} source={info.item.imagePath} style={styles.image}>
       <View style={{justifyContent:'space-between'}}>
       <Text category='s1' style={{marginBottom:12}}>{info.item.title}</Text>
       <Text>{info.item.bodyText}</Text>
-   
       </View>
+      </ImageBackground>
+
+    
       </Card>
 
     );
@@ -89,7 +93,14 @@ const styles = StyleSheet.create({
       paddingVertical:12,
   
     },
-
+    image: {
+      flex: 1,
+      resizeMode: "center",
+      justifyContent: "flex-end",
+    
+      margin:-24,
+      padding:18
+    },
     contentContainer: {
       paddingHorizontal: 20,
       paddingVertical: 8,

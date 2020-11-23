@@ -43,11 +43,8 @@ function IQScreen(){
 
   const userID = user.uid
   const [visible, setVisible] = React.useState(false);
-
   const [dates, setDates] = React.useState([]);
   const userData = useContext(UserDataContext)
-  const navigation = useNavigation();
-
 
   const windowWidth = Dimensions.get('window').width;
       
@@ -155,14 +152,17 @@ function IQScreen(){
     
     <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center'}}>
     <Text style={{marginBottom:12}}>Study Frequency</Text>
+    
+    
     <CalendarHeatmap
     endDate={endOfMonth(new Date())}
     numDays={99}
-
     values={dates}
-    headerStyle={{fontSize:13, fontFamily:'OpenSans-SemiBold'}}
+    monthLabelStyle={{fontSize:14, fontFamily:'OpenSans-Bold'}}
+    //we need to fork so we can add a headerstyle
     />
-</Card>
+    
+  </Card>
    
     </SafeAreaView>
     </ScrollView>
