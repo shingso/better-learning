@@ -70,8 +70,8 @@ function AddNotes({ route }){
    <TopHeader/>
    <Text category='h1' style={{marginBottom:20}}>Recall</Text>
    <Text category='s1'>Take some time and think about what you have just studied or practiced.</Text>
-   <Text category='s1' style={{marginVertical:12}}>Type out what you have learned.</Text>
-   <Text category='s1'>Everything you type out here should be from memory and be done without looking at any material.</Text>
+   <Text category='s1' style={{marginVertical:12, marginBottom:40}}>Type out what you have learned.</Text>
+   <Text>Everything you type here should be from memory and be done without looking at any material.</Text>
    </View>
 
    <View style={{marginVertical:20}}>
@@ -81,7 +81,7 @@ function AddNotes({ route }){
     textStyle={{fontSize:16, height:100}}
  
     multiline={true}
-    placeholder='What did you learn about today?'
+    placeholder='What did you learn about?'
     size={'large'}
     onChangeText={formikProps.handleChange('text')}
       />

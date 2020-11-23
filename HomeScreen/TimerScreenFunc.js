@@ -11,11 +11,11 @@ import { AuthContext } from '../AuthContext'
 import TopHeader from '../UtilComponents/TopHeader'
 
 const PauseIcon = (props) => (
-  <Icon name='pause-circle-outline' width={80} height={80} {...props} />
+  <Icon name='pause-circle-outline' width={90} height={90} {...props} />
 );
 
 const PlayIcon = (props) => (
-  <Icon name='play-circle-outline' width={80} height={80} {...props} />
+  <Icon name='play-circle-outline' width={120} height={120} {...props} />
 );
 
 const RefreshIcon = (props) => (
@@ -197,18 +197,21 @@ confirmAddNote = () =>{
 return (
 
        
-  <View style={{ flex: 1, padding:16}}>
-  
-  <TopHeader/>
+  <View style={{ flex: 1, padding:16 }}>
  
+  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+  <TopHeader/>
+  <Button appearance={'outline'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/>
+  </View>
+
 
   <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between' }}>
 
 
-    
-  <View>
+  
+  <View style={{flex:1,justifyContent:'center',}}> 
   {isPlaying &&
-  <Animated.Text style={{ fontSize:50, color: 'blue'}}>
+  <Animated.Text style={{ fontSize:70, fontFamily:'OpenSans-Bold'}}>
   { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : '00:00'}
   </Animated.Text>
   }
@@ -217,12 +220,12 @@ return (
   }
   </View>
 
-  <View style={{flexDirection:'row'}}>
-   <Button size={'giant'} appearance={'ghost'} accessoryLeft={PauseIcon} onPress={()=>stopBackgroundTimer()}/>
-  
-   <Button size={'giant'} appearance={'ghost'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/>
-  </View>
 
+  {isPlaying &&
+  <View style={{flexDirection:'row'}}>
+  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PauseIcon} onPress={()=>stopBackgroundTimer()}/>
+  </View>
+  }
     <Modal
 
     visible={visible}
@@ -230,12 +233,13 @@ return (
     >
       
     <Card disabled={true}>
+    <View style={{justifyContent:'center', alignItems:'center'}}>
     <Text>+{userData.currentStreak + 1} IQ</Text>
-    <Text>Completed!</Text>
-    <Button size='small' onPress={()=>confirmAddNote()}>
-    ADD NOTE
+    <Text style={{marginVertical:12}}>Completed!</Text>
+    <Button onPress={()=>confirmAddNote()}>
+    Let's wrap this up
     </Button>
-     
+    </View>
     </Card>
     </Modal>      
              

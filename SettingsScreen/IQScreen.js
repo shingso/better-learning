@@ -7,7 +7,7 @@ import { format, endOfMonth } from 'date-fns'
 
 import { UserDataContext } from '../UserDataContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
-import { ContributionGraph } from "react-native-chart-kit";
+
 import { AuthContext } from '../AuthContext'
 
 import CalendarHeatmap from 'react-native-calendar-heatmap';
