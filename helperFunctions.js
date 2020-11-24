@@ -94,9 +94,15 @@ export async function addNotesCollection(userID,subject) {
     
     });
 
-
-   
 }
+
+export async function getAppInformation() {
+    
+  const ref = firestore().collection('App').doc('AppInformation')
+  await ref.get()
+
+}
+
 
 
 export async function addNote(userID, subjectID, text) {

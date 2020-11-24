@@ -28,10 +28,7 @@ const commitsData = [
 ];
 
 
-const getCurrentEndOfMonth = () => {
-   let currentDate = new Date()
 
-};
 
 // or we can keep a centrilized doc which would reduce reads, but increased writes...which seems fine
 
@@ -81,6 +78,21 @@ function IQScreen(){
     });
   }, []);
 
+
+  const calculateStudyStrength = () => {
+    // Get current date
+    let currentDate = new Date()
+    let timeLastedStudied = new Date(userData.timeLastedStudied.toDate())
+
+    // if the currentDate is greater than two weeks of the time last studied
+
+
+    // else go back 14 days and compute the amount of times studied
+    // twoWeeksAgoDate = currentDate - 14 days
+    // 
+    
+  };
+
   const renderToggleButton = () => (
     <Button appearance='ghost' accessoryRight={InfoIcon} onPress={() => setVisible(true)}>
     </Button>
@@ -122,7 +134,7 @@ function IQScreen(){
     <Card style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Started</Text>
-    <Text>{userData.totalTimesStudied}</Text>
+    <Text>{format(new Date(userData.timeStarted.toDate()), 'MMMM dd yyyy')}</Text>
     </View>
     </Card>
 
@@ -158,7 +170,7 @@ function IQScreen(){
     endDate={endOfMonth(new Date())}
     numDays={99}
     values={dates}
-    monthLabelStyle={{fontSize:14, fontFamily:'OpenSans-Bold'}}
+    monthLabelsStyle={{fontSize:14, fill:'black'}}
     //we need to fork so we can add a headerstyle
     />
     
