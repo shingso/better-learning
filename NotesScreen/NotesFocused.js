@@ -89,7 +89,6 @@ function NotesFocused({ route, navigation }){
          data={todos}
          renderItem={renderItem}
          ListEmptyComponent={<Empty message={'Your notes will be placed here'}/>}
-         
          ListHeaderComponent={renderHeader}
          />
  

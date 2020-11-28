@@ -18,6 +18,12 @@ const PlayIcon = (props) => (
   <Icon name='play-circle-outline' width={120} height={120} {...props} />
 );
 
+const PlayIconSmall = (props) => (
+  <Icon name='play-circle-outline' width={90} height={90} {...props} />
+);
+
+
+
 const RefreshIcon = (props) => (
   <Icon {...props} width={30} height={30} name='refresh-outline' />
 );
@@ -28,7 +34,7 @@ const BackIcon = (props) => (
 );
 
 
-const msToTime = (duration) =>{
+const msToTime = (duration) => {
 
     let seconds = Math.floor((duration / 1000) % 60)
     let minutes = Math.floor((duration / (1000 * 60)) % 60)
@@ -47,6 +53,7 @@ const [visible, setVisible] = useState(false)
 const [isPlaying, setIsPlaying] = useState(null)
 const [initialTimeSet, setInitialTimeSet] = useState(null)
 const [timeElaspased, setTimeElaspased] = useState(0)
+const [hasPlayed, sethasPlayed] = useState(false)
 
 const user = useContext(AuthContext)
 const userData = useContext(UserDataContext)
@@ -85,7 +92,6 @@ useEffect(() => {
     BackgroundTimer.runBackgroundTimer(() => { 
 
       setTimeElaspased(timeElaspased => timeElaspased + 1000)
-      console.log(visible, 'ran')
        
       }, 
       1000);
@@ -104,13 +110,9 @@ useEffect(() => {
 
 useEffect(() => {
 
-
-
   if(timeElaspased == initialTimeSet){
     backgroundTimerEnded()
   }
-
-
 
 }, [timeElaspased]);
 
@@ -128,26 +130,16 @@ const BackAction = () => (
 
 
 const startBackgroundTimer = () =>{
-
-  setIsPlaying(true)
-
-// BackgroundTimer.runBackgroundTimer(() => { 
  
-//   setIsPlaying(true)
-//   setTimeElaspased(timeElaspased+1000)
-  
-   
-//   }, 
-//   1000);
+  setIsPlaying(true)
+  sethasPlayed(true)
 
-  
 }
 
 
 const stopBackgroundTimer = () => {
     
   setIsPlaying(false)
-
 
 }
   
@@ -206,25 +198,42 @@ return (
 
 
   <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between' }}>
-
-
   
+  {hasPlayed &&
+  <View style={{alignItems:'center'}}>
+  <Text category='s1'>Currently:</Text>
+  <Text style={{textAlign:'center'}} category='h2'>{isPlaying ? 'FOCUSED ON STUDYING' : 'PAUSED'}</Text>
+  </View>
+  }
+
   <View style={{flex:1,justifyContent:'center',}}> 
-  {isPlaying &&
-  <Animated.Text style={{ fontSize:70, fontFamily:'OpenSans-Bold'}}>
+  
+  {hasPlayed  &&
+  <Animated.Text style={{ fontSize:70,fontFamily:'OpenSans-Bold'}}>
   { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : '00:00'}
   </Animated.Text>
   }
-  {!isPlaying &&
+  
+  {!hasPlayed && 
   <Button size={'giant'} appearance={'ghost'} accessoryLeft={PlayIcon} onPress={()=>startBackgroundTimer()}/>
   }
   </View>
 
 
-  {isPlaying &&
-  <View style={{flexDirection:'row'}}>
+  {hasPlayed &&
+  
+  <View>
+  {isPlaying ?
+  <View>
   <Button size={'giant'} appearance={'ghost'} accessoryLeft={PauseIcon} onPress={()=>stopBackgroundTimer()}/>
+  </View>:
+
+  <View> 
+  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PlayIconSmall} onPress={()=>startBackgroundTimer()}/>
+  </View> 
+  }
   </View>
+  
   }
     <Modal
 
@@ -246,8 +255,7 @@ return (
     </View>
     </View>
   
-       
-          )
+    )
 };
 
 export default TimerScreenFunc

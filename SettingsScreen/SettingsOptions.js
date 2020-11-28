@@ -3,10 +3,10 @@ import { StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import { Card, List, Text, Button, Icon } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Layout } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 
-const data = [{title:'Theme', route:'ThemeSettings'}, {title:'Terms and Conditions', route:'TermsOfService'}, {title:'Privacy Policy', route:'PrivacyPolicy'}]
+
 
 function signOut(){     
   auth()
@@ -16,50 +16,39 @@ function signOut(){
 
 
     
-const renderListFooter = () => (
-  <View   style={styles.item}>
-  
+const ListFooter = () => (
+  <View  style={styles.item}>
   <TouchableOpacity onPress={()=>signOut()}>
-      <Text category='label'>Sign Out</Text>
-</TouchableOpacity>
+  <Text category='s1'>Sign Out</Text>
+  </TouchableOpacity>
       
   </View>
 );
 
-
-
 function SettingsOptions(){
 
  
-  const navigation = useNavigation();
-
-
+const navigation = useNavigation();
   
+  
+const ListItem = ( props ) => (
 
-  const renderItem = (info) => (
-    <TouchableOpacity onPress={()=>navigation.navigate(info.item.route)}>
-    <View
-      style={styles.item}
-      status='basic'
-      >
-      <Text category='label'>
-        {info.item.title}
-      </Text>
+  <TouchableOpacity onPress={()=>navigation.navigate(props.route)}>
+    <View style={styles.item}>
+    <Text>
+    {props.title}
+    </Text>
     </View>
     </TouchableOpacity>
-  );
+);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{margin:20}}>
     <TopHeader/>
-    <List
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      data={data}
-      renderItem={renderItem}
-      ListFooterComponent={renderListFooter}
-      
-    />
+    <ListItem title={'Theme'} route={'ThemeSettings'}/>
+    <ListItem title={'Terms and Conditions'} route={'TermsOfService'}/>
+    <ListItem title={'Privacy Policy'} route={'PrivacyPolicy'}/>
+    <ListFooter/>
     </SafeAreaView>
   );
 };
@@ -67,17 +56,8 @@ function SettingsOptions(){
 export default SettingsOptions
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal:12,
-  
-  },
-  contentContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    
-  },
+ 
   item: {
-
-    marginVertical: 20,
+    marginVertical: 16,
   },
 });

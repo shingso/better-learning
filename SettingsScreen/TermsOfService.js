@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, SafeAreaView, } from 'react-native'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction, Layout } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../themeContext';
-
+import TopHeader from '../UtilComponents/TopHeader'
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );
@@ -26,7 +26,7 @@ function TermsOfService(){
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <TopNavigation  alignment='center' accessoryLeft={BackAction}/>
+    <TopHeader/>
     
     <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 

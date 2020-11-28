@@ -46,14 +46,14 @@ function SetTimer({ route }){
         <TopHeader/>
         <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
 
-        <Text style={{marginBottom:12}} category='h2'>{mode == 'BASIC' ? 'Starter' : 'Advanced'}</Text>  
+        <Text style={{marginBottom:12}} category='h2'>{mode == 'BASIC' ? 'Learner' : 'Advanced'}</Text>  
         <Text>
   
-        {mode == 'BASIC' ? ' A quick and simple 25 minute study session' : 'Advanced'}
+        {mode == 'BASIC' ? 'Start building good study habits by studying for 25 mintues' : 'A longer study session for people with established study habits'}
         </Text>
         
       <View style={{ flex:1, marginBottom:36 , justifyContent:'flex-end'}}>
-      <Button style={{marginBottom:30}} appearance={'outline'} onPress={()=>navigation.navigate("TimerScreen", { mode:mode, subjectID: id })}>
+      <Button style={{marginBottom:30}} onPress={()=>navigation.navigate("TimerScreen", { mode:mode, subjectID: id })}>
       START
     </Button>
 

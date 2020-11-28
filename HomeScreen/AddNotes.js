@@ -100,7 +100,7 @@ function AddNotes({ route }){
         <Card disabled={true}>
           <Text>Note Added!</Text>
           {mode == 'BASIC' || mode =='ADD' &&
-          <Button size='small' onPress={() => confirmAddNote()}>
+          <Button size='small' onPress={confirmAddNote}>
             DISMISS
           </Button>
           }
@@ -108,7 +108,7 @@ function AddNotes({ route }){
 
 
         {mode == 'ADVANCED' &&
-          <Button size='small' onPress={() => confirmAddNoteReset()}>
+          <Button size='small' onPress={confirmAddNoteReset}>
             GO BACK
           </Button>
           } 
