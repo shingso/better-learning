@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
@@ -119,12 +119,8 @@ useEffect(() => {
 
 const navigation = useNavigation();
 
-const navigateBack = () => {
-    navigation.goBack();
-};
-  
 const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={()=>navigateBack()}/>
+    <TopNavigationAction icon={BackIcon} onPress={()=>navigation.dispatch(StackActions.popToTop())}/>
   );
   
 
@@ -172,11 +168,8 @@ const backgroundTimerEnded = () => {
 }
 
 
-
 const onRefresh = () =>{
    setTimeElaspased(0)
-
-
 }
 
 confirmAddNote = () =>{
