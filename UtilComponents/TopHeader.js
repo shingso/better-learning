@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet} from 'react-native'
+import React from 'react';
+import { View, StyleSheet} from 'react-native'
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation, StackActions } from '@react-navigation/native';
 
 
 
@@ -19,27 +18,20 @@ function TopHeader(){
     const navigateBack = () => {
       navigation.goBack();
     };
-    
-    const BackAction = () => (
-      <TopNavigationAction icon={BackIcon} onPress={()=>navigateBack()}/>
-      
-    );
+
+    const popToTop = () => {
+      navigation.dispatch(StackActions.popToTop());
+    };
     
 
-
- 
     return (
        
- 
-        <View style={{alignSelf:'flex-start', marginLeft:-20,}}>
-         <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={() => navigateBack()}></Button>
+      <View style={{alignSelf:'flex-start', marginLeft: -20}}>
+      <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={() => navigateBack()}></Button>
       </View>
-      
       
       );
 
-   
-    
     }
 
 export default TopHeader
