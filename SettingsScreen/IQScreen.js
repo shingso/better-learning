@@ -41,9 +41,8 @@ function IQScreen(){
   const userID = user.uid
   const [visible, setVisible] = React.useState(false);
   const [dates, setDates] = React.useState([]);
+  const [timesStudied, setTimesStudied] = React.useState(0);
   const userData = useContext(UserDataContext)
-
-  const windowWidth = Dimensions.get('window').width;
       
   useEffect(() => {
 
@@ -62,6 +61,9 @@ function IQScreen(){
           datesDict[currentDate] = 1
         }
       });
+
+     
+
       for (var date in datesDict) {
         let item = {};
         item.date = date;
@@ -69,6 +71,7 @@ function IQScreen(){
         
         list.push(item)
      }
+      setTimesStudied(querySnapshot.size)
       // take the dict and convert it into objects
       console.log(list)
       setDates(list);
@@ -81,16 +84,13 @@ function IQScreen(){
 
   const calculateStudyStrength = () => {
     // Get current date
-    let currentDate = new Date()
-    let timeLastedStudied = new Date(userData.timeLastedStudied.toDate())
-
+    //let currentDate = new Date()
+    //let timeLastedStudied = new Date(userData.lastedStudied.toDate())
     // if the currentDate is greater than two weeks of the time last studied
-
-
     // else go back 14 days and compute the amount of times studied
     // twoWeeksAgoDate = currentDate - 14 days
-    // 
     
+    return 1
   };
 
   const renderToggleButton = () => (
@@ -134,21 +134,21 @@ function IQScreen(){
     <Card style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Started</Text>
-    <Text>{format(new Date(userData.timeStarted.toDate()), 'MMMM dd yyyy')}</Text>
+    <Text>{format(new Date(userData.timeStamp.toDate()), 'MMMM dd yyyy')}</Text>
     </View>
     </Card>
 
     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Total Studied</Text>
-    <Text>{userData.totalTimesStudied}</Text>
+    <Text>{timesStudied}</Text>
     </View>
     </Card>
 
     <Card style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Study Strength</Text>
-    <Text>{userData.totalTimesStudied}</Text>
+    <Text>{calculateStudyStrength()}</Text>
     </View>
     </Card>
 
