@@ -85,7 +85,7 @@ useEffect(() => {
 
 useEffect(() => {
 
-
+  //check if mounted 
 
   if (isPlaying) {
 
@@ -102,6 +102,11 @@ useEffect(() => {
     BackgroundTimer.stopBackgroundTimer()
     
   }
+
+  return function cleanup(){
+    BackgroundTimer.stopBackgroundTimer()
+  }
+
 
 
 
