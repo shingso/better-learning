@@ -124,12 +124,6 @@ useEffect(() => {
 
 const navigation = useNavigation();
 
-const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={()=>navigation.dispatch(StackActions.popToTop())}/>
-  );
-  
-
-
 const startBackgroundTimer = () =>{
  
   setIsPlaying(true)
@@ -144,8 +138,6 @@ const stopBackgroundTimer = () => {
 
 }
   
-
-
 const backgroundTimerEnded = () => {
   setIsPlaying(false)
   Vibration.vibrate()
@@ -162,14 +154,10 @@ const backgroundTimerEnded = () => {
   updateUserStreakData(user.uid, updatedIQ , updatedStreak, highestStreak)
   
   setTimeout(() => {
-    
     setVisible(true)
-
   }, 1000);
 
  
-
-
 }
 
 
@@ -190,7 +178,7 @@ return (
   <View style={{ flex: 1, padding:16 }}>
  
   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-  <TopHeader/>
+  <TopHeader func={'top'}/>
   <Button appearance={'outline'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/>
   </View>
 
