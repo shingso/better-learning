@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Card, List, Text, Button, Icon, Layout } from '@ui-kitten/components';
@@ -43,8 +42,10 @@ const ListItem = ( props ) => (
 );
 
   return (
+
     <SafeAreaView style={{margin:20}}>
     <TopHeader/>
+    <Text category='h1' style={{marginBottom:12}}>Settings</Text>
     <ListItem title={'Theme'} route={'ThemeSettings'}/>
     <ListItem title={'Terms and Conditions'} route={'TermsOfService'}/>
     <ListItem title={'Privacy Policy'} route={'PrivacyPolicy'}/>
@@ -58,6 +59,7 @@ export default SettingsOptions
 const styles = StyleSheet.create({
  
   item: {
-    marginVertical: 16,
+    marginVertical: 20,
   },
+
 });
