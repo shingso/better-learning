@@ -23,7 +23,6 @@ const PlayIconSmall = (props) => (
 );
 
 
-
 const RefreshIcon = (props) => (
   <Icon {...props} width={30} height={30} name='refresh-outline' />
 );
@@ -32,6 +31,7 @@ const RefreshIcon = (props) => (
 const BackIcon = (props) => (
   <Icon {...props} width={30} height={30} name='arrow-back' />
 );
+
 
 
 const msToTime = (duration) => {
@@ -45,11 +45,13 @@ const msToTime = (duration) => {
 }
 
 
+  
 
 function TimerScreenFunc({ route }){
 
 const [mode, setMode] = useState(route.params.mode)
 const [visible, setVisible] = useState(false)
+const [confirmBackVisible, setConfirmBackVisible] = useState(false)
 const [isPlaying, setIsPlaying] = useState(null)
 const [initialTimeSet, setInitialTimeSet] = useState(null)
 const [timeElaspased, setTimeElaspased] = useState(0)
@@ -59,6 +61,16 @@ const user = useContext(AuthContext)
 const userData = useContext(UserDataContext)
 
 const { subjectID } = route.params
+
+
+const CustomBackHeader = () => {
+  return(
+  <View style={{alignSelf:'flex-start', marginLeft: -20}}>
+  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>setConfirmBackVisible(true)}></Button>
+  </View>
+  )
+}
+
 
 useEffect(() => {
  
@@ -131,6 +143,11 @@ const startBackgroundTimer = () =>{
 
 }
 
+const popToTop = () => {
+  navigation.dispatch(StackActions.popToTop());
+};
+
+
 
 const stopBackgroundTimer = () => {
     
@@ -166,10 +183,10 @@ const onRefresh = () =>{
 }
 
 confirmAddNote = () =>{
-
   setVisible(false)
   navigation.navigate('AddNotes', {id: subjectID, mode: mode})
 }
+
 
 
 return (
@@ -178,7 +195,7 @@ return (
   <View style={{ flex: 1, padding:16 }}>
  
   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-  <TopHeader func={'top'}/>
+  <CustomBackHeader/>
   <Button appearance={'outline'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/>
   </View>
 
@@ -222,11 +239,9 @@ return (
   
   }
     <Modal
-
     visible={visible}
     backdropStyle={styles.backdrop}
     >
-      
     <Card disabled={true}>
     <View style={{justifyContent:'center', alignItems:'center'}}>
     <Text>+{userData.currentStreak + 1} IQ</Text>
@@ -236,7 +251,30 @@ return (
     </Button>
     </View>
     </Card>
+    </Modal>
+
+    <Modal
+    visible={confirmBackVisible}
+    backdropStyle={styles.backdrop}
+    >
+    <Card style={{marginHorizontal:40}} disabled={true}>
+    
+    <View style={{justifyContent:'center', alignItems:'center'}}>
+    <Text style={{marginVertical:12, marginBottom:24 ,textAlign:'center'}}>Are you sure you want to leave this current study session?</Text> 
+    <View style={{flexDirection:'row', marginBottom:8}}>
+    
+    <Button status='danger' style={{marginRight:12}} onPress={popToTop}>
+    End Study Session
+    </Button>
+
+    <Button appearance='outline' onPress={()=>setConfirmBackVisible(false)}>
+    Close
+    </Button>
+    </View>
+    </View>
+    </Card>
     </Modal>      
+
              
     </View>
     </View>
@@ -257,4 +295,8 @@ const styles = StyleSheet.create({
   item: {
     marginVertical: 8,
   },
+
+  backdrop:{
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
 });
