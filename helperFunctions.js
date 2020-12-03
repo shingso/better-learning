@@ -27,6 +27,15 @@ export async function updateUserInfo(userID) {
    
 }
 
+
+export async function deleteSubject(userID, subjectID) {
+
+  const ref = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID)
+  await ref.delete();
+ 
+}
+
+
 export async function updateUserStreakData(userID, IQ, currentStreak, highestStreak) {
   const docID = uuid()
   const batch = firestore().batch();
