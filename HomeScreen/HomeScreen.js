@@ -4,7 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Divider } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
-
+import ProgressHeader from '../UtilComponents/ProgressHeader'
 const EditIcon = (props) => (
   <Icon {...props} name='edit-outline'/>
 );
@@ -71,7 +71,8 @@ function HomeScreen(){
   
   //<Text category='h1'>Home</Text>
   const renderHeader = () => (
-    <View style={{marginBottom:16}}>
+    <View style={{marginTop:12, marginBottom:12}}>
+    <ProgressHeader/>
     </View>
   );
 
@@ -181,5 +182,6 @@ const styles = StyleSheet.create({
     padding:24
   },
 });
+
 export default HomeScreen
 
