@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { format, endOfMonth } from 'date-fns'
+import { format, endOfMonth, isThisMonth, isThisYear, subDays , isWithinRange } from 'date-fns'
 
 import { UserDataContext } from '../UserDataContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
@@ -12,6 +12,7 @@ import { AuthContext } from '../AuthContext'
 
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
+
 const InfoIcon = (props) => (
   <Icon {...props} name='info'/>
 );
@@ -19,7 +20,6 @@ const InfoIcon = (props) => (
 
 const commitsData = [
   { date: '2010-11-01', count: 0 },
-
   { date: '2020-11-11', count: 1 },
   { date: '2020-11-02', count: 2 },
   { date: '2020-11-05', count: 1 },
@@ -29,19 +29,14 @@ const commitsData = [
 
 
 
-
-// or we can keep a centrilized doc which would reduce reads, but increased writes...which seems fine
-
 function IQScreen(){
 
-
-
   const user = useContext(AuthContext)
-
   const userID = user.uid
   const [visible, setVisible] = React.useState(false);
   const [dates, setDates] = React.useState([]);
   const [timesStudied, setTimesStudied] = React.useState(0);
+  const [timesStudiedMonth, setTimesStudiedMonth] = React.useState(0);
   const userData = useContext(UserDataContext)
       
   useEffect(() => {
@@ -51,10 +46,19 @@ function IQScreen(){
     return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
       const list = [];
       const datesDict = {}
+      var count = 0
       querySnapshot.forEach(doc => {
+
+        console.log(doc.data('timeStamp'))
+            
         const { timeStamp } = doc.data();
-        const currentDate = format(new Date(timeStamp.toDate()), 'yyyy-MM-dd')
-        // take the timestamp and convert it into and array
+        const newDate = new Date(timeStamp.toDate())
+        const currentDate = format(newDate, 'yyyy-MM-dd')
+      
+        if(isThisMonth(newDate) && isThisYear(newDate)){
+          count +=1
+        }
+
         if(currentDate in datesDict){
           datesDict[currentDate] += 1
         } else {
@@ -66,14 +70,11 @@ function IQScreen(){
 
       for (var date in datesDict) {
         let item = {};
-        item.date = date;
-        //item.count = datesDict[date];
-        
+        item.date = date; 
         list.push(item)
      }
       setTimesStudied(querySnapshot.size)
-      // take the dict and convert it into objects
-      console.log(list)
+      setTimesStudiedMonth(count)
       setDates(list);
 
 
@@ -82,14 +83,44 @@ function IQScreen(){
   }, []);
 
 
-  const calculateStudyStrength = () => {
+  const calculateStudyStrength = (date) => {
     // Get current date
-    //let currentDate = new Date()
-    //let timeLastedStudied = new Date(userData.lastedStudied.toDate())
+     let timesStudiedTwoWeeks = 0
+     let currentDate = new Date()
+     let twoWeeksAgo = subDays(currentDate, 14)
+
+    /* if(isWithinRange( date , twoWeeksAgo, currentDate )){
+      timesStudiedTwoWeeks += 1
+      //increament a counter
+    } */
+
+  
+    // if you studied for 12 times in the last 12 weeks you have a study strengt of 10
+
+    // 7 = 5
+    // 8 = 6
+    // 9 = 7
+    // 10 = 8
+    // 11 = 9
+    // 12-14 = 10
+
+    // Multiple times PER
+
+    // we can get currentNumberOfDays 
+
+    // let timeLastedStudied = new Date(userData.lastedStudied.toDate())
     // if the currentDate is greater than two weeks of the time last studied
     // else go back 14 days and compute the amount of times studied
     // twoWeeksAgoDate = currentDate - 14 days
-    
+    // return a number between 1 and 10
+
+    // Number of times studied in current Month/total number of days in the month
+    // total number of times studied in the last 14 days
+
+    // * by a certain amount if studied multiple times per day
+
+    // return a max of 10 or our number
+  
     return 1
   };
 
@@ -99,20 +130,13 @@ function IQScreen(){
   );
   // the glitch is that the color is messed up 
 
-
   return (
 
     <ScrollView showsVerticalScrollIndicator={false}>
     <SafeAreaView style={{flex: 1, padding:16}}>
-      
-    <View style={{ justifyContent:'space-between'}}>
-    </View>
- 
-    <View style={{justifyContent:'space-between', flexDirection:'row'}}>
-   
-    </View>
-{/*     <Tooltip
-     
+    
+
+    {/*<Tooltip
       anchor={renderToggleButton}
       visible={visible}
       accessoryLeft={InfoIcon}
@@ -157,7 +181,7 @@ function IQScreen(){
     <Card style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Times Studied this Month</Text>
-    <Text>{userData.totalTimesStudied}</Text>
+    <Text>{timesStudiedMonth}</Text>
     </View>
     </Card>
 
@@ -174,7 +198,7 @@ function IQScreen(){
     //we need to fork so we can add a headerstyle
     />
     
-  </Card>
+    </Card>
    
     </SafeAreaView>
     </ScrollView>
