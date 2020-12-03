@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
 import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
 
@@ -30,7 +30,7 @@ function AddNotes({ route }){
 
   const confirmAddNote = () => {
     setVisible(false)
-    navigation.navigate('Home')
+    navigation.dispatch(StackActions.popToTop())
   }
 
   
