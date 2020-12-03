@@ -15,7 +15,7 @@ const SubjectSchema = Yup.object().shape({
   subject: Yup.string()
     .min(1, 'Too Short!')
     .max(80, 'Too Long!')
-    .required('Required'),
+    .required('You need to put a title'),
 
 });
 
@@ -26,12 +26,12 @@ function AddSubject(){
   const navigation = useNavigation();
   return(
            
-    <View style={{ flex: 1,padding:16}}>
+    <View style={{ flex: 1, padding:16}}>
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
     onSubmit={(values, actions) => {
-     addNotesCollection( user.uid,values.subject)
+     addNotesCollection( user.uid,values.subject )
      actions.setSubmitting(false);
      setVisible(true)
     }}
@@ -41,28 +41,38 @@ function AddSubject(){
    
    <React.Fragment>
     <TopHeader/>
-    <Text category='h1' style={{marginBottom:40}} >Add a Subject</Text>
+    <Text category='h1' style={{marginBottom:40}}>Getting Started!</Text>
+    
+    <Text  style={{marginBottom:40}} >Think of a subject that you want to learn. Need to be motivated to learn. It has to be a subject you want to learn</Text>
+   
+    
+    <Text>{formikProps.errors.subject}</Text>
     <Input
-    label='Subject'
     placeholder='Enter subject title'
     value={formikProps.values.subject}
     size='large'
     onChangeText={formikProps.handleChange('subject')}
+    status={formikProps.errors.subject != null ? 'danger' : 'basic'}
       />
-  
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()} />
+    
+    <View style={{flex:1, justifyContent:'flex-end'}}>
+    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
+      Add Subject
+    </Button>
+    </View>
+
     <Modal
-        visible={visible}
-        backdropStyle={styles.backdrop}
-        onBackdropPress={() => navigation.navigate('Home')}
-        >
-        <Card disabled={true}>
-          <Text>Subject Added!</Text>
-          <Button size='small' onPress={() => navigation.navigate('Home')}>
-            DISMISS
-          </Button>
-        </Card>
-      </Modal>   
+    visible={visible}
+    backdropStyle={styles.backdrop}
+    onBackdropPress={() => navigation.navigate('Home')}
+    >
+    <Card disabled={true}>
+    <Text>Subject Added!</Text>
+    <Button size='small' onPress={() => navigation.navigate('Home')}>
+    DISMISS
+    </Button>
+    </Card>
+    </Modal>   
       
     </React.Fragment>
     )}
