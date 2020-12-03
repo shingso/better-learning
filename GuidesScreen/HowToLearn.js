@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Layout, Tab, TabView, Text, View, ViewPager, Button  } from '@ui-kitten/components';
+import TopHeader from '../UtilComponents/TopHeader'
 
 const Header = (props) => (
   <View {...props}>
@@ -33,19 +34,13 @@ function HowToLearn(){
      
 ];
 
-
-  return (
-    <Layout level='2' style={{flex:1}}>
-    <ViewPager
-
-      style={{flex:1}}
-      selectedIndex={selectedIndex}
-      onSelect={index => setSelectedIndex(index)}>
-      
+  const Body = () =>{
+    return(
+ 
       <Layout
         style={{ alignItems:'center', flex:1, borderWidth:1, paddingTop:40,padding:16}}
         level='2'>
-        
+     
       <Text style={{marginBottom:20}} category='h1'>How should I study?</Text>
       <Text style={{}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</Text>
       <Image
@@ -56,6 +51,23 @@ function HowToLearn(){
       />
   
       </Layout>
+
+    )
+  }
+
+  return (
+    <Layout level='2' style={{flex:1}}>
+    
+    <TopHeader/>
+    <ViewPager
+
+      style={{flex:1}}
+      selectedIndex={selectedIndex}
+      onSelect={index => setSelectedIndex(index)}>
+      
+     
+  
+     <Body/>
       
       <Layout
         style={styles.tab}
