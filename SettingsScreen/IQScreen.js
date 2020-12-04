@@ -44,26 +44,30 @@ function IQScreen(){
     const ref = firestore().collection('Users').doc(userID).collection('DatesStudied')
  
     return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
+      
+      if(!querySnapshot.metadata.hasPendingWrites){
+      
       const list = [];
       const datesDict = {}
       var count = 0
+
       querySnapshot.forEach(doc => {
 
-        console.log(doc.data('timeStamp'))
-            
-        const { timeStamp } = doc.data();
-        const newDate = new Date(timeStamp.toDate())
-        const currentDate = format(newDate, 'yyyy-MM-dd')
-      
-        if(isThisMonth(newDate) && isThisYear(newDate)){
-          count +=1
-        }
+          const timeStamp = doc.get('timeStamp', { serverTimestamps: 'estimate' })
+          const newDate = new Date(timeStamp.toDate())
+          const currentDate = format(newDate, 'yyyy-MM-dd')
+        
+          if(isThisMonth(newDate) && isThisYear(newDate)){
+            count +=1
+          }
 
-        if(currentDate in datesDict){
-          datesDict[currentDate] += 1
-        } else {
-          datesDict[currentDate] = 1
-        }
+          if(currentDate in datesDict){
+            datesDict[currentDate] += 1
+          } else {
+            datesDict[currentDate] = 1
+          }
+      
+
       });
 
      
@@ -79,7 +83,9 @@ function IQScreen(){
 
 
 
-    });
+    }
+  });
+  
   }, []);
 
 
