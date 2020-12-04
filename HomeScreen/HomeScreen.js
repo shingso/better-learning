@@ -5,12 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Divider } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import ProgressHeader from '../UtilComponents/ProgressHeader'
-const EditIcon = (props) => (
-  <Icon {...props} name='edit-outline'/>
-);
+import { format, formatDistance } from 'date-fns'
+
 
 const PlayIcon = (props) => (
-  <Icon {...props}  name='play-circle-outline'/>
+  <Icon {...props} height={30} width={30} name='play-circle-outline'/>
 );
   
 
@@ -28,18 +27,20 @@ function HomeScreen(){
     
     
     const renderListFooter = () => (
+
       <View style={{alignItems:'flex-start'}}> 
-          <Button   style={{marginVertical:12}} onPress={()=>navigation.navigate('AddSubject')}>
-          Add A Subject to Study
-          </Button>
-        
+      <Button style={{marginVertical:12}} onPress={()=>navigation.navigate('AddSubject')}>
+      Add A Subject to Study
+      </Button>
       </View>
+
   );
 
      
   const renderWelcome = () => (
       
     <View style={{marginBottom:20, justifyContent:'space-between'}}>
+      
     <Text category='h1'>Welcome!</Text>
     <Text category='s1' style={{marginVertical:20}}>Get started by learning a better way to learn</Text>
     <Card style={{marginBottom:16}}>
@@ -63,39 +64,39 @@ function HomeScreen(){
 
     </ImageBackground>
     </Card>
-
-
     <Text category='s1'>When youre ready to start your studying journey...</Text>
     </View>
   );
   
   //<Text category='h1'>Home</Text>
   const renderHeader = () => (
+
     <View style={{marginTop:12, marginBottom:12}}>
-    <ProgressHeader/>
+    <ProgressHeader messageNumber={1}/>
     </View>
+
   );
+
+/*   <Button accessoryLeft={EditIcon} style={{marginRight:16}} appearance={'outline'} onPress={()=>navigation.navigate('AddNotes', {id:info.item.id, mode:'ADD'})}/> */
 
     const renderItem = (info) => (
       
       <Card
         style={styles.item}
         disabled={true}
-       >
+      >
 
       <View style={{ justifyContent:'space-between' }}>
       <View>
-      <Text category='s1'>
-        {info.item.title} 
-      </Text>
+      <Text category='s1'>{info.item.title}</Text>
+      {info.item.timeStamp != null && <Text category='label'> Last Studed: {formatDistance(new Date(info.item.timeStamp.toDate()), new Date())} ago</Text>}
       </View>
 
-      <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:24}}>
+      <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:24, }}>
       <Button accessoryLeft={BookIcon} style={{marginRight:16}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {id:info.item.id, title:info.item.title})}/>
-      <View style={{flexDirection:'row'}}>
-      <Button accessoryLeft={EditIcon} style={{marginRight:16}} appearance={'outline'} onPress={()=>navigation.navigate('AddNotes', {id:info.item.id, mode:'ADD'})}/>
-      <Button accessoryLeft={PlayIcon}  onPress={()=>navigation.navigate('SetTimer', {id:info.item.id})}/>
-      </View>
+   
+      <Button accessoryLeft={PlayIcon} size={'small'}  style={{width:'70%'}} onPress={()=>navigation.navigate('SetTimer', {id:info.item.id})}/>
+    
       </View>
       
       </View>
