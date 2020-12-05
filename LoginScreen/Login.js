@@ -1,27 +1,31 @@
 import React from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, Platform } from 'react-native'
 import auth from '@react-native-firebase/auth';
-
 import { v4 as uuid } from 'uuid'
 import { GoogleSignin, GoogleSigninButton, statusCodes  } from '@react-native-community/google-signin';
-
-import styles from '../styles'
 import { firebase } from '@react-native-firebase/firestore';
-
 import appleAuth, {
   AppleAuthRequestScope,
   AppleAuthRequestOperation,
   appleAuthAndroid,
 } from '@invertase/react-native-apple-authentication';
-
 import { AppleButton } from '@invertase/react-native-apple-authentication';
-
 import { Formik } from 'formik';
-
-
 import { Button, Text ,Icon, Input, Divider} from '@ui-kitten/components';
+import * as Yup from 'yup';
 
 
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email()
+    .max(100, 'Too Long!')
+    .required('Required'),
+
+  password: Yup.string()
+    .min(9, 'Minimum 9 Characters')
+    .max(50, 'Too Long!')
+    .required('Required'),
+
+});
 
 
 async function onAppleButtonPress() {
@@ -144,14 +148,13 @@ export default class Login extends React.Component {
        
       <View style={{ flex: 1, justifyContent:'center', padding:16}}>
       
-      <View style={{flex:2}}>
-      <Text category='h1' style={{marginBottom:12, marginTop:20}}>A Better Way to Learn</Text>
-      <Text category='s1'>Learn more in less time</Text>
+      <View>
+      <Text category='h1' style={{marginBottom:12, marginTop:20}}>Login</Text>
       </View>
 
       <Formik
       initialValues={{ email:'', password:''}}
-      //validationSchema={validationSchema}
+      validationSchema={LoginSchema}
       onSubmit={(values, actions) => {
        this.handleLogin(values.email, values.password)
        actions.setSubmitting(false);
@@ -164,37 +167,37 @@ export default class Login extends React.Component {
    
 
     <Input
+    placeholder='Email address'
+    value={formikProps.values.email}
+    size='large'
+    status={formikProps.errors.email != null ? 'danger':'basic'}
+    onChangeText={formikProps.handleChange('email')}
+    textStyle={{fontSize:14}}
+    style={{marginVertical:8}}
+    />
 
-          placeholder='Email address'
-          value={formikProps.values.email}
-          size='large'
-          onChangeText={formikProps.handleChange('email')}
-          textStyle={{fontSize:14}}
-          style={{marginVertical:8}}
-        />
+    <Input
+    value={formikProps.values.password}
+    textStyle={{fontSize:14}}
+    placeholder='Password'  
+    status={formikProps.errors.password != null ? 'danger':'basic'}
+    //accessoryRight={this.renderIcon}
+    //captionIcon={AlertIcon}
+    size='large'
+    //secureTextEntry={this.state.secureTextEntry}
+    onChangeText={formikProps.handleChange('password')}
+    />
 
-      <Input
-          value={formikProps.values.password}
-          textStyle={{fontSize:14}}
-          placeholder='Password'
-          
-          //accessoryRight={this.renderIcon}
-          //captionIcon={AlertIcon}
-          size='large'
-          //secureTextEntry={this.state.secureTextEntry}
-          onChangeText={formikProps.handleChange('password')}
-        />
-
-      <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
-      Login
-      </Button>
-        </React.Fragment>
+    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
+    Login
+    </Button>
+    </React.Fragment>
 
 
       )}
     </Formik>
     
-    <View style={{marginVertical:20, flex:1, borderWidth:0, justifyContent:'center'}}>
+    <View style={{marginVertical:20,  justifyContent:'center'}}>
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Sign in with the following
     </Text>
@@ -205,16 +208,15 @@ export default class Login extends React.Component {
     <AppleSignIn/>
     </View>
 
-
-    <View style={{flex: 1, borderWidth:0,justifyContent: 'flex-end', marginBottom:36}}>
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Don't have an account?
     </Text>
-
     <Button appearance={'outline'} onPress={() => this.props.navigation.navigate('SignUp')}>
     Sign Up with Email
     </Button>
-    </View>
+
+
+  
              
     </View>
          
