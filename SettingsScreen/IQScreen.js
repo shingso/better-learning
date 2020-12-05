@@ -9,7 +9,7 @@ import { UserDataContext } from '../UserDataContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
 
 import { AuthContext } from '../AuthContext'
-
+import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -27,68 +27,17 @@ const commitsData = [
 
 ];
 
-
-
 function IQScreen(){
 
   const user = useContext(AuthContext)
   const userID = user.uid
   const [visible, setVisible] = React.useState(false);
-  const [dates, setDates] = React.useState([]);
-  const [timesStudied, setTimesStudied] = React.useState(0);
-  const [timesStudiedMonth, setTimesStudiedMonth] = React.useState(0);
   const userData = useContext(UserDataContext)
+  const studyStatsData = useContext(StudyStatsContext)
+  const timesStudiedMonthStat = studyStatsData.timesStudiedMonth
+  const timesStudiedStat = studyStatsData.timesStudied
+  const dateStats = studyStatsData.dates
       
-  useEffect(() => {
-
-    const ref = firestore().collection('Users').doc(userID).collection('DatesStudied')
- 
-    return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
-      
-      if(!querySnapshot.metadata.hasPendingWrites){
-      
-      const list = [];
-      const datesDict = {}
-      var count = 0
-
-      querySnapshot.forEach(doc => {
-
-          const timeStamp = doc.get('timeStamp', { serverTimestamps: 'estimate' })
-          const newDate = new Date(timeStamp.toDate())
-          const currentDate = format(newDate, 'yyyy-MM-dd')
-        
-          if(isThisMonth(newDate) && isThisYear(newDate)){
-            count +=1
-          }
-
-          if(currentDate in datesDict){
-            datesDict[currentDate] += 1
-          } else {
-            datesDict[currentDate] = 1
-          }
-      
-
-      });
-
-     
-
-      for (var date in datesDict) {
-        let item = {};
-        item.date = date; 
-        list.push(item)
-     }
-      setTimesStudied(querySnapshot.size)
-      setTimesStudiedMonth(count)
-      setDates(list);
-
-
-
-    }
-  });
-  
-  }, []);
-
-
   const calculateStudyStrength = (date) => {
     // Get current date
      let timesStudiedTwoWeeks = 0
@@ -139,7 +88,7 @@ function IQScreen(){
   return (
 
     <ScrollView showsVerticalScrollIndicator={false}>
-    <SafeAreaView style={{flex: 1, padding:16}}>
+    <SafeAreaView style={{flex: 1, padding:16,}}>
     
 
     {/*<Tooltip
@@ -153,7 +102,7 @@ function IQScreen(){
       Everytime you finish a study session your IQ will go up by your current streak.
     </Tooltip> */}
 
-    <Text category='s1' style={{marginVertical:8, marginBottom:16}}>Learning is a journey</Text>
+    <Text category='h1' style={{marginVertical:8, marginBottom:16}}>Your Learning Journey</Text>
     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>IQ</Text>
@@ -171,7 +120,7 @@ function IQScreen(){
     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Total Studied</Text>
-    <Text>{timesStudied}</Text>
+    <Text>{timesStudiedStat}</Text>
     </View>
     </Card>
 
@@ -182,29 +131,29 @@ function IQScreen(){
     </View>
     </Card>
 
+        
     
 
     <Card style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Times Studied this Month</Text>
-    <Text>{timesStudiedMonth}</Text>
+    <Text>{timesStudiedMonthStat}</Text>
     </View>
     </Card>
 
-    
-    <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center'}}>
+    <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
     <Text style={{marginBottom:12}}>Study Frequency</Text>
-    
-    
+  
     <CalendarHeatmap
     endDate={endOfMonth(new Date())}
     numDays={99}
-    values={dates}
+    values={dateStats}
     monthLabelsStyle={{fontSize:14, fill:'black'}}
-    //we need to fork so we can add a headerstyle
     />
     
     </Card>
+
+    
    
     </SafeAreaView>
     </ScrollView>
