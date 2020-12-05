@@ -25,27 +25,12 @@ function AddNotes({ route }){
   const user = useContext(AuthContext)
   const navigation = useNavigation();
   const { id } = route.params
-  const { mode } = route.params
+
 
 
   const confirmAddNote = () => {
     setVisible(false)
     navigation.dispatch(StackActions.popToTop())
-  }
-
-  
-  const confirmAddNoteReset = () => {
-    setVisible(false)
-    navigation.navigate('TimerScreen', { mode:'BREAK' })
-  }
-
-
-  const handleChange = (value) => {
-    if (text !== value) {
-      // remember that onChangeText will be Formik's setFieldValue
-      this.props.onChangeText(this.props.name, value)
-      setText({ value })
-    }
   }
 
   return(
@@ -68,10 +53,10 @@ function AddNotes({ route }){
    <React.Fragment>
    <View>
    <TopHeader/>
-   <Text category='h1' style={{marginBottom:20}}>Recall</Text>
-   <Text category='s1'>Take some time and think about what you have just studied or practiced.</Text>
+   <Text category='h1' style={{marginBottom:20}}>Write Something!</Text>
+   <Text category='s1'>If you figured out something new, write it down!</Text>
    <Text category='s1' style={{marginVertical:12, marginBottom:40}}>Type out what you have learned.</Text>
-   <Text>Everything you type here should be from memory and be done without looking at any material.</Text>
+   <Text>The more you write out the better the understanding</Text>
    </View>
 
    <View style={{marginVertical:20}}>
@@ -81,42 +66,30 @@ function AddNotes({ route }){
     textStyle={{fontSize:16, height:100}}
  
     multiline={true}
-    placeholder='What did you learn about?'
+    placeholder='What did you figure out?'
     size={'large'}
     onChangeText={formikProps.handleChange('text')}
       />
 
    </View>
 
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()} >
+    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
       Done
     </Button>
       
     <Modal
- 
-        visible={visible}
-        backdropStyle={styles.backdrop}
-        >
-        <Card disabled={true}>
-          <Text>Note Added!</Text>
-          {mode == 'BASIC' || mode =='ADD' &&
-          <Button size='small' onPress={confirmAddNote}>
-            DISMISS
-          </Button>
-          }
-
-
-
-        {mode == 'ADVANCED' &&
-          <Button size='small' onPress={confirmAddNoteReset}>
-            GO BACK
-          </Button>
-          } 
-        </Card>
-      </Modal>      
-      
+    visible={visible}
+    backdropStyle={styles.backdrop}>
+    <Card disabled={true}>
+    <Text>Note Added!</Text>
+    <Button size='small' onPress={confirmAddNote}>
+    DISMISS
+    </Button>
+    </Card>
+    </Modal>          
     </React.Fragment>
     )}
+
   </Formik>
   </View>
 
