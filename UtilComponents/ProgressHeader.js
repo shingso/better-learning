@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native'
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
-
-
+import { StudyStatsContextWrapper } from '../StudyStats'
+import { StudyStatsContext } from '../StudyStats'
 const getText = (number) => {
 
 
@@ -44,7 +44,8 @@ const getPicture = (number) => {
 
 function ProgressHeader(props){
  
-
+    const studyStatsData = useContext(StudyStatsContext)
+    const timesStudiedWeek = studyStatsData.timesStudiedWeek
     // 0 times within the last two weeks - Motivation message to start
     // 1 times within the last two weeks - 
     // 4 times within the last two weeks - 
@@ -57,7 +58,7 @@ function ProgressHeader(props){
        
       <Card>
       <ImageBackground opacity={0.20} resizeMode='cover' source={getPicture(props.messageNumber)} style={styles.image}>
-      <Text category='label'>{getText(props.messageNumber)}</Text>
+      <Text category='label'>You have studied {timesStudiedWeek} times this week!</Text>
       <Text>You have been extremely consistent in studying. Keep going!</Text>
       </ImageBackground>
       </Card>
@@ -65,6 +66,15 @@ function ProgressHeader(props){
       );
 
     }
+
+
+  const ProgressHeaderWithStats = (props) => {
+    return(
+    <StudyStatsContextWrapper>
+    <ProgressHeader {...props}/>
+    </StudyStatsContextWrapper>
+    )
+  }
 
 const styles = StyleSheet.create({
   
@@ -85,5 +95,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgressHeader
+export default ProgressHeaderWithStats
 
