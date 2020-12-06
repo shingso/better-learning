@@ -12,6 +12,7 @@ import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/componen
 
 
 import AddNotes from './HomeScreen/AddNotes';
+import Recall from './HomeScreen/Recall';
 
 import NotesFocused from './NotesScreen/NotesFocused'
 
@@ -28,6 +29,7 @@ import TipsPage from './HomeScreen/TipsPage'
 
 import SignUp from './LoginScreen/SignUp';
 import Login from './LoginScreen/Login';
+import Welcome from './LoginScreen/Welcome';
 
 import IQScreen from './SettingsScreen/IQScreen';
 import SettingsOptions from './SettingsScreen/SettingsOptions';
@@ -36,6 +38,7 @@ import TermsOfService from './SettingsScreen/TermsOfService';
 import ThemeSettings from './SettingsScreen/ThemeSettings';
 
 import { UserDataContextWrapper } from './UserDataContext'
+import { StudyStatsContextWrapper } from './StudyStats'
 import { AuthContext } from './AuthContext'
 
 
@@ -62,7 +65,9 @@ const ChartIcon = (props) => (
 const IQScreenWithContext = () => {
   return(
   <UserDataContextWrapper>
+  <StudyStatsContextWrapper>
   <IQScreen/>
+  </StudyStatsContextWrapper>
   </UserDataContextWrapper>
   )
 }
@@ -75,6 +80,7 @@ const TimerScreenWithContext = (props) => {
   </UserDataContextWrapper>
   )
 }
+
 
 
 const BottomTabBar = ({ navigation, state }) => (
@@ -91,11 +97,13 @@ const BottomTabBar = ({ navigation, state }) => (
 
 
 
+
 function HomeStack() {
     return (
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AddNotes" component={AddNotes} />
+        <Stack.Screen name="Recall" component={Recall} />
         <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="SetTimer" component={SetTimer} />
         <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />
@@ -108,6 +116,7 @@ function HomeStack() {
   function LoginStack() {
     return (
         <Stack.Navigator headerMode='none'>
+        <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
 
@@ -121,7 +130,6 @@ function HomeStack() {
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="GuidesHome" component={GuidesHome} />
         <Stack.Screen name="HowToLearn" component={HowToLearn} />
-
         <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
         <Stack.Screen name="TermsOfService" component={TermsOfService} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
