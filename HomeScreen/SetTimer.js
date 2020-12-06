@@ -22,6 +22,14 @@ function SetTimer({ route }){
     const [mode, setMode] = React.useState('BASIC');
     const navigation = useNavigation();
     const { id } = route.params
+
+
+
+    const customNav = () => {
+      navigation.pop()
+      navigation.navigate("TimerScreen", { mode:mode, subjectID: id })
+
+    }
  
     const Footer = (props) => (
 
@@ -53,7 +61,7 @@ function SetTimer({ route }){
         </Text>
         
       <View style={{ flex:1, marginBottom:36 , justifyContent:'flex-end'}}>
-      <Button style={{marginBottom:30}} onPress={()=>navigation.navigate("TimerScreen", { mode:mode, subjectID: id })}>
+      <Button style={{marginBottom:30}} onPress={customNav}>
       START
     </Button>
 

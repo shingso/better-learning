@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration } from 'react-native';
+import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
 
 import { useNavigation, StackActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
@@ -57,16 +57,34 @@ const [initialTimeSet, setInitialTimeSet] = useState(null)
 const [timeElaspased, setTimeElaspased] = useState(0)
 const [hasPlayed, sethasPlayed] = useState(false)
 
+const [nav, setNav] = useState(null)
+const navigation = useNavigation();
 const user = useContext(AuthContext)
 const userData = useContext(UserDataContext)
 
 const { subjectID } = route.params
 
+useEffect(() =>
+
+    navigation.addListener('beforeRemove', (e) => {
+     
+      e.preventDefault();
+      setNav(e)
+      setConfirmBackVisible(true)
+      /* 
+      onPress: () => navigation.dispatch(e.data.action),
+      */
+    }),
+    
+  [navigation]
+);
+
+
 
 const CustomBackHeader = () => {
   return(
   <View style={{alignSelf:'flex-start', marginLeft: -20}}>
-  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>setConfirmBackVisible(true)}></Button>
+  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>navigation.goBack()}></Button>
   </View>
   )
 }
@@ -98,29 +116,19 @@ useEffect(() => {
 useEffect(() => {
 
   //check if mounted 
-
   if (isPlaying) {
 
     BackgroundTimer.runBackgroundTimer(() => { 
-
       setTimeElaspased(timeElaspased => timeElaspased + 1000)
-       
       }, 
       1000);
-    
 
   } else {
-
     BackgroundTimer.stopBackgroundTimer()
-    
   }
-
   return function cleanup(){
     BackgroundTimer.stopBackgroundTimer()
   }
-
-
-
 
 }, [isPlaying]);
 
@@ -134,25 +142,20 @@ useEffect(() => {
 }, [timeElaspased]);
 
 
-const navigation = useNavigation();
-
 const startBackgroundTimer = () =>{
- 
   setIsPlaying(true)
   sethasPlayed(true)
-
 }
 
 const popToTop = () => {
-  navigation.dispatch(StackActions.popToTop());
+  
+  navigation.dispatch(nav.data.action)
+  //navigation.dispatch(StackActions.popToTop());
 };
 
 
-
 const stopBackgroundTimer = () => {
-    
   setIsPlaying(false)
-
 }
   
 const backgroundTimerEnded = () => {
@@ -184,7 +187,8 @@ const onRefresh = () =>{
 
 confirmAddNote = () =>{
   setVisible(false)
-  navigation.navigate('AddNotes', {id: subjectID, mode: mode})
+  navigation.pop()
+  navigation.navigate('Recall', {id: subjectID, mode: mode})
 }
 
 
