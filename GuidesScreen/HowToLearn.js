@@ -38,17 +38,19 @@ function HowToLearn(){
     return(
  
       <Layout
-        style={{ alignItems:'center', flex:1, borderWidth:1, paddingTop:40,padding:16}}
+        style={{ alignItems:'center', flex:1, paddingTop:12,padding:16}}
         level='2'>
      
       <Text style={{marginBottom:20}} category='h1'>How should I study?</Text>
-      <Text style={{}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</Text>
+      <Text style={{paddingHorizontal:16}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</Text>
       <Image
         style={{width: 650,
-          height: 400}}
+          height: 300}}
         source={require('../assets/images/studying.png')}
       
       />
+           
+      <Text style={{marginBottom:20, paddingHorizontal:16}} category='s1'>consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
   
       </Layout>
 
@@ -57,8 +59,9 @@ function HowToLearn(){
 
   return (
     <Layout level='2' style={{flex:1}}>
-    
+    <Layout level='2' style={{marginLeft:20, marginTop:8}}>
     <TopHeader/>
+    </Layout>
     <ViewPager
 
       style={{flex:1}}

@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
-
-import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { format, endOfMonth, isThisMonth, isThisYear, subDays , isWithinRange } from 'date-fns'
-
 import { UserDataContext } from '../UserDataContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
-
-import { AuthContext } from '../AuthContext'
 import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -29,9 +24,9 @@ const commitsData = [
 
 function IQScreen(){
 
-  const user = useContext(AuthContext)
-  const userID = user.uid
+
   const [visible, setVisible] = React.useState(false);
+  
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
   const timesStudiedMonthStat = studyStatsData.timesStudiedMonth

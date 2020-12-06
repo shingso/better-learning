@@ -23,14 +23,15 @@ function HomeScreen(){
     const userID = user.uid
     const navigation = useNavigation();
     const [ loading, setLoading ] = useState(true);
-    const [ todos, setTodos ] = useState([]);
-    
-    
+    const [ subjects, setSubjects ] = useState([]);
+  
+
+  
     const renderListFooter = () => (
 
       <View style={{alignItems:'flex-start'}}> 
       <Button style={{marginVertical:12}} onPress={()=>navigation.navigate('AddSubject')}>
-      Add A Subject to Study
+      Start!
       </Button>
       </View>
 
@@ -68,7 +69,7 @@ function HomeScreen(){
     </View>
   );
   
-  //<Text category='h1'>Home</Text>
+
   const renderHeader = () => (
 
     <View style={{marginTop:12, marginBottom:12}}>
@@ -89,14 +90,12 @@ function HomeScreen(){
       <View style={{ justifyContent:'space-between' }}>
       <View>
       <Text category='s1'>{info.item.title}</Text>
-      {info.item.timeStamp != null && <Text category='label'> Last Studed: {formatDistance(new Date(info.item.timeStamp.toDate()), new Date())} ago</Text>}
+      {info.item.timeStamp != null && <Text style={{fontSize:10}}>Last Studed: {formatDistance(new Date(info.item.timeStamp.toDate()), new Date())} ago</Text>}
       </View>
 
       <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:24, }}>
-      <Button accessoryLeft={BookIcon} style={{marginRight:16}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {id:info.item.id, title:info.item.title})}/>
-   
-      <Button accessoryLeft={PlayIcon} size={'small'}  style={{width:'70%'}} onPress={()=>navigation.navigate('SetTimer', {id:info.item.id})}/>
-    
+      <Button accessoryLeft={BookIcon} style={{marginRight:16, height:42}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {id:info.item.id, title:info.item.title})}/>
+      <Button accessoryLeft={PlayIcon} size={'small'}  style={{width:'70%', height:42}} onPress={()=>navigation.navigate('SetTimer', {id:info.item.id})}/>
       </View>
       
       </View>
@@ -104,8 +103,8 @@ function HomeScreen(){
     );
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('NotesCollection')
 
+        const ref = firestore().collection('Users').doc(userID).collection('NotesCollection')
         return ref.onSnapshot(querySnapshot => {
           const list = [];
           querySnapshot.forEach(doc => {
@@ -117,7 +116,7 @@ function HomeScreen(){
             });
           });
   
-          setTodos(list);
+          setSubjects(list);
     
           if (loading) {
             setLoading(false);
@@ -132,19 +131,18 @@ function HomeScreen(){
   
 
     return (
+
     <ImageBackground source={require('../assets/images/5294.2.png')} style={{ flex:1 }}>
     <SafeAreaView style={{flex: 1}}>
-   
     <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-        data={todos}
+        data={subjects}
         renderItem={renderItem}
         ListFooterComponent={renderListFooter}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderWelcome}
         />
- 
     </SafeAreaView>
     </ImageBackground>
       
@@ -172,7 +170,7 @@ const styles = StyleSheet.create({
   },
   
   container:{
-    opacity:0.95
+    opacity:0.92
   },
   image: {
     flex: 1,
