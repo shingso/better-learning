@@ -1,6 +1,7 @@
-import React from 'react'
-import { TextInput, View, SafeAreaView, Dimensions, Platform } from 'react-native'
+import React, { useState } from 'react'
+import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFeedback } from 'react-native'
 import auth from '@react-native-firebase/auth';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import { v4 as uuid } from 'uuid'
 import { GoogleSignin, GoogleSigninButton, statusCodes  } from '@react-native-community/google-signin';
 import { firebase } from '@react-native-firebase/firestore';
@@ -107,10 +108,12 @@ function AppleSignIn() {
 } 
 
 
-export default class Login extends React.Component {
+function Login(){
  
- 
-  handleLogin = (email, password) => {
+ const navigation = useNavigation();
+ const [secureTextEntry, setSecureTextEntry] = useState(false)
+
+ const handleLogin = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -122,25 +125,34 @@ export default class Login extends React.Component {
 
 
 
-    _configureGoogleSignIn() {
+   const _configureGoogleSignIn = () => {
       GoogleSignin.configure({
-       
         webClientId: '658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com',
-
-    
       });
     }
  
 
-    componentDidMount() {
+  /*   componentDidMount() {
 
       this._configureGoogleSignIn();
       }
+ */
 
+    const toggleSecureEntry = () => {
+      setSecureTextEntry(!secureTextEntry)
+    };
+
+
+    const renderIcon = (props) => (
+      <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+        <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
+      </TouchableWithoutFeedback>
+    );
+
+  
 
   
   
-  render() {
     
  
      return (
@@ -156,7 +168,7 @@ export default class Login extends React.Component {
       initialValues={{ email:'', password:''}}
       validationSchema={LoginSchema}
       onSubmit={(values, actions) => {
-       this.handleLogin(values.email, values.password)
+       handleLogin(values.email, values.password)
        actions.setSubmitting(false);
       }}
     >
@@ -169,8 +181,9 @@ export default class Login extends React.Component {
     <Input
     placeholder='Email address'
     value={formikProps.values.email}
+    label={formikProps.touched.email && formikProps.errors.email}
     size='large'
-    status={formikProps.errors.email != null ? 'danger':'basic'}
+    status={formikProps.touched.email && formikProps.errors.email != null ? 'danger':'basic'}
     onChangeText={formikProps.handleChange('email')}
     textStyle={{fontSize:14}}
     style={{marginVertical:8}}
@@ -180,11 +193,11 @@ export default class Login extends React.Component {
     value={formikProps.values.password}
     textStyle={{fontSize:14}}
     placeholder='Password'  
-    status={formikProps.errors.password != null ? 'danger':'basic'}
-    //accessoryRight={this.renderIcon}
-    //captionIcon={AlertIcon}
+    status={formikProps.touched.password && formikProps.errors.password != null ? 'danger':'basic'}
+    accessoryRight={renderIcon}
+    label={formikProps.touched.password && formikProps.errors.password}
     size='large'
-    //secureTextEntry={this.state.secureTextEntry}
+    secureTextEntry={secureTextEntry}
     onChangeText={formikProps.handleChange('password')}
     />
 
@@ -211,7 +224,7 @@ export default class Login extends React.Component {
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Don't have an account?
     </Text>
-    <Button appearance={'outline'} onPress={() => this.props.navigation.navigate('SignUp')}>
+    <Button appearance={'outline'} onPress={() => navigation.navigate('SignUp')}>
     Sign Up with Email
     </Button>
 
@@ -222,6 +235,9 @@ export default class Login extends React.Component {
          
     )
      
-  }
+  
 }
+
+
+export default Login
 

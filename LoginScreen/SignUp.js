@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, TouchableWithoutFeedback } from 'react-native'
-import styles from '../styles'
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import { addUser, addNotesCollection, addNote, updateUserInfo } from '../helperFunctions'
 import { Formik } from 'formik';
 import { Button, Text ,Icon , Input} from '@ui-kitten/components';
@@ -29,6 +28,7 @@ const AlertIcon = (props) => (
 
 function SignUp(){
 
+  const navigation = useNavigation();
   const [secureTextEntry, setSecureTextEntry] = useState(false)
 
   const handleSignUp = (email, password) => {
@@ -103,8 +103,8 @@ function SignUp(){
 
 
     <Input
-    value={formikProps.touched.password && formikProps.values.password}
-    label={formikProps.errors.password}
+    value={formikProps.values.password}
+    label={formikProps.touched.password && formikProps.errors.password}
     placeholder='Password'
     caption='Should contain at least 9 symbols'
     accessoryRight={renderIcon}
@@ -120,7 +120,7 @@ function SignUp(){
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Already have an account?
     </Text>
-    <Button appearance={'outline'} onPress={() => this.props.navigation.navigate('Login')}>
+    <Button appearance={'outline'} onPress={() =>  navigation.navigate('Login')}>
     Go to Login
     </Button>
     </React.Fragment>
