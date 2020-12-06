@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import styles from '../styles'
 import firestore from '@react-native-firebase/firestore';
@@ -27,9 +27,11 @@ const AlertIcon = (props) => (
 );
 
 
-export default class SignUp extends React.Component {
+function SignUp(){
 
-  handleSignUp = (email, password) => {
+  const [secureTextEntry, setSecureTextEntry] = useState(false)
+
+  const handleSignUp = (email, password) => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then((currentUser) => {
@@ -52,36 +54,22 @@ export default class SignUp extends React.Component {
   }
     
     
-    constructor(args) {
-        super(args);
-
-        this.state = {
-          secureTextEntry: false
-
-        }
-    }
-
-  componentDidMount(){
-
-      
-           
-  }
+   
+  
 
 
-  toggleSecureEntry = () => {
-    this.setState({
-      secureTextEntry : !this.state.secureTextEntry
-    })
+  const toggleSecureEntry = () => {
+    setSecureTextEntry(!secureTextEntry)
   };
 
 
-  renderIcon = (props) => (
-    <TouchableWithoutFeedback onPress={this.toggleSecureEntry}>
-      <Icon {...props} name={this.state.secureTextEntry ? 'eye-off' : 'eye'}/>
+  const renderIcon = (props) => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+      <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
     </TouchableWithoutFeedback>
   );
 
-  render() {
+  
     
 
      return (
@@ -93,7 +81,7 @@ export default class SignUp extends React.Component {
     initialValues={{ email:'', password:''}}
     validationSchema={SignUpSchema}
     onSubmit={(values, actions) => {
-       this.handleSignUp(values.email, values.password)
+       handleSignUp(values.email, values.password)
        actions.setSubmitting(false);
       }}
     >
@@ -104,27 +92,27 @@ export default class SignUp extends React.Component {
    
 
     <Input
-    label={formikProps.errors.email}
+    label={formikProps.touched.email && formikProps.errors.email}
     placeholder='Enter Email'
     value={formikProps.values.email}
     size='large'
     onChangeText={formikProps.handleChange('email')}
-    status={formikProps.errors.email != null ? 'danger':'basic'}
+    status={formikProps.touched.email && formikProps.errors.email != null ? 'danger':'basic'}
     style={{marginBottom:16}}
     />
 
 
     <Input
-    value={formikProps.values.password}
+    value={formikProps.touched.password && formikProps.values.password}
     label={formikProps.errors.password}
     placeholder='Password'
     caption='Should contain at least 9 symbols'
-    accessoryRight={this.renderIcon}
+    accessoryRight={renderIcon}
     captionIcon={AlertIcon}
     size='large'
-    secureTextEntry={this.state.secureTextEntry}
+    secureTextEntry={secureTextEntry}
     onChangeText={formikProps.handleChange('password')}
-    status={formikProps.errors.password != null ? 'danger':'basic'}
+    status={formikProps.touched.password && formikProps.errors.password != null ? 'danger':'basic'}
     />
 
 
@@ -143,6 +131,7 @@ export default class SignUp extends React.Component {
          
     )
      
-  }
+  
 }
 
+export default SignUp
