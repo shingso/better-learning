@@ -55,7 +55,7 @@ const [isPlaying, setIsPlaying] = useState(null)
 const [initialTimeSet, setInitialTimeSet] = useState(null)
 const [timeElaspased, setTimeElaspased] = useState(0)
 const [hasPlayed, sethasPlayed] = useState(false)
-
+const [hasEnded, setHasEnded] = useState(false)
 const [nav, setNav] = useState(null)
 const navigation = useNavigation();
 const user = useContext(AuthContext)
@@ -63,19 +63,32 @@ const userData = useContext(UserDataContext)
 
 const { subjectID } = route.params
 
-useEffect(() =>
+useEffect(() => {
 
-    navigation.addListener('beforeRemove', (e) => {
-     
+    if( !hasPlayed || hasEnded ){
+      return;
+    }
+
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      setIsPlaying(false)
       e.preventDefault();
       setNav(e)
       setConfirmBackVisible(true)
+
+      
       /* 
       onPress: () => navigation.dispatch(e.data.action),
       */
-    }),
+    })
+
+    return unsubscribe
     
-  [navigation]
+   
+  },
+
+    
+    
+  [navigation, hasEnded, hasPlayed]
 );
 
 
@@ -125,6 +138,7 @@ useEffect(() => {
   } else {
     BackgroundTimer.stopBackgroundTimer()
   }
+
   return function cleanup(){
     BackgroundTimer.stopBackgroundTimer()
   }
@@ -147,7 +161,7 @@ const startBackgroundTimer = () =>{
 }
 
 const popToTop = () => {
-  
+  navigation.pop()
   navigation.dispatch(nav.data.action)
   //navigation.dispatch(StackActions.popToTop());
 };
@@ -159,6 +173,7 @@ const stopBackgroundTimer = () => {
   
 const backgroundTimerEnded = () => {
   setIsPlaying(false)
+  setHasEnded(true)
   Vibration.vibrate()
   let updatedIQ = userData.IQ + userData.currentStreak + 1
   let updatedStreak = userData.currentStreak + 1

@@ -37,6 +37,7 @@ function Recall({ route }){
   
   const confirmAddNoteBreak = () => {
     setVisible(false)
+    navigation.pop()
     navigation.navigate('Break', { mode:mode, subjectID: subjectID })
   }
 
@@ -101,7 +102,7 @@ function Recall({ route }){
 
         {mode == 'ADVANCED' &&
           <Button size='small' onPress={confirmAddNoteBreak}>
-            GO BACK
+            Its time for a break
           </Button>
           } 
         </Card>
