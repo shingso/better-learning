@@ -24,7 +24,7 @@ function AddNotes({ route }){
   const [text, setText] = React.useState(null);
   const user = useContext(AuthContext)
   const navigation = useNavigation();
-  const { id } = route.params
+  const { subjectID } = route.params
 
 
 
@@ -41,7 +41,7 @@ function AddNotes({ route }){
     initialValues={{ text:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( user.uid, id , values.text)
+     addNote( user.uid, subjectID , values.text)
      //actions.setSubmitting(false);
      setVisible(true)
 

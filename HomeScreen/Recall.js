@@ -24,7 +24,8 @@ function Recall({ route }){
   const [text, setText] = React.useState(null);
   const user = useContext(AuthContext)
   const navigation = useNavigation();
-  const { id } = route.params
+
+  const { subjectID } = route.params
   const { mode } = route.params
 
 
@@ -34,9 +35,9 @@ function Recall({ route }){
   }
 
   
-  const confirmAddNoteReset = () => {
+  const confirmAddNoteBreak = () => {
     setVisible(false)
-    navigation.navigate('TimerScreen', { mode:'BREAK' })
+    navigation.navigate('Break', { mode:mode, subjectID: subjectID })
   }
 
 
@@ -49,7 +50,7 @@ function Recall({ route }){
     initialValues={{ text:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( user.uid, id , values.text)
+     addNote( user.uid, subjectID , values.text)
      //actions.setSubmitting(false);
      setVisible(true)
 
@@ -70,14 +71,12 @@ function Recall({ route }){
    <View style={{marginVertical:20}}>
    {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null}
    <Input
-  
     textStyle={{fontSize:16, height:100}}
- 
     multiline={true}
     placeholder='What did you learn about?'
     size={'large'}
     onChangeText={formikProps.handleChange('text')}
-      />
+    />
 
    </View>
 
@@ -101,7 +100,7 @@ function Recall({ route }){
 
 
         {mode == 'ADVANCED' &&
-          <Button size='small' onPress={confirmAddNoteReset}>
+          <Button size='small' onPress={confirmAddNoteBreak}>
             GO BACK
           </Button>
           } 

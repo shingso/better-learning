@@ -1,6 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
-
 import { useNavigation, StackActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
@@ -188,7 +187,7 @@ const onRefresh = () =>{
 confirmAddNote = () =>{
   setVisible(false)
   navigation.pop()
-  navigation.navigate('Recall', {id: subjectID, mode: mode})
+  navigation.navigate('Recall', { subjectID: subjectID, mode: mode})
 }
 
 
@@ -242,48 +241,48 @@ return (
   </View>
   
   }
-    <Modal
-    visible={visible}
-    backdropStyle={styles.backdrop}
-    >
-    <Card disabled={true}>
-    <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text>+{userData.currentStreak + 1} IQ</Text>
-    <Text style={{marginVertical:12}}>Completed!</Text>
-    <Button onPress={()=>confirmAddNote()}>
-    Let's wrap this up
-    </Button>
-    </View>
-    </Card>
-    </Modal>
 
-    <Modal
-    visible={confirmBackVisible}
-    backdropStyle={styles.backdrop}
-    >
-    <Card style={{marginHorizontal:40}} disabled={true}>
+  <Modal
+  visible={visible}
+  backdropStyle={styles.backdrop}
+  >
+  <Card disabled={true}>
+  <View style={{justifyContent:'center', alignItems:'center'}}>
+  <Text>+{userData.currentStreak + 1} IQ</Text>
+  <Text style={{marginVertical:12}}>Completed!</Text>
+  <Button onPress={confirmAddNote}>
+  Let's wrap this up
+  </Button>
+  </View>
+  </Card>
+  </Modal>
+
+  <Modal
+  visible={confirmBackVisible}
+  backdropStyle={styles.backdrop}
+  >
+
+  <Card style={{marginHorizontal:40}} disabled={true}>
+  <View style={{justifyContent:'center', alignItems:'center'}}>
+  <Text style={{marginVertical:12, marginBottom:24 ,textAlign:'center'}}>Are you sure you want to leave this current study session?</Text> 
+  <View style={{flexDirection:'row', marginBottom:8}}>
     
-    <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text style={{marginVertical:12, marginBottom:24 ,textAlign:'center'}}>Are you sure you want to leave this current study session?</Text> 
-    <View style={{flexDirection:'row', marginBottom:8}}>
-    
-    <Button status='danger' style={{marginRight:12}} onPress={popToTop}>
-    End Study Session
-    </Button>
+  <Button status='danger' style={{marginRight:12}} onPress={popToTop}>
+  End Study Session
+  </Button>
 
-    <Button appearance='outline' onPress={()=>setConfirmBackVisible(false)}>
-    Close
-    </Button>
-    </View>
-    </View>
-    </Card>
-    </Modal>      
-
-             
-    </View>
-    </View>
+  <Button appearance='outline' onPress={()=>setConfirmBackVisible(false)}>
+  Close
+  </Button>
+  </View>
+  </View>
+  </Card>
+  </Modal>      
+          
+  </View>
+  </View>
   
-    )
+  )
 };
 
 export default TimerScreenFunc

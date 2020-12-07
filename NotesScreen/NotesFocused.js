@@ -24,7 +24,7 @@ function NotesFocused({ route, navigation }){
     const user = useContext(AuthContext)
     const userID = user.uid
   
-    const { id } = route.params
+    const { subjectID } = route.params
     const { title } = route.params
     const [ loading, setLoading ] = useState(true);
     const [ todos, setTodos ] = useState([]);
@@ -65,7 +65,7 @@ function NotesFocused({ route, navigation }){
          
           <Input value={inputValue} onChangeText={setInputValue} />
           <View style={{flexDirection:'row', marginTop:20,marginBottom:8}}>
-          <Button status='danger' style={{marginRight:12}} onPress={()=> deleteSubjectFunction(userID, id)}>
+          <Button status='danger' style={{marginRight:12}} onPress={()=> deleteSubjectFunction(userID, subjectID)}>
           Delete
           </Button>
        
@@ -86,7 +86,7 @@ function NotesFocused({ route, navigation }){
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
       <TopHeader/>
       <View style={{flexDirection:'row'}}>
-      <Button accessoryLeft={EditIcon} style={{marginRight:16}} appearance='ghost' onPress={()=>navigation.navigate('AddNotes', {id:id, mode:'ADD'})}/>
+      <Button accessoryLeft={EditIcon} style={{marginRight:16}} appearance='ghost' onPress={()=>navigation.navigate('AddNotes', { subjectID: subjectID, mode:'ADD'})}/>
       <Button style={{marginRight:-12}} size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       </View>
       </View>
@@ -99,7 +99,7 @@ function NotesFocused({ route, navigation }){
     
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(id).collection('Notes')
+        const ref = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID).collection('Notes')
         return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
           if(!querySnapshot.metadata.hasPendingWrites){
           const list = [];

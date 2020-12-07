@@ -21,13 +21,13 @@ function SetTimer({ route }){
  
     const [mode, setMode] = React.useState('BASIC');
     const navigation = useNavigation();
-    const { id } = route.params
+    const { subjectID } = route.params
 
 
 
     const customNav = () => {
       navigation.pop()
-      navigation.navigate("TimerScreen", { mode:mode, subjectID: id })
+      navigation.navigate("TimerScreen", { mode:mode, subjectID: subjectID })
 
     }
  
@@ -37,7 +37,7 @@ function SetTimer({ route }){
       <View {...props} style={[props.style, styles.footerContainer]}>
         <ClockIcon/>
         <Button
-          onPress={()=>navigation.navigate("TimerScreen", { mode: props.mode, subjectID: id })}
+          onPress={()=>navigation.navigate("TimerScreen", { mode: props.mode, subjectID: subjectID })}
           style={styles.footerControl}
           size='small'>
         
