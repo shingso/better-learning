@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { format, endOfMonth, isThisMonth, isThisYear, subDays , isWithinRange } from 'date-fns'
+import { format, endOfMonth, isThisMonth, isThisYear, subDays , differenceInDays, differenceInCalendarDays} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
@@ -31,47 +31,49 @@ function IQScreen(){
   const studyStatsData = useContext(StudyStatsContext)
   const timesStudiedMonthStat = studyStatsData.timesStudiedMonth
   const timesStudiedStat = studyStatsData.timesStudied
+  const timesStudiedTwoWeek = studyStatsData.timesStudiedTwoWeek
+  const timesStudiedTwoWeeksUnique = studyStatsData.timesStudiedTwoWeeksUnique
   const dateStats = studyStatsData.dates
+  const userStartDate = userData.timeStamp
+
       
-  const calculateStudyStrength = (date) => {
+  const calculateStudyStrength = () => {
     // Get current date
-     let timesStudiedTwoWeeks = 0
+     let studyStrength = 0
      let currentDate = new Date()
-     let twoWeeksAgo = subDays(currentDate, 14)
+     let userStartDateConverted = new Date(userStartDate.toDate())
+     let diffInStartToCurrent = differenceInCalendarDays(userStartDateConverted, currentDate)
+     let extraMultiplier =  timesStudiedTwoWeek - diffInStartToCurrent
+     console.log(timesStudiedTwoWeeksUnique , diffInStartToCurrent, extraMultiplier)
+ /*     if( diffInStartToCurrent >= 14 ){
+      //if difference in days is greater than 14 days
+      //divide the unque times studied this month
+      console.log(timesStudiedTwoWeeksUnique, diffInStartToCurrent,'Log')
+     } else { 
 
-    /* if(isWithinRange( date , twoWeeksAgo, currentDate )){
-      timesStudiedTwoWeeks += 1
-      //increament a counter
-    } */
 
-  
-    // if you studied for 12 times in the last 12 weeks you have a study strengt of 10
+      //divide the uniqu
+      console.log(diffInStartToCurrent)
 
-    // 7 = 5
-    // 8 = 6
-    // 9 = 7
-    // 10 = 8
-    // 11 = 9
-    // 12-14 = 10
 
-    // Multiple times PER
+     }
+ */
 
-    // we can get currentNumberOfDays 
+    // we want the user to have a higher score the beginning  
 
-    // let timeLastedStudied = new Date(userData.lastedStudied.toDate())
-    // if the currentDate is greater than two weeks of the time last studied
-    // else go back 14 days and compute the amount of times studied
-    // twoWeeksAgoDate = currentDate - 14 days
-    // return a number between 1 and 10
+    // 7 = 5 - 50%
+    // 8 = 6 - 57%
+    // 9 = 7 - 64%
+    // 10 = 8 - 71%
+    // 11 = 9 - 78%
+    // 12-14 = 10  - 85%
 
     // Number of times studied in current Month/total number of days in the month
-    // total number of times studied in the last 14 days
-
+   
     // * by a certain amount if studied multiple times per day
 
-    // return a max of 10 or our number
   
-    return 1
+ 
   };
 
   const renderToggleButton = () => (
@@ -97,7 +99,14 @@ function IQScreen(){
       Everytime you finish a study session your IQ will go up by your current streak.
     </Tooltip> */}
 
-    <Text category='h1' style={{marginVertical:8, marginBottom:16}}>Your Learning Journey</Text>
+    <Card onPress={calculateStudyStrength} style={{marginVertical:12}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Text style={{marginBottom:8}} category={'s1'}>Study Strength</Text>
+    <Text>{calculateStudyStrength()}</Text>
+    </View>
+    <Text>Your study strength is determined by how consistently you have been studying</Text>
+    </Card>
+
     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>IQ</Text>
@@ -119,12 +128,7 @@ function IQScreen(){
     </View>
     </Card>
 
-    <Card style={{marginVertical:12}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    <Text category={'s1'}>Study Strength</Text>
-    <Text>{calculateStudyStrength()}</Text>
-    </View>
-    </Card>
+    
 
         
     
