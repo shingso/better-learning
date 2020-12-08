@@ -65,20 +65,17 @@ const { subjectID } = route.params
 
 useEffect(() => {
 
-    if( !hasPlayed || hasEnded ){
+    if( !hasPlayed || hasEnded || confirmBackVisible ){
       return;
     }
 
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+
       setIsPlaying(false)
       e.preventDefault();
       setNav(e)
       setConfirmBackVisible(true)
 
-      
-      /* 
-      onPress: () => navigation.dispatch(e.data.action),
-      */
     })
 
     return unsubscribe
@@ -87,8 +84,7 @@ useEffect(() => {
   },
 
     
-    
-  [navigation, hasEnded, hasPlayed]
+  [navigation, hasEnded, hasPlayed, confirmBackVisible]
 );
 
 
@@ -96,7 +92,7 @@ useEffect(() => {
 const CustomBackHeader = () => {
   return(
   <View style={{alignSelf:'flex-start', marginLeft: -20}}>
-  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>navigation.goBack()}></Button>
+  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>navigation.dispatch(StackActions.popToTop())}></Button>
   </View>
   )
 }
@@ -111,6 +107,12 @@ useEffect(() => {
   }
 
   if (route.params.mode == 'ADVANCED') {
+    setMode(route.params.mode);
+    setInitialTimeSet(4000)
+    setTimeElaspased(0)
+  }
+
+  if (route.params.mode == 'ADVANCED2') {
     setMode(route.params.mode);
     setInitialTimeSet(4000)
     setTimeElaspased(0)
@@ -161,9 +163,8 @@ const startBackgroundTimer = () =>{
 }
 
 const popToTop = () => {
-  navigation.pop()
-  navigation.dispatch(nav.data.action)
-  //navigation.dispatch(StackActions.popToTop());
+  console.log('ran')
+  navigation.dispatch(StackActions.popToTop());
 };
 
 
@@ -185,7 +186,7 @@ const backgroundTimerEnded = () => {
 
   BackgroundTimer.stopBackgroundTimer()
 
-  updateUserStreakData(user.uid, updatedIQ , updatedStreak, highestStreak)
+  updateUserStreakData(user.uid, updatedIQ , updatedStreak, highestStreak, subjectID)
   
   setTimeout(() => {
     setVisible(true)

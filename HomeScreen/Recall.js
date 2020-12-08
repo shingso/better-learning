@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View , StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
@@ -18,10 +18,13 @@ const TextSchema = Yup.object().shape({
 });
 
 
+
+
+
 function Recall({ route }){
  
   const [visible, setVisible] = React.useState(false);
-  const [text, setText] = React.useState(null);
+  const [confirmBackVisible, setConfirmBackVisible] = React.useState(false);
   const user = useContext(AuthContext)
   const navigation = useNavigation();
 
@@ -29,18 +32,46 @@ function Recall({ route }){
   const { mode } = route.params
 
 
+  useEffect(() => {
+
+    if( confirmBackVisible || visible ){
+      return;
+    }
+
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+
+      e.preventDefault();
+      setConfirmBackVisible(true)
+
+    })
+
+    return unsubscribe
+    
+   
+  },
+
+    
+  [navigation, confirmBackVisible, visible]
+);
+
+
   const confirmAddNote = () => {
     setVisible(false)
+
     navigation.dispatch(StackActions.popToTop())
   }
 
   
   const confirmAddNoteBreak = () => {
+
     setVisible(false)
     navigation.pop()
     navigation.navigate('Break', { mode:mode, subjectID: subjectID })
   }
 
+  const popToTop = () => {
+    navigation.dispatch(StackActions.popToTop())
+  }
 
 
   return(
@@ -86,27 +117,46 @@ function Recall({ route }){
     </Button>
       
     <Modal
- 
-        visible={visible}
-        backdropStyle={styles.backdrop}
-        >
-        <Card disabled={true}>
-          <Text>Note Added!</Text>
-          {mode == 'BASIC' || mode =='ADD' &&
-          <Button size='small' onPress={confirmAddNote}>
-            DISMISS
-          </Button>
-          }
+    visible={visible}
+    backdropStyle={styles.backdrop}>
+    <Card disabled={true}>
+    <Text>Note Added!</Text>
+    {mode == 'BASIC' || mode == 'ADVANCED2'  &&
+    <Button size='small' onPress={confirmAddNote}>
+    DISMISS
+    </Button>
+    }
 
 
+    {mode == 'ADVANCED' &&
+    <Button size='small' onPress={confirmAddNoteBreak}>
+    Its time for a break
+    </Button>
+    } 
+    </Card>
+    </Modal>  
 
-        {mode == 'ADVANCED' &&
-          <Button size='small' onPress={confirmAddNoteBreak}>
-            Its time for a break
-          </Button>
-          } 
-        </Card>
-      </Modal>      
+    <Modal
+    visible={confirmBackVisible}
+    backdropStyle={styles.backdrop}
+    >
+
+    <Card style={{marginHorizontal:40}} disabled={true}>
+    <View style={{justifyContent:'center', alignItems:'center'}}>
+    <Text style={{marginVertical:12, marginBottom:24 ,textAlign:'center'}}>Writing something down is crucial to learning!</Text> 
+    <View style={{flexDirection:'row', marginBottom:8}}>
+        
+    <Button status='danger' style={{marginRight:12}} onPress={popToTop}>
+    Leave
+    </Button>
+
+    <Button appearance='outline' onPress={()=>setConfirmBackVisible(false)}>
+    Close
+    </Button>
+    </View>
+    </View>
+    </Card>
+    </Modal>     
       
     </React.Fragment>
     )}

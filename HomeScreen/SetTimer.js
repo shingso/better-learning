@@ -26,7 +26,7 @@ function SetTimer({ route }){
 
 
     const customNav = () => {
-      navigation.pop()
+
       navigation.navigate("TimerScreen", { mode:mode, subjectID: subjectID })
 
     }
@@ -51,7 +51,7 @@ function SetTimer({ route }){
         //onPress={()=>navigation.navigate("TimerScreen",{mode:"ADVANCED"},
 
         <SafeAreaView style={{flex: 1, padding:16}}>
-        <TopHeader/>
+        <TopHeader />
         <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
 
         <Text style={{marginBottom:12}} category='h2'>{mode == 'BASIC' ? 'Learner' : 'Advanced'}</Text>  
