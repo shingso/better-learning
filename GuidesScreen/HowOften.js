@@ -5,10 +5,10 @@ import { useNavigation, StackActions } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
 
-function HowToLearn(){
+function HowOften(){
 
   return (
-    
+     
     <Swiper style={styles.wrapper} loop={false} index={0}>
       
       <View style={styles.slide1}>
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HowToLearn
+export default HowOften

@@ -32,7 +32,7 @@ function GuidesHome(){
     
     const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to Learn!', imagePath:require('../assets/images/teaching.png')},
      {title:'What is Learning?', path:'LearningTips', bodyText:'The basics of learning', imagePath:require('../assets/images/studying.png')},
-     {title:'How often should I study?', path:'LearningTips', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendar.png')},
+     {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendar.png')},
      {title:'Im just not getting it...', path:'LearningTips', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged.png')},
      {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning', imagePath:require('../assets/images/progress.png')},
      {title:'Some inspiration!', path:'LearningTips', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/progress.png')}
