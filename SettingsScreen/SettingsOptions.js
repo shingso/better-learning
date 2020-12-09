@@ -42,7 +42,7 @@ const ListItem = ( props ) => (
 );
 
   return (
-
+    <Layout style={{flex:1}}>
     <SafeAreaView style={{margin:20}}>
     <TopHeader/>
     <Text category='h1' style={{marginBottom:12}}>Settings</Text>
@@ -51,6 +51,7 @@ const ListItem = ( props ) => (
     <ListItem title={'Privacy Policy'} route={'PrivacyPolicy'}/>
     <ListFooter/>
     </SafeAreaView>
+    </Layout>
   );
 };
 

@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { format, endOfMonth, isThisMonth, isThisYear, subDays , differenceInDays, differenceInCalendarDays} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
-import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
+import { Layout, Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem} from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -24,9 +24,6 @@ const commitsData = [
 
 function IQScreen(){
 
-
-  const [visible, setVisible] = React.useState(false);
-  
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
   const timesStudiedMonthStat = studyStatsData.timesStudiedMonth
@@ -50,7 +47,7 @@ function IQScreen(){
       //divide the unque times studied this month
       console.log(timesStudiedTwoWeeksUnique, diffInStartToCurrent,'Log')
      } else { 
-
+     
 
       //divide the uniqu
       console.log(diffInStartToCurrent)
@@ -58,6 +55,7 @@ function IQScreen(){
 
      }
  */
+
 
     // we want the user to have a higher score the beginning  
 
@@ -76,29 +74,15 @@ function IQScreen(){
  
   };
 
-  const renderToggleButton = () => (
-    <Button appearance='ghost' accessoryRight={InfoIcon} onPress={() => setVisible(true)}>
-    </Button>
-  );
+  
   // the glitch is that the color is messed up 
 
   return (
 
-    <ScrollView showsVerticalScrollIndicator={false}>
-    <SafeAreaView style={{flex: 1, padding:16,}}>
-    
-
-    {/*<Tooltip
-      anchor={renderToggleButton}
-      visible={visible}
-      accessoryLeft={InfoIcon}
-      placement={'bottom end'}
-      onBackdropPress={() => setVisible(false)}>
-      What is IQ?
-      IQ is just for fun!
-      Everytime you finish a study session your IQ will go up by your current streak.
-    </Tooltip> */}
-
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flex:1}}>
+    <SafeAreaView style={{flex: 1}}>
+  
+    <Layout style={{flex:1, padding:16}}>
     <Card onPress={calculateStudyStrength} style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text style={{marginBottom:8}} category={'s1'}>Study Strength</Text>
@@ -107,19 +91,8 @@ function IQScreen(){
     <Text>Your study strength is determined by how consistently you have been studying</Text>
     </Card>
 
-    <Card>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    <Text category={'s1'}>IQ</Text>
-    <Text>{userData.IQ}</Text>
-    </View>
-    </Card>
       
-    <Card style={{marginVertical:12}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    <Text category={'s1'}>Started</Text>
-    <Text>{format(new Date(userData.timeStamp.toDate()), 'MMMM dd yyyy')}</Text>
-    </View>
-    </Card>
+
 
     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
@@ -152,8 +125,7 @@ function IQScreen(){
     
     </Card>
 
-    
-   
+    </Layout>
     </SafeAreaView>
     </ScrollView>
       
