@@ -15,7 +15,6 @@ export function StudyStatsContextWrapper(props) {
   const [timesStudiedWeek, setTimesStudiedWeek] = React.useState(0);
   const [timesStudiedTwoWeek, setTimesStudiedTwoWeek] = React.useState(0);
   const [timesStudiedTwoWeeksUnique, setTimesStudiedTwoWeeksUnique] = React.useState(0);
-
   const [timesStudiedMonth, setTimesStudiedMonth] = React.useState(0);
   
   useEffect(() => {
@@ -36,9 +35,9 @@ export function StudyStatsContextWrapper(props) {
       const list = [];
       const datesDict = {}
       const twoWeekDatesSet = new Set()
-      var count = 0
-      var weekCount = 0
-      var twoWeekCount = 0
+      let count = 0
+      let weekCount = 0
+      let twoWeekCount = 0
 
       querySnapshot.forEach(doc => {
 
