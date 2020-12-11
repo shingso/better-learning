@@ -13,14 +13,8 @@ const InfoIcon = (props) => (
 );
 
 
-const commitsData = [
-  { date: '2010-11-01', count: 0 },
-  { date: '2020-11-11', count: 1 },
-  { date: '2020-11-02', count: 2 },
-  { date: '2020-11-05', count: 1 },
-  { date: '2020-11-13', count: 2 }
-
-];
+const commitsData = [{"date": "2020-11-11"}, {"date": "2020-11-11"}, {"date": "2020-11-13"}, {"date": "2020-11-13"}, {"date": "2020-11-13"}, {"date": "2020-11-23"}, {"date": "2020-11-23"}, {"date": "2020-11-30"}, {"date": "2020-11-30"}, {"date": "2020-11-30"}, {"date": "2020-11-30"},{"date": "2020-12-06"}, {"date": "2020-12-01"}, {"date": "2020-12-01"}, {"date": "2020-12-01"}, {"date": "2020-12-01"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-04"}, {"date": "2020-12-04"}, {"date": "2020-12-04"}, {"date": "2020-12-05"}, {"date": "2020-12-05"}, {"date": "2020-12-05"}, {"date": "2020-12-06"},{"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"},  {"date": "2020-12-06"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-08"}, {"date": "2020-12-08"}]
+;
 
 function IQScreen(){
 
@@ -32,6 +26,7 @@ function IQScreen(){
   const timesStudiedTwoWeeksUnique = studyStatsData.timesStudiedTwoWeeksUnique
   const dateStats = studyStatsData.dates
   const userStartDate = userData.timeStamp
+  const allDateStats = studyStatsData.allDates
 
   const calculateStudyFrequency = () => {
     
@@ -62,7 +57,7 @@ function IQScreen(){
     dateStats.forEach(element => {
 
       let newDate = new Date(element.date)
-      console.log(element.date)
+
    
       if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end:endOfWeekOneWeek})){
         weeklyFrequencyDict[1] += 1
@@ -87,9 +82,7 @@ function IQScreen(){
 
   
   
-  console.log(count/4)
-  console.log(weeklyFrequencyDict)
-
+  console.log(allDateStats)
 
   return count/4
 
@@ -220,8 +213,11 @@ function IQScreen(){
     endDate={endOfMonth(new Date())}
     numDays={99}
     //need to pass in style prop to mon
-    values={dateStats}
-    monthLabelsStyle={{fontSize:14, fill:'black'}}
+    //Need to pass in our own color array 
+    colorArray={["#eee", "#D44B79", "#6B1928", "#9F3251", "#360000",'#360000']}
+    values={commitsData}
+    monthLabelsStyle={{fontSize:14, fill:'black '}}
+    monthLabelsColor={'black'}
     />
   
     </Card>

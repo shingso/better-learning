@@ -16,6 +16,9 @@ export function StudyStatsContextWrapper(props) {
   const [timesStudiedTwoWeek, setTimesStudiedTwoWeek] = React.useState(0);
   const [timesStudiedTwoWeeksUnique, setTimesStudiedTwoWeeksUnique] = React.useState(0);
   const [timesStudiedMonth, setTimesStudiedMonth] = React.useState(0);
+  const [currentWeekStudiedSet, setCurrentWeekStudiedSet] = React.useState(0);
+  const [allDates, setAllDates] = React.useState(0);
+
   
   useEffect(() => {
 
@@ -33,8 +36,10 @@ export function StudyStatsContextWrapper(props) {
       if(!querySnapshot.metadata.hasPendingWrites){
       
       const list = [];
+      const allList = [];
       const datesDict = {}
       const twoWeekDatesSet = new Set()
+      const currentWeekStudiedSet = new Set()
       let count = 0
       let weekCount = 0
       let twoWeekCount = 0
@@ -44,13 +49,14 @@ export function StudyStatsContextWrapper(props) {
           const timeStamp = doc.get('timeStamp', { serverTimestamps: 'estimate' })
           const newDate = new Date(timeStamp.toDate())
           const newDateConverted = format(newDate, 'yyyy-MM-dd')
-
-
+          let currentItem = {};
+          currentItem.date = newDateConverted
+          allList.push(currentItem)
         
-          
           //check if date is within the current Week
           if(isWithinInterval(newDate, {start:startOfCurrentWeek, end:endOfCurrentWeek})){
             weekCount += 1
+            currentWeekStudiedSet.add(newDateConverted)
           }
 
           if(isWithinInterval(newDate, {start:twoWeeksAgo, end:currentDate})){
@@ -81,8 +87,9 @@ export function StudyStatsContextWrapper(props) {
         list.push(item)
      }
 
+    
   
-
+      setAllDates(allList)
       setTimesStudied(querySnapshot.size)
       setTimesStudiedWeek(weekCount)
       setTimesStudiedTwoWeek(twoWeekCount)
@@ -90,6 +97,7 @@ export function StudyStatsContextWrapper(props) {
       setTimesStudiedMonth(count)
       setDates(list);
       setInitializing(false)
+
 
 
     }
@@ -102,7 +110,7 @@ export function StudyStatsContextWrapper(props) {
     return null
   }
 
-  return (<StudyStatsContext.Provider value={{dates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique}}>
+  return (<StudyStatsContext.Provider value={{dates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique, allDates}}>
     {props.children}
     </StudyStatsContext.Provider>
     );

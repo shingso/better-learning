@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native'
-import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
+import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, ButtonGroup } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { StudyStatsContextWrapper } from '../StudyStats'
 import { StudyStatsContext } from '../StudyStats'
+import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format } from 'date-fns'
+
 const getText = (number) => {
 
 
@@ -42,10 +44,35 @@ const getPicture = (number) => {
     return pictureDict[number]
 }
 
+const returnDayOfTheWeekCompleted = () => {
+
+  let currentDate = new Date()
+  let currentDayOfWeek = getDay(currentDate)
+  let currentStartOfWeek = startOfWeek(currentDate)
+  let currentEndOfWeek = endOfWeek(currentDate)
+  let daysOfTheWeekStudied = {}
+  let eachDayOfWeek = eachDayOfInterval({start:currentStartOfWeek, end:currentEndOfWeek})
+
+  for(let x in eachDayOfWeek){
+    
+    console.log(format(eachDayOfWeek[x], 'yyyy-MM-dd'))
+
+    //can we use overlapping days
+    //after we have overll
+
+  }
+
+
+
+
+}
+
+
 function ProgressHeader(props){
  
     const studyStatsData = useContext(StudyStatsContext)
     const timesStudiedWeek = studyStatsData.timesStudiedWeek
+
     // 0 times within the last two weeks - Motivation message to start
     // 1 times within the last two weeks - 
     // 4 times within the last two weeks - 
@@ -55,14 +82,19 @@ function ProgressHeader(props){
     // return how many times you studied in the past week vs how many days have passed in the week
 
     return (
-       
-      <Card>
+      <View>
+      
+
+      <View style={{flexDirection:'row'}}>
+      <View></View>
+      </View>
+
+      <Card style={{marginTop:12}} onPress={()=>returnDayOfTheWeekCompleted()}>
       <ImageBackground opacity={0.20} resizeMode='cover' source={getPicture(props.messageNumber)} style={styles.image}>
-      <Text category='label'>You have studied {timesStudiedWeek} times this week!</Text>
-      <Text>You have been extremely consistent in studying. Keep going!</Text>
+      <Text>You have studied {timesStudiedWeek} times this week.</Text>
       </ImageBackground>
       </Card>
-      
+      </View>
       );
 
     }
