@@ -10,15 +10,15 @@ import { AuthContext } from '../AuthContext'
 import TopHeader from '../UtilComponents/TopHeader'
 
 const PauseIcon = (props) => (
-  <Icon name='pause-circle-outline' width={90} height={90} {...props} />
+  <Icon name='pause-circle' width={90} height={90} {...props} />
 );
 
 const PlayIcon = (props) => (
-  <Icon name='play-circle-outline' width={120} height={120} {...props} />
+  <Icon name='play-circle' width={120} height={120} {...props} />
 );
 
 const PlayIconSmall = (props) => (
-  <Icon name='play-circle-outline' width={90} height={90} {...props} />
+  <Icon name='play-circle' width={90} height={90} {...props} />
 );
 
 
@@ -100,29 +100,10 @@ const CustomBackHeader = () => {
 
 useEffect(() => {
  
-  if (route.params.mode == 'BASIC') {
-    setMode(route.params.mode);
-    setInitialTimeSet(1500000)
-    setTimeElaspased(0)
-  }
-
-  if (route.params.mode == 'ADVANCED') {
+ 
     setMode(route.params.mode);
     setInitialTimeSet(4000)
     setTimeElaspased(0)
-  }
-
-  if (route.params.mode == 'ADVANCED2') {
-    setMode(route.params.mode);
-    setInitialTimeSet(4000)
-    setTimeElaspased(0)
-  }
-
-  if (route.params.mode == 'BREAK') {
-    setMode(route.params.mode);
-    setInitialTimeSet(1000)
-    setTimeElaspased(0)
-  }
 
 
 }, [route.params.mode])
@@ -221,12 +202,14 @@ return (
 
   <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between' }}>
   
-  {hasPlayed &&
-  <View style={{alignItems:'center'}}>
-  <Text category='s1'>Currently:</Text>
-  <Text style={{textAlign:'center'}} category='h2'>{isPlaying ? 'FOCUSED ON STUDYING' : 'PAUSED'}</Text>
+  
+
+  {/* {hasPlayed && */}
+  <View style={{flexDirection:'row'}}>
+  <Text>Currently:</Text>
+  <Text style={{textAlign:'center'}} >{isPlaying ? ' Studying' : ' Paused'}</Text>
   </View>
-  }
+  {/* } */}
 
   <View style={{flex:1,justifyContent:'center',}}> 
   

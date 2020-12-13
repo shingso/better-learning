@@ -1,8 +1,5 @@
 
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { View, Text, Button,  } from 'react-native';
-
-import auth from '@react-native-firebase/auth';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,16 +7,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components'
 
-
+import HomeScreen from './HomeScreen/HomeScreen'
 import AddNotes from './HomeScreen/AddNotes';
 import Recall from './HomeScreen/Recall';
+import Break from './HomeScreen/BreakScreen';
 
 import NotesFocused from './NotesScreen/NotesFocused'
 
-import HomeScreen from './HomeScreen/HomeScreen'
-
 import GuidesHome from './GuidesScreen/GuidesHome'
 import HowToLearn from './GuidesScreen/HowToLearn'
+import HowOften from './GuidesScreen/HowOften'
+import WhatIsLearning from './GuidesScreen/WhatIsLearning'
+import Discouraged from './GuidesScreen/Discouraged'
+import Inspiration from './GuidesScreen/Inspiration'
+import LearningTips from './GuidesScreen/LearningTips'
+
 
 import TimerScreenFunc from './HomeScreen/TimerScreenFunc'
 import SetTimer from './HomeScreen/SetTimer'
@@ -48,16 +50,16 @@ const Tab = createBottomTabNavigator();
 
 
 const HomeIcon = (props) => (
-  <Icon {...props} name='home-outline'/>
+  <Icon {...props} name='home'/>
 );
 
 const BookIcon = (props) => (
-  <Icon {...props} name='book-outline'/>
+  <Icon {...props} name='book'/>
 );
 
 
 const ChartIcon = (props) => (
-  <Icon {...props} name='bar-chart-2-outline'/>
+  <Icon {...props} name='bar-chart-2'/>
 );
 //export const AuthContext = createContext(null)
 
@@ -104,6 +106,7 @@ function HomeStack() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AddNotes" component={AddNotes} />
         <Stack.Screen name="Recall" component={Recall} />
+        <Stack.Screen name="Break" component={Break} />
         <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="SetTimer" component={SetTimer} />
         <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />
@@ -130,6 +133,14 @@ function HomeStack() {
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="GuidesHome" component={GuidesHome} />
         <Stack.Screen name="HowToLearn" component={HowToLearn} />
+        <Stack.Screen name="HowOften" component={HowOften} />
+        <Stack.Screen name="WhatIsLearning" component={WhatIsLearning} />
+        <Stack.Screen name="LearningTips" component={LearningTips} />
+        <Stack.Screen name="Inspiration" component={Inspiration} />
+        <Stack.Screen name="Discouraged" component={Discouraged} />
+        
+
+
         <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
         <Stack.Screen name="TermsOfService" component={TermsOfService} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
@@ -145,9 +156,7 @@ function SettingsStack() {
     return (
 
         <Stack.Navigator headerMode='none'>
-    
         <Stack.Screen name="IQScreen" component={IQScreenWithContext} />
-
         </Stack.Navigator>
     );
   }

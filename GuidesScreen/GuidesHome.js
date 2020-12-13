@@ -15,6 +15,7 @@ function GuidesHome(){
    
     const navigateSettings = () => {
       navigation.navigate('SettingsOptions');
+      
   };
     
   const SettingsIcon = (props) => (
@@ -31,11 +32,11 @@ function GuidesHome(){
   );
     
     const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to Learn!', imagePath:require('../assets/images/teaching.png')},
-     {title:'What is Learning?', path:'LearningTips', bodyText:'The basics of learning', imagePath:require('../assets/images/studying.png')},
+     {title:'What is Learning?', path:'WhatIsLearning', bodyText:'The basics of learning', imagePath:require('../assets/images/studying.png')},
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendar.png')},
-     {title:'Im just not getting it...', path:'LearningTips', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged.png')},
+     {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged.png')},
      {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning', imagePath:require('../assets/images/progress.png')},
-     {title:'Some inspiration!', path:'LearningTips', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/progress.png')}
+     {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/progress.png')}
     ]
 
     const renderItem = (info) => (
@@ -43,7 +44,7 @@ function GuidesHome(){
     //
       
       <Card style={styles.item}
-       onPress={()=>navigation.navigate('HowToLearn')}
+       onPress={()=>navigation.navigate(info.item.path)}
       >
       <ImageBackground opacity={0.20} resizeMode='cover' width={500} source={info.item.imagePath} style={styles.image}>
       <View style={{justifyContent:'space-between'}}>

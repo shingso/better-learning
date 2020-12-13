@@ -12,7 +12,7 @@ function HowToLearn(){
     <Swiper style={styles.wrapper} loop={false} index={0}>
       
       <View style={styles.slide1}>
-
+      <Text style={{marginBottom:20}} category='h1'>How should I learn?</Text>
       <Text>Learning is about putting time into understanding a subject</Text>
       <Image
         style={{width: 350,

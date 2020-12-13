@@ -82,7 +82,7 @@ function IQScreen(){
 
   
   
-  console.log(allDateStats)
+  //console.log(allDateStats)
 
   return count/4
 
@@ -99,7 +99,7 @@ function IQScreen(){
      let diffInStartToCurrent = differenceInCalendarDays(userStartDateConverted, currentDate)
      let extraMultiplier =  timesStudiedTwoWeek - diffInStartToCurrent
      let currentScore = 0
-     console.log(timesStudiedTwoWeeksUnique , diffInStartToCurrent, extraMultiplier)
+     //console.log(timesStudiedTwoWeeksUnique , diffInStartToCurrent, extraMultiplier)
  /*     if( diffInStartToCurrent >= 14 ){
       //if difference in days is greater than 14 days
       //divide the unque times studied this month
@@ -216,7 +216,7 @@ function IQScreen(){
     //Need to pass in our own color array 
     colorArray={["#eee", "#D44B79", "#6B1928", "#9F3251", "#360000",'#360000']}
     values={commitsData}
-    monthLabelsStyle={{fontSize:14, fill:'black '}}
+    monthLabelsStyle={{fontSize:14, fill:'black'}}
     monthLabelsColor={'black'}
     />
   

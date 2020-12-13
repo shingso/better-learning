@@ -4,12 +4,7 @@ import { Button, Icon,  Card, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 
-const Header = (props) => (
-    <View {...props}>
-      <Text category='s1'>{props.title}</Text>
 
-    </View>
-  );
 
 
   const ClockIcon = (props) => (
@@ -30,38 +25,40 @@ function SetTimer({ route }){
       navigation.navigate("TimerScreen", { mode:mode, subjectID: subjectID })
 
     }
- 
-    const Footer = (props) => (
-
-    
-      <View {...props} style={[props.style, styles.footerContainer]}>
-        <ClockIcon/>
-        <Button
-          onPress={()=>navigation.navigate("TimerScreen", { mode: props.mode, subjectID: subjectID })}
-          style={styles.footerControl}
-          size='small'>
-        
-         {props.title}
-        </Button>
-      </View>
-    );
 
     return (
        
-        //onPress={()=>navigation.navigate("TimerScreen",{mode:"ADVANCED"},
+    <SafeAreaView style={{flex: 1, padding:16}}>
+    <TopHeader/>
+    <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
+    
+    <View style={{marginBottom:12}}>
+    <View style={{flexDirection:'row', alignItems:'flex-end', marginBottom:12}}>
+    <Text  category='h1'>{mode == 'BASIC' ? 'Starter' : 'Advanced'}</Text>  
+    
+    {mode == 'BASIC' &&
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:7, marginLeft:20}}>
+    <Icon fill='green' width={15} height={15} name='alert-circle-outline' />
+    <Text style={{ marginLeft:4,color:'green'}}>Recommended</Text>  
+    </View>
+    }
+    </View>
 
-        <SafeAreaView style={{flex: 1, padding:16}}>
-        <TopHeader />
-        <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
 
-        <Text style={{marginBottom:12}} category='h2'>{mode == 'BASIC' ? 'Learner' : 'Advanced'}</Text>  
-        <Text>
-  
-        {mode == 'BASIC' ? 'Start building good study habits by studying for 25 mintues' : 'A longer study session for people with established study habits'}
-        </Text>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Text style={{marginRight:8}}>Study Period:</Text>
+    <Icon fill='black' width={15} height={15} name='clock-outline' />
+    <Text style={{marginLeft:8}}>{mode == 'BASIC' ? '25 mins' : '1 hour'}</Text>
+    </View>
+    
+    </View>
+
+    <Text>
+    {mode == 'BASIC' ? 'Start building good study habits by studying for 25 mintues' : 'A longer study session for people with established study habits'}
+    </Text>
         
-      <View style={{ flex:1, marginBottom:36 , justifyContent:'flex-end'}}>
-      <Button style={{marginBottom:30}} onPress={customNav}>
+    <View style={{ flex:1, marginBottom:36 , justifyContent:'flex-end'}}>
+    <Button style={{marginBottom:30}} onPress={customNav}>
       START
     </Button>
 
@@ -76,27 +73,10 @@ function SetTimer({ route }){
     
     </View>
     </View>
-
-      {/*   <Card style={styles.card} header={(props)=><Header {...props} title='Starter Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='BASIC'/>}>
-        <Text>
-         A quick and simple 25 minute study session
-        </Text>
-        </Card>
-
-
-        <Card style={styles.card} header={(props)=><Header {...props} title='Advanced Study Session'/>} footer={(props)=><Footer {...props} title='START' mode='ADVANCED'/>}>
-        <Text>
-        One hour study session. Two twenty five minute studys with a break inbetween.
-        </Text>
-        </Card> */}
-
-
-
-      
-      </SafeAreaView>
+    </SafeAreaView>
       
       
-      );
+    );
 
       //we need to update state when we add an item
     
