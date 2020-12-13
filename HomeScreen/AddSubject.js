@@ -43,9 +43,11 @@ function AddSubject(){
     <TopHeader/>
     <Text category='h1' style={{marginBottom:40}}>Getting Started!</Text>
     
-    <Text  style={{marginBottom:40}} >Think of a subject that you want to learn. Need to be motivated to learn. It has to be a subject you want to learn</Text>
+    <Text style={{marginBottom:12}} >Think of a subject that you want to learn.</Text>
+    <Text style={{marginBottom:40}} >Learning comes best when its something that you want to learn, a subject that you find valuable in growing and getting better in 
+    </Text>
    
-    
+    <Text>So what is a subject that you find intrested in learning?</Text>
     <Text>{formikProps.errors.subject}</Text>
     <Input
     placeholder='Enter subject title'

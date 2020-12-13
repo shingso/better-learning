@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
+import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert, ImageBackground } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Modal, Card, Text } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
 import { AuthContext } from '../AuthContext'
 import TopHeader from '../UtilComponents/TopHeader'
@@ -159,15 +159,16 @@ const startBreak = (time) => {
 return (
 
        
-  <View style={{ flex: 1, padding:16 }}>
- 
+  <Layout style={{ flex: 1, padding:16 }}>
+  <ImageBackground style={{flex:1}} resizeMode={'contain'} opacity={0.8}  source={require('../assets/images/poolbreak.png')}>
   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
   <CustomBackHeader/>
   </View>
 
 
   <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between' }}>
-  <Text style={{marginBottom:12}}>Its time for a break</Text>
+  
+  <Text category='h1' style={{marginBottom:12}}>It's time for a break</Text>
   <Text>Breaks are important to reset our train of thought</Text>
 
   <View style={{flex:1,justifyContent:'center',}}> 
@@ -240,7 +241,8 @@ return (
   </Modal>      
           
   </View>
-  </View>
+  </ImageBackground>
+  </Layout>
   
   )
 };

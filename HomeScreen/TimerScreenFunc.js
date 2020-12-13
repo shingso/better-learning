@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text } from '@ui-kitten/components';
+import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
 import { UserDataContext } from '../UserDataContext'
 import { updateUserStreakData } from '../helperFunctions'
@@ -192,7 +192,7 @@ confirmAddNote = () =>{
 return (
 
        
-  <View style={{ flex: 1, padding:16 }}>
+  <Layout level='2' style={{ flex: 1, padding:16 }}>
  
   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
   <CustomBackHeader/>
@@ -279,7 +279,7 @@ return (
   </Modal>      
           
   </View>
-  </View>
+  </Layout>
   
   )
 };

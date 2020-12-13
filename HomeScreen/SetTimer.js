@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet} from 'react-native'
-import { Button, Icon,  Card, Text } from '@ui-kitten/components';
+import {  View, SafeAreaView, StyleSheet, ImageBackground} from 'react-native'
+import { Button, Icon,  Card, Text, Layout } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 
@@ -18,20 +18,17 @@ function SetTimer({ route }){
     const navigation = useNavigation();
     const { subjectID } = route.params
 
-
-
     const customNav = () => {
-
       navigation.navigate("TimerScreen", { mode:mode, subjectID: subjectID })
-
     }
 
     return (
-       
+    <Layout level='2' style={{flex:1}}>
     <SafeAreaView style={{flex: 1, padding:16}}>
     <TopHeader/>
-    <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
     
+    <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
+    <ImageBackground style={{flex:1}} resizeMode={'contain'} opacity={0.1} source={mode == 'BASIC' ? require('../assets/images/boystudyingv1.png') : require('../assets/images/blogpostv2.png')}>
     <View style={{marginBottom:12}}>
     <View style={{flexDirection:'row', alignItems:'flex-end', marginBottom:12}}>
     <Text  category='h1'>{mode == 'BASIC' ? 'Starter' : 'Advanced'}</Text>  
@@ -73,7 +70,9 @@ function SetTimer({ route }){
     
     </View>
     </View>
+    </ImageBackground>
     </SafeAreaView>
+    </Layout>
       
       
     );

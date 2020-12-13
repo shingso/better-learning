@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View , StyleSheet } from 'react-native';
+import { View , StyleSheet, ImageBackground } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
-import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
+import { Button, Text ,Icon , Input, Modal, Card, Layout } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { useNavigation, StackActions } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
@@ -13,7 +13,7 @@ const TextSchema = Yup.object().shape({
   text: Yup.string()
     .min(1, 'Its crucial to recall inorder to learn')
     .max(200, 'Too Long!')
-    .required('Required'),
+    .required('Type out what you have learned below '),
 
 });
 
@@ -76,8 +76,8 @@ function Recall({ route }){
 
   return(
            
-    <View style={{ flex: 1, padding:16 }}>
-      
+    <Layout style={{ flex: 1, padding:16 }}>
+    <ImageBackground style={{flex:1}} resizeMode={'contain'} opacity={0.1} source={require('../assets/images/boystudyingv1.png')}>
     <Formik
     initialValues={{ text:''}}
     validationSchema={TextSchema}
@@ -121,7 +121,7 @@ function Recall({ route }){
     backdropStyle={styles.backdrop}>
     <Card disabled={true}>
     <Text>Note Added!</Text>
-    {mode == 'BASIC' || mode == 'ADVANCED2'  &&
+    {mode == 'BASIC'  &&
     <Button size='small' onPress={confirmAddNote}>
     DISMISS
     </Button>
@@ -161,7 +161,8 @@ function Recall({ route }){
     </React.Fragment>
     )}
   </Formik>
-  </View>
+  </ImageBackground>
+  </Layout>
 
     )
 };
