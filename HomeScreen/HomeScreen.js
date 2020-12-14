@@ -2,14 +2,15 @@ import React, { useState, useEffect, useContext } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Divider } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Layout } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import ProgressHeader from '../UtilComponents/ProgressHeader'
 import { format, formatDistance } from 'date-fns'
 
 
+
 const PlayIcon = (props) => (
-  <Icon {...props} height={30} width={30} name='play-circle-outline'/>
+  <Icon {...props} height={40} width={40} name='play-circle'/>
 );
   
 
@@ -29,14 +30,15 @@ function HomeScreen(){
     const userID = user.uid
     const navigation = useNavigation();
     const [ loading, setLoading ] = useState(true);
-    const [ subjects, setSubjects ] = useState([]);
-  
+    const [ subjects, setSubjects ] = useState([]);   
+    const [ currentSubject, setCurrentSubject ] = useState(null);   
+    const [ currentSubjectID, setCurrentSubjectID ] = useState(null);   
 
   
     const renderListFooter = () => (
 
-      <View style={{alignItems:'flex-start'}}> 
-      <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32}} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} />
+      <View style={{alignItems:'flex-start', marginBottom:128}}> 
+      {/* <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32, }} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} /> */}
       </View>
 
   );
@@ -76,30 +78,44 @@ function HomeScreen(){
 
   const renderHeader = () => (
 
-    <View style={{marginTop:12, marginBottom:12}}>
-    <ProgressHeader messageNumber={1}/>
+    <View >
+{/*     <ProgressHeader messageNumber={1}/> */}
+
+  
+  
+   
+
     </View>
 
+    
+
   );
+
+  const setCurrentItemInfo = (title, id) => {
+    setCurrentSubject(title)
+    setCurrentSubjectID(id)
+  }
 
 
     const renderItem = (info) => (
      
       <Card
-        style={styles.item}
-        disabled={true}
+        style={{backgroundColor: info.item.title == currentSubject ? '#F0FDE3' : '#FFFFFF', marginVertical:8 }}
+        onPress={()=>{setCurrentItemInfo(info.item.title, info.item.id)}}
       >
 
-      <View style={{ justifyContent:'space-between' }}>
-      <View>
+      <View style={{ justifyContent:'space-between', flexDirection:'row'}}>
+      <View style={{flex:10}}>
       <Text category='s1'>{info.item.title}</Text>
       {info.item.lastStudied != null && <Text style={{fontSize:10}}>Last Studed: {formatDistance(new Date(info.item.lastStudied.toDate()), new Date())} ago</Text>}
       </View>
 
-      <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:24, }}>
-      <Button accessoryLeft={BookIcon} style={{marginRight:16, height:42}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {subjectID :info.item.id, title:info.item.title})}/>
-      <Button accessoryLeft={PlayIcon} size={'small'}  style={{width:'70%', height:42}} onPress={()=>navigation.navigate('SetTimer', {subjectID :info.item.id})}/>
-      </View>
+    
+
+      <View style={{flex:1}}>
+      <Button accessoryLeft={BookIcon} style={{ height:42}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {subjectID :info.item.id, title:info.item.title})}/>
+    
+      </View> 
       
       </View>
       </Card>
@@ -123,10 +139,13 @@ function HomeScreen(){
           });
   
           setSubjects(list);
-    
+          setCurrentSubject(list[0].title)
+          
           if (loading) {
             setLoading(false);
           }
+          
+
         });
       }, []);
     
@@ -138,8 +157,23 @@ function HomeScreen(){
 
     return (
 
-    <ImageBackground  opacity={0.5} source={require('../assets/images/backgroundLowV1.png')} style={{ flex:1, }}>
+
+    
     <SafeAreaView style={{flex: 1}}>
+    
+    <Layout level='2' style={{padding:16}}>
+    <ProgressHeader messageNumber={1}/>
+    <Card style={{marginTop:12, backgroundColor:'white', borderWidth:1.5, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon style={{marginRight:12}} fill='#14671C' width={50} height={50} name='play-circle' />
+    <View style={{flexDirection:'column', flex:1}}>
+    <Text style={{fontWeight:'bold', fontSize:15}} category='label'>Start a study session for:</Text>
+    <Text style={{flexWrap:'wrap'}}>{currentSubject}</Text>
+    </View>
+    </View>
+    </Card>
+    </Layout>
+
     <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -149,8 +183,10 @@ function HomeScreen(){
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderWelcome}
         />
+    <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32,position: 'absolute', bottom: 20,                                                    
+    right: 20, zIndex:5 }} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} />
     </SafeAreaView>
-    </ImageBackground>
+  
       
     );
 
@@ -162,22 +198,24 @@ function HomeScreen(){
 const styles = StyleSheet.create({
   item: {
 
-    marginVertical:8,
+    marginBottom:8,
   
     
   },
   //contanier that holds everything 
   contentContainer: {
 
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    flexGrow:1,
+    paddingHorizontal: 16,
+
+   
 
   },
   
   container:{
-    opacity:0.92
+ 
+    flex:1
   },
+
   image: {
     flex: 1,
     resizeMode: "center",
