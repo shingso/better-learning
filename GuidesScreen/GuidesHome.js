@@ -98,10 +98,11 @@ const styles = StyleSheet.create({
       flex: 1,
       resizeMode: "center",
       justifyContent: "flex-end",
-    
       margin:-24,
       padding:18
     },
+
+
     contentContainer: {
       paddingHorizontal: 20,
       paddingVertical: 8,

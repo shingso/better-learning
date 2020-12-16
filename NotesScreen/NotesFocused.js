@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
-import { Card, List, Text, Button, Icon, Modal, Input, Layout } from '@ui-kitten/components';
-import Empty from '../UtilComponents/EmptyList'
+import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
 
 const TrashIcon = (props) => (
-  <Icon {...props} width={20} height={20} name='trash-2-outline' />
+  <Icon {...props} width={22} height={22} name='trash-2-outline' />
 );
 
 const EditIcon = (props) => (
-  <Icon {...props} width={20} height={20} name='edit-outline'/>
+  <Icon {...props} width={25} height={25} name='plus-outline'/>
 );
 
 
@@ -35,12 +34,31 @@ function NotesFocused({ route, navigation }){
     const renderItem = (info) => (
       
       <View style={styles.item}>
-      <View>
-      <Text style={{marginBottom:12}} category='label'>{format(new Date(info.item.timeStamp.toDate()), 'MMMM do yyyy')}</Text>
-      <Text>{info.item.text}</Text>
+      <Text category='label' style={{marginBottom:4}} appearance='hint'>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
+      {info.item.textTheme != null && <Text category='s1' style={{fontWeight:'bold', marginBottom:8}}>{info.item.textTheme}</Text>}
+      
+      <Text style={{lineHeight:22}} >{info.item.text}</Text>
       </View>
-      </View>
+      
+
     );
+
+
+    const renderEmpty = () => (
+
+      <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
+      <Text style={{textAlign:'center', marginTop:40}}>You can view your notes for {title} here.</Text>
+      <Image
+        style={{width: 650, height: 250, resizeMode:'contain'}}
+        source={require('../assets/images/notesv1.png')}
+      
+      />
+      <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
+
+      <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top left to add a note when you make connections about new ideas</Text>
+      </View>
+      
+    )
 
 
 
@@ -63,16 +81,16 @@ function NotesFocused({ route, navigation }){
       return (
         <Layout style={styles.modalContent}>
          
-          <Input value={inputValue} onChangeText={setInputValue} />
-          <View style={{flexDirection:'row', marginTop:20,marginBottom:8}}>
-          <Button status='danger' style={{marginRight:12}} onPress={()=> deleteSubjectFunction(userID, subjectID)}>
-          Delete
-          </Button>
+        <Input value={inputValue} onChangeText={setInputValue} />
+        <View style={{flexDirection:'row', marginTop:20,marginBottom:8}}>
+        <Button status='danger' style={{marginRight:12}} onPress={()=> deleteSubjectFunction(userID, subjectID)}>
+        Delete
+        </Button>
        
-          <Button appearance='outline' onPress={()=>setVisible(false)}>
-          Close
-          </Button>
-          </View>
+        <Button appearance='outline' onPress={()=>setVisible(false)}>
+        Close
+        </Button>
+        </View>
           
         </Layout>
       );
@@ -82,15 +100,15 @@ function NotesFocused({ route, navigation }){
    
     const renderHeader = () => (
         
-      <View>
+      <View style={{marginBottom:12}}>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
       <TopHeader/>
       <View style={{flexDirection:'row'}}>
-      <Button accessoryLeft={EditIcon} style={{marginRight:16}} appearance='ghost' onPress={()=>navigation.navigate('AddNotes', { subjectID: subjectID, mode:'ADD'})}/>
-      <Button style={{marginRight:-12}} size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
+      <Button accessoryLeft={EditIcon}  style={{marginRight:8}} appearance='ghost' onPress={()=>navigation.navigate('AddNotes', { subjectID: subjectID, mode:'ADD'})}/>
+      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       </View>
       </View>
-      <Text style={{marginTop:12}} category='s1'>{title}</Text>
+      <Text style={{marginTop:12, fontWeight:'bold'}} category='h3'>{title}</Text>
       </View>
     );
  
@@ -106,12 +124,13 @@ function NotesFocused({ route, navigation }){
           querySnapshot.forEach(doc => {
 
 
-            const { text, timeStamp } = doc.data();
+            const { text, timeStamp, textTheme } = doc.data();
 
             list.push({
               id: doc.id,
               text,
-              timeStamp
+              timeStamp,
+              textTheme,
             
             });
           });
@@ -146,7 +165,7 @@ function NotesFocused({ route, navigation }){
          contentContainerStyle={styles.contentContainer}
          data={todos}
          renderItem={renderItem}
-         ListEmptyComponent={<Empty message={'Your notes will be placed here'}/>}
+         ListEmptyComponent={renderEmpty}
          ListHeaderComponent={renderHeader}
          />
 
@@ -203,14 +222,25 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    marginVertical:8,
-    marginHorizontal:16,
-    flexGrow: 1
+    marginVertical:12,
+    marginHorizontal:20,
+    paddingBottom:100,
+    borderColor:'red',
+    
   },
+
+  container:{
   
+  },
+
+ 
   
   item: {
-    marginVertical:20
+    paddingVertical:32,
+    borderBottomColor:'rgba(0, 0, 0, 0.04)',
+  
+    borderBottomWidth:1
+   
   },
 
 });

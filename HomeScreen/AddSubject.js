@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Formik } from 'formik';
 import { addNotesCollection } from '../helperFunctions';
 import { Button, Text ,Icon , Modal, Input, Card} from '@ui-kitten/components';
@@ -26,7 +26,7 @@ function AddSubject(){
   const navigation = useNavigation();
   return(
            
-    <View style={{ flex: 1, padding:16}}>
+    <KeyboardAvoidingView behavior='position' style={{ flex: 1, padding:16}}>
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
@@ -41,13 +41,13 @@ function AddSubject(){
    
    <React.Fragment>
     <TopHeader/>
-    <Text category='h1' style={{marginBottom:40}}>Getting Started!</Text>
+    <Text category='h1' style={{marginBottom:20}}>Getting Started</Text>
     
-    <Text style={{marginBottom:12}} >Think of a subject that you want to learn.</Text>
-    <Text style={{marginBottom:40}} >Learning comes best when its something that you want to learn, a subject that you find valuable in growing and getting better in 
+    <Text style={{marginBottom:12}}>Think of a subject that you want to learn.</Text>
+    <Text style={{marginBottom:40}}>Learning comes best when its something that you want to learn, a subject that you find valuable in growing and getting better in 
     </Text>
    
-    <Text>So what is a subject that you find intrested in learning?</Text>
+    <Text>So what is a subject you are interested in learning?</Text>
     <Text>{formikProps.errors.subject}</Text>
     <Input
     placeholder='Enter subject title'
@@ -57,8 +57,8 @@ function AddSubject(){
     status={formikProps.errors.subject != null ? 'danger' : 'basic'}
       />
     
-    <View style={{flex:1, justifyContent:'flex-end'}}>
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
+    <View style={{ justifyContent:'flex-end'}}>
+    <Button style={{marginTop:40}} onPress={()=>formikProps.handleSubmit()}>
       Add Subject
     </Button>
     </View>
@@ -79,7 +79,7 @@ function AddSubject(){
     </React.Fragment>
     )}
   </Formik>
-  </View>
+  </KeyboardAvoidingView>
 
     )
 };

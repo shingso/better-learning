@@ -5,14 +5,14 @@ import { useNavigation, StackActions } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
 
-function HowToLearn(){
+function Discouraged(){
 
   return (
     
     <Swiper style={styles.wrapper} loop={false} index={0}>
       
       <View style={styles.slide1}>
-      <Text style={{marginBottom:20}} category='h1'>How should I learn?</Text>
+      <Text style={{marginBottom:20}} category='h1'>Discouraged</Text>
       <Text>Learning is about putting time into understanding a subject</Text>
       <Image
         style={{width: 350,
@@ -55,7 +55,6 @@ function HowToLearn(){
       <Text style={{marginBottom:20, paddingHorizontal:16}} category='s1'>Recalling helps our brains process the information</Text>
       </View>
     </Swiper>
-    
   )
 };
 
@@ -79,4 +78,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HowToLearn
+export default Discouraged

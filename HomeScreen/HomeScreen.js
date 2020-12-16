@@ -82,7 +82,7 @@ function HomeScreen(){
 {/*     <ProgressHeader messageNumber={1}/> */}
 
   
-  
+    <Text category={'label'}>Your Subjects:</Text>
    
 
     </View>
@@ -163,11 +163,11 @@ function HomeScreen(){
     
     <Layout level='2' style={{padding:16}}>
     <ProgressHeader messageNumber={1}/>
-    <Card style={{marginTop:12, backgroundColor:'white', borderWidth:1.5, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
+    <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon style={{marginRight:12}} fill='#14671C' width={50} height={50} name='play-circle' />
+    <Icon style={{marginRight:12}} fill='#14671C' width={45} height={45} name='play-circle' />
     <View style={{flexDirection:'column', flex:1}}>
-    <Text style={{fontWeight:'bold', fontSize:15}} category='label'>Start a study session for:</Text>
+    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session for:</Text>
     <Text style={{flexWrap:'wrap'}}>{currentSubject}</Text>
     </View>
     </View>

@@ -8,6 +8,7 @@ import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format } from 'date-
 
 const getText = (number) => {
 
+  // if toda
 
     const messageDict = {
 
@@ -22,7 +23,17 @@ const getText = (number) => {
 
     }
 
-    return messageDict[number]
+    if(getDay(new Date()) == 0 && number == 0){
+      return 'Its the first day of the week!'
+    } else if (getDay(new Date()) != 0 && number == 0){
+      return "You haven't studied yet this week"
+    } else {
+      return 'You have studied ' + number + ' times this week'
+    }
+
+    
+
+  
 }
 
 const getPicture = (number) => {
@@ -91,7 +102,7 @@ function ProgressHeader(props){
 
       <Card style={{marginTop:12}} onPress={()=>returnDayOfTheWeekCompleted()}>
       <ImageBackground opacity={0.20} resizeMode='cover' source={getPicture(props.messageNumber)} style={styles.image}>
-      <Text>You have studied {timesStudiedWeek} times this week.</Text>
+      <Text>{getText(timesStudiedWeek)}</Text>
       </ImageBackground>
       </Card>
       </View>
@@ -118,7 +129,7 @@ const styles = StyleSheet.create({
   //contanier that holds everything 
   
   image: {
-    flex: 1,
+    
     resizeMode: "center",
     justifyContent: "flex-end",
   

@@ -36,11 +36,12 @@ export async function deleteSubject(userID, subjectID) {
 }
 
 
-export async function updateUserStreakData(userID, IQ, currentStreak, highestStreak) {
+export async function updateUserStreakData(userID, IQ, currentStreak, highestStreak, subjectID) {
   const docID = uuid()
   const batch = firestore().batch();
   const ref = firestore().collection('Users').doc(userID)
   const ref2 = firestore().collection('Users').doc(userID).collection('DatesStudied').doc(docID)
+  const ref3 = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID)
   
   batch.update(ref,{
     lastStudied: firestore.FieldValue.serverTimestamp(),
@@ -53,10 +54,11 @@ export async function updateUserStreakData(userID, IQ, currentStreak, highestStr
      timeStamp: firestore.FieldValue.serverTimestamp(),
    })
 
- /*  await ref.add({   
-    timeStamp: firestore.FieldValue.serverTimestamp(),
-  });
- */
+
+   batch.update(ref3, {
+     lastStudied: firestore.FieldValue.serverTimestamp()
+   })
+
 
   batch.commit()
 
@@ -84,17 +86,31 @@ export async function getAppInformation() {
 
 
 
-export async function addNote(userID, subjectID, text) {
+export async function addNote(userID, subjectID, text, textTheme) {
     const increment = firestore.FieldValue.increment(1);
     const ref = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID).collection('Notes')
     const subjectRef = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID)
 
-    await ref.add({
+    if(textTheme != ''){
+
+      await ref.add({
+        
+        text: text,
+        textTheme: textTheme,
+        timeStamp: firestore.FieldValue.serverTimestamp()
+        
+      });
       
-      text: text,
-      timeStamp: firestore.FieldValue.serverTimestamp()
-      
-    });
+    } else {
+
+      await ref.add({
+        
+        text: text,
+        timeStamp: firestore.FieldValue.serverTimestamp()
+        
+      });
+     
+    }
 
     await subjectRef.update({
       noteCount: increment

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { format, endOfMonth, isThisMonth, isThisYear, subDays , differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval} from 'date-fns'
+import { format, endOfMonth, isThisMonth, isThisYear, endOfDay, subDays , startOfDay,differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
-import { Layout, Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction , Tooltip, ListItem, DateService} from '@ui-kitten/components';
+import { Layout, Card, List, Text, Button, Icon } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,9 +12,26 @@ const InfoIcon = (props) => (
   <Icon {...props} name='info'/>
 );
 
+const findVariance = (arr) => {
 
-const commitsData = [{"date": "2020-11-11"}, {"date": "2020-11-11"}, {"date": "2020-11-13"}, {"date": "2020-11-13"}, {"date": "2020-11-13"}, {"date": "2020-11-23"}, {"date": "2020-11-23"}, {"date": "2020-11-30"}, {"date": "2020-11-30"}, {"date": "2020-11-30"}, {"date": "2020-11-30"},{"date": "2020-12-06"}, {"date": "2020-12-01"}, {"date": "2020-12-01"}, {"date": "2020-12-01"}, {"date": "2020-12-01"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-02"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-03"}, {"date": "2020-12-04"}, {"date": "2020-12-04"}, {"date": "2020-12-04"}, {"date": "2020-12-05"}, {"date": "2020-12-05"}, {"date": "2020-12-05"}, {"date": "2020-12-06"},{"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"}, {"date": "2020-12-06"},  {"date": "2020-12-06"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-07"}, {"date": "2020-12-08"}, {"date": "2020-12-08"}]
-;
+  let currentTotal = 0
+  let lengthOfArray = arr.length
+  let varianceTotal = 0
+
+  arr.forEach(element => {
+    currentTotal += element
+  });
+
+  let meanOfArr = currentTotal/lengthOfArray
+
+  arr.forEach(element => {
+    varianceTotal += Math.abs(meanOfArr - element) 
+  })
+
+  return varianceTotal/lengthOfArray
+
+}
+
 
 function IQScreen(){
 
@@ -30,12 +47,23 @@ function IQScreen(){
 
   const calculateStudyFrequency = () => {
     
-    const currentDate = new Date()
-    const weeklyFrequencyDict = {1:0,2:0,3:0,4:0}
+    const _Date = new Date()
+    const currentDate = startOfDay(new Date())
+    const weeklyFrequencyDict = { 0:0, 1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0 }
 
-   
+    const weeklyFrequencyArr = []
 
     const startOfCurrentWeek = startOfWeek(currentDate)
+    const endOfCurrentWeek = endOfWeek(currentDate)
+
+    const sevenDaysAgo = subDays(currentDate, 7)
+    const eightDaysAgo = subDays(currentDate, 8)
+    const endOfDayEight = endOfDay(eightDaysAgo)
+    console.log('log', sevenDaysAgo, eightDaysAgo, endOfDayEight)
+    const fourteenDaysAgo = subDays(currentDate, 14)
+
+
+
 
     const oneWeekAgo = subWeeks(currentDate, 1)
     const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
@@ -52,39 +80,98 @@ function IQScreen(){
     const fourWeeksAgo = subWeeks(currentDate, 4)
     const startOfWeekFourWeek = startOfWeek(fourWeeksAgo)
     const endOfWeekFourWeek = endOfWeek(fourWeeksAgo)
-    let count = 0
 
-    dateStats.forEach(element => {
+    const fiveWeeksAgo = subWeeks(currentDate, 5)
+    const startOfWeekFiveWeek = startOfWeek(fiveWeeksAgo)
+    const endOfWeekFiveWeek = endOfWeek(fiveWeeksAgo)
+
+    const sixWeeksAgo = subWeeks(currentDate, 6)
+    const startOfWeekSixWeek = startOfWeek(sixWeeksAgo)
+    const endOfWeekSixWeek = endOfWeek(sixWeeksAgo)
+
+    const sevenWeeksAgo = subWeeks(currentDate, 7)
+    const startOfWeekSevenWeek = startOfWeek(sevenWeeksAgo)
+    const endOfWeekSevenWeek = endOfWeek(sevenWeeksAgo)
+
+    const eightWeeksAgo = subWeeks(currentDate, 8)
+    const startOfWeekEightWeek = startOfWeek(eightWeeksAgo)
+    const endOfWeekEightWeek = endOfWeek(eightWeeksAgo)
+    
+    
+    let count = 0
+    let monthlyAverage = 0
+    let lastSevenDaysCount = 0
+    let lastFourteenDaysCount = 0
+
+    allDateStats.forEach(element => {
 
       let newDate = new Date(element.date)
 
-   
-      if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end:endOfWeekOneWeek})){
+
+      if(isWithinInterval(newDate, {start:sevenDaysAgo, end: _Date})){
+        lastSevenDaysCount += 1
+      } 
+      
+      if(isWithinInterval(newDate, {start:fourteenDaysAgo, end: eightDaysAgo})){
+        lastFourteenDaysCount += 1
+      } 
+
+      
+     
+  
+
+      if(isWithinInterval(newDate, {start:startOfCurrentWeek, end:endOfCurrentWeek})){
+        weeklyFrequencyDict[0] += 1
+        count += 1
+        
+      } else if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end:endOfWeekOneWeek})){
         weeklyFrequencyDict[1] += 1
         count += 1
-      } 
-
-      if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
+      } else if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
         weeklyFrequencyDict[2] += 1
         count += 1
-      } 
-
-      if(isWithinInterval(newDate, {start:startOfWeekThreeWeek, end:endOfWeekThreeWeek})){
+      
+      } else if(isWithinInterval(newDate, {start:startOfWeekThreeWeek, end:endOfWeekThreeWeek})){
         weeklyFrequencyDict[3] += 1
         count += 1
-      }
-
-      if(isWithinInterval(newDate, {start:startOfWeekFourWeek, end:endOfWeekFourWeek})){
+       
+      } else if(isWithinInterval(newDate, {start:startOfWeekFourWeek, end:endOfWeekFourWeek})){
         weeklyFrequencyDict[4] += 1
         count += 1
+       
+      } else if(isWithinInterval(newDate, {start:startOfWeekFiveWeek, end:endOfWeekFiveWeek})){
+        weeklyFrequencyDict[5] += 1
+        count += 1
+        
+      } else if(isWithinInterval(newDate, {start:startOfWeekSixWeek, end:endOfWeekSixWeek})){
+        weeklyFrequencyDict[6] += 1
+        count += 1
+      
+      } else if(isWithinInterval(newDate, {start:startOfWeekSevenWeek, end:endOfWeekSevenWeek})){
+        weeklyFrequencyDict[7] += 1
+        count += 1
+      
+      } else if(isWithinInterval(newDate, {start:startOfWeekEightWeek, end:endOfWeekEightWeek})){
+        weeklyFrequencyDict[8] += 1
+        count += 1
+      
       }
+
+
     });
 
-  
-  
-  //console.log(allDateStats)
 
-  return count/4
+    for (const [key, value] of Object.entries(weeklyFrequencyDict)) {
+        weeklyFrequencyArr.push(value)
+    }
+
+    //console.log(findVariance(weeklyFrequencyArr))
+    console.log(lastSevenDaysCount/lastFourteenDaysCount)
+  
+  
+  //console.log(weeklyFrequencyDict)
+
+  return count/8
 
   
   
@@ -162,9 +249,10 @@ function IQScreen(){
   return (
 
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight:800}}>
+
     <SafeAreaView style={{flex: 1}}>
-  
-    <Layout style={{flex:1, padding:16}}>
+   
+    <Layout level='2' style={{flex:1, padding:16}}>
     <Card onPress={calculateStudyStrength} style={{marginVertical:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
     <Text category={'s1'}>Study Strength</Text>
@@ -214,8 +302,8 @@ function IQScreen(){
     numDays={99}
     //need to pass in style prop to mon
     //Need to pass in our own color array 
-    colorArray={["#eee", "#D44B79", "#6B1928", "#9F3251", "#360000",'#360000']}
-    values={commitsData}
+    colorArray={["#eee", "#DDFBC7", "#C2F3A8", "#A7E78F", "#80D86A",'#5BB94D']}
+    values={allDateStats}
     monthLabelsStyle={{fontSize:14, fill:'black'}}
     monthLabelsColor={'black'}
     />
@@ -224,6 +312,7 @@ function IQScreen(){
 
     </Layout>
     </SafeAreaView>
+
     </ScrollView>
       
       );

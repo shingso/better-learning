@@ -79,11 +79,10 @@ function Recall({ route }){
     <Layout style={{ flex: 1, padding:16 }}>
     <ImageBackground style={{flex:1}} resizeMode={'contain'} opacity={0.1} source={require('../assets/images/boystudyingv1.png')}>
     <Formik
-    initialValues={{ text:''}}
+    initialValues={{ text:'', textTheme:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( user.uid, subjectID , values.text)
-     //actions.setSubmitting(false);
+     addNote( user.uid, subjectID , values.text, values.textTheme)
      setVisible(true)
 
     }}
@@ -96,12 +95,21 @@ function Recall({ route }){
    <TopHeader/>
    <Text category='h1' style={{marginBottom:20}}>Recall</Text>
    <Text category='s1'>Take some time and think about what you have just studied or practiced.</Text>
-   <Text category='s1' style={{marginVertical:12, marginBottom:40}}>Type out what you have learned.</Text>
+   <Text category='s1' style={{marginVertical:12, marginBottom:20}}>Type out what you have learned.</Text>
    <Text>Everything you type here should be from memory and be done without looking at any material.</Text>
    </View>
 
    <View style={{marginVertical:20}}>
    {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null}
+      
+   <Input
+   textStyle={{fontSize:16}}
+   style={{marginBottom:12}}
+   multiline={true}
+   placeholder='Overarching theme?'
+   onChangeText={formikProps.handleChange('textTheme')}
+    />
+   
    <Input
     textStyle={{fontSize:16, height:100}}
     multiline={true}

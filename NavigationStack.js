@@ -23,6 +23,8 @@ import Inspiration from './GuidesScreen/Inspiration'
 import LearningTips from './GuidesScreen/LearningTips'
 
 
+
+
 import TimerScreenFunc from './HomeScreen/TimerScreenFunc'
 import SetTimer from './HomeScreen/SetTimer'
 import AddSubject from './HomeScreen/AddSubject'
@@ -42,6 +44,7 @@ import ThemeSettings from './SettingsScreen/ThemeSettings';
 import { UserDataContextWrapper } from './UserDataContext'
 import { StudyStatsContextWrapper } from './StudyStats'
 import { AuthContext } from './AuthContext'
+import Onboard from './GuidesScreen/Onboard';
 
 
 const Stack = createStackNavigator();
@@ -137,7 +140,7 @@ function HomeStack() {
         <Stack.Screen name="WhatIsLearning" component={WhatIsLearning} />
         <Stack.Screen name="LearningTips" component={LearningTips} />
         <Stack.Screen name="Inspiration" component={Inspiration} />
-        <Stack.Screen name="Discouraged" component={Discouraged} />
+        <Stack.Screen name="Discouraged" component={Onboard} />
         
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFeedback } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
@@ -45,15 +45,19 @@ async function onAppleButtonPress() {
     state,
   });
 
+  try{
 
   const response = await appleAuthAndroid.signIn();
-
   if (response.state === state) {
     const credentials = auth.AppleAuthProvider.credential(
       response.id_token,
       rawNonce, 
     )
     return auth().signInWithCredential(credentials)
+    }
+
+  }catch(e){
+    console.log(e)
   }
 
 
@@ -122,21 +126,14 @@ function Login(){
     });
   }
     
+  useEffect(() => {
 
+    GoogleSignin.configure({
+      webClientId: '658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com',
+    });
 
+  }, []);
 
-   const _configureGoogleSignIn = () => {
-      GoogleSignin.configure({
-        webClientId: '658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com',
-      });
-    }
- 
-
-  /*   componentDidMount() {
-
-      this._configureGoogleSignIn();
-      }
- */
 
     const toggleSecureEntry = () => {
       setSecureTextEntry(!secureTextEntry)
@@ -151,10 +148,7 @@ function Login(){
 
   
 
-  
-  
-    
- 
+
      return (
 
        

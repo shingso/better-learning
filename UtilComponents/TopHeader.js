@@ -27,7 +27,7 @@ function TopHeader(props){
     return (
        
       <View style={{alignSelf:'flex-start', marginLeft: -20}}>
-      <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={props.func == 'top' ? popToTop : navigateBack}></Button>
+      <Button size='small'  status='basic' appearance='ghost' accessoryLeft={BackIcon} onPress={props.func == 'top' ? popToTop : navigateBack}></Button>
       </View>
       
       );
