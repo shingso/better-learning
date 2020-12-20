@@ -6,23 +6,44 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 
 
-function TermsOfService(){
+function OpenSource(){
 
   return (
    
     <Layout level='2' style={{ flex: 1, padding:16 }}>
     <SafeAreaView style={{ flex: 1}}>
     <TopHeader/>
-    <Text style={{marginBottom:20}} category='h2'>Terms and Conditions</Text>
+    <Text style={{marginBottom:20}} category='h2'>Open Source Libraries</Text>
     <ScrollView>
     
+
+    <Text style={styles.bodyText} category='s1'>react-native-ui-kitten</Text>
     <Text style={styles.bodyText}>
-    By downloading or using the app, these terms will automatically apply to you – 
-    you should make sure therefore that you read them carefully before using the app. 
-    You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not 
-    allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other 
-    languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights 
-    and other intellectual property rights related to it, still belong to Shing So.
+    
+    <Text style={styles.bodyText}>  
+    The MIT License (MIT)
+    </Text>
+    <Text style={styles.bodyText}>  
+    Copyright (c) 2016 akveo.com
+    </Text>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
     </Text>
 
 
@@ -122,7 +143,7 @@ function TermsOfService(){
   );
 };
 
-export default TermsOfService
+export default OpenSource
 
 
 const styles = StyleSheet.create({

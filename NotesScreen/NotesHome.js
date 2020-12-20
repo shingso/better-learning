@@ -25,10 +25,10 @@ function NotesHome(){
  
  
   
-    const user = useContext(AuthContext)
+    const authContext = useContext(AuthContext)
     const navigation = useNavigation();
 
-    const userID = user.uid
+    const userID = authContext.user.uid
 
 
     const [ loading, setLoading ] = useState(true);

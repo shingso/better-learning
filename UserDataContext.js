@@ -9,8 +9,8 @@ export const UserDataContext = createContext(null)
 
 export function UserDataContextWrapper(props) {
 
-  const user = useContext(AuthContext)
-  const userID = user.uid
+  const authContext = useContext(AuthContext)
+  const userID = authContext.user.uid
   
   const [initializing, setInitializing] = useState(true)
   const [ userData, setUserData] = useState(null)

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFeedback } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { v4 as uuid } from 'uuid'
@@ -12,9 +12,10 @@ import appleAuth, {
 } from '@invertase/react-native-apple-authentication';
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { Formik } from 'formik';
-import { Button, Text ,Icon, Input, Divider} from '@ui-kitten/components';
+import { Button, Text ,Icon, Input, Layout } from '@ui-kitten/components';
 import * as Yup from 'yup';
-
+import { AuthContext } from '../AuthContext'
+import { addUser, addNote } from '../helperFunctions';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email()
@@ -53,10 +54,12 @@ async function onAppleButtonPress() {
       response.id_token,
       rawNonce, 
     )
-    return auth().signInWithCredential(credentials)
+    const authResponse = await auth().signInWithCredential(credentials) 
+    addUser(authResponse.user.uid)
+    return authResponse
     }
 
-  }catch(e){
+  } catch(e){
     console.log(e)
   }
 
@@ -81,17 +84,12 @@ async function onAppleButtonPressApple() {
   const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 
   // Sign the user in with the credential
-  return auth().signInWithCredential(appleCredential);
+  const authResponse = await auth().signInWithCredential(appleCredential);
+  addUser(authResponse.user.uid)
+  return authResponse
 }
    
-async function onGoogleButtonPress() {
 
-    const { idToken } = await GoogleSignin.signIn()
-
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-
-    return auth().signInWithCredential(googleCredential);
-}
 
 
 
@@ -104,8 +102,6 @@ function AppleSignIn() {
         width:'100%',
         height: 45,
       }}
-
-      
       onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
     />
   );
@@ -114,8 +110,10 @@ function AppleSignIn() {
 
 function Login(){
  
+ const authContext = useContext(AuthContext)
  const navigation = useNavigation();
  const [secureTextEntry, setSecureTextEntry] = useState(false)
+ const [loading, setLoading] = useState(false)
 
  const handleLogin = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -125,7 +123,21 @@ function Login(){
     
     });
   }
-    
+
+  async function onGoogleButtonPress() {
+
+    setLoading(true)
+    try{
+    const { idToken } = await GoogleSignin.signIn()
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+    const response = await auth().signInWithCredential(googleCredential)  
+    addUser(response.user.uid)
+    return response
+    } catch(e){
+      setLoading(false)
+    }
+}
+
   useEffect(() => {
 
     GoogleSignin.configure({
@@ -147,11 +159,16 @@ function Login(){
     );
 
   
-
+    if(loading){
+      return <Layout style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <ActivityIndicator size={60} color="#0000ff" style={{marginBottom:40}}/>
+        <Text>Loading</Text>
+      </Layout>
+    }
 
      return (
 
-       
+    
       <View style={{ flex: 1, justifyContent:'center', padding:16}}>
       
       <View>

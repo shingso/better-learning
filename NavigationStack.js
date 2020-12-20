@@ -22,14 +22,11 @@ import Discouraged from './GuidesScreen/Discouraged'
 import Inspiration from './GuidesScreen/Inspiration'
 import LearningTips from './GuidesScreen/LearningTips'
 
-
-
-
 import TimerScreenFunc from './HomeScreen/TimerScreenFunc'
 import SetTimer from './HomeScreen/SetTimer'
 import AddSubject from './HomeScreen/AddSubject'
 import TipsPage from './HomeScreen/TipsPage'
-
+import NotesRecall from './HomeScreen/NotesRecall'
 
 import SignUp from './LoginScreen/SignUp';
 import Login from './LoginScreen/Login';
@@ -40,6 +37,8 @@ import SettingsOptions from './SettingsScreen/SettingsOptions';
 import PrivacyPolicy from './SettingsScreen/PrivacyPolicy';
 import TermsOfService from './SettingsScreen/TermsOfService';
 import ThemeSettings from './SettingsScreen/ThemeSettings';
+import OpenSource from './SettingsScreen/OpenSource';
+
 
 import { UserDataContextWrapper } from './UserDataContext'
 import { StudyStatsContextWrapper } from './StudyStats'
@@ -107,6 +106,7 @@ function HomeStack() {
     return (
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="NotesRecall" component={NotesRecall} />
         <Stack.Screen name="AddNotes" component={AddNotes} />
         <Stack.Screen name="Recall" component={Recall} />
         <Stack.Screen name="Break" component={Break} />
@@ -140,10 +140,8 @@ function HomeStack() {
         <Stack.Screen name="WhatIsLearning" component={WhatIsLearning} />
         <Stack.Screen name="LearningTips" component={LearningTips} />
         <Stack.Screen name="Inspiration" component={Inspiration} />
-        <Stack.Screen name="Discouraged" component={Onboard} />
-        
-
-
+        <Stack.Screen name="Discouraged" component={Discouraged} />
+        <Stack.Screen name="OpenSource" component={OpenSource} />
         <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
         <Stack.Screen name="TermsOfService" component={TermsOfService} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
@@ -166,24 +164,37 @@ function SettingsStack() {
 
 function App() {
 
-const user = useContext(AuthContext)
+const authContext = useContext(AuthContext)
+  //authContext.newUser
+  if(authContext.newUser){
+ 
+    return (
+    <NavigationContainer>
+    <Onboard/>
+    </NavigationContainer>)
+  
+  }
 
-  return user ? (     
+
+  return authContext.user ?    
+
+   
      <NavigationContainer>
   
       <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="SettingsStack" component={SettingsStack} />
-        <Tab.Screen name="GuidesStack" component={GuidesStack} />
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="SettingsStack" component={SettingsStack} />
+      <Tab.Screen name="GuidesStack" component={GuidesStack} />
       </Tab.Navigator>
   
     </NavigationContainer>
-  ) : (
+    
+    : 
 
     <NavigationContainer>
     <LoginStack/>
     </NavigationContainer>
-  )
+  
  
 }
 

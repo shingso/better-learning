@@ -9,10 +9,6 @@ import { format, formatDistance } from 'date-fns'
 
 
 
-const PlayIcon = (props) => (
-  <Icon {...props} height={40} width={40} name='play-circle'/>
-);
-  
 
 const BookIcon = (props) => (
   <Icon {...props} name='book-outline'/>
@@ -26,8 +22,8 @@ const PlusIcon = (props) => (
 
 function HomeScreen(){
 
-    const user = useContext(AuthContext)
-    const userID = user.uid
+    const authContext = useContext(AuthContext)
+    const userID = authContext.user.uid
     const navigation = useNavigation();
     const [ loading, setLoading ] = useState(true);
     const [ subjects, setSubjects ] = useState([]);   
@@ -48,8 +44,7 @@ function HomeScreen(){
       
     <View style={{marginBottom:20, justifyContent:'space-between'}}>
       
-    <Text category='h1'>Welcome!</Text>
-    <Text category='s1' style={{marginVertical:20}}>Get started by learning a better way to learn</Text>
+ 
     <Card style={{marginBottom:16}}>
     <ImageBackground opacity={0.2} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
     <Text style={{marginBottom:8}} category='s1'>What is Learning?</Text>
@@ -71,20 +66,28 @@ function HomeScreen(){
 
     </ImageBackground>
     </Card>
-    <Text category='s1'>When youre ready to start your studying journey...</Text>
+    
     </View>
   );
   
 
   const renderHeader = () => (
 
-    <View >
+    <View style={{paddingBottom:8}}>
 {/*     <ProgressHeader messageNumber={1}/> */}
 
+    <View>
+    <Card style={{ marginVertical:8 }}>
+    <Text>All notes</Text>
   
-    <Text category={'label'}>Your Subjects:</Text>
-   
-
+    </Card>
+    </View>
+    {
+    subjects.length != 0 ? 
+    <Text category={'label'}>Your Subjects:</Text>:
+    <Text category={'label'}>To get the most out of this app, check out the guides below:</Text>
+    }
+  
     </View>
 
     
@@ -100,8 +103,8 @@ function HomeScreen(){
     const renderItem = (info) => (
      
       <Card
-        style={{backgroundColor: info.item.title == currentSubject ? '#F0FDE3' : '#FFFFFF', marginVertical:8 }}
-        onPress={()=>{setCurrentItemInfo(info.item.title, info.item.id)}}
+        style={{backgroundColor: info.item.id == currentSubjectID ? '#F0FDE3' : '#FFFFFF', marginVertical:8 }}
+        onPress={()=>navigation.navigate('NotesFocused', {subjectID :info.item.id, title:info.item.title})}
       >
 
       <View style={{ justifyContent:'space-between', flexDirection:'row'}}>
@@ -111,11 +114,6 @@ function HomeScreen(){
       </View>
 
     
-
-      <View style={{flex:1}}>
-      <Button accessoryLeft={BookIcon} style={{ height:42}} appearance={'outline'} onPress={()=>navigation.navigate('NotesFocused', {subjectID :info.item.id, title:info.item.title})}/>
-    
-      </View> 
       
       </View>
       </Card>
@@ -139,7 +137,10 @@ function HomeScreen(){
           });
   
           setSubjects(list);
-          setCurrentSubject(list[0].title)
+
+          if(list.length != 0){
+            setCurrentSubject(list[0].title)
+          }
           
           if (loading) {
             setLoading(false);
@@ -153,25 +154,70 @@ function HomeScreen(){
         return null; 
     }
 
-  
+  /* 
+    if(subjects.length == 0){
+
+      return (
+
+        <View style={{marginBottom:20, padding:16, justifyContent:'space-between'}}>
+      
+        <Text category='h1'>Welcome!</Text>
+        <Text category='s1' style={{marginVertical:20}}>Get started by learning a better way to learn</Text>
+        <Card style={{marginBottom:16}}>
+        <ImageBackground opacity={0.2} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
+        <Text style={{marginBottom:8}} category='s1'>What is Learning?</Text>
+        <Text>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</Text>
+        </ImageBackground>
+        </Card>
+    
+        <Card style={{marginVertical:8, marginBottom:28}}>
+        <ImageBackground opacity={0.2} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
+        <Text style={{marginBottom:8}} category='s1'>How should I be learning?</Text>
+        <Text>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</Text>
+        </ImageBackground>
+        </Card>
+    
+        <Card style={{marginBottom:28}}>
+        <ImageBackground opacity={0.2} resizeMode='cover' source={require('../assets/images/8600.5.png')} style={styles.image}>
+        <Text style={{marginBottom:8}} category='s1'>Want to know more?</Text>
+        <Text>Duis aute irure dolor in reprehenderit</Text>
+    
+        </ImageBackground>
+        </Card>
+        <Text category='s1'>When youre ready to start your studying journey...</Text>
+        </View>
+      )
+    } */
 
     return (
 
-
+    
     
     <SafeAreaView style={{flex: 1}}>
     
     <Layout level='2' style={{padding:16}}>
-    <ProgressHeader messageNumber={1}/>
+    {/* <ProgressHeader messageNumber={1}/> */}
+    {subjects.length == 0 ?
     <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
     <Icon style={{marginRight:12}} fill='#14671C' width={45} height={45} name='play-circle' />
     <View style={{flexDirection:'column', flex:1}}>
-    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session for:</Text>
-    <Text style={{flexWrap:'wrap'}}>{currentSubject}</Text>
+    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Add a subject to get started</Text>
     </View>
     </View>
-    </Card>
+    </Card>:
+
+    <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon style={{marginRight:12}} fill='#14671C' width={45} height={45} name='play-circle' />
+    <View style={{flexDirection:'column', flex:1}}>
+    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session</Text>
+
+    </View>
+    </View>
+    </Card>}
+
+
     </Layout>
 
     <List

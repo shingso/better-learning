@@ -12,7 +12,7 @@ const BackIcon = (props) => (
 
 function ThemeSettings(){
 
-  const themeContext = React.useContext(ThemeContext);
+  const themeContext = useContext(ThemeContext);
   const navigation = useNavigation();
  
  

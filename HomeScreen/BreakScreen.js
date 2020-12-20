@@ -4,7 +4,6 @@ import { useNavigation, StackActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Button, Icon, Layout, Modal, Card, Text } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
-import { AuthContext } from '../AuthContext'
 import TopHeader from '../UtilComponents/TopHeader'
 
 

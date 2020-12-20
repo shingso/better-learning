@@ -4,7 +4,16 @@ import { v4 as uuid } from 'uuid'
 
 export async function addUser(userID) {
     
+
   const ref = firestore().collection('Users').doc(userID)
+
+  const refResponse = await ref.get()
+
+  if(refResponse.exists){
+    console.log('exists',refResponse.exists)
+  
+  } else {
+    
     await ref.set({
       timeStamp: firestore.FieldValue.serverTimestamp(),
       currentStreak: 0,
@@ -13,7 +22,7 @@ export async function addUser(userID) {
       lastStudied: firestore.FieldValue.serverTimestamp(),
     });
  
-   
+    }
   }
 
 
@@ -80,6 +89,35 @@ export async function addNotesCollection(userID,subject) {
 export async function getAppInformation() {
     
   const ref = firestore().collection('App').doc('AppInformation')
+  await ref.get()
+
+}
+
+
+
+export async function incrementActiveUsers() {
+  const increment = firestore.FieldValue.increment(1);
+  const ref = firestore().collection('CurrentUsers').doc('ActiveUsers')
+  await ref.update({
+    NumberOfActiveUsers: increment
+  });
+
+}
+
+
+export async function decrementActiveUsers() {
+  const decrement = firestore.FieldValue.decrement(1);
+  const ref = firestore().collection('CurrentUsers').doc('ActiveUsers')
+  await ref.update({
+    NumberOfActiveUsers: decrement
+  });
+
+}
+
+
+export async function getActiveUsers() {
+    
+  const ref = firestore().collection('CurrentUsers').doc('ActiveUsers')
   await ref.get()
 
 }

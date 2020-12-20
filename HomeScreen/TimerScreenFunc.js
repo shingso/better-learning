@@ -1,12 +1,10 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
+
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
-import { UserDataContext } from '../UserDataContext'
-import { updateUserStreakData } from '../helperFunctions'
-import { AuthContext } from '../AuthContext'
+
 import TopHeader from '../UtilComponents/TopHeader'
 
 const PauseIcon = (props) => (
@@ -58,8 +56,7 @@ const [hasPlayed, sethasPlayed] = useState(false)
 const [hasEnded, setHasEnded] = useState(false)
 const [nav, setNav] = useState(null)
 const navigation = useNavigation();
-const user = useContext(AuthContext)
-const userData = useContext(UserDataContext)
+
 
 const { subjectID } = route.params
 
@@ -157,17 +154,10 @@ const backgroundTimerEnded = () => {
   setIsPlaying(false)
   setHasEnded(true)
   Vibration.vibrate()
-  let updatedIQ = userData.IQ + userData.currentStreak + 1
-  let updatedStreak = userData.currentStreak + 1
-  let highestStreak = userData.highestStreak
-
-  if(updatedStreak > highestStreak){
-    highestStreak = highestStreak + 1
-  }
 
   BackgroundTimer.stopBackgroundTimer()
 
-  updateUserStreakData(user.uid, updatedIQ , updatedStreak, highestStreak, subjectID)
+  //updateUserStreakData(user.uid, updatedIQ , updatedStreak, highestStreak, subjectID)
   
   setTimeout(() => {
     setVisible(true)
@@ -246,8 +236,7 @@ return (
   backdropStyle={styles.backdrop}
   >
   <Card disabled={true}>
-  <View style={{justifyContent:'center', alignItems:'center'}}>
-  <Text>+{userData.currentStreak + 1} IQ</Text>
+  <View style={{justifyContent:'center', alignItems:'center'}}>>
   <Text style={{marginVertical:12}}>Completed!</Text>
   <Button onPress={confirmAddNote}>
   Let's wrap this up

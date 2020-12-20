@@ -25,7 +25,7 @@ function Recall({ route }){
  
   const [visible, setVisible] = React.useState(false);
   const [confirmBackVisible, setConfirmBackVisible] = React.useState(false);
-  const user = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const navigation = useNavigation();
 
   const { subjectID } = route.params
@@ -82,7 +82,7 @@ function Recall({ route }){
     initialValues={{ text:'', textTheme:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( user.uid, subjectID , values.text, values.textTheme)
+     addNote( authContext.user.uid, subjectID , values.text, values.textTheme)
      setVisible(true)
 
     }}

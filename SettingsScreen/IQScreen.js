@@ -8,6 +8,7 @@ import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
 
+
 const InfoIcon = (props) => (
   <Icon {...props} name='info'/>
 );
@@ -49,7 +50,7 @@ function IQScreen(){
     
     const _Date = new Date()
     const currentDate = startOfDay(new Date())
-    const weeklyFrequencyDict = { 0:0, 1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0 }
+    const weeklyFrequencyDict = { 0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0 }
 
     const weeklyFrequencyArr = []
 
@@ -166,7 +167,33 @@ function IQScreen(){
     }
 
     //console.log(findVariance(weeklyFrequencyArr))
-    console.log(lastSevenDaysCount/lastFourteenDaysCount)
+    // if last seven day count is greater or equal to 
+    // so this is the number that dictates the percentage chan ge
+
+    // 1 would mean no change
+    // .8 would mean that it went down 20%
+    // 2 would mean an increase of 100%
+    // any improvment should be a boost, but there is no 
+    // this score will never impact your score if it is negative
+
+    // What would be another important number
+
+    // what is the mean of the last seven days over the mean of the last monmth
+    let percentageChangeLastSeven = lastSevenDaysCount/lastFourteenDaysCount
+    let sevenDayAverage = lastSevenDaysCount/7
+
+    // we can also look at percentage change two weeks
+
+    // should we compare it to the last 21 days?
+      
+  //consistency
+
+  // only using uniques
+  // so this would cap out at 7
+  // we should take an average of this so its easier
+
+
+
   
   
   //console.log(weeklyFrequencyDict)
@@ -246,6 +273,12 @@ function IQScreen(){
   
   // the glitch is that the color is messed up 
 
+  // times studied in current week/month
+  // monthly average per week
+  // weekly consistency vs past two weeks - last 7 days vs last 14 days
+  // last 7 days vs last 21 days
+
+
   return (
 
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight:800}}>
@@ -267,9 +300,9 @@ function IQScreen(){
     <Text category={'s1'}>Weekly Average</Text>
     <Text>{calculateStudyFrequency()}</Text>
     </View>
-    <Text>Your weekly average studied per week over the last four weeks</Text>
+    <Text>Your weekly average studied per week over the last four weeks</Text> 
     </Card>
-
+    
     <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
     <Text category={'s1'}>Recommended Study</Text>
@@ -277,21 +310,15 @@ function IQScreen(){
     </View>
     <Text>You've been studying extremely consistently for the last few weeks. Try and add a few more study sessions</Text>
     </Card>
-
+    
 {/*     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Total Studied</Text>
     <Text>{timesStudiedStat}</Text>
     </View>
-    </Card> */}
+    </Card> 
+    */}
     
-
-    <Card style={{marginBottom:12}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    <Text category={'s1'}>Times Studied this Month</Text>
-    <Text>{timesStudiedMonthStat}</Text>
-    </View>
-    </Card>
 
     <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
  

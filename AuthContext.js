@@ -10,15 +10,18 @@ export function AuthContextWrapper(props) {
   
   const [initializing, setInitializing] = useState(true)
   const [user, setUser] = useState(null)
+  const [newUser, setNewUser] = useState(false)
+
 
   function onAuthStateChanged(result) {
     setUser(result)
+  
     if (initializing) setInitializing(false)
   }
   
   useEffect(() => {
     const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged)
-  
+
     // unsubscribe on unmount
     return authSubscriber
   }, [])
@@ -28,7 +31,7 @@ export function AuthContextWrapper(props) {
     return null
   }
 
-  return (<AuthContext.Provider value={user}>
+  return (<AuthContext.Provider value={{user, setNewUser, newUser}}>
     {props.children}
     </AuthContext.Provider>
     );

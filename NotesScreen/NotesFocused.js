@@ -20,8 +20,8 @@ const EditIcon = (props) => (
 function NotesFocused({ route, navigation }){
     
  
-    const user = useContext(AuthContext)
-    const userID = user.uid
+    const authContext = useContext(AuthContext)
+    const userID = authContext.user.uid
   
     const { subjectID } = route.params
     const { title } = route.params
@@ -65,10 +65,10 @@ function NotesFocused({ route, navigation }){
     const StatefulModalContent = (props) => {
       const [inputValue, setInputValue] = React.useState();
       
-      const deleteSubjectFunction = ( user, subjectID ) => {
+      const deleteSubjectFunction = ( userID, subjectID ) => {
 
         if(inputValue == 'Delete'){
-          deleteSubject(user, subjectID)
+          deleteSubject(userID, subjectID)
           setVisible(false)
           setVisibleConfirm(true)
         } else {

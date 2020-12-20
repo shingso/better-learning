@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Formik } from 'formik';
 import { addNotesCollection } from '../helperFunctions';
 import { Button, Text ,Icon , Modal, Input, Card} from '@ui-kitten/components';
@@ -22,7 +22,7 @@ const SubjectSchema = Yup.object().shape({
 
 function AddSubject(){
   const [visible, setVisible] = React.useState(false);
-  const user = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const navigation = useNavigation();
   return(
            
@@ -31,7 +31,7 @@ function AddSubject(){
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
     onSubmit={(values, actions) => {
-     addNotesCollection( user.uid,values.subject )
+     addNotesCollection( authContext.user.uid,values.subject )
      actions.setSubmitting(false);
      setVisible(true)
     }}
@@ -65,17 +65,27 @@ function AddSubject(){
 
     <Modal
     visible={visible}
-    backdropStyle={styles.backdrop}
-    onBackdropPress={() => navigation.navigate('Home')}
-    >
-    <Card disabled={true}>
-    <Text>Subject Added!</Text>
-    <Button size='small' onPress={() => navigation.navigate('Home')}>
+    backdropStyle={styles.backdrop}>
+    <Card style={{width:180, height:160}} disabled={true}>
+    <ImageBackground opacity={0.10} resizeMode='contain'source={require('../assets/images/progress.png')} style={styles.image}>
+    <View style={{ height:140}}>
+    <View style={{flex:1}}>
+    <Text category='s1' style={{textAlign:'center', marginTop:12}}>The first step...</Text>
+    <Text category='s1' style={{textAlign:'center', marginTop:12}}>But just one of many to come</Text>
+    </View>
+    
+    <View style={{flex:1, justifyContent:'flex-end'}}>
+    <Button size='small' style={{marginBottom:8}} onPress={()=>{navigation.navigate('Home')}}>
     DISMISS
     </Button>
+    </View>
+    
+    </View>
+
+
+    </ImageBackground>
     </Card>
-    </Modal>   
-      
+    </Modal>  
     </React.Fragment>
     )}
   </Formik>
@@ -91,6 +101,14 @@ const styles = StyleSheet.create({
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+
+  image: {
+
+    height:180,
+    margin:-24,
+    padding:18
+
+  }
 });
 
 export default AddSubject

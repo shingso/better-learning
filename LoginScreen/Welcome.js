@@ -18,8 +18,11 @@ function Welcome(){
   return(
            
     <View style={{ flex: 1, padding:16}}>
-      
+    
+    <View>
     <Text category='h1'>Welcome</Text>
+    </View>
+    
     <View style={{flex: 1, justifyContent:'center', marginBottom:36}}>
 
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 

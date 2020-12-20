@@ -32,7 +32,7 @@ function AddNotes({ route }){
  
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState(null);
-  const user = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const navigation = useNavigation();
   const { subjectID } = route.params
 
@@ -51,7 +51,7 @@ function AddNotes({ route }){
     initialValues={{ text:'', textTheme:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( user.uid, subjectID , values.text, values.textTheme)
+     addNote( authContext.user.uid, subjectID , values.text, values.textTheme)
      //actions.setSubmitting(false);
      setVisible(true)
 
@@ -67,7 +67,8 @@ function AddNotes({ route }){
    <Text category='s1' style={{marginBottom:8}}>If you figured out something new, write it down!</Text>
    <Text>The more you write out the better the information will be processed and stored in your head</Text>
    </View>
-
+    <Button onPress={()=>{authContext.setNewUser(true)}}/>
+    <Button onPress={()=>{console.log(authContext.newUser)}}/>
    <View style={{marginVertical:20}}>
 
    <Text style={{marginTop:20, marginBottom:8}}>What is the overarching concept?  <Text appearance='hint'>Optional</Text></Text>

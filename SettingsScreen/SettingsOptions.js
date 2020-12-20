@@ -49,6 +49,7 @@ const ListItem = ( props ) => (
     <ListItem title={'Theme'} route={'ThemeSettings'}/>
     <ListItem title={'Terms and Conditions'} route={'TermsOfService'}/>
     <ListItem title={'Privacy Policy'} route={'PrivacyPolicy'}/>
+    <ListItem title={'Open Source'} route={'OpenSource'}/>
     <ListFooter/>
     </SafeAreaView>
     </Layout>
@@ -60,7 +61,7 @@ export default SettingsOptions
 const styles = StyleSheet.create({
  
   item: {
-    marginVertical: 20,
+    marginVertical: 18,
   },
 
 });
