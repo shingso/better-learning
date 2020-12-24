@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import {  View, SafeAreaView, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
-import { useNavigation, useNavigationBuilder } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon } from '@ui-kitten/components';
 
 

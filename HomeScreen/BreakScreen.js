@@ -71,7 +71,7 @@ useEffect(() => {
 const CustomBackHeader = () => {
   return(
   <View style={{alignSelf:'flex-start', marginLeft: -20}}>
-  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>navigation.dispatch(StackActions.popToTop())}></Button>
+  <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={()=>navigation.dispatch(StackActions.Top())}></Button>
   </View>
   )
 }

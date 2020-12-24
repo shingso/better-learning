@@ -10,8 +10,8 @@ import { format, formatDistance } from 'date-fns'
 
 
 
-const BookIcon = (props) => (
-  <Icon {...props} name='book-outline'/>
+const EditIcon = (props) => (
+  <Icon {...props} width={25} height={25} name='edit-outline'/>
 );
 
 const PlusIcon = (props) => (
@@ -75,36 +75,38 @@ function HomeScreen(){
 
     <View style={{paddingBottom:8}}>
 {/*     <ProgressHeader messageNumber={1}/> */}
-
+    <Button onPress={()=>{navigation.navigate('NotesRecall')}}/>
     <View>
-    <Card style={{ marginVertical:8 }}>
-    <Text>All notes</Text>
-  
-    </Card>
+    <Card onPress={()=>navigation.navigate('GlobalNotes')} style={{ marginVertical:8 }}>
+    <View style={{justifyContent:'space-between', flexDirection:'row'}}>
+    <View>
+    <Text>Notes</Text>
     </View>
-    {
+    <Button accessoryRight={EditIcon} size='small' appearance='outline' onPress={()=>navigation.navigate('AddNotes')}/>
+    </View>
+    </Card>
+
+    </View>
+   {/*  {
     subjects.length != 0 ? 
     <Text category={'label'}>Your Subjects:</Text>:
     <Text category={'label'}>To get the most out of this app, check out the guides below:</Text>
-    }
+    } */}
   
     </View>
 
-    
-
+  
   );
 
-  const setCurrentItemInfo = (title, id) => {
-    setCurrentSubject(title)
-    setCurrentSubjectID(id)
-  }
+
+
 
 
     const renderItem = (info) => (
      
       <Card
-        style={{backgroundColor: info.item.id == currentSubjectID ? '#F0FDE3' : '#FFFFFF', marginVertical:8 }}
-        onPress={()=>navigation.navigate('NotesFocused', {subjectID :info.item.id, title:info.item.title})}
+        style={{ marginVertical:8 }}
+        onPress={()=>navigation.navigate('NotesFocusedTEST', {subjectID :info.item.id, title:info.item.title})}
       >
 
       <View style={{ justifyContent:'space-between', flexDirection:'row'}}>
@@ -123,16 +125,16 @@ function HomeScreen(){
     
     useEffect(() => {
 
-        const ref = firestore().collection('Users').doc(userID).collection('NotesCollection')
+        const ref = firestore().collection('Users').doc(userID).collection('Subjects')
         return ref.onSnapshot(querySnapshot => {
           const list = [];
           querySnapshot.forEach(doc => {
-            const { title, timeStamp, lastStudied } = doc.data();
+            const { title, timeStamp } = doc.data();
             list.push({
               id: doc.id,
               title,
               timeStamp,
-              lastStudied
+            
             });
           });
   
@@ -197,25 +199,17 @@ function HomeScreen(){
     
     <Layout level='2' style={{padding:16}}>
     {/* <ProgressHeader messageNumber={1}/> */}
-    {subjects.length == 0 ?
-    <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon style={{marginRight:12}} fill='#14671C' width={45} height={45} name='play-circle' />
-    <View style={{flexDirection:'column', flex:1}}>
-    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Add a subject to get started</Text>
-    </View>
-    </View>
-    </Card>:
+    
 
-    <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer', {subjectID :currentSubjectID})}>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer')}>
+    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
     <Icon style={{marginRight:12}} fill='#14671C' width={45} height={45} name='play-circle' />
-    <View style={{flexDirection:'column', flex:1}}>
+
     <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session</Text>
 
+   
     </View>
-    </View>
-    </Card>}
+    </Card>
 
 
     </Layout>

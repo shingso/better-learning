@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Formik } from 'formik';
-import { addNotesCollection } from '../helperFunctions';
+import { addSubject } from '../helperFunctions';
 import { Button, Text ,Icon , Modal, Input, Card} from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
@@ -31,7 +31,7 @@ function AddSubject(){
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
     onSubmit={(values, actions) => {
-     addNotesCollection( authContext.user.uid,values.subject )
+     addSubject( authContext.user.uid, values.subject )
      actions.setSubmitting(false);
      setVisible(true)
     }}
