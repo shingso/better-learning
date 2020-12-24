@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
-import { addUser, addNotesCollection, addNote, updateUserInfo } from '../helperFunctions'
+import { addUser } from '../helperFunctions'
 import { Formik } from 'formik';
 import { Button, Text ,Icon , Input} from '@ui-kitten/components';
 import * as Yup from 'yup';

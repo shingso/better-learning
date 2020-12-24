@@ -1,8 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from './AuthContext'
-import { format, differenceInHours } from 'date-fns'
+
 
 export const UserDataContext = createContext(null)
 

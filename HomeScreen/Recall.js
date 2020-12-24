@@ -21,15 +21,12 @@ const TextSchema = Yup.object().shape({
 
 
 
-function Recall({ route }){
+function Recall(){
  
   const [visible, setVisible] = React.useState(false);
   const [confirmBackVisible, setConfirmBackVisible] = React.useState(false);
   const authContext = useContext(AuthContext)
   const navigation = useNavigation();
-
-  const { subjectID } = route.params
-  const { mode } = route.params
 
 
   useEffect(() => {
@@ -57,17 +54,12 @@ function Recall({ route }){
 
   const confirmAddNote = () => {
     setVisible(false)
-
-    navigation.dispatch(StackActions.popToTop())
+    navigation.pop()
+    //navigation.dispatch(StackActions.popToTop())
+    navigation.navigate('StudyFinished')
   }
 
   
-  const confirmAddNoteBreak = () => {
-
-    setVisible(false)
-    navigation.pop()
-    navigation.navigate('Break', { mode:mode, subjectID: subjectID })
-  }
 
   const popToTop = () => {
     navigation.dispatch(StackActions.popToTop())
@@ -77,12 +69,12 @@ function Recall({ route }){
   return(
            
     <Layout style={{ flex: 1, padding:16 }}>
-    <ImageBackground style={{flex:1}} resizeMode={'contain'} opacity={0.1} source={require('../assets/images/boystudyingv1.png')}>
+ 
     <Formik
-    initialValues={{ text:'', textTheme:''}}
+    initialValues={{ text:'', textTheme:'', subject:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( authContext.user.uid, subjectID , values.text, values.textTheme)
+     addNote( authContext.user.uid, values.subject, values.text, values.textTheme)
      setVisible(true)
 
     }}
@@ -93,7 +85,7 @@ function Recall({ route }){
    <React.Fragment>
    <View>
    <TopHeader/>
-   <Text category='h1' style={{marginBottom:20}}>Recall</Text>
+
    <Text category='s1'>Take some time and think about what you have just studied or practiced.</Text>
    <Text category='s1' style={{marginVertical:12, marginBottom:20}}>Type out what you have learned.</Text>
    <Text>Everything you type here should be from memory and be done without looking at any material.</Text>
@@ -129,18 +121,11 @@ function Recall({ route }){
     backdropStyle={styles.backdrop}>
     <Card disabled={true}>
     <Text>Note Added!</Text>
-    {mode == 'BASIC'  &&
     <Button size='small' onPress={confirmAddNote}>
     DISMISS
     </Button>
-    }
+    
 
-
-    {mode == 'ADVANCED' &&
-    <Button size='small' onPress={confirmAddNoteBreak}>
-    Its time for a break
-    </Button>
-    } 
     </Card>
     </Modal>  
 
@@ -169,7 +154,7 @@ function Recall({ route }){
     </React.Fragment>
     )}
   </Formik>
-  </ImageBackground>
+
   </Layout>
 
     )
