@@ -32,7 +32,7 @@ const findVariance = (arr) => {
   return varianceTotal/lengthOfArray
 
 }
-
+ 
 
 function IQScreen(){
 
@@ -305,10 +305,32 @@ function IQScreen(){
     
     <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+
+      
     <Text category={'s1'}>Recommended Study</Text>
-    <Text>{7}</Text>
+    <Text>{5}</Text>
     </View>
     <Text>You've been studying extremely consistently for the last few weeks. Try and add a few more study sessions</Text>
+    </Card>
+
+
+    <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+
+    <Text category={'s1'} style={{fontWeight:'bold'}}>Currently setting first benchmark</Text>
+   
+    </View>
+
+
+    <View style={{alignItems:'center', marginVertical:12}}>
+    <Text category='h1'>7</Text>
+    <Text>Studied this week</Text>
+    </View>
+
+
+    <Text style={{lineHeight:24}}>Learning is a process, much more than a week to learn. In order to provide data. Day to day studying is more important to amount of times studied</Text>
+    
+   
     </Card>
     
 {/*     <Card>
@@ -320,7 +342,7 @@ function IQScreen(){
     */}
     
 
-    <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
+    {/* <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
  
     <Text category='s1' style={{marginBottom:16, textAlign:'center'}}>Study Frequency</Text>
   
@@ -336,7 +358,7 @@ function IQScreen(){
     />
   
     </Card>
-
+ */}
     </Layout>
     </SafeAreaView>
 

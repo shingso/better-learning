@@ -10,9 +10,11 @@ import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/componen
 import HomeScreen from './HomeScreen/HomeScreen'
 import AddNotes from './HomeScreen/AddNotes';
 import Recall from './HomeScreen/Recall';
-import Break from './HomeScreen/BreakScreen';
 
 import NotesFocused from './NotesScreen/NotesFocused'
+import NotesFocusedTEST from './NotesScreen/NotesFocusedTEST'
+import GlobalNotes from './NotesScreen/GlobalNotes'
+
 
 import GuidesHome from './GuidesScreen/GuidesHome'
 import HowToLearn from './GuidesScreen/HowToLearn'
@@ -27,6 +29,8 @@ import SetTimer from './HomeScreen/SetTimer'
 import AddSubject from './HomeScreen/AddSubject'
 import TipsPage from './HomeScreen/TipsPage'
 import NotesRecall from './HomeScreen/NotesRecall'
+import RecallExplain from './HomeScreen/RecallExplain'
+import StudyFinished from './HomeScreen/StudyFinished'
 
 import SignUp from './LoginScreen/SignUp';
 import Login from './LoginScreen/Login';
@@ -43,6 +47,8 @@ import OpenSource from './SettingsScreen/OpenSource';
 import { UserDataContextWrapper } from './UserDataContext'
 import { StudyStatsContextWrapper } from './StudyStats'
 import { AuthContext } from './AuthContext'
+import { SubjectsContextWrapper } from './SubjectsContext'
+
 import Onboard from './GuidesScreen/Onboard';
 
 
@@ -86,6 +92,15 @@ const TimerScreenWithContext = (props) => {
 }
 
 
+const AddNotesWithContext = (props) => {
+  return(
+  <SubjectsContextWrapper>
+  <AddNotes {...props}/>
+  </SubjectsContextWrapper>
+  )
+}
+
+
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
@@ -107,14 +122,18 @@ function HomeStack() {
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="NotesRecall" component={NotesRecall} />
-        <Stack.Screen name="AddNotes" component={AddNotes} />
+        <Stack.Screen name="RecallExplain" component={RecallExplain} />
+        <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
         <Stack.Screen name="Recall" component={Recall} />
-        <Stack.Screen name="Break" component={Break} />
         <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="SetTimer" component={SetTimer} />
         <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />
         <Stack.Screen name="TipsPage" component={TipsPage} />
         <Stack.Screen name="NotesFocused" component={NotesFocused} />
+        <Stack.Screen name="NotesFocusedTEST" component={NotesFocusedTEST} />
+        <Stack.Screen name="GlobalNotes" component={GlobalNotes} />
+        <Stack.Screen name="StudyFinished" component={StudyFinished} />
+   
         </Stack.Navigator>
     );
   }
@@ -165,7 +184,7 @@ function SettingsStack() {
 function App() {
 
 const authContext = useContext(AuthContext)
-  //authContext.newUser
+
   if(authContext.newUser){
  
     return (
