@@ -3,6 +3,8 @@ import {  View, SafeAreaView, StyleSheet, ImageBackground} from 'react-native'
 import { Button, Icon,  Card, Text, Layout } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
+import firestore from '@react-native-firebase/firestore';
+import { incrementActiveUsers } from '../helperFunctions';
 
 
 
@@ -14,63 +16,52 @@ import TopHeader from '../UtilComponents/TopHeader'
 
 function SetTimer({ route }){
  
-    const [mode, setMode] = React.useState('BASIC');
+    const [ activeUsers, setActiveUsers] = useState(0)
     const navigation = useNavigation();
-    const { subjectID } = route.params
 
     const customNav = () => {
-      navigation.navigate("TimerScreen", { mode:mode, subjectID: subjectID })
+      incrementActiveUsers()
+      navigation.navigate("TimerScreen")
     }
+
+
+       
+    useEffect(() => {
+      
+      async function fetchData(){
+        const ref = firestore().collection('CurrentUsers').doc('ActiveUsers')
+        const response = await ref.get()
+
+        setActiveUsers(response.data().NumberOfActiveUsers)
+      }
+
+      fetchData()
+      
+      
+    }, []);
 
     return (
     <Layout level='2' style={{flex:1}}>
     <SafeAreaView style={{flex: 1, padding:16}}>
     <TopHeader/>
-    
-    <Text style={{marginBottom:20}}  category='h1'>Choose a study session</Text>    
-    <ImageBackground style={{flex:1}} resizeMode={'contain'} opacity={0.1} source={mode == 'BASIC' ? require('../assets/images/boystudyingv1.png') : require('../assets/images/blogpostv2.png')}>
-    <View style={{marginBottom:12}}>
-    <View style={{flexDirection:'row', alignItems:'flex-end', marginBottom:12}}>
-    <Text  category='h1'>{mode == 'BASIC' ? 'Starter' : 'Advanced'}</Text>  
-    
-    {mode == 'BASIC' &&
-    <View style={{flexDirection:'row', alignItems:'center', marginBottom:7, marginLeft:20}}>
-    <Icon fill='green' width={15} height={15} name='alert-circle-outline' />
-    <Text style={{ marginLeft:4,color:'green'}}>Recommended</Text>  
-    </View>
-    }
+    <View style={{justifyContent:'space-between', flex:1}}>
+    <View style={{alignSelf:'flex-end'}}>
+    <Text category='s1'>Active Studiers</Text>
+    <Text style={{ alignSelf:'flex-end', fontWeight:'bold' }}>{activeUsers}</Text>
     </View>
 
-
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Text style={{marginRight:8}}>Study Period:</Text>
-    <Icon fill='black' width={15} height={15} name='clock-outline' />
-    <Text style={{marginLeft:8}}>{mode == 'BASIC' ? '25 mins' : '1 hour'}</Text>
+    <View>
+    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Text>
     </View>
     
-    </View>
-
-    <Text>
-    {mode == 'BASIC' ? 'Start building good study habits by studying for 25 mintues' : 'A longer study session for people with established study habits'}
-    </Text>
-        
-    <View style={{ flex:1, marginBottom:36 , justifyContent:'flex-end'}}>
-    <Button style={{marginBottom:30}} onPress={customNav}>
-      START
+    <View style={{ marginBottom:36 , justifyContent:'flex-end', alignItems:'center'}}>
+    <Button style={{marginBottom:30, width:300,}} onPress={customNav}>
+      start session
     </Button>
 
-    <View style={{ flexDirection:'row' }}>
-      <Button style={styles.button} appearance={mode == 'BASIC' ? 'outline' : 'ghost'} onPress={()=>setMode('BASIC')}>
-      STARTER
-    </Button>
-
-    <Button style={styles.button} appearance={mode == 'ADVANCED' ? 'outline' : 'ghost'} onPress={()=>setMode('ADVANCED')}>
-      ADVANCED
-    </Button>
-    
     </View>
-    </View>
-    </ImageBackground>
+   
+   </View>
     </SafeAreaView>
     </Layout>
       

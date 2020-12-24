@@ -1,11 +1,9 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
-
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
-
-import TopHeader from '../UtilComponents/TopHeader'
+import { decrementActiveUsers } from '../helperFunctions';
 
 const PauseIcon = (props) => (
   <Icon name='pause-circle' width={90} height={90} {...props} />
@@ -35,7 +33,7 @@ const msToTime = (duration) => {
 
     let seconds = Math.floor((duration / 1000) % 60)
     let minutes = Math.floor((duration / (1000 * 60)) % 60)
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    //minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
     return  minutes + ":" + seconds
@@ -44,25 +42,24 @@ const msToTime = (duration) => {
 
   
 
-function TimerScreenFunc({ route }){
+function TimerScreenFunc(){
 
-const [mode, setMode] = useState(route.params.mode)
 const [visible, setVisible] = useState(false)
 const [confirmBackVisible, setConfirmBackVisible] = useState(false)
 const [isPlaying, setIsPlaying] = useState(null)
 const [initialTimeSet, setInitialTimeSet] = useState(null)
 const [timeElaspased, setTimeElaspased] = useState(0)
-const [hasPlayed, sethasPlayed] = useState(false)
+
 const [hasEnded, setHasEnded] = useState(false)
 const [nav, setNav] = useState(null)
 const navigation = useNavigation();
 
 
-const { subjectID } = route.params
+
 
 useEffect(() => {
 
-    if( !hasPlayed || hasEnded || confirmBackVisible ){
+    if( hasEnded || confirmBackVisible ){
       return;
     }
 
@@ -81,7 +78,7 @@ useEffect(() => {
   },
 
     
-  [navigation, hasEnded, hasPlayed, confirmBackVisible]
+  [navigation, hasEnded, confirmBackVisible]
 );
 
 
@@ -97,13 +94,9 @@ const CustomBackHeader = () => {
 
 useEffect(() => {
  
- 
-    setMode(route.params.mode);
     setInitialTimeSet(4000)
-    setTimeElaspased(0)
-
-
-}, [route.params.mode])
+    setIsPlaying(true)
+}, [])
 
 useEffect(() => {
 
@@ -137,11 +130,10 @@ useEffect(() => {
 
 const startBackgroundTimer = () =>{
   setIsPlaying(true)
-  sethasPlayed(true)
 }
 
 const popToTop = () => {
-  console.log('ran')
+  decrementActiveUsers()
   navigation.dispatch(StackActions.popToTop());
 };
 
@@ -151,14 +143,13 @@ const stopBackgroundTimer = () => {
 }
   
 const backgroundTimerEnded = () => {
+  
   setIsPlaying(false)
   setHasEnded(true)
   Vibration.vibrate()
 
   BackgroundTimer.stopBackgroundTimer()
 
-  //updateUserStreakData(user.uid, updatedIQ , updatedStreak, highestStreak, subjectID)
-  
   setTimeout(() => {
     setVisible(true)
   }, 1000);
@@ -171,10 +162,11 @@ const onRefresh = () =>{
    setTimeElaspased(0)
 }
 
-confirmAddNote = () =>{
+const confirmCompleted = () =>{
   setVisible(false)
   navigation.pop()
-  navigation.navigate('Recall', { subjectID: subjectID, mode: mode})
+  decrementActiveUsers()
+  navigation.navigate('RecallExplain')
 }
 
 
@@ -186,7 +178,7 @@ return (
  
   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
   <CustomBackHeader/>
-  <Button appearance={'outline'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/>
+ {/*  <Button appearance={'outline'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/> */}
   </View>
 
 
@@ -194,29 +186,21 @@ return (
   
   
 
-  {/* {hasPlayed && */}
-  <View style={{flexDirection:'row'}}>
-  <Text>Currently:</Text>
-  <Text style={{textAlign:'center'}} >{isPlaying ? ' Studying' : ' Paused'}</Text>
-  </View>
-  {/* } */}
 
-  <View style={{flex:1,justifyContent:'center',}}> 
   
-  {hasPlayed  &&
+
+
+  {!hasEnded &&
+  <View style={{flex:1,justifyContent:'center'}}> 
   <Animated.Text style={{ fontSize:70,fontFamily:'OpenSans-Bold'}}>
   { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : '00:00'}
   </Animated.Text>
-  }
-  
-  {!hasPlayed && 
-  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PlayIcon} onPress={()=>startBackgroundTimer()}/>
-  }
   </View>
+  }
 
 
-  {hasPlayed &&
-  
+
+  {!hasEnded &&
   <View>
   {isPlaying ?
   <View>
@@ -228,17 +212,17 @@ return (
   </View> 
   }
   </View>
-  
   }
+  
 
   <Modal
   visible={visible}
   backdropStyle={styles.backdrop}
   >
   <Card disabled={true}>
-  <View style={{justifyContent:'center', alignItems:'center'}}>>
+  <View style={{justifyContent:'center', alignItems:'center'}}>
   <Text style={{marginVertical:12}}>Completed!</Text>
-  <Button onPress={confirmAddNote}>
+  <Button onPress={confirmCompleted}>
   Let's wrap this up
   </Button>
   </View>

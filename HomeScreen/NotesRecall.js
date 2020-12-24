@@ -1,127 +1,171 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Layout, Input, useTheme } from '@ui-kitten/components';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import { AuthContext } from '../AuthContext'
-import ProgressHeader from '../UtilComponents/ProgressHeader'
-import { format, formatDistance } from 'date-fns'
 import Swiper from 'react-native-swiper'
+import { addRecallNote, skipNote } from '../helperFunctions';
 
+const firestoreAutoId = () => {
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  let autoId = ''
+
+  for (let i = 0; i < 20; i++) {
+    autoId += CHARS.charAt(
+      Math.floor(Math.random() * CHARS.length)
+    )
+  }
+  return autoId
+}
+
+
+const TextSchema = Yup.object().shape({
+  text: Yup.string()
+    .min(1, 'Its crucial to recall inorder to learn')
+    .max(200, 'Too Long!')
+    .required('Required'),
+  
+
+    
+});
 
 
 
 function NotesRecall(){
     const theme = useTheme();
 
-    const selectRandomToShow = (list) => {
-      let currentList = list
     
-      let numberToSelect = 0
-      const randomList = []
-      //const randomDict = [{text:'hello', one:'two'}, {text:'helso', one:'two'}, {text:'hell', one:'two'}]
-      //select a random number in the length of the array
-      //remove that element and add the text and ID to a 
-      //need to map objects to a swiper
-    
-      /* for(var x in [0,1]){
-      let currentRandomNumber = Math.random() * currentList.length
-      let currentRandomNumberRounded = Math.floor(currentRandomNumber)
-      
-      let newList = currentList.splice(currentRandomNumberRounded,1)
-      
-      console.log(newList)
-      randomList.push(newList)
-      } */
-      
-    
-      //allow the user to look at one of the notes and add an additonal note if they want 
-    
-      //map the elements into a array object
-    
-      //Dont show this note again
-      //Skip all in general
-    
-      const listItems = list.map((item) =>
-      <View key={item.id}>
-      <Text style={styles.listItem}>{item.text}</Text>
-    
-      </View>
-      );
-    
-      return(
-        <View style={{height:180, padding:20, }}>
-        <Swiper  activeDotColor={theme['color-primary-default']} index={0}>
-        {listItems}
-        </Swiper>
-        </View>
-      )
-    
-    }
 
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
     const navigation = useNavigation();
-    const [ loading, setLoading ] = useState(true);
-    const [ notes, setNotes ] = useState([]);   
-    const [ currentSubject, setCurrentSubject ] = useState(null);   
-    const [ currentSubjectID, setCurrentSubjectID ] = useState(null);   
-
+ 
+    const [ currentData, setCurrentData ] = useState({})
     const [value, setValue] = React.useState('');
+    const [visible, setVisible] = React.useState(false);
+
+
     
+
+    const confirmAddRecallNote = () => {
+
+
+    }
+
+    const confirmSkipNote = (userID,subjectID) => {
+      console.log(subjectID)
+      skipNote(userID,subjectID)
+      navigation.dispatch(StackActions.popToTop());
+    }
+
+
+
     useEffect(() => {
 
-        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes')
-        return ref.onSnapshot(querySnapshot => {
-          const list = [];
-          querySnapshot.forEach(doc => {
-            const { text } = doc.data();
-            list.push({
 
-              id: doc.id,
-              text,
+        //
 
-            });
-          });
+        async function fetchData(){
+
+          let randomVar = firestoreAutoId()
+
+
+          //if we have more than 3 notes then recall acn start
+
+           const ref = await firestore().collection('Users').doc(userID).collection('GlobalNotes')
+           .where(firestore.FieldPath.documentId(), '>=', randomVar)
+           .orderBy(firestore.FieldPath.documentId(),'asc')
+           .limit(1)
+           .get()
+
+           if(ref.docs.length > 0){
+            ref.docs.map(doc => {
+              let placeholderDict = doc.data()
+              placeholderDict['id'] = doc.id
+              setCurrentData(placeholderDict)
+            })
+           
+          
+          } else {
+
+            const ref2 = await firestore().collection('Users').doc(userID).collection('GlobalNotes')
+            .where(firestore.FieldPath.documentId(), '<=', randomVar)
+            .orderBy(firestore.FieldPath.documentId(),'asc')
+            .limit(1)
+            .get()
+
+            if(ref2.docs.length > 0){
+              ref2.docs.map(doc => {
+              let placeholderDict = doc.data()
+              placeholderDict['id'] = doc.id
+              setCurrentData(placeholderDict)
+              })
+             }
   
-        setNotes(list);
 
-   
-          if (loading) {
-            setLoading(false);
-          }
+           }
 
-          
-          
+           
 
-        });
+        }
+
+        fetchData()
+
+
+
+
       }, []);
     
-    if (loading) {
-        return null; 
-    }
+   
+    //Allow to never show again - skip
+    //Once someone writes something it should never show again 
 
     return (
 
-      
+     
+
+      <Formik
+      initialValues={{ text:'', textTheme:'' }}
+      validationSchema={TextSchema}
+      onSubmit={(values, actions) => {
+       addRecallNote( authContext.user.uid, currentData.id , values.text, currentData.textTheme, currentData.subject)
+       //actions.setSubmitting(false);
+       setVisible(true)
+  
+      }}
+     >
+    {formikProps => (
     <Layout style={{flex: 1, padding:16}}>
-    <SafeAreaView>
+    <SafeAreaView>  
+    
+    <Button style={{alignSelf:'flex-end'}} appearance='ghost' onPress={()=>{confirmSkipNote(userID,currentData.id)}}>Skip</Button>
+
+
+    <Button style={{alignSelf:'flex-end'}} appearance='ghost' onPress={()=>{console.log(currentData)}}>Log</Button>
+    
     <Text style={{marginBottom:20}}>Review this</Text>
-    {selectRandomToShow(notes)}
+    <Text style={{textAlign:'center'}}>{currentData.text}</Text>
+  
     <Input
       style={{marginTop:40, marginBottom:20,marginTop:20, backgroundColor:'white', borderColor:'white', borderWidth:0}}
       autoFocus={true}
       multiline={true}
       textStyle={{height:80}}
-      
+      onChangeText={formikProps.handleChange('text')}
       placeholder='Write anything thoughts you have about the notes. Any new thoughts or new things learned?'
-      value={value}
-      onChangeText={nextValue => setValue(nextValue)}
+   
+
     />
-    <Button style={{marginHorizontal:20}} disabled={value == '' ? true : false}/>
+    <Button style={{marginHorizontal:20}} onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.text ? true : false}/>
     </SafeAreaView>
     </Layout>
-      
+    
+    )}
+    </Formik>
     );
 
       //we need to update state when we add an item
@@ -140,8 +184,6 @@ const styles = StyleSheet.create({
   contentContainer: {
 
     paddingHorizontal: 16,
-
-   
 
   },
 
