@@ -26,11 +26,11 @@ export async function addUser(userID) {
 
 
 
-export async function updateUserInfo(userID) {
+export async function updateUserLastStudied(userID) {
 
     const ref = firestore().collection('Users').doc(userID)
     await ref.update({
-      timeStamp: firestore.FieldValue.serverTimestamp()
+      lastStudied: firestore.FieldValue.serverTimestamp()
     });
    
 }

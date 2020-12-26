@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import ProgressHeader from '../UtilComponents/ProgressHeader'
-import { format, formatDistance } from 'date-fns'
-
-
+import CalendarStrip from 'react-native-calendar-strip'
+import { ScrollView } from 'react-native-gesture-handler';
+import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth } from 'date-fns'
 
 
 const EditIcon = (props) => (
@@ -20,9 +20,56 @@ const PlusIcon = (props) => (
 
 
 
+
+
 function HomeScreen(){
 
+  
+
     const theme = useTheme()
+
+
+    const markedDatesFunc = date => {
+      // Dot
+      if (date.isoWeekday() === 4) { // Thursdays
+        return {
+          dots:[{
+            color: theme['color-primary-500'],
+            selectedColor: theme['color-primary-500'],
+          }]
+        };
+      }
+
+      if (date.isoWeekday() === 5) { 
+        return {
+          dots:[{
+            color: theme['color-primary-500'],
+            selectedColor: theme['color-primary-500'],
+          }]
+        };
+      }
+
+      if (date.isoWeekday() === 6) {
+        return {
+          dots:[{
+            color: theme['color-primary-500'],
+            selectedColor: theme['color-primary-500'],
+            
+          }]
+
+          
+        };
+      }
+
+    
+    
+      
+      // Line
+     
+      return {};
+      
+    }
+
 
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
@@ -75,11 +122,8 @@ function HomeScreen(){
 
   const renderHeader = () => (
 
-    <View style={{paddingBottom:8}}>
-{/*     <ProgressHeader messageNumber={1}/> */}
-    
+   /*  <View style={{paddingBottom:8}}>
 
- 
     <View style={{justifyContent:'space-between', flexDirection:'row'}}>
     <View style={{flex:1, marginRight:12}}>
     <Button appearance='outline'>View All Notes</Button>
@@ -87,18 +131,20 @@ function HomeScreen(){
     <Button style={{marginRight:8}} accessoryRight={EditIcon} size='small' appearance='outline' onPress={()=>navigation.navigate('AddNotes')}/>
     <Button accessoryRight={PlusIcon} size='small'  onPress={()=>navigation.navigate('AddNotes')}/>
     </View>
-    
- 
-    
-
-
-   {/*  {
-    subjects.length != 0 ? 
-    <Text category={'label'}>Your Subjects:</Text>:
-    <Text category={'label'}>To get the most out of this app, check out the guides below:</Text>
-    } */}
   
+    </View> */
+
+    <Card style={{height:160}}>
+
+    <View style={{justifyContent:'space-between', flexDirection:'row'}}>
+ 
+    <Button style={{height:120, flex:1, marginRight:12}} appearance='ghost'>View All Notes</Button>
+
+  {/*   <Button style={{marginRight:0}} accessoryRight={EditIcon} size='small' appearance='outline' onPress={()=>navigation.navigate('AddNotes')}/> */}
+    {/* <Button accessoryRight={PlusIcon} size='small'  onPress={()=>navigation.navigate('AddNotes')}/> */}
     </View>
+  
+    </Card>
 
   
   );
@@ -126,6 +172,8 @@ function HomeScreen(){
       </Card>
     );
 
+      
+    
     
     
     useEffect(() => {
@@ -161,28 +209,75 @@ function HomeScreen(){
         return null; 
     }
 
+    const currentDate = new Date()
+    const startOfCurrentWeek = startOfWeek(currentDate)
+    const endOfCurrentWeek =  endOfWeek(currentDate)
+    const startOfCurrentMonth = startOfMonth(currentDate)
+
+    
+    const datesBlacklistFunc = date => {
+      return true; // disable Saturdays
+    }
+
+
+    
 
     return (
 
     
     
     <SafeAreaView style={{flex: 1}}>
-    
+    <ScrollView showsVerticalScrollIndicator={false}>
     <Layout level='2' style={{padding:16, flex:1}}>
+    
+    <Card style={{bodyPaddingHorizontal:-12}}>
+    <CalendarStrip
+     
+      showMonth={false}
+      calendarAnimation={{type: 'sequence', duration: 30}}
+      daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
+      style={{height:80, paddingTop: 0, paddingBottom: 0, marginHorizontal: -16,
+        marginVertical: -20}}
+      calendarHeaderStyle={{color: 'black'}}
+      calendarColor={'white'}
+      dateNumberStyle={{color:'black'}}
+      dateNameStyle={{color: 'black'}}
+      iconContainer={{flex: .1}}
+      //max date should be last date of the current week
+      maxDate={endOfCurrentWeek}
+      //min date should be the last 4 weeks
+      minDate={startOfCurrentMonth}
+      datesBlacklist={datesBlacklistFunc}
+      //iconLeft={null}
+      //iconRight={null}
+      //starting date should be first day of the week
+      startingDate={startOfCurrentWeek}
+      
+      markedDates={markedDatesFunc}
+ 
+      useIsoWeekday={false}
+      disabledDateOpacity={1}
 
 
-    <Card style={{marginTop:12, backgroundColor:theme['color-primary-500'], borderWidth:1, borderColor:theme['color-primary-500']}} onPress={()=>navigation.navigate('SetTimer')}>
-    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-    <Icon style={{marginRight:12}} fill={theme['color-primary-800']} width={45} height={45} name='play-circle' />
-
-    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session</Text>
-
-   
-    </View>
+    />
     </Card>
 
+    <Card style={{marginTop:16, height:200,backgroundColor:theme['color-primary-400'], justifyContent:'center', borderWidth:1, borderColor:theme['color-primary-500']}} onPress={()=>navigation.navigate('SetTimer')}>
 
-    <Card style={{marginTop:20}} onPress={()=>{navigation.navigate('NotesRecall')}}>
+    <View style={{ alignItems:'center', justifyContent:'center'}}>
+    <Icon style={{marginBottom:12}} fill={theme['color-primary-800']} width={50} height={50} name='play-circle' />
+
+    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session</Text>
+    <Text style={{marginTop:8, textAlign:'center', lineHeight:20}} category='label'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</Text>
+   
+    </View>
+   
+    </Card> 
+
+   
+
+
+    <Card style={{marginTop:16}} onPress={()=>{navigation.navigate('NotesRecall')}}>
     <ImageBackground opacity={0.15} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
     <View style={{ alignItems:'center', justifyContent:'center'}}>
 
@@ -203,7 +298,7 @@ function HomeScreen(){
         ListEmptyComponent={renderWelcome}
         showsVerticalScrollIndicator={false}
         /> */}
-    <View style={{flex:1, justifyContent:'flex-end'}}>
+    <View style={{marginTop:16}}>
     {renderHeader()}
     </View>
 
@@ -213,7 +308,7 @@ function HomeScreen(){
     {/* <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32,position: 'absolute', bottom: 20,                                                    
     right: 20, zIndex:5 }} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} /> */}
     
-
+    </ScrollView>
 
     </SafeAreaView>
   
