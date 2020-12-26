@@ -47,19 +47,19 @@ function AddNotes(){
   }
 
   const renderFooter = () => (
-    <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject({id:1, title:'No Folder'})}>
+    <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject({id:'', title:'No Folder'})}>
     <View style={{flexDirection:'row', alignItems:'center', marginVertical:16}}>
     
     <Icon style={{width:20, height:20, marginRight:16}} 
-    name={subjectsContext.lastUsedSubject.id == '1' ? 'checkmark-square-2': 'square-outline'}
-    fill={subjectsContext.lastUsedSubject.id == '1' ? theme['color-primary-800'] :theme['color-basic-500']}/>
+    name={subjectsContext.lastUsedSubject.id == '' ? 'checkmark-square-2': 'square-outline'}
+    fill={subjectsContext.lastUsedSubject.id == '' ? theme['color-primary-800'] :theme['color-basic-500']}/>
 
     <Text 
 
     style={{
       flexShrink:1,
-      fontWeight:subjectsContext.lastUsedSubject.id == '1' ? 'bold' : 'normal',
-      color:subjectsContext.lastUsedSubject.id == '1' ? theme['color-basic-600'] :theme['color-basic-600']}
+      fontWeight:subjectsContext.lastUsedSubject.id == '' ? 'bold' : 'normal',
+      color:subjectsContext.lastUsedSubject.id == '' ? theme['color-basic-600'] :theme['color-basic-600']}
     }>
     None
     </Text>
@@ -105,7 +105,7 @@ function AddNotes(){
     initialValues={{ text:'', textTheme:'' }}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( authContext.user.uid, selectedID , values.text, values.textTheme)
+     addNote( authContext.user.uid, subjectsContext.lastUsedSubject.id  , values.text, values.textTheme)
      //actions.setSubmitting(false);
      setVisible(true)
 

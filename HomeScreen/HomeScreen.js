@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Layout } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import ProgressHeader from '../UtilComponents/ProgressHeader'
 import { format, formatDistance } from 'date-fns'
@@ -15,12 +15,14 @@ const EditIcon = (props) => (
 );
 
 const PlusIcon = (props) => (
-  <Icon {...props} height={28} width={28}  name='plus-outline'/>
+  <Icon {...props} height={20} width={20}  name='plus-outline'/>
 );
 
 
 
 function HomeScreen(){
+
+    const theme = useTheme()
 
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
@@ -33,9 +35,9 @@ function HomeScreen(){
   
     const renderListFooter = () => (
 
-      <View style={{alignItems:'flex-start', marginBottom:128}}> 
-      {/* <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32, }} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} /> */}
-      </View>
+      <Layout style={{marginTop:12}}> 
+     {/*  <Button accessoryRight={PlusIcon} size='small' onPress={()=>navigation.navigate('AddSubject')} />  */}
+      </Layout>
 
   );
 
@@ -75,18 +77,21 @@ function HomeScreen(){
 
     <View style={{paddingBottom:8}}>
 {/*     <ProgressHeader messageNumber={1}/> */}
-    <Button onPress={()=>{navigation.navigate('NotesRecall')}}/>
-    <View>
-    <Card onPress={()=>navigation.navigate('GlobalNotes')} style={{ marginVertical:8 }}>
-    <View style={{justifyContent:'space-between', flexDirection:'row'}}>
-    <View>
-    <Text>Notes</Text>
-    </View>
-    <Button accessoryRight={EditIcon} size='small' appearance='outline' onPress={()=>navigation.navigate('AddNotes')}/>
-    </View>
-    </Card>
+    
 
+ 
+    <View style={{justifyContent:'space-between', flexDirection:'row'}}>
+    <View style={{flex:1, marginRight:12}}>
+    <Button appearance='outline'>View All Notes</Button>
     </View>
+    <Button style={{marginRight:8}} accessoryRight={EditIcon} size='small' appearance='outline' onPress={()=>navigation.navigate('AddNotes')}/>
+    <Button accessoryRight={PlusIcon} size='small'  onPress={()=>navigation.navigate('AddNotes')}/>
+    </View>
+    
+ 
+    
+
+
    {/*  {
     subjects.length != 0 ? 
     <Text category={'label'}>Your Subjects:</Text>:
@@ -110,10 +115,10 @@ function HomeScreen(){
       >
 
       <View style={{ justifyContent:'space-between', flexDirection:'row'}}>
-      <View style={{flex:10}}>
+    
       <Text category='s1'>{info.item.title}</Text>
       {info.item.lastStudied != null && <Text style={{fontSize:10}}>Last Studed: {formatDistance(new Date(info.item.lastStudied.toDate()), new Date())} ago</Text>}
-      </View>
+    
 
     
       
@@ -156,40 +161,6 @@ function HomeScreen(){
         return null; 
     }
 
-  /* 
-    if(subjects.length == 0){
-
-      return (
-
-        <View style={{marginBottom:20, padding:16, justifyContent:'space-between'}}>
-      
-        <Text category='h1'>Welcome!</Text>
-        <Text category='s1' style={{marginVertical:20}}>Get started by learning a better way to learn</Text>
-        <Card style={{marginBottom:16}}>
-        <ImageBackground opacity={0.2} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
-        <Text style={{marginBottom:8}} category='s1'>What is Learning?</Text>
-        <Text>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</Text>
-        </ImageBackground>
-        </Card>
-    
-        <Card style={{marginVertical:8, marginBottom:28}}>
-        <ImageBackground opacity={0.2} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
-        <Text style={{marginBottom:8}} category='s1'>How should I be learning?</Text>
-        <Text>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</Text>
-        </ImageBackground>
-        </Card>
-    
-        <Card style={{marginBottom:28}}>
-        <ImageBackground opacity={0.2} resizeMode='cover' source={require('../assets/images/8600.5.png')} style={styles.image}>
-        <Text style={{marginBottom:8}} category='s1'>Want to know more?</Text>
-        <Text>Duis aute irure dolor in reprehenderit</Text>
-    
-        </ImageBackground>
-        </Card>
-        <Text category='s1'>When youre ready to start your studying journey...</Text>
-        </View>
-      )
-    } */
 
     return (
 
@@ -197,13 +168,12 @@ function HomeScreen(){
     
     <SafeAreaView style={{flex: 1}}>
     
-    <Layout level='2' style={{padding:16}}>
-    {/* <ProgressHeader messageNumber={1}/> */}
-    
+    <Layout level='2' style={{padding:16, flex:1}}>
 
-    <Card style={{marginTop:12, backgroundColor:'#A7E78F', borderWidth:1, borderColor:'#80D86A'}} onPress={()=>navigation.navigate('SetTimer')}>
+
+    <Card style={{marginTop:12, backgroundColor:theme['color-primary-500'], borderWidth:1, borderColor:theme['color-primary-500']}} onPress={()=>navigation.navigate('SetTimer')}>
     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-    <Icon style={{marginRight:12}} fill='#14671C' width={45} height={45} name='play-circle' />
+    <Icon style={{marginRight:12}} fill={theme['color-primary-800']} width={45} height={45} name='play-circle' />
 
     <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Start a study session</Text>
 
@@ -212,9 +182,18 @@ function HomeScreen(){
     </Card>
 
 
-    </Layout>
+    <Card style={{marginTop:20}} onPress={()=>{navigation.navigate('NotesRecall')}}>
+    <ImageBackground opacity={0.15} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
+    <View style={{ alignItems:'center', justifyContent:'center'}}>
 
-    <List
+    
+    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Daily Recall</Text>
+    <Text style={{marginTop:8}} category='label'>Take a look at past note and write something new about it</Text>
+    </View>
+    </ImageBackground>
+    </Card>
+
+  {/*   <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
         data={subjects}
@@ -222,9 +201,20 @@ function HomeScreen(){
         ListFooterComponent={renderListFooter}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderWelcome}
-        />
-    <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32,position: 'absolute', bottom: 20,                                                    
-    right: 20, zIndex:5 }} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} />
+        showsVerticalScrollIndicator={false}
+        /> */}
+    <View style={{flex:1, justifyContent:'flex-end'}}>
+    {renderHeader()}
+    </View>
+
+    </Layout>
+
+   
+    {/* <Button  style={{marginVertical:12, width:64, height:64, borderRadius:32,position: 'absolute', bottom: 20,                                                    
+    right: 20, zIndex:5 }} accessoryRight={PlusIcon} onPress={()=>navigation.navigate('AddSubject')} /> */}
+    
+
+
     </SafeAreaView>
   
       
@@ -245,24 +235,22 @@ const styles = StyleSheet.create({
   //contanier that holds everything 
   contentContainer: {
 
-    paddingHorizontal: 16,
 
-   
 
   },
   
   container:{
- 
-    flex:1
+    marginTop:16
   },
 
   image: {
-    flex: 1,
+    
     resizeMode: "center",
-    justifyContent: "flex-end",
-  
+   
     margin:-24,
-    padding:24
+    padding:24,
+    paddingVertical:60
+    
   },
 });
 

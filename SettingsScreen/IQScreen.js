@@ -45,6 +45,12 @@ function IQScreen(){
   const dateStats = studyStatsData.dates
   const userStartDate = userData.timeStamp
   const allDateStats = studyStatsData.allDates
+  const lastStudied = userData.lastStudied
+  const daysSinceLastStudy = differenceInDays(new Date(), lastStudied.toDate())
+  // if its greater than 14 days
+  console.log(differenceInDays(new Date(), lastStudied.toDate()))
+
+  
 
   const calculateStudyFrequency = () => {
     
@@ -60,7 +66,7 @@ function IQScreen(){
     const sevenDaysAgo = subDays(currentDate, 7)
     const eightDaysAgo = subDays(currentDate, 8)
     const endOfDayEight = endOfDay(eightDaysAgo)
-    console.log('log', sevenDaysAgo, eightDaysAgo, endOfDayEight)
+    //console.log('log', sevenDaysAgo, eightDaysAgo, endOfDayEight)
     const fourteenDaysAgo = subDays(currentDate, 14)
 
 
@@ -313,25 +319,21 @@ function IQScreen(){
     <Text>You've been studying extremely consistently for the last few weeks. Try and add a few more study sessions</Text>
     </Card>
 
-
+    { daysSinceLastStudy < 15 &&
     <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-
     <Text category={'s1'} style={{fontWeight:'bold'}}>Currently setting first benchmark</Text>
-   
     </View>
-
 
     <View style={{alignItems:'center', marginVertical:12}}>
     <Text category='h1'>7</Text>
     <Text>Studied this week</Text>
     </View>
-
-
     <Text style={{lineHeight:24}}>Learning is a process, much more than a week to learn. In order to provide data. Day to day studying is more important to amount of times studied</Text>
-    
-   
+
     </Card>
+
+    }
     
 {/*     <Card>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>

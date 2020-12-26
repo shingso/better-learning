@@ -3,7 +3,8 @@ import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
-import { decrementActiveUsers } from '../helperFunctions';
+import { decrementActiveUsers, updateUserLastStudied } from '../helperFunctions';
+import { AuthContext } from '../AuthContext'
 
 const PauseIcon = (props) => (
   <Icon name='pause-circle' width={90} height={90} {...props} />
@@ -55,6 +56,7 @@ const [nav, setNav] = useState(null)
 const navigation = useNavigation();
 
 
+const authContext = useContext(AuthContext)
 
 
 useEffect(() => {
@@ -128,26 +130,19 @@ useEffect(() => {
 }, [timeElaspased]);
 
 
-const startBackgroundTimer = () =>{
-  setIsPlaying(true)
-}
-
 const popToTop = () => {
   decrementActiveUsers()
   navigation.dispatch(StackActions.popToTop());
 };
 
-
-const stopBackgroundTimer = () => {
-  setIsPlaying(false)
-}
   
 const backgroundTimerEnded = () => {
   
   setIsPlaying(false)
   setHasEnded(true)
   Vibration.vibrate()
-
+  console.log(authContext.user.uid)
+  updateUserLastStudied(authContext.user.uid)
   BackgroundTimer.stopBackgroundTimer()
 
   setTimeout(() => {
@@ -157,15 +152,10 @@ const backgroundTimerEnded = () => {
  
 }
 
-
-const onRefresh = () =>{
-   setTimeElaspased(0)
-}
-
 const confirmCompleted = () =>{
   setVisible(false)
   navigation.pop()
-  decrementActiveUsers()
+  decrementActiveUsers(authContext.user.id)
   navigation.navigate('RecallExplain')
 }
 
@@ -204,11 +194,11 @@ return (
   <View>
   {isPlaying ?
   <View>
-  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PauseIcon} onPress={()=>stopBackgroundTimer()}/>
+  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PauseIcon} onPress={()=>setIsPlaying(false)}/>
   </View>:
 
   <View> 
-  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PlayIconSmall} onPress={()=>startBackgroundTimer()}/>
+  <Button size={'giant'} appearance={'ghost'} accessoryLeft={PlayIconSmall} onPress={()=>setIsPlaying(true)}/>
   </View> 
   }
   </View>

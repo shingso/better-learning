@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
-import firestore from '@react-native-firebase/firestore';
 import { useNavigation, StackActions } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Layout, Input, useTheme } from '@ui-kitten/components';
+import { Text, Button, Layout } from '@ui-kitten/components';
 
 
 
@@ -24,6 +23,8 @@ function StudyFinished(){
       <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
       <Text category='h5' style={{marginBottom:20}}>Study Session Complete!</Text>
       <Text category='s1'>time for a break</Text>
+
+      <Button onPress={()=>{navigation.dispatch(StackActions.popToTop())}}>Completed</Button>
       </View>
       </SafeAreaView>
       </Layout>

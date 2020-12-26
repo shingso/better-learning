@@ -8,7 +8,7 @@ import { useNavigation, StackActions } from '@react-navigation/native';
 const TextComponent = (props) => {
 
     return(
-        <View style={{borderColor:'red', borderWidth:1, flex:1, justifyContent:'center', alignItems:'center', padding:16}}>
+        <View style={{ flex:1, justifyContent:'center', alignItems:'center', padding:16}}>
         <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>{props.bodyText}</Text>
         </View>
     )

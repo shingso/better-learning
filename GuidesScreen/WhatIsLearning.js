@@ -1,145 +1,72 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { View , StyleSheet, Image, ImageBackground } from 'react-native';
-import { Button, Text ,Icon , Input, Modal, Card, Layout } from '@ui-kitten/components';
-import { useNavigation, StackActions } from '@react-navigation/native';
+import { Button, Text ,Icon , Input, Modal, Card, useTheme, Layout } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
+import GuideComponent from '../UtilComponents/GuideComponent'
 
 function WhatIsLearning(){
 
+  const theme = useTheme();
   return (
     <Layout style={{flex:1}}>
-    <View style={{paddingLeft:16, borderColor:'red', borderWidth:1}}>
+    <View style={{paddingLeft:16, paddingTop:4, flexDirection:'row', alignItems:'center'}}>
     <TopHeader/>
+    <Text style={{fontWeight:'bold', fontSize:16, marginLeft:4}}>What is Learning?</Text>
     </View>
     
-    <Swiper style={styles.wrapper} loop={false} index={0}>
-
-    <Layout style={styles.slide1}>
-    <ImageBackground style={{flex:1, padding:16}}  source={require('../assets/images/backgroundLowV1.png')}>
-    <Text style={{marginBottom:12, textAlign:'center'}} category='h2'>Learning is a process</Text>
-    <Text category='p1' style={{textAlign:'center'}}>Building on past information inorder to comprehend new information</Text>
-    <Image
-      style={{
-        borderColor:'black',
-        borderWidth:1,
-        width:250,
-        height: 350,
-        alignSelf:'center',
-        marginVertical:16,
-        resizeMode:'contain',
-      
-
-      }}
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
     
-      source={require('../assets/images/girlThinkingHDv1.png')}
-    
+
+    <GuideComponent 
+    picture={require('../assets/images/girlthinkingbackground.png')} 
+    headerText={'Building on past information'}
+    bodyText={'Learning is about taking information you already know and building on top of it'}
     />
-         
-    <Text style={{textAlign:'center'}} category='s1'>consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
-    </ImageBackground>
-    </Layout>
 
-
-
-
-
-    <ImageBackground style={{flex:1}}  source={require('../assets/images/backgroundLowV1.png')}>
-    <View style={styles.slide1}>
-    <Text style={{marginBottom:12, textAlign:'center'}} category='h2'>Learning is a process</Text>
-    <Text category='p1' style={{textAlign:'center'}}>Building on past information inorder to comprehend new information</Text>
-    <Image
-      style={{
-        borderColor:'black',
-        borderWidth:1,
-        width:250,
-        height: 350,
-        alignSelf:'center',
-        marginVertical:16,
-        resizeMode:'contain',
-      
-
-      }}
-    
-      source={require('../assets/images/girlThinkingHDv1.png')}
-    
+    <GuideComponent 
+    picture={require('../assets/images/boybutterfly.png')} 
+    headerText={'Focused and active'}
+    bodyText={'Decide on what you are going to do'}
     />
-         
-    <Text style={{textAlign:'center'}} category='s1'>consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
-    </View>
-    </ImageBackground>
 
-
-
-
-
-
-    
-    <ImageBackground style={{flex:1}}  source={require('../assets/images/backgroundLowV1.png')}>
-    <View style={styles.slide1}>
-    <Text style={{ textAlign:'center'}} category='h1'>Learning is NOT memorization</Text>
-    
-    <Image
-      style={{
-        width:350,
-        height: 350,
-        marginBottom:16,
-        marginTop:16,
-        resizeMode:'contain',
-      }}
-      source={require('../assets/images/blogpostv2.png')}
+    <GuideComponent 
+    picture={require('../assets/images/girltakingnotes.png')} 
+    headerText={'Learning is a process'}
+    bodyText={'A study sessions is a 25 minute period where you commit to being focused on the task at hand. During this time, engage and actively thinking about what you are reading.'}
     />
-    <Text style={{textAlign:'center', marginBottom:20}}>Try and memorize as little as possible when learning!</Text>
-    <Text style={{textAlign:'center', marginBottom:20}}>If you have something memorized, you DO NOT understand the underlying concept</Text>
-    <Text style={{marginBottom:20, textAlign:'center'}} category='s1'>Instead look towards understanding concepts. Figure out how smaller concepts and think about how they fix into the larger concept</Text>
-    </View>
-    </ImageBackground>
-
-
 
     
-    <View style={[styles.slide1,{backgroundColor:'#B5E2E2'}]}>
-    <Text style={{marginBottom:20, textAlign:'center'}} category='h1'>Learning is engaged and active</Text>
-    <Text style={{textAlign:'center'}}>Our brains absorb and process information the best when we are fully focused on what is in front of us</Text>
-    <Text style={{textAlign:'center'}}>Actively thinking about what we are trying to learn</Text>
-    <Image
-      style={{
-        width:350,
-        height: 300,
-        marginVertical:32,
-        resizeMode:'contain',
-      }}
-      source={require('../assets/images/boystudyingv1.png')}
+    <GuideComponent 
+    picture={require('../assets/images/walkingwithoutbackground.png')} 
+    headerText={'Learning is NOT memorization'}
+    bodyText={'The last step to a study session is to recall what you have learned about. Take some time to think about what you learned about and write it down. During recall do NOT look at any material'}
     />
-    <View>
-    <Text style={{textAlign:'center'}} category='s1'>The best way to learn with SHORT but CONCENTRATED periods of time</Text>
-    </View>
-    </View>
 
+   
 
-
-  </Swiper>
-  </Layout>
-  )
+    </Swiper>
+    </Layout>)
 };
 
 
 const styles = StyleSheet.create({
-  container: {
-    minHeight: 192,
-  },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  slide1: {
-    flex: 1,
-    justifyContent: 'space-between',
-    borderColor:'blue',
+  nextButtonStyle:{
+    marginBottom:12, 
+    marginRight:20, 
     borderWidth:1, 
+    padding:14, 
+    borderRadius:6, 
+    paddingHorizontal:22
+  },
 
-    
-    marginBottom:50
-
+  prevButtonStyle:{
+    marginBottom:12, 
+    marginLeft:20, 
+    borderWidth:1,
+    padding:14, 
+    borderRadius:6, 
+    paddingHorizontal:22
   },
 
 });

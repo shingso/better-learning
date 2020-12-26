@@ -1,114 +1,75 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { View , StyleSheet, Image, ImageBackground } from 'react-native';
-import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
-import { useNavigation, StackActions } from '@react-navigation/native';
+import { Button, Text ,Icon , Input, Modal, Card, useTheme, Layout } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
+import GuideComponent from '../UtilComponents/GuideComponent'
 
 function HowOften(){
 
+  const theme = useTheme();
   return (
-     
-    <Swiper style={styles.wrapper} loop={false} index={0}>
-      
-      <ImageBackground style={{flex:1}}  source={require('../assets/images/backgroundLowV1.png')}>
-      <View style={styles.slide1}>
-      <Text style={{marginBottom:20, textAlign:'center'}} category='h2'>Tortor dignissim convallis</Text>
-      <Text category='p1' style={{textAlign:'center'}}>Eget nulla facilisi etiam dignissim diam quis enim lobortis. Tortor dignissim convallis aenean et tortor</Text>
-      <Image
-        style={{
-          width:400,
-          height: 350,
-          marginVertical:16,
-          resizeMode:'contain',
-        
+    <Layout style={{flex:1}}>
+    <View style={{paddingLeft:16, paddingTop:4}}>
+    <TopHeader/>
+    </View>
+    
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    
 
-        }}
-      
-        source={require('../assets/images/girlThinkingHDv1.png')}
-      
-      />
-           
-      <Text style={{marginBottom:20, textAlign:'center'}} category='s1'>consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
-      </View>
-      </ImageBackground>
+    <GuideComponent 
+    picture={require('../assets/images/girlthinkingbackground.png')} 
+    headerText={'Short and sweet'}
+    bodyText={'The key to learning is short but focused and engaged studying!'}
+    />
 
+    <GuideComponent 
+    picture={require('../assets/images/boybutterfly.png')} 
+    headerText={'Find something to Learn.'}
+    bodyText={'Decide on what you are going to do'}
+    />
 
+    <GuideComponent 
+    picture={require('../assets/images/girltakingnotes.png')} 
+    headerText={'Start a study session.'}
+    bodyText={'A study sessions is a 25 minute period where you commit to being focused on the task at hand. During this time, engage and actively thinking about what you are reading.'}
+    />
 
+    
+    <GuideComponent 
+    picture={require('../assets/images/walkingwithoutbackground.png')} 
+    headerText={'Recall'}
+    bodyText={'The last step to a study session is to recall what you have learned about. Take some time to think about what you learned about and write it down. During recall do NOT look at any material'}
+    />
 
-
-      
-      <ImageBackground style={{flex:1}}  source={require('../assets/images/backgroundLowV1.png')}>
-      <View style={styles.slide1}>
-      <Text style={{ textAlign:'center'}} category='h1'>consectetur adipiscing elit</Text>
-      
-      <Image
-        style={{
-          width:350,
-          height: 350,
-          marginBottom:16,
-          marginTop:16,
-          resizeMode:'contain',
-      
-        }}
-      
-        source={require('../assets/images/blogpostv2.png')}
-      
-      />
-      <Text style={{textAlign:'center', marginBottom:20}}>Eget nulla facilisi etiam dignissim diam quis enim lobortis. Tortor dignissim convallis aenean et tortor</Text>
-           
-      <Text style={{marginBottom:20, textAlign:'center'}} category='s1'>consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
-      </View>
-      </ImageBackground>
-
-
-
-      
-      <View style={[styles.slide1,{backgroundColor:'#B5E2E2'}]}>
-      <Text style={{marginBottom:20, textAlign:'center'}} category='h1'>Tortor dignissim convallis</Text>
-      <Text style={{textAlign:'center'}}>Eget nulla facilisi etiam dignissim diam quis enim lobortis. Tortor dignissim convallis aenean et tortor</Text>
-      <Image
-        style={{
-          width:350,
-          height: 300,
-          marginVertical:32,
-          resizeMode:'contain',
-      
-        }}
-      
-        source={require('../assets/images/boystudyingv1.png')}
-      
-      />
-           
-      <Text style={{marginBottom:20, textAlign:'center'}} category='s1'>consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
-      </View>
-
-
+    <GuideComponent 
+    picture={require('../assets/images/relaxingbed.png')} 
+    headerText={'Take a break'}
+    bodyText={'When your done studying take a break! Do something you enjoy. Breaks are more important than you think and if you want to push yourself more. Take a break!'}
+    />
 
     </Swiper>
-  )
+    </Layout>)
 };
 
 
 const styles = StyleSheet.create({
-  container: {
-    minHeight: 192,
+  nextButtonStyle:{
+    marginBottom:12, 
+    marginRight:20, 
+    borderWidth:1, 
+    padding:14, 
+    borderRadius:6, 
+    paddingHorizontal:22
   },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  slide1: {
-   
-    paddingBottom:32,
-    paddingHorizontal:20,
-    paddingTop:24,
-    alignItems:'center',
-    flex:1
 
-  
-
-
-
+  prevButtonStyle:{
+    marginBottom:12, 
+    marginLeft:20, 
+    borderWidth:1,
+    padding:14, 
+    borderRadius:6, 
+    paddingHorizontal:22
   },
 
 });
