@@ -11,26 +11,11 @@ function GuidesHome(){
  
  
 
-    const navigation = useNavigation();
+  const navigation = useNavigation();
    
-    const navigateSettings = () => {
-      navigation.navigate('SettingsOptions');
-      
-  };
-    
-  const SettingsIcon = (props) => (
-    <Icon {...props} width='25' height='25' name='settings-outline' />
-  );
+
   
-   
-  const renderHeader = () => (
-      
-    <View style={{marginBottom:12, flexDirection:'row', justifyContent:'space-between'}}>
-    <Text category='h1'></Text>
-    <Button size='small' accessoryRight={SettingsIcon} onPress={navigateSettings}></Button>
-    </View>
-  );
-    
+
     const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to Learn!', imagePath:require('../assets/images/teaching.png')},
      {title:'What is Learning?', path:'WhatIsLearning', bodyText:'The basics of learning', imagePath:require('../assets/images/studying.png')},
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendar.png')},
@@ -46,9 +31,9 @@ function GuidesHome(){
       <Card style={styles.item}
        onPress={()=>navigation.navigate(info.item.path)}
       >
-      <ImageBackground opacity={0.20} resizeMode='cover' width={500} source={info.item.imagePath} style={styles.image}>
+      <ImageBackground opacity={0.20} resizeMode='cover'  source={info.item.imagePath} style={styles.image}>
       <View style={{justifyContent:'space-between'}}>
-      <Text category='s1' style={{marginBottom:12}}>{info.item.title}</Text>
+      <Text category='s1' style={{marginBottom:12, fontWeight:'bold', letterSpacing:0.5 }}>{info.item.title}</Text>
       <Text>{info.item.bodyText}</Text>
       </View>
       </ImageBackground>
@@ -73,8 +58,6 @@ function GuidesHome(){
         data={todos}
         renderItem={renderItem}
 
-        ListHeaderComponent={renderHeader}
-      
         />
 
       </SafeAreaView>
@@ -92,28 +75,24 @@ export default GuidesHome
 const styles = StyleSheet.create({
     container: {
       paddingVertical:12,
-  
+     
     },
+
     image: {
       flex: 1,
-      resizeMode: "center",
-      justifyContent: "flex-end",
       margin:-24,
-      padding:18
+      padding:18,
+      paddingVertical:24
     },
 
 
     contentContainer: {
       paddingHorizontal: 20,
       paddingVertical: 8,
-    
-     
     },
+
     item: {
-      marginVertical: 8,
+      marginVertical:8,
       paddingVertical:8,
-    
-      
-    
     },
   });

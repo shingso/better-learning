@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components'
+import { BottomNavigation, BottomNavigationTab, Icon, useTheme } from '@ui-kitten/components'
 
 import HomeScreen from './HomeScreen/HomeScreen'
 import AddNotes from './HomeScreen/AddNotes';
@@ -14,7 +14,7 @@ import Recall from './HomeScreen/Recall';
 import NotesFocused from './NotesScreen/NotesFocused'
 import NotesFocusedTEST from './NotesScreen/NotesFocusedTEST'
 import GlobalNotes from './NotesScreen/GlobalNotes'
-
+import NotesHome from './NotesScreen/NotesHome'
 
 import GuidesHome from './GuidesScreen/GuidesHome'
 import HowToLearn from './GuidesScreen/HowToLearn'
@@ -43,6 +43,9 @@ import TermsOfService from './SettingsScreen/TermsOfService';
 import ThemeSettings from './SettingsScreen/ThemeSettings';
 import OpenSource from './SettingsScreen/OpenSource';
 
+import UserInfo from './UserInfoScreens/UserInfo';
+
+
 
 import { UserDataContextWrapper } from './UserDataContext'
 import { StudyStatsContextWrapper } from './StudyStats'
@@ -50,6 +53,7 @@ import { AuthContext } from './AuthContext'
 import { SubjectsContextWrapper } from './SubjectsContext'
 
 import Onboard from './GuidesScreen/Onboard';
+
 
 
 const Stack = createStackNavigator();
@@ -69,6 +73,10 @@ const BookIcon = (props) => (
 const ChartIcon = (props) => (
   <Icon {...props} name='bar-chart-2'/>
 );
+
+const UserIcon = (props) => (
+  <Icon {...props} name='person'/>
+);
 //export const AuthContext = createContext(null)
 
 
@@ -83,6 +91,25 @@ const IQScreenWithContext = () => {
 }
 
 
+const UserInfoWithContext = () => {
+  return(
+  <UserDataContextWrapper>
+  <StudyStatsContextWrapper>
+  <UserInfo/>
+  </StudyStatsContextWrapper>
+  </UserDataContextWrapper>
+  )
+}
+
+const HomeScreenWithContext = () => {
+  return(
+
+  <StudyStatsContextWrapper>
+  <HomeScreen/>
+  </StudyStatsContextWrapper>
+
+  )
+}
 const TimerScreenWithContext = (props) => {
   return(
   <UserDataContextWrapper>
@@ -110,6 +137,7 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigationTab icon={HomeIcon}/>
     <BottomNavigationTab icon={ChartIcon}/>
     <BottomNavigationTab icon={BookIcon}/>
+    <BottomNavigationTab icon={UserIcon}/>
   </BottomNavigation>
 );
 
@@ -120,7 +148,7 @@ const BottomTabBar = ({ navigation, state }) => (
 function HomeStack() {
     return (
         <Stack.Navigator headerMode='none'>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreenWithContext} />
         <Stack.Screen name="NotesRecall" component={NotesRecall} />
         <Stack.Screen name="RecallExplain" component={RecallExplain} />
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
@@ -133,6 +161,7 @@ function HomeStack() {
         <Stack.Screen name="NotesFocusedTEST" component={NotesFocusedTEST} />
         <Stack.Screen name="GlobalNotes" component={GlobalNotes} />
         <Stack.Screen name="StudyFinished" component={StudyFinished} />
+        <Stack.Screen name="NotesHome" component={NotesHome} />
    
         </Stack.Navigator>
     );
@@ -160,11 +189,6 @@ function HomeStack() {
         <Stack.Screen name="LearningTips" component={LearningTips} />
         <Stack.Screen name="Inspiration" component={Inspiration} />
         <Stack.Screen name="Discouraged" component={Discouraged} />
-        <Stack.Screen name="OpenSource" component={OpenSource} />
-        <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
-        <Stack.Screen name="TermsOfService" component={TermsOfService} />
-        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-        <Stack.Screen name="ThemeSettings" component={ThemeSettings} />
         </Stack.Navigator>
     );
   }
@@ -172,7 +196,7 @@ function HomeStack() {
 
 
 
-function SettingsStack() {
+function UserStatsStack() {
     return (
 
         <Stack.Navigator headerMode='none'>
@@ -181,8 +205,24 @@ function SettingsStack() {
     );
   }
 
+
+  function UserSettingsStack() {
+    return (
+
+        <Stack.Navigator headerMode='none'>
+        <Stack.Screen name="UserInfo" component={UserInfoWithContext} />
+        <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
+        <Stack.Screen name="OpenSource" component={OpenSource} />
+        <Stack.Screen name="TermsOfService" component={TermsOfService} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+        <Stack.Screen name="ThemeSettings" component={ThemeSettings} />
+        </Stack.Navigator>
+    );
+  }
+
 function App() {
 
+const theme = useTheme();
 const authContext = useContext(AuthContext)
 
   if(authContext.newUser){
@@ -198,12 +238,13 @@ const authContext = useContext(AuthContext)
   return authContext.user ?    
 
    
-     <NavigationContainer>
+     <NavigationContainer theme={{ colors: { background:theme['background-basic-color-2']}}}>
   
       <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="SettingsStack" component={SettingsStack} />
+      <Tab.Screen name= "UserStatsStack" component={UserStatsStack} />
       <Tab.Screen name="GuidesStack" component={GuidesStack} />
+      <Tab.Screen name="UserSettingsStack" component={UserSettingsStack} />
       </Tab.Navigator>
   
     </NavigationContainer>

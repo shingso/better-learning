@@ -54,11 +54,10 @@ function GlobalNotes({ navigation }){
     const renderHeader = () => (
         
       <View style={{marginBottom:12}}>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+
       <TopHeader/>
    
-      <Button accessoryLeft={EditIcon}  size='small'  onPress={()=>navigation.navigate('AddNotes')}/>
-      </View>
+      {/*  <Button accessoryLeft={EditIcon}  size='small'  onPress={()=>navigation.navigate('AddNotes')}/> */}
       </View>
 
     );

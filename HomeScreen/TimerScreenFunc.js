@@ -1,13 +1,13 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
-import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout } from '@ui-kitten/components';
+import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout, useTheme } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
 import { decrementActiveUsers, updateUserLastStudied } from '../helperFunctions';
 import { AuthContext } from '../AuthContext'
 
 const PauseIcon = (props) => (
-  <Icon name='pause-circle' width={90} height={90} {...props} />
+  <Icon name='pause-circle' width={50} height={50} {...props} />
 );
 
 const PlayIcon = (props) => (
@@ -19,9 +19,7 @@ const PlayIconSmall = (props) => (
 );
 
 
-const RefreshIcon = (props) => (
-  <Icon {...props} width={30} height={30} name='refresh-outline' />
-);
+
 
 
 const BackIcon = (props) => (
@@ -44,6 +42,8 @@ const msToTime = (duration) => {
   
 
 function TimerScreenFunc(){
+
+const theme = useTheme()
 
 const [visible, setVisible] = useState(false)
 const [confirmBackVisible, setConfirmBackVisible] = useState(false)
@@ -141,7 +141,7 @@ const backgroundTimerEnded = () => {
   setIsPlaying(false)
   setHasEnded(true)
   Vibration.vibrate()
-  console.log(authContext.user.uid)
+
   updateUserLastStudied(authContext.user.uid)
   BackgroundTimer.stopBackgroundTimer()
 
@@ -168,7 +168,7 @@ return (
  
   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
   <CustomBackHeader/>
- {/*  <Button appearance={'outline'} accessoryLeft={RefreshIcon} onPress={()=>onRefresh()}/> */}
+ 
   </View>
 
 
@@ -182,7 +182,7 @@ return (
 
   {!hasEnded &&
   <View style={{flex:1,justifyContent:'center'}}> 
-  <Animated.Text style={{ fontSize:70,fontFamily:'OpenSans-Bold'}}>
+  <Animated.Text style={{ fontSize:70,fontFamily:'OpenSans-Bold', color:theme['text-basic-color']}}>
   { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : '00:00'}
   </Animated.Text>
   </View>

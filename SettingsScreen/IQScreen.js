@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { format, endOfMonth, isThisMonth, isThisYear, endOfDay, subDays , startOfDay,differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval} from 'date-fns'
+import { endOfDay, subDays , startOfDay,differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
 import { Layout, Card, List, Text, Button, Icon } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
@@ -39,7 +39,6 @@ function IQScreen(){
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
   const timesStudiedMonthStat = studyStatsData.timesStudiedMonth
-  const timesStudiedStat = studyStatsData.timesStudied
   const timesStudiedTwoWeek = studyStatsData.timesStudiedTwoWeek
   const timesStudiedTwoWeeksUnique = studyStatsData.timesStudiedTwoWeeksUnique
   const dateStats = studyStatsData.dates
@@ -335,32 +334,10 @@ function IQScreen(){
 
     }
     
-{/*     <Card>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    <Text category={'s1'}>Total Studied</Text>
-    <Text>{timesStudiedStat}</Text>
-    </View>
-    </Card> 
-    */}
+
     
 
-    {/* <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
- 
-    <Text category='s1' style={{marginBottom:16, textAlign:'center'}}>Study Frequency</Text>
-  
-    <CalendarHeatmap
-    endDate={endOfMonth(new Date())}
-    numDays={99}
-    //need to pass in style prop to mon
-    //Need to pass in our own color array 
-    colorArray={["#eee", "#DDFBC7", "#C2F3A8", "#A7E78F", "#80D86A",'#5BB94D']}
-    values={allDateStats}
-    monthLabelsStyle={{fontSize:14, fill:'black'}}
-    monthLabelsColor={'black'}
-    />
-  
-    </Card>
- */}
+   
     </Layout>
     </SafeAreaView>
 

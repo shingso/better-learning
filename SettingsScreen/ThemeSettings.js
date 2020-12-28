@@ -4,6 +4,8 @@ import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction, Lay
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../themeContext';
 
+
+
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' />
 );

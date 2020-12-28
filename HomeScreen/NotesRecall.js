@@ -49,12 +49,6 @@ function NotesRecall(){
     const [visible, setVisible] = React.useState(false);
 
 
-    
-
-    const confirmAddRecallNote = () => {
-
-
-    }
 
     const confirmSkipNote = (userID,subjectID) => {
       console.log(subjectID)
@@ -141,17 +135,16 @@ function NotesRecall(){
     {formikProps => (
     <Layout style={{flex: 1, padding:16}}>
     <SafeAreaView>  
-    
-    <Button style={{alignSelf:'flex-end'}} appearance='ghost' onPress={()=>{confirmSkipNote(userID,currentData.id)}}>Skip</Button>
 
 
-    <Button style={{alignSelf:'flex-end'}} appearance='ghost' onPress={()=>{console.log(currentData)}}>Log</Button>
-    
-    <Text style={{marginBottom:20}}>Review this</Text>
-    <Text style={{textAlign:'center'}}>{currentData.text}</Text>
   
+    <Button style={{alignSelf:'flex-end'}} status='danger' appearance='ghost' onPress={()=>{confirmSkipNote(userID,currentData.id)}}>Skip</Button>
+   
+   
+    {/* <Text category='h5' style={{textAlign:'center'}}>{currentData.text}</Text> */}
+    <Text category='h5' style={{textAlign:'center', marginTop:40}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</Text>
     <Input
-      style={{marginTop:40, marginBottom:20,marginTop:20, backgroundColor:'white', borderColor:'white', borderWidth:0}}
+      style={{marginTop:40, marginBottom:20,marginTop:20 ,backgroundColor:theme['background-basic-color-1'],  borderColor:theme['background-basic-color-1'],borderWidth:0}}
       autoFocus={true}
       multiline={true}
       textStyle={{height:80}}
@@ -160,7 +153,7 @@ function NotesRecall(){
    
 
     />
-    <Button style={{marginHorizontal:20}} onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.text ? true : false}/>
+    <Button style={{marginHorizontal:20}} onPress={()=>console.log(formikProps.errors.text)} disabled={formikProps.errors.text ? true : false}/>
     </SafeAreaView>
     </Layout>
     

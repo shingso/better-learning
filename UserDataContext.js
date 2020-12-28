@@ -24,9 +24,9 @@ export function UserDataContextWrapper(props) {
 
     const ref = firestore().collection('Users').doc(userID)
     const subscriber = ref.onSnapshot(documentSnapshot => {
-
+      if(!documentSnapshot.metadata.hasPendingWrites){
       UserDataSet(documentSnapshot.data());
-      
+      }
       });
 
 

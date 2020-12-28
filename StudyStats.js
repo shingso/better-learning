@@ -18,6 +18,7 @@ export function StudyStatsContextWrapper(props) {
   const [timesStudiedMonth, setTimesStudiedMonth] = React.useState(0);
   const [currentWeekStudiedSet, setCurrentWeekStudiedSet] = React.useState(0);
   const [allDates, setAllDates] = React.useState(0);
+  const [uniqueDates, setUniqueDates] = React.useState(0);
 
   
   useEffect(() => {
@@ -35,6 +36,8 @@ export function StudyStatsContextWrapper(props) {
       
       if(!querySnapshot.metadata.hasPendingWrites){
       
+      const uniqueDates = new Set()
+
       const list = [];
       const allList = [];
       const datesDict = {}
@@ -85,6 +88,7 @@ export function StudyStatsContextWrapper(props) {
         let item = {};
         item.date = date; 
         list.push(item)
+        uniqueDates.add(date)
      }
 
     
@@ -97,6 +101,7 @@ export function StudyStatsContextWrapper(props) {
       setTimesStudiedMonth(count)
       setDates(list);
       setInitializing(false)
+      setUniqueDates(uniqueDates)
 
 
 
@@ -110,7 +115,7 @@ export function StudyStatsContextWrapper(props) {
     return null
   }
 
-  return (<StudyStatsContext.Provider value={{dates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique, allDates}}>
+  return (<StudyStatsContext.Provider value={{dates, uniqueDates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique, allDates}}>
     {props.children}
     </StudyStatsContext.Provider>
     );
