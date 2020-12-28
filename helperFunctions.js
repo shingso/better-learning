@@ -1,5 +1,34 @@
 import firestore from '@react-native-firebase/firestore';
 import { v4 as uuid } from 'uuid'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
+export async function saveThemeValue(value){
+  try {
+    await AsyncStorage.setItem('@theme', value)
+  } catch (e) {
+    // saving error
+    console.log(e)
+  }
+}
+
+
+
+export async function getThemeValue(){
+  try {
+    const value = await AsyncStorage.getItem('@theme')
+    if(value !== null) {
+      // value previously stored
+      console.log(value)
+    }
+  } catch(e) {
+    // error reading value
+    console.log(e)
+  }
+}
+
+
 
 
 
