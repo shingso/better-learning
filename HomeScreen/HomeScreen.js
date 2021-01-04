@@ -9,13 +9,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO } from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
 
-const EditIcon = (props) => (
-  <Icon {...props} width={25} height={25} name='edit-outline'/>
-);
-
-const PlusIcon = (props) => (
- <Icon {...props} height={20} width={20}  name='plus-outline'/>
-);
 
 
 function HomeScreen(){
@@ -120,18 +113,17 @@ function HomeScreen(){
     return (
 
     
-    <Layout level='2' style={{ flex:1, padding:16 }}>
-    <SafeAreaView style={{flex: 1}}>
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <Layout level='2' style={{ flex:1 }}>
+    <ScrollView  showsVerticalScrollIndicator={false}>
    
-    
+    <SafeAreaView style={{flex: 1, paddingVertical:20, paddingHorizontal:16}}>
     <Card style={{bodyPaddingHorizontal:-12}}>
     
     
     <CalendarStrip
      //currently not getting rerendered on change of theme
       showMonth={false}
-      calendarAnimation={{type: 'sequence', duration: 30}}
+      calendarAnimation={{type:"parallel", duration:0}}
       daySelectionAnimation={{type: 'background', duration: 300}}
       style={{height:80, paddingTop: 0, paddingBottom: 0, marginHorizontal: -16,
         marginVertical: -20, backgroundColor:theme["background-basic-color-1"]}}
@@ -161,24 +153,22 @@ function HomeScreen(){
     />
     </Card>
 
-    <Card style={{marginTop:16, height:200,backgroundColor:theme['color-primary-900'], justifyContent:'center', borderWidth:1, borderColor:theme['color-primary-700']}} onPress={()=>navigation.navigate('SetTimer')}>
+    <Card style={{marginTop:16, height:210, justifyContent:'center', borderWidth:1.3, borderColor:theme['color-primary-400']}} onPress={()=>navigation.navigate('SetTimer')}>
     <View style={{ alignItems:'center', justifyContent:'center'}}>
-    <Icon style={{marginBottom:12}} fill={theme['color-basic-400']} width={50} height={50} name='play-circle' />
-    <Text style={{fontWeight:'bold', fontSize:16, color:theme['text-basic-color']}} category='label'>Start a study session</Text>
-    <Text style={{marginTop:8, textAlign:'center', lineHeight:20}} category='label'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</Text>
+    <Icon style={{marginBottom:16}} fill={theme['color-primary-400']} width={50} height={50} name='play-circle' />
+    <Text category='h6'>Start a study session</Text>
+    <Text style={{marginTop:12, textAlign:'center', lineHeight:20}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</Text>
     </View>
     </Card> 
 
    
 
 
-    <Card style={{marginTop:16}} onPress={()=>{navigation.navigate('NotesRecall')}}>
+    <Card style={{marginTop:16}} onPress={()=>{navigation.navigate('NotesRecallExplain')}}>
     <ImageBackground opacity={0.15} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
     <View style={{ alignItems:'center', justifyContent:'center'}}>
-
-    
-    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Daily Recall</Text>
-    <Text style={{marginTop:8}} category='label'>Take a look at past note and write something new about it</Text>
+    <Text category='h6'>Daily Recall</Text>
+    <Text style={{marginTop:16, textAlign:'center', lineHeight:20}}>Take a look at past note and write something new about it</Text>
     </View>
     </ImageBackground>
     </Card>
@@ -187,17 +177,17 @@ function HomeScreen(){
     <Card onPress={()=>{navigation.navigate('NotesHome')}} style={{marginTop:16, justifyContent:'center', alignItems:'center'}}>
     <ImageBackground opacity={0.3} resizeMode='cover'  source={require('../assets/images/viewNotesv2.png')} style={styles.image}>
     <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text style={{fontWeight:'bold', fontSize:16}} category='label'>Your Notes</Text>
-    <Text style={{marginTop:8}} category='label'>A collection of your thoughts and notes</Text>
+    <Text category='h6'>Your Notes</Text>
+    <Text style={{marginTop:16}}>A collection of your thoughts and notes</Text>
 
     </View>
     </ImageBackground>
     </Card>
 
-  
+    </SafeAreaView>
     </ScrollView>
 
-    </SafeAreaView>
+   
     </Layout>
       
     );
@@ -222,7 +212,8 @@ const styles = StyleSheet.create({
   },
   
   container:{
-    marginTop:16
+    marginTop:16,
+    backgroundColor:'red'
   },
 
   image: {

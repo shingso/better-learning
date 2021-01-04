@@ -12,7 +12,7 @@ import { SubjectsContext } from '../SubjectsContext';
 
 
 const SelectIcon = (props) => (
-  <Icon {...props} width='25' height='25' name={'checkmark'} />
+  <Icon {...props} width='25' height='25' name={'folder-outline'} />
 );
  
 
@@ -25,7 +25,16 @@ const TextSchema = Yup.object().shape({
     
 });
 
+const renderEmpty = () => (
 
+  <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
+
+
+  <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
+  <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top left to add a note when you make connections about new ideas</Text>
+  </View>
+  
+)
 
 
 
@@ -46,7 +55,7 @@ function AddNotes(){
     navigation.dispatch(StackActions.popToTop())
   }
 
-  const renderFooter = () => (
+ /*  const renderFooter = () => (
     <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject({id:'', title:'No Folder'})}>
     <View style={{flexDirection:'row', alignItems:'center', marginVertical:16}}>
     
@@ -69,25 +78,29 @@ function AddNotes(){
     </TouchableOpacity>
     
 
-  )
+  ) */
 
   const renderItem = (info) => (
     <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject(info.item)}>
     <View style={{flexDirection:'row', alignItems:'center', marginVertical:16}}>
     
-    <Icon style={{width:20, height:20, marginRight:16}} 
-    name={subjectsContext.lastUsedSubject.id == info.item.id ? 'checkmark-square-2': 'square-outline'}
-    fill={subjectsContext.lastUsedSubject.id == info.item.id ? theme['color-primary-800'] :theme['color-basic-500']}/>
+    <Icon style={{width:15, height:15, marginRight:20}} 
+    name={subjectsContext.lastUsedSubject.id == info.item.id ? 'checkmark': 'folder-outline'}
+    fill={subjectsContext.lastUsedSubject.id == info.item.id ? theme['color-primary-700'] :theme['color-basic-600']}/>
 
     <Text 
    
     style={{
       flexShrink:1,
-      fontWeight:subjectsContext.lastUsedSubject.id == info.item.id ? 'bold' : 'normal',
-      color:subjectsContext.lastUsedSubject.id == info.item.id ? theme['color-primary-800'] :theme['color-basic-800']}
+      fontSize:14,
+   
+      fontWeight:subjectsContext.lastUsedSubject.id == info.item.id ? 'normal' : 'normal',
+      color:subjectsContext.lastUsedSubject.id == info.item.id ? theme['color-primary-700'] :theme['color-basic-600']}
     }>
     {info.item.title}
     </Text>
+
+    
 
   
     </View>
@@ -117,17 +130,19 @@ function AddNotes(){
    <React.Fragment>
    <View>
     
-   <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-   <TopHeader/>
 
-   </View>
+   <TopHeader title={'Add Note'}/>
+
 
     
-   <View style={{alignSelf:'flex-end'}}> 
+   <View style={{marginLeft:20, marginRight:50}}> 
    <TouchableOpacity onPress={()=>{setSelectVisible(true)}}>
-   <Text style={{textAlign:'right', marginBottom:2}} category='label'>Note Added To:</Text>
+    
    {subjectsContext.lastUsedSubject != null &&
-   <Text style={{fontSize:13, textAlign:'right',marginBottom:20, color:theme["color-primary-900"], fontWeight:'bold'}}>{subjectsContext.lastUsedSubject.title }</Text>
+   <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
+   <Icon style={{marginRight:8}} fill={theme["color-primary-500"]} width='15' height='15' name={'folder'} />
+   <Text style={{fontSize:13,color:theme["color-primary-500"], fontWeight:'bold'}}>{subjectsContext.lastUsedSubject.title }</Text>
+   </View>
    }
    </TouchableOpacity>
    </View>
@@ -143,30 +158,31 @@ function AddNotes(){
    <View style={{marginVertical:20}}>
 
 
-   <Divider/>
+
    <Input
-   textStyle={{fontSize:16}}
-   style={{marginBottom:4, marginTop:4, borderColor:'white'}}
-   placeholder={'Theme?'}
+   textStyle={{fontSize:16, fontWeight:'bold'}}
+   style={{marginBottom:4, marginTop:4, borderColor:'white', backgroundColor:theme["color-basic-100"]}}
+   placeholder={'Main topic'}
    onChangeText={formikProps.handleChange('textTheme')}
     />
 
-   <Divider/>
+
   
 
-   {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null}
+  {/*  {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null} */}
    <Input
-    placeholder={'What did you learn?'}
-    style={{backgroundColor:theme["color-basic-100"], borderColor:theme["color-basic-100"], marginTop:20}}
+    placeholder={'Write something here'}
+    style={{backgroundColor:theme["color-basic-100"], borderColor:theme["color-basic-100"], marginTop:12}}
     textAlignVertical={'top'}
-    textStyle={{fontSize:16, height:100,  paddingTop:4}}
+    textStyle={{fontSize:15, height:120}}
     multiline={true}
-    
+    autoFocus={true}
     size={'large'}
     onChangeText={formikProps.handleChange('text')}
       />
-
-   <Button style={{marginVertical:16, marginHorizontal:24}} disabled={formikProps.errors.text ? true : false} onPress={()=>formikProps.handleSubmit()}>Done</Button>
+  
+   <Button style={{marginVertical:16, marginHorizontal:20}} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()}>Done</Button>
+  
    </View>
     
     
@@ -190,8 +206,6 @@ function AddNotes(){
     </View>
     
     </View>
-
-
     </ImageBackground>
     </Card>
     </Modal>     
@@ -202,26 +216,22 @@ function AddNotes(){
     <Modal
     visible={selectVisible}
     backdropStyle={styles.backdrop}>
-    <Card style={{margin:20}} disabled={true}>
+    <Card style={{paddingHorizontal:24, paddingVertical:20, marginHorizontal:20}} disabled={true}>
     
-    <Text category='h5' style={{marginTop:12, marginBottom:12, fontWeight:'bold'}}>Select a Folder:</Text>
-  
-
     <List
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       data={subjectsContext.subjects}
       renderItem={renderItem}
-      ListFooterComponent={renderFooter}
+      ListEmptyComponent={renderEmpty}
+      
     />
     
     <View>
-    <Button  size='small' style={{marginBottom:8, marginTop:12 , alignSelf:'flex-end'}} onPress={()=>setSelectVisible(false)}>
+    <Button appearance='outline' style={{marginBottom:0, marginTop:20 }} onPress={()=>setSelectVisible(false)}>
     Close
     </Button>
-    </View>
-    
-  
+    </View> 
     </Card>
     </Modal>     
 
@@ -239,7 +249,7 @@ function AddNotes(){
 
 const styles = StyleSheet.create({
   container: {
-    height:280,
+   
     backgroundColor:'white',
   },
 

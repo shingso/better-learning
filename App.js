@@ -46,7 +46,7 @@ export default  () => {
             <>
             <IconRegistry icons={EvaIconsPack} />
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <ApplicationProvider  {...eva} theme={{...eva[theme], ...themeJson}}>
+            <ApplicationProvider customMapping={mapping} {...eva} theme={{...eva[theme], ...themeJson}}>
             <AuthContextWrapper>
                 <NavigationStack/>
             </AuthContextWrapper>

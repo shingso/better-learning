@@ -16,9 +16,9 @@ function signOut(){
 
     
 const ListFooter = () => (
-  <View  style={styles.item}>
+  <View style={styles.item}>
   <TouchableOpacity onPress={()=>signOut()}>
-  <Text category='s1'>Sign Out</Text>
+  <Text category='s1' style={{fontSize:15}}>Sign Out</Text>
   </TouchableOpacity>
       
   </View>
@@ -33,19 +33,19 @@ const navigation = useNavigation();
 const ListItem = ( props ) => (
 
   <TouchableOpacity onPress={()=>navigation.navigate(props.route)}>
-    <View style={styles.item}>
-    <Text>
-    {props.title}
-    </Text>
-    </View>
-    </TouchableOpacity>
+  <View style={styles.item}>
+  <Text category='p2' style={{fontSize:15}}>{props.title}</Text>
+  </View>
+  </TouchableOpacity>
 );
 
   return (
     <Layout style={{flex:1}}>
     <SafeAreaView style={{margin:20}}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
     <TopHeader/>
-    <Text category='h1' style={{marginBottom:12}}>Settings</Text>
+    <Text category='h6'>Settings</Text>
+    </View>
     <ListItem title={'Theme'} route={'ThemeSettings'}/>
     <ListItem title={'Terms and Conditions'} route={'TermsOfService'}/>
     <ListItem title={'Privacy Policy'} route={'PrivacyPolicy'}/>

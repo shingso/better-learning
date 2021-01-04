@@ -2,20 +2,13 @@ import React, { useState, useEffect, useContext } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
-import { v4 as uuid } from 'uuid'
-import { GoogleSignin, GoogleSigninButton, statusCodes  } from '@react-native-community/google-signin';
 import { firebase } from '@react-native-firebase/firestore';
-import appleAuth, {
-  AppleAuthRequestScope,
-  AppleAuthRequestOperation,
-  appleAuthAndroid,
-} from '@invertase/react-native-apple-authentication';
-import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { Formik } from 'formik';
 import { Button, Text ,Icon, Input, Layout } from '@ui-kitten/components';
 import * as Yup from 'yup';
 import { AuthContext } from '../AuthContext'
-import { addUser, addNote } from '../helperFunctions';
+
+import SignInComponent from '../UtilComponents/SignInComponent'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email()
@@ -30,82 +23,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 
-async function onAppleButtonPress() {
- 
-  const rawNonce = uuid();
-  const state = uuid();
 
-
-  appleAuthAndroid.configure({
-
-    clientId: 'com.shing.betterlearning',
-    redirectUri: 'https://betterlearning-88c6f.firebaseapp.com/__/auth/handler',
-    responseType: appleAuthAndroid.ResponseType.ALL,
-    scope: appleAuthAndroid.Scope.ALL,
-    nonce: rawNonce,
-    state,
-  });
-
-  try{
-
-  const response = await appleAuthAndroid.signIn();
-  if (response.state === state) {
-    const credentials = auth.AppleAuthProvider.credential(
-      response.id_token,
-      rawNonce, 
-    )
-    const authResponse = await auth().signInWithCredential(credentials) 
-    addUser(authResponse.user.uid)
-    return authResponse
-    }
-
-  } catch(e){
-    console.log(e)
-  }
-
-
-}
-
-
-async function onAppleButtonPressApple() {
-  // Start the sign-in request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-  });
-
-  // Ensure Apple returned a user identityToken
-  if (!appleAuthRequestResponse.identityToken) {
-    throw 'Apple Sign-In failed - no identify token returned';
-  }
-
-  // Create a Firebase credential from the response
-  const { identityToken, nonce } = appleAuthRequestResponse;
-  const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
-
-  // Sign the user in with the credential
-  const authResponse = await auth().signInWithCredential(appleCredential);
-  addUser(authResponse.user.uid)
-  return authResponse
-}
-   
-
-
-
-
-function AppleSignIn() {
-  return (
-    <AppleButton
-      buttonStyle={AppleButton.Style.WHITE_OUTLINE}
-      buttonType={AppleButton.Type.SIGN_IN}
-      style={{
-        width:'100%',
-        height: 45,
-      }}
-      onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
-    />
-  );
-} 
 
 
 function Login(){
@@ -113,7 +31,7 @@ function Login(){
  const authContext = useContext(AuthContext)
  const navigation = useNavigation();
  const [secureTextEntry, setSecureTextEntry] = useState(false)
- const [loading, setLoading] = useState(false)
+
 
  const handleLogin = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -124,27 +42,9 @@ function Login(){
     });
   }
 
-  async function onGoogleButtonPress() {
 
-    setLoading(true)
-    try{
-    const { idToken } = await GoogleSignin.signIn()
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-    const response = await auth().signInWithCredential(googleCredential)  
-    addUser(response.user.uid)
-    return response
-    } catch(e){
-      setLoading(false)
-    }
-}
 
-  useEffect(() => {
-
-    GoogleSignin.configure({
-      webClientId: '658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com',
-    });
-
-  }, []);
+ 
 
 
     const toggleSecureEntry = () => {
@@ -159,20 +59,14 @@ function Login(){
     );
 
   
-    if(loading){
-      return <Layout style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-        <ActivityIndicator size={60} color="#0000ff" style={{marginBottom:40}}/>
-        <Text>Loading</Text>
-      </Layout>
-    }
 
      return (
 
     
-      <View style={{ flex: 1, justifyContent:'center', padding:16}}>
+      <View style={{ flex: 1, justifyContent:'center', padding:16, paddingBottom:40}}>
       
       <View>
-      <Text category='h1' style={{marginBottom:12, marginTop:20}}>Login</Text>
+      <Text category='s1' style={{marginBottom:4, textAlign:'center'}}>Sign in with your Email and Password</Text>
       </View>
 
       <Formik
@@ -222,21 +116,19 @@ function Login(){
     </Formik>
     
     <View style={{marginVertical:20,  justifyContent:'center'}}>
-    <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
-    Sign in with the following
+    <Text category='s1' style={{alignSelf:'center', marginVertical:8}}> 
+    Or with the following providers
     </Text>
-    <Button appearance={'outline'}  onPress={() => onGoogleButtonPress()} style={{marginBottom:20}}> 
-    Sign in with Google 
-    </Button>
+    <SignInComponent/>
                
-    <AppleSignIn/>
+
     </View>
 
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Don't have an account?
     </Text>
-    <Button appearance={'outline'} onPress={() => navigation.navigate('SignUp')}>
-    Sign Up with Email
+    <Button appearance={'ghost'} onPress={() => navigation.navigate('SignUp')}>
+    Go To Sign Up
     </Button>
 
 

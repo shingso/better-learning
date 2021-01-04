@@ -6,7 +6,7 @@ import { addUser } from '../helperFunctions'
 import { Formik } from 'formik';
 import { Button, Text ,Icon , Input} from '@ui-kitten/components';
 import * as Yup from 'yup';
-
+import SignInComponent from '../UtilComponents/SignInComponent'
 
 
 const SignUpSchema = Yup.object().shape({
@@ -24,6 +24,9 @@ const SignUpSchema = Yup.object().shape({
 const AlertIcon = (props) => (
   <Icon {...props} name='alert-circle-outline'/>
 );
+
+
+
 
 
 function SignUp(){
@@ -117,10 +120,15 @@ function SignUp(){
 
 
     <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
+
+    <SignInComponent/>
+
+
+
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Already have an account?
     </Text>
-    <Button appearance={'outline'} onPress={() =>  navigation.navigate('Login')}>
+    <Button appearance={'ghost'} onPress={() =>  navigation.navigate('Login')}>
     Go to Login
     </Button>
     </React.Fragment>

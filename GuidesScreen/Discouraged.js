@@ -20,27 +20,27 @@ function Discouraged(){
 
     <GuideComponent 
     picture={require('../assets/images/girlthinkingbackground.png')} 
-    headerText={'Building on past information'}
-    bodyText={'Learning is about taking information you already know and building on top of it'}
+    headerText={'Just start and do your best'}
+    bodyText={'The road ahead might seem daunting and difficult'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Focused and active'}
-    bodyText={'Decide on what you are going to do'}
+    headerText={'Just start'}
+    bodyText={'If you are procrasting, start a study session and work for the timer'}
     />
 
     <GuideComponent 
-    picture={require('../assets/images/girltakingnotes.png')} 
-    headerText={'Learning is a process'}
-    bodyText={'A study sessions is a 25 minute period where you commit to being focused on the task at hand. During this time, engage and actively thinking about what you are reading.'}
+    picture={require('../assets/images/problemsolving.png')} 
+    headerText={'Learning new concepts is tough'}
+    bodyText={'Everyone struggles. It takes more than one look, one try, to build an understanding of a subject'}
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Learning is NOT memorization'}
-    bodyText={'The last step to a study session is to recall what you have learned about. Take some time to think about what you learned about and write it down. During recall do NOT look at any material'}
+    headerText={'Focus on putting in the time'}
+    bodyText={'Dont judge a study session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
     />
 
    

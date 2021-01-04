@@ -128,7 +128,7 @@ function NotesRecall(){
       onSubmit={(values, actions) => {
        addRecallNote( authContext.user.uid, currentData.id , values.text, currentData.textTheme, currentData.subject)
        //actions.setSubmitting(false);
-       setVisible(true)
+       //setVisible(true)
   
       }}
      >
@@ -142,18 +142,18 @@ function NotesRecall(){
    
    
     {/* <Text category='h5' style={{textAlign:'center'}}>{currentData.text}</Text> */}
-    <Text category='h5' style={{textAlign:'center', marginTop:40}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</Text>
+    <Text category='h6' style={{textAlign:'center', marginTop:40, marginHorizontal:16}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</Text>
     <Input
       style={{marginTop:40, marginBottom:20,marginTop:20 ,backgroundColor:theme['background-basic-color-1'],  borderColor:theme['background-basic-color-1'],borderWidth:0}}
       autoFocus={true}
       multiline={true}
       textStyle={{height:80}}
       onChangeText={formikProps.handleChange('text')}
-      placeholder='Write anything thoughts you have about the notes. Any new thoughts or new things learned?'
+      placeholder='Write anything thoughts you have. Any new thoughts or things learned?'
    
 
     />
-    <Button style={{marginHorizontal:20}} onPress={()=>console.log(formikProps.errors.text)} disabled={formikProps.errors.text ? true : false}/>
+    <Button style={{marginHorizontal:20}} onPress={()=>console.log(formikProps.errors.text)} disabled={formikProps.errors.text ? true : false}>Complete</Button>
     </SafeAreaView>
     </Layout>
     

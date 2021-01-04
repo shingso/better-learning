@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -48,6 +49,7 @@ export async function addUser(userID) {
     await ref.set({
       timeStamp: firestore.FieldValue.serverTimestamp(),
       lastStudied: firestore.FieldValue.serverTimestamp(),
+      startedStudying: null
     });
  
     }
@@ -55,13 +57,34 @@ export async function addUser(userID) {
 
 
 
-export async function updateUserLastStudied(userID) {
+export async function updateUserLastStudied(userID, dateSinceLastStudy) {
+
+    const docID = uuid()
+    const batch = firestore().batch();
 
     const ref = firestore().collection('Users').doc(userID)
-    await ref.update({
-      lastStudied: firestore.FieldValue.serverTimestamp()
-    });
-   
+    const ref2 = firestore().collection('Users').doc(userID).collection('DatesStudied').doc(docID)
+    //if the date since last study is greater than 14 than we need to update started studying
+    if(dateSinceLastStudy < 14){
+      batch.update(ref, {
+        lastStudied: firestore.FieldValue.serverTimestamp()
+      })
+    } else {
+
+      batch.update(ref, {
+        lastStudied: firestore.FieldValue.serverTimestamp(),
+        startedStudying: firestore.FieldValue.serverTimestamp()
+      })
+
+    }
+
+
+
+    batch.set(ref2, {   
+      timeStamp: firestore.FieldValue.serverTimestamp(),
+    })
+
+    batch.commit()
 }
 
 
@@ -73,28 +96,7 @@ export async function deleteSubject(userID, subjectID) {
 }
 
 
-export async function updateUserStreakData(userID,  subjectID) {
 
-
-  const docID = uuid()
-  const batch = firestore().batch();
-
-  const ref2 = firestore().collection('Users').doc(userID).collection('DatesStudied').doc(docID)
-  const ref3 = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID)
-  
-
-  batch.set(ref2, {   
-     timeStamp: firestore.FieldValue.serverTimestamp(),
-   })
-
-   batch.update(ref3, {
-     lastStudied: firestore.FieldValue.serverTimestamp()
-   })
-
-
-  batch.commit()
-
-}
 
 
 export async function addSubject( userID, title ) {

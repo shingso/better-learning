@@ -26,11 +26,11 @@ function NotesRecallExplain(){
   }
 
   const navigateToRecall = () =>{
-    setLeaveScreen(true)
-    navigation.navigate('Recall')
+    navigation.pop()
+    navigation.navigate('NotesRecall')
   }
 
-
+/* 
   useEffect(() => {
 
     if( confirmBackVisible || leaveScreen ){
@@ -51,39 +51,31 @@ function NotesRecallExplain(){
 
     
   [navigation, confirmBackVisible, leaveScreen]
-  );
+  ); */
 
 
 
   return (
     <Layout style={{flex:1}}>
-    <View style={{justifyContent:'flex-end'}}>
-    <Button style='small' appearance='ghost' onPress={navigateToRecall}>
-    Skip
-    </Button>
-    </View>
-    
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+ 
     
 
     <TextComponent
-
-    bodyText={'To wrap up our study session we are now going to recall what we have learned'}
+    bodyText={"Let's review a past note or concept and write our thoughts about it"}
     />
 
     <TextComponent
-  
-    bodyText={'In the next screen write down everything that you have learned'}
-    />
-
-    <TextComponent
-  
-    bodyText={'Everything that you write out should be from memory and during this recall sessions you should not look at any material'}
+    bodyText={"Writing anything that comes to your mind. It could be something you already know or something new."}
     />
 
    
 
-    </Swiper>
+    <Button onPress={navigateToRecall} style={{marginBottom:40, marginHorizontal:20}}>I'm ready</Button>
+
+   
+
+   
+
 
     <Modal
     visible={confirmBackVisible}
@@ -117,23 +109,6 @@ function NotesRecallExplain(){
 const styles = StyleSheet.create({
   
 
-  nextButtonStyle:{
-    marginBottom:12, 
-    marginRight:20, 
-    borderWidth:1, 
-    padding:14, 
-    borderRadius:6, 
-    paddingHorizontal:22
-  },
-
-  prevButtonStyle:{
-    marginBottom:12, 
-    marginLeft:20, 
-    borderWidth:1,
-    padding:14, 
-    borderRadius:6, 
-    paddingHorizontal:22
-  }
 
 });
 

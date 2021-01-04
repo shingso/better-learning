@@ -58,32 +58,29 @@ function RecallExplain(){
   return (
     <Layout style={{flex:1}}>
     <View style={{justifyContent:'flex-end'}}>
-    <Button style='small' appearance='ghost' onPress={navigateToRecall}>
-    Skip
-    </Button>
+   
     </View>
     
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    
     
 
     <TextComponent
 
-    bodyText={'To wrap up our study session we are now going to recall what we have learned'}
+    bodyText={'To wrap up our study session, we need to recall what we have learned'}
     />
 
     <TextComponent
   
-    bodyText={'In the next screen write down everything that you have learned'}
+    bodyText={'In the next screen write down everything that you just learned'}
     />
-
-    <TextComponent
+ <TextComponent
   
-    bodyText={'Everything that you write out should be from memory and during this recall sessions you should not look at any material'}
-    />
+  bodyText={'In the next screen write down everything that you just learned'}
+  />
 
-   
+    <Button style='small' style={{marginHorizontal:20, marginBottom:40}} onPress={navigateToRecall}>I'm ready</Button>
 
-    </Swiper>
+    
 
     <Modal
     visible={confirmBackVisible}

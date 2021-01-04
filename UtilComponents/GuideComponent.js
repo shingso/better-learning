@@ -23,8 +23,8 @@ function GuideComponent(props){
         />
      
         <View style={{justifyContent:'flex-start', paddingTop:40, flex:2.5}}>
-        <Text category='h4' style={styles.headerText}>{props.headerText}</Text>
-        <Text style={styles.bodyText} category='s1'>{props.bodyText}</Text>
+        <Text category='h5' style={styles.headerText}>{props.headerText}</Text>
+        <Text style={styles.bodyText} category='p1'>{props.bodyText}</Text>
         </View>
     
         </View>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     bodyText:{
       textAlign:'center', 
       lineHeight: 24,
-      fontSize:15, 
+
       marginHorizontal:4,
       marginBottom:60
     },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     headerText:{
       marginBottom:24,
       textAlign:'center',
-      fontSize:24
+     
     },
   
     container: {

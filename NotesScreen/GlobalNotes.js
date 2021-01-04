@@ -24,9 +24,8 @@ function GlobalNotes({ navigation }){
     const renderItem = (info) => (
       
       <View style={styles.item}>
-      <Text category='label' style={{marginBottom:4}} appearance='hint'>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
+      <Text category='label' style={{marginBottom:8, fontSize:10}} appearance='hint'>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
       {info.item.textTheme != null && <Text category='s1' style={{fontWeight:'bold', marginBottom:8}}>{info.item.textTheme}</Text>}
-      
       <Text style={{lineHeight:22}} >{info.item.text}</Text>
       </View>
       
@@ -53,10 +52,9 @@ function GlobalNotes({ navigation }){
    
     const renderHeader = () => (
         
-      <View style={{marginBottom:12}}>
-
+      <View style={{marginBottom:12, flexDirection:'row', alignItems:'center'}}>
       <TopHeader/>
-   
+      <Text category='s1'>All Notes</Text>
       {/*  <Button accessoryLeft={EditIcon}  size='small'  onPress={()=>navigation.navigate('AddNotes')}/> */}
       </View>
 
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
     marginVertical:12,
     marginHorizontal:20,
     paddingBottom:100,
-    borderColor:'red',
+   
     
   },
 
@@ -148,9 +146,7 @@ const styles = StyleSheet.create({
   
   item: {
     paddingVertical:32,
-    borderBottomColor:'rgba(0, 0, 0, 0.04)',
-  
-    borderBottomWidth:1
+
    
   },
 

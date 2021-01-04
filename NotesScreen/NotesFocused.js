@@ -9,11 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
 
 const TrashIcon = (props) => (
-  <Icon {...props} width={22} height={22} name='trash-2-outline' />
-);
-
-const EditIcon = (props) => (
-  <Icon {...props} width={25} height={25} name='plus-outline'/>
+  <Icon {...props} width={20} height={20} name='trash-2-outline' />
 );
 
 
@@ -34,9 +30,8 @@ function NotesFocused({ route, navigation }){
     const renderItem = (info) => (
       
       <View style={styles.item}>
-      <Text category='label' style={{marginBottom:4}} appearance='hint'>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
+      <Text category='label' style={{marginBottom:8, fontSize:10}} appearance='hint'>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
       {info.item.textTheme != null && <Text category='s1' style={{fontWeight:'bold', marginBottom:8}}>{info.item.textTheme}</Text>}
-      
       <Text style={{lineHeight:22}} >{info.item.text}</Text>
       </View>
       
@@ -104,11 +99,11 @@ function NotesFocused({ route, navigation }){
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
       <TopHeader/>
       <View style={{flexDirection:'row'}}>
-      <Button accessoryLeft={EditIcon}  style={{marginRight:8}} appearance='ghost' onPress={()=>navigation.navigate('AddNotes', { subjectID: subjectID, mode:'ADD'})}/>
+      
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       </View>
       </View>
-      <Text style={{marginTop:12, fontWeight:'bold'}} category='h3'>{title}</Text>
+      <Text style={{marginTop:12, fontWeight:'bold'}} category='h6'>{title}</Text>
       </View>
     );
  
@@ -117,8 +112,8 @@ function NotesFocused({ route, navigation }){
     
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('NotesCollection').doc(subjectID).collection('Notes')
-        return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
+        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('subject', '==', subjectID)
+        return ref.onSnapshot(querySnapshot => {
           if(!querySnapshot.metadata.hasPendingWrites){
           const list = [];
           querySnapshot.forEach(doc => {
@@ -237,9 +232,6 @@ const styles = StyleSheet.create({
   
   item: {
     paddingVertical:32,
-    borderBottomColor:'rgba(0, 0, 0, 0.04)',
-  
-    borderBottomWidth:1
    
   },
 

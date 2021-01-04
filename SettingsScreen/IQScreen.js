@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Dimensions, ImageBackground } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { endOfDay, subDays , startOfDay,differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval} from 'date-fns'
+import { endOfDay, subDays , startOfDay,differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
-import { Layout, Card, List, Text, Button, Icon } from '@ui-kitten/components';
+import { Layout, Card, List, Text, Button, Icon, useTheme } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import StepIndicator from 'react-native-step-indicator';
 
 const InfoIcon = (props) => (
   <Icon {...props} name='info'/>
@@ -36,16 +36,23 @@ const findVariance = (arr) => {
 
 function IQScreen(){
 
+
+
+  const theme = useTheme()
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
   const timesStudiedMonthStat = studyStatsData.timesStudiedMonth
   const timesStudiedTwoWeek = studyStatsData.timesStudiedTwoWeek
   const timesStudiedTwoWeeksUnique = studyStatsData.timesStudiedTwoWeeksUnique
+
   const dateStats = studyStatsData.dates
   const userStartDate = userData.timeStamp
+  const userStartStudyingDate = userData.startedStudying
   const allDateStats = studyStatsData.allDates
   const lastStudied = userData.lastStudied
   const daysSinceLastStudy = differenceInDays(new Date(), lastStudied.toDate())
+  const daysSinceStartStudying = differenceInDays(new Date(), userStartStudyingDate.toDate())
+  
   // if its greater than 14 days
   console.log(differenceInDays(new Date(), lastStudied.toDate()))
 
@@ -56,6 +63,7 @@ function IQScreen(){
     const _Date = new Date()
     const currentDate = startOfDay(new Date())
     const weeklyFrequencyDict = { 0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0 }
+
 
     const weeklyFrequencyArr = []
 
@@ -204,8 +212,6 @@ function IQScreen(){
   //console.log(weeklyFrequencyDict)
 
   return count/8
-
-  
   
 
   }
@@ -283,6 +289,63 @@ function IQScreen(){
   // weekly consistency vs past two weeks - last 7 days vs last 14 days
   // last 7 days vs last 21 days
 
+  const newFunction = () => {
+    let _userStartDate = new Date(userStartDate.toDate())
+    let _userStartDateBegin = startOfDay(_userStartDate)
+
+    let userStartedStudying = new Date(userStartStudyingDate.toDate())
+
+
+    //with this number we can find the how far from the benchmark date
+    let currentDate = new Date()
+
+    let differenceInStartDays = differenceInDays(currentDate, userStartedStudying)
+    let sevenDaysAfterStart = addDays(_userStartDate, 6)
+    let userStartWeek = eachDayOfInterval({start:_userStartDate, end:sevenDaysAfterStart})
+
+    //get the last seven days of study or all the days of study at this point
+    //console.log(userStartWeek)
+    console.log('Dates', daysSinceStartStudying)
+  }
+
+
+
+  const renderSettingBenchmark = () => (
+
+    
+
+    //need to get the next 7 days 
+    //need to get last 7 days of study form today
+    //need to match them up 
+    <View>
+    <Button onPress={()=>newFunction()}/>
+    </View>
+  )
+
+  
+  const customStyles = {
+    
+  stepIndicatorSize: 30,
+    currentStepIndicatorSize:30,
+    separatorStrokeWidth:2,
+    currentStepStrokeWidth: 2,
+    stepStrokeCurrentColor: theme['color-primary-800'],
+    stepStrokeWidth: 2,
+    stepStrokeFinishedColor: theme['color-primary-400'],
+    stepStrokeUnFinishedColor: theme['color-basic-500'],
+    separatorFinishedColor: theme['color-primary-400'],
+    separatorUnFinishedColor: theme['color-basic-500'],
+    stepIndicatorFinishedColor: theme['color-primary-400'],
+    stepIndicatorUnFinishedColor: '#ffffff',
+    stepIndicatorCurrentColor: '#ffffff',
+    stepIndicatorLabelFontSize: 14,
+    stepIndicatorLabelCurrentColor: theme['color-basic-800'],
+    stepIndicatorLabelFinishedColor: '#ffffff',
+    stepIndicatorLabelUnFinishedColor: theme['color-basic-500'],
+
+
+  }
+
 
   return (
 
@@ -291,48 +354,97 @@ function IQScreen(){
     <SafeAreaView style={{flex: 1}}>
    
     <Layout level='2' style={{flex:1, padding:16}}>
-    <Card onPress={calculateStudyStrength} style={{marginVertical:12}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-    <Text category={'s1'}>Study Strength</Text>
-    <Text>{calculateStudyStrength()}</Text>
+
+    {(daysSinceLastStudy > 15 || daysSinceStartStudying < 7) &&
+    <Card onPress={calculateStudyStrength} style={{marginBottom:12, paddingVertical:16}}>
+    <ImageBackground opacity={0.0} resizeMode='cover'  source={require('../assets/images/walkingwithoutbackground.png')} style={styles.image}>
+    <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+    <Text category={'h6'}>Setting Benchmark</Text>
     </View>
-    <Text>Your study strength is determined by how consistently you have been studying</Text>
+   {/*  {renderSettingBenchmark()} */}
+    
+
+
+   {/*  <View style={{flexDirection:'row', justifyContent:'space-around'}}>
+    <View style={{alignItems:'center', marginVertical:20}}>
+    <Text category='h1'>7</Text>
+    <Text category='label'>Studied Last 7 days</Text> 
+    </View>
+    </View> */}
+
+
+    <View style={{marginVertical:40}}>
+
+    <Text category='label' style={{textAlign:'center', marginBottom:12}}>Days into setting benchmark</Text>
+    <StepIndicator
+         customStyles={customStyles}
+         currentPosition={daysSinceStartStudying}
+         stepCount={7}
+    />
+    </View>
+
+
+    <Text category='p1' style={{textAlign:'center'}}>The next 6 days after you start studying will be a benchmark of how you are studying</Text>
+    </ImageBackground>
     </Card>
 
+    }
 
-    <Card onPress={calculateStudyFrequency} style={{marginBottom:12}}>
+    {daysSinceLastStudy > 7 &&
+    <Card onPress={calculateStudyStrength} style={{marginBottom:12, paddingBottom:16, paddingTop:16}}>
+    <ImageBackground opacity={0.15} resizeMode='cover'  source={require('../assets/images/walkingwithoutbackground.png')} style={styles.image}>
+    <View style={{ justifyContent:'space-between', alignItems:'center', marginBottom:16}}>
+    <Text style={{marginBottom:16}} category={'h6'}>Study Strength</Text>
+    <Text category='h1'>{calculateStudyStrength()}</Text>
+    </View>
+    <Text category='p1' style={{lineHeight:20, textAlign:'center'}}>Your study strength is determined by how consistently you have been studying</Text>
+    </ImageBackground>
+    </Card>
+    }
+
+    {daysSinceLastStudy > 7 &&
+    <Card onPress={calculateStudyFrequency} style={{marginBottom:12, paddingVertical:20}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-    <Text category={'s1'}>Weekly Average</Text>
+    <Text category={'h1'}>Weekly Average</Text>
     <Text>{calculateStudyFrequency()}</Text>
     </View>
     <Text>Your weekly average studied per week over the last four weeks</Text> 
     </Card>
-    
-    <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+    }
 
-      
-    <Text category={'s1'}>Recommended Study</Text>
+
+    <Card onPress={calculateStudyStrength} style={{marginBottom:12, paddingBottom:16, paddingTop:16}}>
+    <ImageBackground opacity={0.00} resizeMode='cover'  source={require('../assets/images/walkingwithoutbackground.png')} style={styles.image}>
+    <View style={{ justifyContent:'space-between', alignItems:'center', marginBottom:16}}>
+    <Text style={{marginBottom:16}} category={'h6'}>Recommended Study</Text>
+
+    <View style={{ justifyContent:"space-between"}}>
+
+    
+    <View style={{alignItems:'center'}}>
+    <Text category='h1'>{5}</Text>
+    <Text category='label'>times per week</Text>
+    </View>
+
+    </View>
+
+    </View>
+    
+    <Text style={{lineHeight:20, textAlign:'center', marginTop:12}}>Space out your study sessions over a period of the week.</Text>
+    </ImageBackground>
+
+    </Card>
+
+   
+    {/* <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+    <Text category={'h6'}>Recommended Study</Text>
     <Text>{5}</Text>
     </View>
     <Text>You've been studying extremely consistently for the last few weeks. Try and add a few more study sessions</Text>
-    </Card>
-
-    { daysSinceLastStudy < 15 &&
-    <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-    <Text category={'s1'} style={{fontWeight:'bold'}}>Currently setting first benchmark</Text>
-    </View>
-
-    <View style={{alignItems:'center', marginVertical:12}}>
-    <Text category='h1'>7</Text>
-    <Text>Studied this week</Text>
-    </View>
-    <Text style={{lineHeight:24}}>Learning is a process, much more than a week to learn. In order to provide data. Day to day studying is more important to amount of times studied</Text>
-
-    </Card>
-
-    }
+    </Card> */}
+    
+    
     
 
     
@@ -351,6 +463,12 @@ function IQScreen(){
 export default IQScreen
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    margin:-40,
+    padding:40,
+ 
+  },
 
 
 });

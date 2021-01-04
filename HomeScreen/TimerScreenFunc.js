@@ -5,6 +5,8 @@ import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, L
 import BackgroundTimer from 'react-native-background-timer';
 import { decrementActiveUsers, updateUserLastStudied } from '../helperFunctions';
 import { AuthContext } from '../AuthContext'
+import { UserDataContext } from '../UserDataContext'
+import { differenceInDays} from 'date-fns'
 
 const PauseIcon = (props) => (
   <Icon name='pause-circle' width={50} height={50} {...props} />
@@ -28,6 +30,8 @@ const BackIcon = (props) => (
 
 
 
+
+
 const msToTime = (duration) => {
 
     let seconds = Math.floor((duration / 1000) % 60)
@@ -44,7 +48,8 @@ const msToTime = (duration) => {
 function TimerScreenFunc(){
 
 const theme = useTheme()
-
+const userData = useContext(UserDataContext)
+const lastStudied = userData.lastStudied
 const [visible, setVisible] = useState(false)
 const [confirmBackVisible, setConfirmBackVisible] = useState(false)
 const [isPlaying, setIsPlaying] = useState(null)
@@ -137,12 +142,17 @@ const popToTop = () => {
 
   
 const backgroundTimerEnded = () => {
-  
+  //check this
+  let userLastStudied = new Date(lastStudied.toDate())
+  let currentDate = new Date()
+  let differenceInLastStudied = differenceInDays(currentDate, userLastStudied)
+
+
   setIsPlaying(false)
   setHasEnded(true)
   Vibration.vibrate()
 
-  updateUserLastStudied(authContext.user.uid)
+  updateUserLastStudied(authContext.user.uid, differenceInLastStudied)
   BackgroundTimer.stopBackgroundTimer()
 
   setTimeout(() => {

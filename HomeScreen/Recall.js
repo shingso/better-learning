@@ -55,7 +55,6 @@ function Recall(){
   const confirmAddNote = () => {
     setVisible(false)
     navigation.pop()
-    //navigation.dispatch(StackActions.popToTop())
     navigation.navigate('StudyFinished')
   }
 

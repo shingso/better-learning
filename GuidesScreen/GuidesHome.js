@@ -33,7 +33,7 @@ function GuidesHome(){
       >
       <ImageBackground opacity={0.20} resizeMode='cover'  source={info.item.imagePath} style={styles.image}>
       <View style={{justifyContent:'space-between'}}>
-      <Text category='s1' style={{marginBottom:12, fontWeight:'bold', letterSpacing:0.5 }}>{info.item.title}</Text>
+      <Text category='s1' style={{marginBottom:8 }}>{info.item.title}</Text>
       <Text>{info.item.bodyText}</Text>
       </View>
       </ImageBackground>
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     contentContainer: {
       paddingHorizontal: 20,
       paddingVertical: 8,
+      paddingBottom:32
     },
 
     item: {

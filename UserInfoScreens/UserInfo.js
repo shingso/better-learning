@@ -29,6 +29,7 @@ function UserInfo(){
     const allDateStats = studyStatsData.allDates  
     const timesStudiedStat = studyStatsData.timesStudied
     console.log(userStartDate)
+    
     return (
 
     
@@ -50,6 +51,13 @@ function UserInfo(){
     <Card style={{marginBottom:16}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <Text category={'s1'}>Total Studied</Text>
+    <Text>{timesStudiedStat}</Text>
+    </View>
+    </Card> 
+
+    <Card style={{marginBottom:16}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Text category={'s1'}>Times Studied this Month</Text>
     <Text>{timesStudiedStat}</Text>
     </View>
     </Card> 

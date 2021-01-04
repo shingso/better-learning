@@ -19,35 +19,30 @@ function HowOften(){
 
     <GuideComponent 
     picture={require('../assets/images/girlthinkingbackground.png')} 
-    headerText={'Short and sweet'}
-    bodyText={'The key to learning is short but focused and engaged studying!'}
+    headerText={'Do what is sustainable'}
+    bodyText={'Learning is a '}
     />
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Find something to Learn.'}
+    headerText={'Avoid burnout'}
     bodyText={'Decide on what you are going to do'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/girltakingnotes.png')} 
-    headerText={'Start a study session.'}
-    bodyText={'A study sessions is a 25 minute period where you commit to being focused on the task at hand. During this time, engage and actively thinking about what you are reading.'}
+    headerText={'Once per day'}
+    bodyText={'Try to study once per day. '}
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Recall'}
+    headerText={'Use your own judgement'}
     bodyText={'The last step to a study session is to recall what you have learned about. Take some time to think about what you learned about and write it down. During recall do NOT look at any material'}
     />
 
-    <GuideComponent 
-    picture={require('../assets/images/relaxingbed.png')} 
-    headerText={'Take a break'}
-    bodyText={'When your done studying take a break! Do something you enjoy. Breaks are more important than you think and if you want to push yourself more. Take a break!'}
-    />
-
+  
     </Swiper>
     </Layout>)
 };

@@ -11,15 +11,15 @@ function WhatIsLearning(){
   return (
     <Layout style={{flex:1}}>
     <View style={{paddingLeft:16, paddingTop:4, flexDirection:'row', alignItems:'center'}}>
-    <TopHeader/>
-    <Text style={{fontWeight:'bold', fontSize:16, marginLeft:4}}>What is Learning?</Text>
+    <TopHeader title={'What is Learning?'}/>
+    
     </View>
     
     <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
     
 
     <GuideComponent 
-    picture={require('../assets/images/girlthinkingbackground.png')} 
+    picture={require('../assets/images/buildingidea.png')} 
     headerText={'Building on past information'}
     bodyText={'Learning is about taking information you already know and building on top of it'}
     />

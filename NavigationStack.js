@@ -29,6 +29,7 @@ import SetTimer from './HomeScreen/SetTimer'
 import AddSubject from './HomeScreen/AddSubject'
 import TipsPage from './HomeScreen/TipsPage'
 import NotesRecall from './HomeScreen/NotesRecall'
+import NotesRecallExplain from './HomeScreen/NotesRecallExplain'
 import RecallExplain from './HomeScreen/RecallExplain'
 import StudyFinished from './HomeScreen/StudyFinished'
 
@@ -71,7 +72,7 @@ const BookIcon = (props) => (
 
 
 const ChartIcon = (props) => (
-  <Icon {...props} name='bar-chart-2'/>
+  <Icon {...props} name='pie-chart-2'/>
 );
 
 const UserIcon = (props) => (
@@ -150,6 +151,7 @@ function HomeStack() {
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Home" component={HomeScreenWithContext} />
         <Stack.Screen name="NotesRecall" component={NotesRecall} />
+        <Stack.Screen name="NotesRecallExplain" component={NotesRecallExplain} />
         <Stack.Screen name="RecallExplain" component={RecallExplain} />
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
         <Stack.Screen name="Recall" component={Recall} />
@@ -234,7 +236,7 @@ const authContext = useContext(AuthContext)
   
   }
 
-
+//authContext.user
   return authContext.user ?    
 
    

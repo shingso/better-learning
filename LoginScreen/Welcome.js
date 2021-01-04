@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View , StyleSheet } from 'react-native';
+import { View , StyleSheet, ImageBackground } from 'react-native';
 
 import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
 
@@ -17,27 +17,34 @@ function Welcome(){
 
   return(
            
-    <View style={{ flex: 1, padding:16}}>
-    
-    <View>
-    <Text category='h1'>Welcome</Text>
-    </View>
-    
-    <View style={{flex: 1, justifyContent:'center', marginBottom:36}}>
+    <View style={{ flex: 1 }}>
+    <ImageBackground opacity={0.90}  source={require('../assets/images/progress.png')} style={{flex:1, padding:16}}>
+    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
 
-    <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
-    Already have an account?
-    </Text>
-    <Button  onPress={() => navigation.navigate('Login')}>
-    Go to Login
-    </Button>
+    <Text style={{marginTop:20, marginLeft:8}} category='h1'>Discover </Text>
+
+    <Text style={{marginTop:8, marginLeft:8, fontSize:46}} category='h1'>Learning</Text>
+    </View>
+    </ImageBackground>
+    <View style={{flex: 1, justifyContent:'center', marginBottom:36, padding:16}}>
+
+ 
 
 
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Don't have an account?
     </Text>
-    <Button appearance={'outline'} onPress={() => navigation.navigate('SignUp')}>
-    Sign Up with Email
+    <Button style={{marginBottom:40}} size='large' onPress={() => navigation.navigate('SignUp')}>
+    Sign Up
+    </Button>
+
+
+
+    <Text category='label' style={{alignSelf:'center'}}> 
+    Already have an account?
+    </Text>
+    <Button appearance='ghost' onPress={() => navigation.navigate('Login')}>
+    Go to Login
     </Button>
     
     </View>
