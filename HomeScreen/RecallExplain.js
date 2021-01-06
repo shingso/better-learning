@@ -73,10 +73,10 @@ function RecallExplain(){
   
     bodyText={'In the next screen write down everything that you just learned'}
     />
- <TextComponent
-  
-  bodyText={'In the next screen write down everything that you just learned'}
-  />
+
+    <TextComponent
+    bodyText={'In the next screen write down everything that you just learned'}
+    />
 
     <Button style='small' style={{marginHorizontal:20, marginBottom:40}} onPress={navigateToRecall}>I'm ready</Button>
 

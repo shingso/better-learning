@@ -12,20 +12,14 @@ const PauseIcon = (props) => (
   <Icon name='pause-circle' width={50} height={50} {...props} />
 );
 
-const PlayIcon = (props) => (
-  <Icon name='play-circle' width={120} height={120} {...props} />
-);
+
 
 const PlayIconSmall = (props) => (
   <Icon name='play-circle' width={90} height={90} {...props} />
 );
 
-
-
-
-
 const BackIcon = (props) => (
-  <Icon {...props} width={30} height={30} name='arrow-back' />
+  <Icon {...props} width={30} height={30} name='undo-outline' />
 );
 
 

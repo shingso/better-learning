@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from './AuthContext'
-import { format, isThisMonth, isThisYear, startOfWeek, endOfWeek, isWithinInterval, subDays } from 'date-fns'
+import { format, isThisMonth, isThisYear, startOfWeek, endOfWeek, isWithinInterval, subDays, endOfDay, startOfDay } from 'date-fns'
 
 export const StudyStatsContext = createContext(null)
 
@@ -14,6 +14,7 @@ export function StudyStatsContextWrapper(props) {
   const [timesStudied, setTimesStudied] = React.useState(0);
 
   const [datesStudiedPastSeven, setDatesStudiedPastSeven] = React.useState(0);
+  const [pastSevenDaysCount, setPastSevenDaysCount] = React.useState(0);
 
   const [timesStudiedWeek, setTimesStudiedWeek] = React.useState(0);
   const [timesStudiedTwoWeek, setTimesStudiedTwoWeek] = React.useState(0);
@@ -29,12 +30,15 @@ export function StudyStatsContextWrapper(props) {
     const ref = firestore().collection('Users').doc(userID).collection('DatesStudied')
     
     const currentDate = new Date()
-    const startOfCurrentWeek = startOfWeek(currentDate)
-    const endOfCurrentWeek = endOfWeek(currentDate)
-    const twoWeeksAgo = subDays(currentDate, 14)
-    const sevenDaysAgo = subDays(currentDate, 7)
+    const endOfCurrentDate = endOfDay(currentDate) 
 
+    const startOfCurrentWeek = startOfDay(startOfWeek(currentDate))
+    const endOfCurrentWeek = endOfDay(endOfWeek(currentDate))
+    const twoWeeksAgo = startOfDay(subDays(currentDate, 14))
+    const sevenDaysAgo = startOfDay(subDays(currentDate, 6))
 
+    // if we want to count today then we should subtract 6 days
+    // if we dont want to count today then we should subtract 7 days
 
     return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
       
@@ -48,6 +52,7 @@ export function StudyStatsContextWrapper(props) {
       const twoWeekDatesSet = new Set()
       const currentWeekStudiedSet = new Set()
       const pastSevenDaysSet = new Set()
+      let sevenDaysCount = 0
       let count = 0
       let weekCount = 0
       let twoWeekCount = 0
@@ -75,9 +80,9 @@ export function StudyStatsContextWrapper(props) {
             twoWeekDatesSet.add(newDateConverted)
           }
 
-          if(isWithinInterval(newDate, {start:sevenDaysAgo, end:currentDate})){
+          if(isWithinInterval(newDate, {start:sevenDaysAgo, end:endOfCurrentDate})){
             pastSevenDaysSet.add(newDateConverted)
-            console.log('ran')
+            sevenDaysCount += 1
           }
 
 
@@ -104,9 +109,12 @@ export function StudyStatsContextWrapper(props) {
         list.push(item)
         uniqueDates.add(date)
      }
-
+    
       setDatesStudiedPastSeven(pastSevenDaysSet)
-  
+
+      setPastSevenDaysCount(sevenDaysCount)
+
+
       setAllDates(allList)
       setTimesStudied(querySnapshot.size)
       setTimesStudiedWeek(weekCount)
@@ -130,7 +138,7 @@ export function StudyStatsContextWrapper(props) {
     return null
   }
 
-  return (<StudyStatsContext.Provider value={{datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique, allDates}}>
+  return (<StudyStatsContext.Provider value={{pastSevenDaysCount,datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique, allDates}}>
     {props.children}
     </StudyStatsContext.Provider>
     );

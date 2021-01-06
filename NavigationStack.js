@@ -129,6 +129,15 @@ const AddNotesWithContext = (props) => {
 }
 
 
+const RecallWithContext = (props) => {
+  return(
+  <SubjectsContextWrapper>
+  <Recall {...props}/>
+  </SubjectsContextWrapper>
+  )
+}
+
+
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
@@ -154,7 +163,7 @@ function HomeStack() {
         <Stack.Screen name="NotesRecallExplain" component={NotesRecallExplain} />
         <Stack.Screen name="RecallExplain" component={RecallExplain} />
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
-        <Stack.Screen name="Recall" component={Recall} />
+        <Stack.Screen name="Recall" component={RecallWithContext} />
         <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="SetTimer" component={SetTimer} />
         <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />

@@ -36,20 +36,6 @@ function HomeScreen(){
         };
       }
 
-  
-
-      if (date.isoWeekday() === 5) {
-
-        return {
-          dots:[{
-            color: theme['color-primary-900'],
-            selectedColor: theme['color-primary-900'],
-            
-          }]
-
-          
-        };
-      }
 
       return {};
       

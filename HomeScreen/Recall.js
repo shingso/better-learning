@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View , StyleSheet, ImageBackground } from 'react-native';
+import { View , StyleSheet, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
-import { Button, Text ,Icon , Input, Modal, Card, Layout } from '@ui-kitten/components';
+import { Button, Text ,Icon , Input, Modal, Card, Layout, useTheme, List } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { useNavigation, StackActions } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
-
+import { SubjectsContext } from '../SubjectsContext';
 
 const TextSchema = Yup.object().shape({
   text: Yup.string()
@@ -21,13 +21,60 @@ const TextSchema = Yup.object().shape({
 
 
 
+
+
 function Recall(){
  
+  const theme = useTheme()
   const [visible, setVisible] = React.useState(false);
-  const [confirmBackVisible, setConfirmBackVisible] = React.useState(false);
+  const [selectVisible, setSelectVisible] = React.useState(false);
   const authContext = useContext(AuthContext)
   const navigation = useNavigation();
+  const subjectsContext = useContext(SubjectsContext)
+  const [confirmBackVisible, setConfirmBackVisible] = React.useState(false);
 
+
+
+  const renderEmpty = () => (
+
+    <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
+  
+  
+    <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
+    <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top left to add a note when you make connections about new ideas</Text>
+    </View>
+    
+  )
+  
+  
+  const renderItem = (info) => (
+    <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject(info.item)}>
+    <View style={{flexDirection:'row', alignItems:'center', marginVertical:16}}>
+    
+    <Icon style={{width:15, height:15, marginRight:20}} 
+    name={subjectsContext.lastUsedSubject.id == info.item.id ? 'checkmark': 'folder-outline'}
+    fill={subjectsContext.lastUsedSubject.id == info.item.id ? theme['color-primary-700'] :theme['color-basic-600']}/>
+  
+    <Text 
+   
+    style={{
+      flexShrink:1,
+      fontSize:14,
+   
+      fontWeight:subjectsContext.lastUsedSubject.id == info.item.id ? 'normal' : 'normal',
+      color:subjectsContext.lastUsedSubject.id == info.item.id ? theme['color-primary-700'] :theme['color-basic-600']}
+    }>
+    {info.item.title}
+    </Text>
+  
+    
+  
+  
+    </View>
+    </TouchableOpacity>
+    
+  
+  );
 
   useEffect(() => {
 
@@ -82,36 +129,45 @@ function Recall(){
     {formikProps => (
 
    <React.Fragment>
-   <View>
-   <TopHeader/>
-
-   <Text category='s1'>Take some time and think about what you have just studied or practiced.</Text>
-   <Text category='s1' style={{marginVertical:12, marginBottom:20}}>Type out what you have learned.</Text>
-   <Text>Everything you type here should be from memory and be done without looking at any material.</Text>
+   
+   <Text category='h5' style={{marginTop:20, marginLeft:20, marginBottom:12, fontWeight:'bold', lineHeight:26}}>Think about what you just learned and type it out</Text>
+   <View style={{marginLeft:20, marginRight:50}}> 
+   <TouchableOpacity onPress={()=>{setSelectVisible(true)}}>
+    
+   {subjectsContext.lastUsedSubject != null &&
+   <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
+   <Icon style={{marginRight:8}} fill={theme["color-primary-500"]} width='15' height='15' name={'folder'} />
+   <Text style={{fontSize:13,color:theme["color-primary-500"], fontWeight:'bold'}}>{subjectsContext.lastUsedSubject.title }</Text>
+   </View>
+   }
+   </TouchableOpacity>
    </View>
 
    <View style={{marginVertical:20}}>
-   {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null}
-      
+   
+   
+  
    <Input
-   textStyle={{fontSize:16}}
-   style={{marginBottom:12}}
-   multiline={true}
-   placeholder='Overarching theme?'
+   textStyle={{fontSize:16, fontWeight:'bold'}}
+   style={{marginBottom:4, marginTop:4, borderColor:'white', backgroundColor:theme["color-basic-100"]}}
+   placeholder={'Main topic'}
    onChangeText={formikProps.handleChange('textTheme')}
     />
    
    <Input
-    textStyle={{fontSize:16, height:100}}
+    placeholder={'Write something here'}
+    style={{backgroundColor:theme["color-basic-100"], borderColor:theme["color-basic-100"], marginTop:12}}
+    textAlignVertical={'top'}
+    textStyle={{fontSize:15, height:120}}
     multiline={true}
-    placeholder='What did you learn about?'
+    autoFocus={true}
     size={'large'}
     onChangeText={formikProps.handleChange('text')}
-    />
+      />
 
    </View>
 
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()} >
+    <Button style={{marginVertical:16, marginHorizontal:20}} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()} >
       Done
     </Button>
       
@@ -127,6 +183,30 @@ function Recall(){
 
     </Card>
     </Modal>  
+
+
+    <Modal
+    visible={selectVisible}
+    backdropStyle={styles.backdrop}>
+    <Card style={{paddingHorizontal:24, paddingVertical:20, marginHorizontal:20}} disabled={true}>
+    
+    <List
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      data={subjectsContext.subjects}
+      renderItem={renderItem}
+      ListEmptyComponent={renderEmpty}
+      
+    />
+    
+    <View>
+    <Button appearance='outline' style={{marginBottom:0, marginTop:20 }} onPress={()=>setSelectVisible(false)}>
+    Close
+    </Button>
+    </View> 
+    </Card>
+    </Modal> 
+
 
     <Modal
     visible={confirmBackVisible}
@@ -157,6 +237,9 @@ function Recall(){
   </Layout>
 
     )
+
+
+    
 };
 
 
@@ -167,6 +250,13 @@ const styles = StyleSheet.create({
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+
+  container: {
+    backgroundColor:'white',
+  },
+
 });
+
+
 
 export default Recall

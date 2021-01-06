@@ -37,7 +37,6 @@ export function SubjectsContextWrapper(props) {
         subjectsSet(list);
         setLastUsedSubject(list[0])
 
-        console.log('ran')
       })
 
   }, []);

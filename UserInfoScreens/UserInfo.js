@@ -28,8 +28,7 @@ function UserInfo(){
     const userStartDate = userData.timeStamp
     const allDateStats = studyStatsData.allDates  
     const timesStudiedStat = studyStatsData.timesStudied
-    console.log(userStartDate)
-    
+
     return (
 
     
