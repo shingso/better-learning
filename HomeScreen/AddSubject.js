@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Formik } from 'formik';
 import { addSubject } from '../helperFunctions';
-import { Button, Text ,Icon , Modal, Input, Card} from '@ui-kitten/components';
+import { Button, Text ,Icon , Modal, Input, Card, useTheme, Layout } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
@@ -24,9 +24,11 @@ function AddSubject(){
   const [visible, setVisible] = React.useState(false);
   const authContext = useContext(AuthContext)
   const navigation = useNavigation();
+  const theme = useTheme()
+
   return(
            
-    <KeyboardAvoidingView behavior='position' style={{ flex: 1, padding:16}}>
+    <Layout style={{padding:20 , flex:1}}>
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
@@ -39,27 +41,26 @@ function AddSubject(){
 
     {formikProps => (
    
-   <React.Fragment>
-    <TopHeader/>
-    <Text category='h1' style={{marginBottom:20}}>Getting Started</Text>
-    
-    <Text style={{marginBottom:12}}>Think of a subject that you want to learn.</Text>
-    <Text style={{marginBottom:40}}>Learning comes best when its something that you want to learn, a subject that you find valuable in growing and getting better in 
-    </Text>
+   <React.Fragment >
+   <TopHeader title={'Add a new subject folder'}/>
+
+   <Text style={{marginBottom:8,marginTop:20}}>Use folders to furthur organize your notes.</Text>
+   <Text style={{marginBottom:40}}>You can select a folder to store your note into when you are adding a note</Text>
    
-    <Text>So what is a subject you are interested in learning?</Text>
     <Text>{formikProps.errors.subject}</Text>
     <Input
-    placeholder='Enter subject title'
+    placeholder='What are you learning about?'
     value={formikProps.values.subject}
     size='large'
     onChangeText={formikProps.handleChange('subject')}
     status={formikProps.errors.subject != null ? 'danger' : 'basic'}
+    style={{borderColor:theme['color-basic-100']}}
+    autoFocus={true}
       />
     
     <View style={{ justifyContent:'flex-end'}}>
     <Button style={{marginTop:40}} onPress={()=>formikProps.handleSubmit()}>
-      Add Subject
+      Add Folder
     </Button>
     </View>
 
@@ -89,7 +90,8 @@ function AddSubject(){
     </React.Fragment>
     )}
   </Formik>
-  </KeyboardAvoidingView>
+  </Layout>
+
 
     )
 };

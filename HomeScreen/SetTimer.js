@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import firestore from '@react-native-firebase/firestore';
 import { incrementActiveUsers } from '../helperFunctions';
-
+import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 
 
@@ -42,27 +42,35 @@ function SetTimer({ route }){
 
     return (
     <Layout level='2' style={{flex:1}}>
-    <SafeAreaView style={{flex: 1, padding:16}}>
-    <TopHeader/>
-    <View style={{justifyContent:'space-between', flex:1}}>
-    <View style={{alignSelf:'flex-end'}}>
-   
-    </View>
 
-    <View>
+    <StudyProgressIndicator currentStep={0}/>
+    <SafeAreaView style={{flex: 1, padding:16}}>
+    
+    <View style={{flexDirection:'row', justifyContent:'center'}}>
+    {/* <TopHeader/> */}
+    
+    </View>
+    
+    <View style={{ flex:1}}>
+  
+    <View style={{flex:1, justifyContent:'center'}}>
     <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>For the next twenty-five minutes you will be engaged in study. Focused on making progress.</Text>
     </View>
     
-    <View style={{ marginBottom:0 , justifyContent:'flex-end', alignItems:'center'}}>
+    <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
     
-    <View style={{flexDirection:'row', marginBottom:12, alignItems:'center'}}>
+    <View style={{flexDirection:'row',  marginBottom:12, alignItems:'center'}}>
     <Text category='c1'>Active Studiers: </Text>
     <Text  category='c1' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
     </View>
 
-    <Button style={{marginBottom:30, width:300,}} onPress={customNav}>
+    <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
+{/*     <Button status={'basic'} appearance='outline' style={{marginRight:16, flex:1}}>Back</Button> */}
+    <Button style={{flex:5}} onPress={customNav}>
       Start guided study
     </Button>
+    </View>
+
 
     </View>
    

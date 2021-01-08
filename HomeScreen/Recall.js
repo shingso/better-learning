@@ -8,6 +8,7 @@ import { useNavigation, StackActions } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
 import { SubjectsContext } from '../SubjectsContext';
+import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 const TextSchema = Yup.object().shape({
   text: Yup.string()
@@ -114,14 +115,17 @@ function Recall(){
 
   return(
            
-    <Layout style={{ flex: 1, padding:16 }}>
- 
+    <Layout style={{ flex: 1 }}>
+    <StudyProgressIndicator currentStep={3}/>
+    <View style={{padding:16}}>
+
     <Formik
     initialValues={{ text:'', textTheme:'', subject:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-     addNote( authContext.user.uid, values.subject, values.text, values.textTheme)
+     addNote( authContext.user.uid,  subjectsContext.lastUsedSubject.id, values.text, values.textTheme)
      setVisible(true)
+     confirmAddNote()
 
     }}
    >
@@ -171,7 +175,7 @@ function Recall(){
       Done
     </Button>
       
-    <Modal
+  {/*   <Modal
     visible={visible}
     backdropStyle={styles.backdrop}>
     <Card disabled={true}>
@@ -182,7 +186,7 @@ function Recall(){
     
 
     </Card>
-    </Modal>  
+    </Modal> */}  
 
 
     <Modal
@@ -233,6 +237,7 @@ function Recall(){
     </React.Fragment>
     )}
   </Formik>
+  </View>
 
   </Layout>
 

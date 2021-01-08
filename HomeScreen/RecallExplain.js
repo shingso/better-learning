@@ -4,6 +4,7 @@ import { Button, Text ,Icon , Input, Modal, Card, useTheme, Layout } from '@ui-k
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
 import { useNavigation, StackActions } from '@react-navigation/native';
+import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 const TextComponent = (props) => {
 
@@ -57,9 +58,9 @@ function RecallExplain(){
 
   return (
     <Layout style={{flex:1}}>
-    <View style={{justifyContent:'flex-end'}}>
    
-    </View>
+    <StudyProgressIndicator currentStep={2}/>
+   
     
     
     
@@ -74,9 +75,7 @@ function RecallExplain(){
     bodyText={'In the next screen write down everything that you just learned'}
     />
 
-    <TextComponent
-    bodyText={'In the next screen write down everything that you just learned'}
-    />
+   
 
     <Button style='small' style={{marginHorizontal:20, marginBottom:40}} onPress={navigateToRecall}>I'm ready</Button>
 

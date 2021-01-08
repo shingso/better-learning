@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { Text, Button, Layout } from '@ui-kitten/components';
-
+import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 
 
@@ -20,9 +20,13 @@ function StudyFinished(){
 
       <Layout style={{flex:1}}>
       <SafeAreaView style={{flex:1}}>
-      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-      <Text category='h5' style={{marginBottom:20}}>Study Session Complete!</Text>
-      <Text category='s1'>time for a break</Text>
+     
+      <StudyProgressIndicator currentStep={4}/>
+  
+
+      <View style={{flex:1, alignItems:'center',padding:20, justifyContent:'space-around'}}>
+      <Text category='h5' style={{marginBottom:20, marginTop:60}}>Session Complete!</Text>
+      <Text category='s1' style={{marginBottom:40}}>time for a break</Text>
 
       <Button onPress={()=>{navigation.dispatch(StackActions.popToTop())}}>Completed</Button>
       </View>

@@ -33,6 +33,10 @@ const TextSchema = Yup.object().shape({
     
 });
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 
 
 function NotesRecall(){
@@ -43,15 +47,23 @@ function NotesRecall(){
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
     const navigation = useNavigation();
- 
+
+    const writingTopics = 
+    [{text:'What did you learn about the last time you studied?'},
+    {text:'What is a new connection that you have made recently?'},
+    {text:'What is something new that you have learned?'},
+    ]
+
     const [ currentData, setCurrentData ] = useState({})
     const [value, setValue] = React.useState('');
     const [visible, setVisible] = React.useState(false);
 
 
+    const getRandomWritingTopic = () => {
+      return writingTopics[getRandomInt(writingTopics.length)]
+    }
 
     const confirmSkipNote = (userID,subjectID) => {
-      console.log(subjectID)
       skipNote(userID,subjectID)
       navigation.dispatch(StackActions.popToTop());
     }
@@ -79,6 +91,15 @@ function NotesRecall(){
            if(ref.docs.length > 0){
             ref.docs.map(doc => {
               let placeholderDict = doc.data()
+              if(placeholderDict.textTheme != null){
+                let firstRandom = getRandomInt(2)
+                if(firstRandom == 0){
+                  placeholderDict['text'] = placeholderDict['textTheme']
+                }
+              }
+              
+              
+              
               placeholderDict['id'] = doc.id
               setCurrentData(placeholderDict)
             })
@@ -93,7 +114,9 @@ function NotesRecall(){
             .get()
 
             if(ref2.docs.length > 0){
+            
               ref2.docs.map(doc => {
+              let secondRandom = getRandomInt(2)
               let placeholderDict = doc.data()
               placeholderDict['id'] = doc.id
               setCurrentData(placeholderDict)
@@ -107,10 +130,16 @@ function NotesRecall(){
 
         }
 
-        fetchData()
+        
+        let currentRandom = getRandomInt(3)
 
+        if(currentRandom == 0){
+          setCurrentData(getRandomWritingTopic())
+        } else {
 
+          fetchData()
 
+        }
 
       }, []);
     
@@ -129,31 +158,31 @@ function NotesRecall(){
        addRecallNote( authContext.user.uid, currentData.id , values.text, currentData.textTheme, currentData.subject)
        //actions.setSubmitting(false);
        //setVisible(true)
+       navigation.pop()
+       navigation.navigate('NotesRecallComplete')
   
       }}
      >
     {formikProps => (
     <Layout style={{flex: 1, padding:16}}>
     <SafeAreaView>  
-
-
   
-    <Button style={{alignSelf:'flex-end'}} status='danger' appearance='ghost' onPress={()=>{confirmSkipNote(userID,currentData.id)}}>Skip</Button>
-   
-   
-    {/* <Text category='h5' style={{textAlign:'center'}}>{currentData.text}</Text> */}
-    <Text category='h6' style={{textAlign:'center', marginTop:40, marginHorizontal:16}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</Text>
+   {/*  <Button style={{alignSelf:'flex-end'}} status='danger' appearance='ghost' onPress={()=>{confirmSkipNote(userID,currentData.id)}}>Skip</Button> */}
+    
+
+    <Text category='s1' style={{textAlign:'center', marginTop:40, marginHorizontal:8}}>{currentData.text}</Text> 
+    
     <Input
       style={{marginTop:40, marginBottom:20,marginTop:20 ,backgroundColor:theme['background-basic-color-1'],  borderColor:theme['background-basic-color-1'],borderWidth:0}}
       autoFocus={true}
       multiline={true}
       textStyle={{height:80}}
       onChangeText={formikProps.handleChange('text')}
-      placeholder='Write anything thoughts you have. Any new thoughts or things learned?'
+      placeholder='Write anything thoughts you have'
    
 
     />
-    <Button style={{marginHorizontal:20}} onPress={()=>console.log(formikProps.errors.text)} disabled={formikProps.errors.text ? true : false}>Complete</Button>
+    <Button style={{marginHorizontal:20, marginTop:40}} onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.text ? true : false}>Complete</Button>
     </SafeAreaView>
     </Layout>
     

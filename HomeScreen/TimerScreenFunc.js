@@ -7,6 +7,7 @@ import { decrementActiveUsers, updateUserLastStudied } from '../helperFunctions'
 import { AuthContext } from '../AuthContext'
 import { UserDataContext } from '../UserDataContext'
 import { differenceInDays} from 'date-fns'
+import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 const PauseIcon = (props) => (
   <Icon name='pause-circle' width={50} height={50} {...props} />
@@ -168,20 +169,16 @@ const confirmCompleted = () =>{
 return (
 
        
-  <Layout level='2' style={{ flex: 1, padding:16 }}>
- 
-  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-  <CustomBackHeader/>
- 
+  <Layout level='2' style={{ flex: 1,  }}>
+   
+  <View>
+ {/*  <CustomBackHeader/> */}
+  <StudyProgressIndicator currentStep={1}/>
   </View>
+    
 
 
-  <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between' }}>
-  
-  
-
-
-  
+  <View style={{ flex: 1 , alignItems:'center', marginVertical: 20, marginTop:30 ,justifyContent:'space-between',padding:16 }}>
 
 
   {!hasEnded &&
@@ -207,21 +204,16 @@ return (
   }
   </View>
   }
-  
 
-  <Modal
-  visible={visible}
-  backdropStyle={styles.backdrop}
-  >
-  <Card disabled={true}>
-  <View style={{justifyContent:'center', alignItems:'center'}}>
-  <Text style={{marginVertical:12}}>Completed!</Text>
-  <Button onPress={confirmCompleted}>
-  Let's wrap this up
-  </Button>
+  {hasEnded && 
+  <View style={{borderColor:'red', borderWidth:1}}>
+  <Text>Studying Done!</Text>
+  <View style={{flex:1, justifyContent:'flex-end', borderColor:'blue', borderWidth:1}}>
+  <Button onPress={confirmCompleted}/>
   </View>
-  </Card>
-  </Modal>
+  </View>
+  }
+  
 
   <Modal
   visible={confirmBackVisible}
