@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions, ImageBackground } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { endOfDay, subDays , startOfDay, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays} from 'date-fns'
+import { endOfDay, subDays , startOfDay, differenceInCalendarWeeks, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
 import { Layout, Card, List, Text, Button, Icon, useTheme } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
@@ -316,17 +316,20 @@ function IQScreen(){
     let sevenDaysAfterStart = addDays(_userStartDate, 6)
     let userStartWeek = eachDayOfInterval({start:_userStartDate, end:sevenDaysAfterStart})
 
+
+    let diffInWeeks = differenceInCalendarWeeks(currentDate, userStartedStudying)
+
     const newDict = {}
 
-    const startDate = startOfDay(userStartStudyingDate.toDate())
+/*     const startDate = startOfDay(userStartStudyingDate.toDate())
     const endDate = addDays(startDate, 6)
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
     const stringConvertedDates = []
 
     daysInWeek.forEach(item => stringConvertedDates.push(format(item,'yyyy-MM-dd')))
     
-    uniqueDates.forEach(item => newDict[item] = {selected:true})
-    console.log(newDict)
+    uniqueDates.forEach(item => newDict[item] = {selected:true}) */
+    console.log(diffInWeeks)
     //get the last seven days of study or all the days of study at this point
     //console.log(userStartWeek)
    
@@ -379,7 +382,7 @@ function IQScreen(){
     //need to get the next 7 days 
     //need to get last 7 days of study form today
     //need to match them up 
-    <View>
+    <View style={{marginTop:20}}>
     <Button onPress={()=>newFunction()}/>
     </View>
   )
@@ -556,6 +559,7 @@ function IQScreen(){
 
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight:800}}>
     <SafeAreaView style={{flex: 1}}>
+    {renderSettingBenchmark()}
     <Layout level='2' style={{flex:1, padding:16}}>
 
     {(daysSinceLastStudy > 15 || daysSinceStartStudying < 7) &&
@@ -616,24 +620,7 @@ function IQScreen(){
     }
 
 
-    <Card onPress={calculateStudyStrength} style={{marginBottom:12, paddingVertical:40,}}>
-    <ImageBackground opacity={0.00} resizeMode='cover'  source={require('../assets/images/walkingwithoutbackground.png')} style={styles.image}>
-    <View style={{ justifyContent:'space-between', alignItems:'center', marginBottom:16}}>
-    <Text style={{marginBottom:16}} category={'h6'}>Recommended Study</Text>
-
-   
-    <View style={{alignItems:'center'}}>
-    <Text category='h1'>{5}</Text>
-    <Text category='label'>times per week</Text>
-    </View>
-
-
-    </View>
-    
-    <Text style={{lineHeight:20, textAlign:'center', marginTop:12}}>Space out your study sessions over a period of the week.</Text>
-    </ImageBackground>
-
-    </Card>
+  
 
     <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24}}>
     <Calendar
@@ -659,7 +646,7 @@ function IQScreen(){
   // day from another month that is visible in calendar page. Default = false
   disableMonthChange={true}
   // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-  firstDay={1}
+  firstDay={0}
   // Hide day names. Default = false
   hideDayNames={false}
   // Show week numbers to the left. Default = false
@@ -690,6 +677,9 @@ function IQScreen(){
   }}
 />
 </Card>
+
+
+    
 
    
     {/* <Card onPress={calculateStudyStrength} style={{marginBottom:12}}>
@@ -753,6 +743,20 @@ function IQScreen(){
         
     />
     </View>
+    </Card>
+
+
+    <Card onPress={calculateStudyStrength} style={{marginBottom:12, paddingVertical:40,}}>
+    <ImageBackground opacity={0.00} resizeMode='cover'  source={require('../assets/images/walkingwithoutbackground.png')} style={styles.image}>
+    <View style={{ justifyContent:'space-between', alignItems:'center', marginBottom:16}}>
+    <Text style={{marginBottom:16}} category={'h6'}>Recommended Study</Text>
+    <View style={{alignItems:'center'}}>
+    <Text category='h1'>{5}</Text>
+    <Text category='label'>times per week</Text>
+    </View>
+    </View>
+    <Text style={{lineHeight:20, textAlign:'center', marginTop:12}}>Space out your study sessions over a period of the week.</Text>
+    </ImageBackground>
     </Card>
 
     

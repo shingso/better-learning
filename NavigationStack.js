@@ -12,7 +12,8 @@ import AddNotes from './HomeScreen/AddNotes';
 import Recall from './HomeScreen/Recall';
 
 import NotesFocused from './NotesScreen/NotesFocused'
-import NotesFocusedTEST from './NotesScreen/NotesFocusedTEST'
+import RecalledNotes from './NotesScreen/RecalledNotes'
+
 import GlobalNotes from './NotesScreen/GlobalNotes'
 import NotesHome from './NotesScreen/NotesHome'
 
@@ -30,6 +31,7 @@ import AddSubject from './HomeScreen/AddSubject'
 import TipsPage from './HomeScreen/TipsPage'
 import NotesRecall from './HomeScreen/NotesRecall'
 import NotesRecallExplain from './HomeScreen/NotesRecallExplain'
+import NotesRecallComplete from './HomeScreen/NotesRecallComplete'
 import RecallExplain from './HomeScreen/RecallExplain'
 import StudyFinished from './HomeScreen/StudyFinished'
 
@@ -72,7 +74,7 @@ const BookIcon = (props) => (
 
 
 const ChartIcon = (props) => (
-  <Icon {...props} name='pie-chart-2'/>
+  <Icon {...props} name='calendar'/>
 );
 
 const UserIcon = (props) => (
@@ -105,9 +107,12 @@ const UserInfoWithContext = () => {
 const HomeScreenWithContext = () => {
   return(
 
+
+  <UserDataContextWrapper>
   <StudyStatsContextWrapper>
   <HomeScreen/>
   </StudyStatsContextWrapper>
+  </UserDataContextWrapper>
 
   )
 }
@@ -161,6 +166,7 @@ function HomeStack() {
         <Stack.Screen name="Home" component={HomeScreenWithContext} />
         <Stack.Screen name="NotesRecall" component={NotesRecall} />
         <Stack.Screen name="NotesRecallExplain" component={NotesRecallExplain} />
+        <Stack.Screen name="NotesRecallComplete" component={NotesRecallComplete} />
         <Stack.Screen name="RecallExplain" component={RecallExplain} />
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
         <Stack.Screen name="Recall" component={RecallWithContext} />
@@ -169,7 +175,8 @@ function HomeStack() {
         <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />
         <Stack.Screen name="TipsPage" component={TipsPage} />
         <Stack.Screen name="NotesFocused" component={NotesFocused} />
-        <Stack.Screen name="NotesFocusedTEST" component={NotesFocusedTEST} />
+        <Stack.Screen name="RecalledNotes" component={RecalledNotes} />
+
         <Stack.Screen name="GlobalNotes" component={GlobalNotes} />
         <Stack.Screen name="StudyFinished" component={StudyFinished} />
         <Stack.Screen name="NotesHome" component={NotesHome} />

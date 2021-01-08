@@ -152,21 +152,29 @@ export async function skipNote(userID, subjectID) {
 
 export async function addRecallNote(userID, ID, text, textTheme, subject) {
   
-  const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes')
-  await ref.add({
+  
+ 
+  const docID = uuid()
+  const batch = firestore().batch();
+  const ref = firestore().collection('Users').doc(userID)
+  const ref2 = firestore().collection('Users').doc(userID).collection('GlobalNotes').doc(docID)
+
+  //if the date since last study is greater than 14 than we need to update started studying
+
+  batch.update(ref, {
+    lastRecalled: firestore.FieldValue.serverTimestamp()
+  })
+
+  batch.set(ref2, {   
     subject: subject,
     text: text,
     textTheme: textTheme,
     timeStamp: firestore.FieldValue.serverTimestamp(),
     recalled : true,
     recallNote: true
+  })
 
-  });
-
-  const ref2 = firestore().collection('Users').doc(userID).collection('GlobalNotes').doc(ID)
-  await ref2.update({
-    recalled : true
-  });
+  batch.commit()
 
 }
 

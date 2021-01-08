@@ -43,8 +43,8 @@ function NotesHome({ navigation }){
 
       <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
    
-      <Text style={{textAlign:'center', marginTop:20}}>Your notes will go here add a new folder and it will go here</Text>
-      <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top right to add a note</Text>
+      <Text style={{textAlign:'center', marginTop:20}}>Add a new folder to better organize your notes</Text>
+      <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top right to add a new note</Text>
       </View>
       
     )
@@ -74,7 +74,7 @@ function NotesHome({ navigation }){
       <Text style={{textAlign:'center'}} category='label'>A collection of your thoughts</Text>
       </Card>
 
-      <Card style={styles.item}>
+      <Card onPress={()=>navigation.navigate('RecalledNotes')} style={styles.item}>
       <Text style={{textAlign:'center'}} category='s1'>Daily Recall Notes</Text>
       <Text style={{textAlign:'center'}} category='label'>Notes from your daily recall sessions</Text>
       </Card>
