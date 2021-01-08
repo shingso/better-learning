@@ -4,7 +4,7 @@ import { Button, Text ,Icon , Input, Modal, Card, useTheme, Layout } from '@ui-k
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
 import GuideComponent from '../UtilComponents/GuideComponent'
-
+import SwiperButtons from '../UtilComponents/SwiperButtons'
 
 function HowToLearn(){
 
@@ -15,7 +15,7 @@ function HowToLearn(){
     <TopHeader/>
     </View>
     
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
     
 
     <GuideComponent 

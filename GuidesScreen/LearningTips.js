@@ -15,32 +15,38 @@ function LearningTips(){
     <Text style={{fontWeight:'bold', fontSize:16, marginLeft:4}}>Learning Tips</Text>
     </View>
     
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text category='s1' style={[styles.nextButtonStyle,{color:theme['color-basic-100'],backgroundColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
     
 
     <GuideComponent 
     picture={require('../assets/images/girlthinkingbackground.png')} 
-    headerText={'Building on past information'}
-    bodyText={'Learning is about taking information you already know and building on top of it'}
+    headerText={'Take care of yourself'}
+    bodyText={'External factors that influence our rate of learning. Taking care of our bodies is critical to learning'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Focused and active'}
-    bodyText={'Decide on what you are going to do'}
+    headerText={'Getting good sleep'}
+    bodyText={'Our brains process information deeply when we sleep. Getting adequte sleep is nessecary when trying to learn'}
     />
+
+    {/* <GuideComponent 
+    picture={require('../assets/images/boybutterfly.png')} 
+    headerText={'Minimize Stress'}
+    bodyText={''}
+    /> */}
 
     <GuideComponent 
     picture={require('../assets/images/girltakingnotes.png')} 
-    headerText={'Learning is a process'}
-    bodyText={'A study sessions is a 25 minute period where you commit to being focused on the task at hand. During this time, engage and actively thinking about what you are reading.'}
+    headerText={'Be energized and ready to study'}
+    bodyText={'Study when you are feeling good. The more energized you are the most focused and attentive you will be'}
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Learning is NOT memorization'}
-    bodyText={'The last step to a study session is to recall what you have learned about. Take some time to think about what you learned about and write it down. During recall do NOT look at any material'}
+    headerText={'Practice, Practice, Practice'}
+    bodyText={'Practicing enforces our thoughts. The more we practice the more deeply engrained the concepts will be.'}
     />
 
    
@@ -52,19 +58,17 @@ function LearningTips(){
 
 const styles = StyleSheet.create({
   nextButtonStyle:{
-    marginBottom:12, 
+    marginBottom:14, 
     marginRight:20, 
-    borderWidth:1, 
-    padding:14, 
+    paddingVertical:14, 
     borderRadius:6, 
     paddingHorizontal:22
   },
 
   prevButtonStyle:{
-    marginBottom:12, 
+    marginBottom:14, 
     marginLeft:20, 
-    borderWidth:1,
-    padding:14, 
+    paddingVertical:14, 
     borderRadius:6, 
     paddingHorizontal:22
   },

@@ -4,6 +4,7 @@ import { Button, Text ,Icon , Input, Modal, Card, useTheme, Layout } from '@ui-k
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
 import GuideComponent from '../UtilComponents/GuideComponent'
+import SwiperButtons from '../UtilComponents/SwiperButtons'
 
 function Discouraged(){
 
@@ -15,13 +16,13 @@ function Discouraged(){
     <Text style={{fontWeight:'bold', fontSize:16, marginLeft:4}}>Discouraged</Text>
     </View>
     
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
     
 
     <GuideComponent 
     picture={require('../assets/images/girlthinkingbackground.png')} 
     headerText={'Just start and do your best'}
-    bodyText={'The road ahead might seem daunting and difficult'}
+    bodyText={'Try to start everyday. Do what you can. Some days you might study a lot and some days you will be less motivated. Either way progress is progress and everything counts.'}
     />
 
     <GuideComponent 
@@ -39,7 +40,7 @@ function Discouraged(){
     
     <GuideComponent 
     picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Focus on putting in the time'}
+    headerText={'Focus on putting in the time, not whether you figured something out'}
     bodyText={'Dont judge a study session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
     />
 

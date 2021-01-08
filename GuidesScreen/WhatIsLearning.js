@@ -4,6 +4,7 @@ import { Button, Text ,Icon , Input, Modal, Card, useTheme, Layout } from '@ui-k
 import TopHeader from '../UtilComponents/TopHeader'
 import Swiper from 'react-native-swiper'
 import GuideComponent from '../UtilComponents/GuideComponent'
+import SwiperButtons from '../UtilComponents/SwiperButtons'
 
 function WhatIsLearning(){
 
@@ -15,7 +16,7 @@ function WhatIsLearning(){
     
     </View>
     
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<Text status='primary' style={[styles.nextButtonStyle,{borderColor:theme['color-primary-default']}]}>Next</Text>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
     
 
     <GuideComponent 
@@ -26,21 +27,21 @@ function WhatIsLearning(){
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Focused and active'}
-    bodyText={'Decide on what you are going to do'}
+    headerText={'Focused, Active, and Engaged'}
+    bodyText={'Be constantly in thought while you are learning. Think about how the concepts relate to each other'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/girltakingnotes.png')} 
-    headerText={'Learning is a process'}
-    bodyText={'A study sessions is a 25 minute period where you commit to being focused on the task at hand. During this time, engage and actively thinking about what you are reading.'}
+    headerText={'Learning is a constant process'}
+    bodyText={'Learning is slowly figuring out concepts. This process occurs over weeks, not days. Inorder to build valuable'}
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/walkingwithoutbackground.png')} 
     headerText={'Learning is NOT memorization'}
-    bodyText={'The last step to a study session is to recall what you have learned about. Take some time to think about what you learned about and write it down. During recall do NOT look at any material'}
+    bodyText={'Do not memorize key terms, formulas, and concepts. Instead work on trying to understand how the current concepts fit into the bigger picture. How do the smaller concepts fit together.'}
     />
 
    
