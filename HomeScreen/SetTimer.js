@@ -54,7 +54,10 @@ function SetTimer({ route }){
     <View style={{ flex:1}}>
   
     <View style={{flex:1, justifyContent:'center'}}>
-    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>For the next twenty-five minutes you will be engaged in study. Focused on making progress.</Text>
+    
+    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>When you start the study session a <Text category='h4' style={{fontWeight:"bold"}}>25 minute timer</Text> will begin.</Text>
+    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12, marginTop:32}}>While the timer is running, stay <Text category='h4' style={{fontWeight:'bold'}}>focused and engaged</Text>.</Text>
+
     </View>
     
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
@@ -67,7 +70,7 @@ function SetTimer({ route }){
     <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
 {/*     <Button status={'basic'} appearance='outline' style={{marginRight:16, flex:1}}>Back</Button> */}
     <Button style={{flex:5}} onPress={customNav}>
-      Start guided study
+      Start
     </Button>
     </View>
 

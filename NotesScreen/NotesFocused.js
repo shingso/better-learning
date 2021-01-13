@@ -41,16 +41,18 @@ function NotesFocused({ route, navigation }){
 
     const renderEmpty = () => (
 
-      <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
-      <Text style={{textAlign:'center', marginTop:40}}>You can view your notes for {title} here.</Text>
+      <View style={{flex: 1,alignItems:'center', marginTop:60,justifyContent:'center',padding:16}}>
+      
       <Image
         style={{width: 650, height: 250, resizeMode:'contain'}}
         source={require('../assets/images/notesv1.png')}
       
       />
+
+      <Text style={{textAlign:'center', marginTop:40}}>Your notes for <Text category='s1'>{title}</Text> will be organized here.</Text>
       <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
 
-      <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top left to add a note when you make connections about new ideas</Text>
+     
       </View>
       
     )

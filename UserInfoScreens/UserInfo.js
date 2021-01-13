@@ -40,37 +40,34 @@ function UserInfo(){
     <Button size='small' appearance={'ghost'} accessoryRight={SettingsIcon} onPress={()=>navigation.navigate('SettingsOptions')}></Button>
     </View>
 
-    <Card style={{marginBottom:16}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <Card style={{marginBottom:16, paddingVertical:20}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:20}}>
     <Text category={'s1'}>Started</Text>
     <Text>{format(new Date(userStartDate.toDate()), 'MMM d yyyy')}</Text>
     </View>
-    </Card> 
-
-    <Card style={{marginBottom:16}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:20}}>
     <Text category={'s1'}>Total Studied</Text>
     <Text>{timesStudiedStat}</Text>
     </View>
-    </Card> 
-
-    <Card style={{marginBottom:16}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center' }}>
     <Text category={'s1'}>Times Studied this Month</Text>
     <Text>{timesStudiedStat}</Text>
     </View>
     </Card> 
+
+   
     
 
 
 
     <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
  
-    <Text category='s1' style={{marginBottom:16, textAlign:'center'}}>Last three months</Text>
+
   
     <CalendarHeatmap
     endDate={endOfMonth(new Date())}
-    numDays={99}
+    //the number of dates should be the number of days inbetween  between the starting date and end of the month or 90
+    numDays={65}
     //need to pass in style prop to mon
     //Need to pass in our own color array 
     colorArray={[theme['background-basic-color-2'], theme['color-primary-100'], theme['color-primary-200'], theme['color-primary-300'], theme['color-primary-400'],theme['color-primary-500']]}

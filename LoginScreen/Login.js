@@ -66,7 +66,7 @@ function Login(){
       <View style={{ flex: 1, justifyContent:'center', padding:16, paddingBottom:40}}>
       
       <View>
-      <Text category='s1' style={{marginBottom:4, textAlign:'center'}}>Sign in with your Email and Password</Text>
+      <Text category='s1' style={{marginBottom:4, textAlign:'center'}}>Enter your email and well sen</Text>
       </View>
 
       <Formik
@@ -109,6 +109,7 @@ function Login(){
     <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
     Login
     </Button>
+    <Button appearance='ghost' onPress={()=>{navigation.navigate('ForgotPassword')}}>Forgot your password?</Button>
     </React.Fragment>
 
 

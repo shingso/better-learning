@@ -17,12 +17,36 @@ function Onboard(){
   return (
     <View style={{flex:1}}>
     <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
-      
+
+     
+    
+    <View style={styles.container}>
+        {/* <Image
+          style={{
+            flex:3,         
+            resizeMode:'contain'
+          }}
+          source={require('../assets/images/girlthinkingbackground.png')}
+        /> */}
+     
+        <View style={{alignItems:'center',flex:1}}>
+        <Text category='h1' >{'Welcome'}</Text>
+        <Text category='h2' style={{marginTop:20}}>{'to'}</Text>
+        <Text category='h2' style={{marginTop:20}}>{'the'}</Text>
+        <Text category='h1' style={{marginTop:20}}>{'Start'}</Text>
+        <Text category='h2' style={{marginTop:20}}>{'of'}</Text>
+        <Text category='h2' style={{marginTop:20}}>{'a'}</Text>
+        <Text category='h1' style={{marginTop:20}}>{'Smarter'}</Text>
+        <Text category='h1' style={{marginTop:20}}>{'You'}</Text>
+        </View>
+    
+    </View>
+  
 
     <GuideComponent 
     picture={require('../assets/images/girlthinkingbackground.png')} 
-    headerText={'Reshaping learning'}
-    bodyText={'Learn how to learn. Face learning in a new light. Structured in a way where progress is noticable!'}
+    headerText={'Reshape the way you learn'}
+    bodyText={'Discover learning as a meaningful'}
     />
  
 
@@ -30,32 +54,25 @@ function Onboard(){
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Learn and grow'}
-    bodyText={'And push yourself to grow and learn. Enjoy learning!'}
+    headerText={'Become comfortable with studying'}
+    bodyText={'Overcome procrastination. Slowly build consistent studying habits and become more comfortable with learning'}
     />
 
 
     <GuideComponent 
     picture={require('../assets/images/girltakingnotes.png')} 
     headerText={'Learn and grow'}
-    bodyText={'And push yourself to grow and learn. Enjoy learning!'}
+    bodyText={'As you continue in your learning journey, you will continue face more and more complex problems.'}
     />
 
 
-
-
-
-
-     
-
-
-
-      <View style={styles.slide1}>
-      <GuideComponent 
-      picture={require('../assets/images/walkingwithoutbackground.png')} 
-      headerText={'Learning is about making progress'}
-      bodyText={'Learning and growing is one of most fufilling things you can do. Learning is about doing, trying, and making progress.'}
-      />
+    <View style={styles.slide1}>
+      
+    <GuideComponent 
+    picture={require('../assets/images/walkingwithoutbackground.png')} 
+    headerText={'Work towards becoming the best you'}
+    bodyText={'Learning and growing is one of most fufilling things you can do. Learning is about doing, trying, and making progress.'}
+    />
     
     <Button style={{ marginBottom:100, marginHorizontal:32}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start my learning adventure</Button>
     </View>
@@ -69,17 +86,23 @@ function Onboard(){
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 192,
+    
+    paddingBottom:32,
+    paddingHorizontal:20,
+    paddingTop:80,
+    alignItems:'center',
+    flex:1,
+    justifyContent:'center',
+    paddingBottom:80
+    
   },
+
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  slide1: {
-   
-  
-    flex:1,
-  
 
+  slide1: {
+    flex:1,
   },
 
   nextButtonStyle:{

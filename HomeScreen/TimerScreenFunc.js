@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Alert } from 'react-native';
+import { StyleSheet, View, TouchableOpacity,  Animated,  Vibration, Image } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { Button, Icon , TopNavigation, TopNavigationAction, Modal, Card, Text, Layout, useTheme } from '@ui-kitten/components';
 import BackgroundTimer from 'react-native-background-timer';
@@ -145,7 +145,7 @@ const backgroundTimerEnded = () => {
 
   setIsPlaying(false)
   setHasEnded(true)
-  Vibration.vibrate()
+  //Vibration.vibrate()
 
   updateUserLastStudied(authContext.user.uid, differenceInLastStudied)
   BackgroundTimer.stopBackgroundTimer()
@@ -169,7 +169,7 @@ const confirmCompleted = () =>{
 return (
 
        
-  <Layout level='2' style={{ flex: 1,  }}>
+  <Layout level='2' style={{ flex: 1  }}>
    
   <View>
  {/*  <CustomBackHeader/> */}
@@ -206,10 +206,22 @@ return (
   }
 
   {hasEnded && 
-  <View style={{borderColor:'red', borderWidth:1}}>
-  <Text>Studying Done!</Text>
-  <View style={{flex:1, justifyContent:'flex-end', borderColor:'blue', borderWidth:1}}>
-  <Button onPress={confirmCompleted}/>
+  <View style={{borderColor:'red', borderWidth:0, flex:1, padding:16 }}>
+
+  <Image
+          style={{
+            width:300,
+            height:300,
+            resizeMode:'contain'
+          }}
+          source={require('../assets/images/studycomplete.png')}
+        />
+  <View style={{flex:1, justifyContent:'center'}}>
+  
+  <Text category='h6' style={{textAlign:'center'}}>You just got a little bit smarter!</Text>
+  </View>
+  <View style={{ flex:1,justifyContent:'flex-end', borderColor:'blue', borderWidth:0}}>
+  <Button  onPress={confirmCompleted}>On to recall</Button>
   </View>
   </View>
   }

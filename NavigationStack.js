@@ -38,6 +38,7 @@ import StudyFinished from './HomeScreen/StudyFinished'
 import SignUp from './LoginScreen/SignUp';
 import Login from './LoginScreen/Login';
 import Welcome from './LoginScreen/Welcome';
+import ForgotPassword from './LoginScreen/ForgotPassword';
 
 import IQScreen from './SettingsScreen/IQScreen';
 import SettingsOptions from './SettingsScreen/SettingsOptions';
@@ -191,6 +192,7 @@ function HomeStack() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
         </Stack.Navigator>
     );
@@ -242,7 +244,7 @@ function App() {
 
 const theme = useTheme();
 const authContext = useContext(AuthContext)
-
+  //authContext.newUser)
   if(authContext.newUser){
  
     return (
@@ -252,7 +254,7 @@ const authContext = useContext(AuthContext)
   
   }
 
-//authContext.user
+
   return authContext.user ?    
 
    

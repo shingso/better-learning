@@ -1,42 +1,53 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {  View, SafeAreaView, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native'
+import {  View, SafeAreaView, StyleSheet, TouchableOpacity, Image, ImageBackground, Dimensions }  from 'react-native'
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, useTheme } from '@ui-kitten/components';
 
 
 
 function GuidesHome(){
  
- 
+  const theme = useTheme()
 
   const navigation = useNavigation();
-   
+  const screenWidth = Dimensions.get('window').width
 
   
 
-    const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to Learn!', imagePath:require('../assets/images/teaching.png')},
-     {title:'What is Learning?', path:'WhatIsLearning', bodyText:'The basics of learning', imagePath:require('../assets/images/studying.png')},
-     {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendar.png')},
-     {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged.png')},
-     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning', imagePath:require('../assets/images/progress.png')},
-     {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/progress.png')}
+    const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
+     {title:'What Is Learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
+     {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendarmark.png')},
+     {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouragedbackground.png')},
+     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning better outside of studying', imagePath:require('../assets/images/makingprogressbackground.png')},
+     {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/inspirationgroup.png')}
     ]
 
     const renderItem = (info) => (
-    //'../assets/images/studying.png'
-    //
-      
-      <Card style={styles.item}
-       onPress={()=>navigation.navigate(info.item.path)}
-      >
-      <ImageBackground opacity={0.20} resizeMode='cover'  source={info.item.imagePath} style={styles.image}>
+    
+      <Card style={styles.item} onPress={()=>navigation.navigate(info.item.path)}>
+
+      <Image
+          style={{
+            height:120,
+            width:screenWidth,
+            marginBottom:28,
+            marginTop:-16,
+           
+          }}
+  
+          source={info.item.imagePath}
+        />
+      {/* <ImageBackground opacity={0.51} resizeMode='cover'  source={info.item.imagePath} style={styles.image}>
       <View style={{justifyContent:'space-between'}}>
       <Text category='s1' style={{marginBottom:8 }}>{info.item.title}</Text>
       <Text>{info.item.bodyText}</Text>
       </View>
       </ImageBackground>
+ */}
+      <Text category='s1' style={{marginBottom:8, textAlign:'center' }}>{info.item.title}</Text>
+      <Text  style={{marginBottom:16, textAlign:'center', letterSpacing:0.2, color:theme['color-basic-600']}}>{info.item.bodyText}</Text>
 
     
       </Card>
@@ -80,9 +91,11 @@ const styles = StyleSheet.create({
 
     image: {
       flex: 1,
-      margin:-24,
+      marginTop:-24,
+      marginHorizontal:-24,
       padding:18,
-      paddingVertical:24
+      paddingVertical:24,
+      height:80
     },
 
 
@@ -94,6 +107,9 @@ const styles = StyleSheet.create({
 
     item: {
       marginVertical:8,
-      paddingVertical:8,
+      alignItems:'center',
+      borderWidth:0.5
+      
+    
     },
   });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView, Image } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image, ImageBackground } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
@@ -8,11 +8,11 @@ import TopHeader from '../UtilComponents/TopHeader'
 
 
 const EditIcon = (props) => (
-  <Icon {...props} name='edit'/>
+  <Icon {...props} name='edit-outline'/>
 );
 
 const FolderIcon = (props) => (
-  <Icon {...props} name='folder'/>
+  <Icon {...props} name='folder-add-outline'/>
 );
 
 
@@ -25,14 +25,17 @@ function NotesHome({ navigation }){
     const theme = useTheme()
 
     const [ loading, setLoading ] = useState(true);
-    const [ todos, setTodos ] = useState([]);
     const [ subjects, setSubjects ] = useState([]);
+
 
 
     const renderItem = (info) => (
       
       <Card onPress={()=>{navigation.navigate('NotesFocused',{ title: info.item.title, subjectID: info.item.id})}} style={styles.item}>
-      <Text category="s1" style={{lineHeight:22, textAlign:'center'}} >{info.item.title}</Text>
+      <View style={{flexDirection:'row', alignItems:'center'}}>
+      <Icon fill={theme['color-basic-600']} width={16} height={16} name='folder-outline'/>
+      <Text category="s1"  style={{lineHeight:22, textAlign:'center', marginLeft:12}} >{info.item.title}</Text>
+      </View>
       </Card>
       
 
@@ -42,7 +45,6 @@ function NotesHome({ navigation }){
     const renderEmpty = () => (
 
       <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
-   
       <Text style={{textAlign:'center', marginTop:20}}>Add a new folder to better organize your notes</Text>
       <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top right to add a new note</Text>
       </View>
@@ -53,32 +55,45 @@ function NotesHome({ navigation }){
    
     const renderHeader = () => (
         
-      <View>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:8}}>
-      {/* <Card style={{flex:1, marginRight:8, alignItems:'center', paddingVertical:4, borderColor:theme['color-primary-500']}}>
-      <Text>Add Note</Text>
-      </Card> */}
-      <Button  onPress={()=>navigation.navigate('AddNotes')} accessoryLeft={EditIcon} appearance='outline' status='primary' style={{flex:1, marginRight:8}}>Add Note</Button>
-      <Button  onPress={()=>navigation.navigate('AddSubject')} accessoryLeft={FolderIcon} appearance='outline' status='success' style={{flex:1, marginLeft:8}}>New Folder</Button>
+    <View>
+    <View style={{paddingLeft:16}}>
+    <TopHeader title={'Notes Collection'}/>
+    </View>
+ 
+    <Card style={{marginTop:16, borderWidth:0.5, marginBottom:8 }}>
+  {/*   <Image
+          style={{
+            height:120,
+            width:410,
+            
+            marginBottom:28,
+            marginTop:-16,
+           
+          }}
+  
+          source={require('../assets/images/takingnoteshome.png')}
+        /> */}
+    
+    {/* <Text  style={{ fontSize:14, letterSpacing:0.2,marginHorizontal:32,textAlign:'center', lineHeight:24, color:theme['color-basic-600']}}>Review and organize your notes</Text> */}
 
-      {/* <Card style={{flex:1, marginLeft:8, alignItems:'center', paddingVertical:4, borderColor:theme['color-primary-500']}}>
-      <Text>Add Folder</Text>
-      </Card> */}
-   
-      {/* <Button accessoryLeft={EditIcon}  size='small'  onPress={()=>navigation.navigate('AddNotes')}/> */}
-      </View>
+    
+    <View style={{flexDirection:'row', marginVertical:-12, marginHorizontal:-24 }}>
+    <Button  onPress={()=>navigation.navigate('AddNotes')} accessoryLeft={EditIcon} appearance='ghost' status='primary' style={{flex:1}}>Add Note</Button>
+    <Button  onPress={()=>navigation.navigate('AddSubject')} accessoryLeft={FolderIcon} appearance='ghost' style={{flex:1}}>Add Folder</Button>
+    </View>
+  
+
+    </Card>
       
-      <Card onPress={()=>navigation.navigate('GlobalNotes')} style={styles.item}>
-      
+      <Card onPress={()=>navigation.navigate('GlobalNotes')} style={styles.item}>   
       <Text style={{textAlign:'center'}} category='s1'>All Notes</Text>
-      <Text style={{textAlign:'center'}} category='label'>A collection of your thoughts</Text>
+      <Text style={{textAlign:'center', color:theme['color-basic-600'], marginTop:8}} category='label'>A collection of your thoughts</Text>
       </Card>
 
       <Card onPress={()=>navigation.navigate('RecalledNotes')} style={styles.item}>
       <Text style={{textAlign:'center'}} category='s1'>Daily Recall Notes</Text>
-      <Text style={{textAlign:'center'}} category='label'>Notes from your daily recall sessions</Text>
+      <Text style={{textAlign:'center', color:theme['color-basic-600'], marginTop:8}} category='label'>Notes from your daily recall sessions</Text>
       </Card>
-
       </View>
 
     );
@@ -122,9 +137,7 @@ function NotesHome({ navigation }){
     return (
        
       <SafeAreaView style={{flex: 1}}>
-      <View style={{padding:16}}>
-      <TopHeader title={'Notes Collection'}/>
-      </View>
+      
       <List
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
@@ -169,8 +182,8 @@ const styles = StyleSheet.create({
   item: {
     paddingVertical:8,
     alignItems:'center',
-  
     marginVertical:8,
+    borderWidth:0.5
   
    
   },

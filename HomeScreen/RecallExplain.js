@@ -10,7 +10,7 @@ const TextComponent = (props) => {
 
     return(
         <View style={{ flex:1, justifyContent:'center', alignItems:'center', padding:16}}>
-        <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>{props.bodyText}</Text>
+        <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>{props.bodyText}</Text>
         </View>
     )
 }
@@ -64,17 +64,25 @@ function RecallExplain(){
     
     
     
-
+    <View style={{flex:1, marginVertical:20}}>
     <TextComponent
-
-    bodyText={'To wrap up our study session, we need to recall what we have learned'}
+    bodyText={'To further solidify what we have learned, we need to recall.'}
     />
 
-    <TextComponent
-  
-    bodyText={'In the next screen write down everything that you just learned'}
-    />
+   
 
+    <View style={{ flex:1, justifyContent:'center', alignItems:'center', padding:16}}>
+    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>In the next screen, <Text category='h4' style={{fontWeight:'bold'}}>write down what you have just learned</Text></Text>
+    </View>
+
+
+    
+
+
+    <TextComponent
+    bodyText={'Everything you write down should be from memory, do not refer to notes'}
+    />
+  </View>
    
 
     <Button style='small' style={{marginHorizontal:20, marginBottom:40}} onPress={navigateToRecall}>I'm ready</Button>
