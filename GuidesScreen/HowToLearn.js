@@ -19,19 +19,19 @@ function HowToLearn(){
     
 
     <GuideComponent 
-    picture={require('../assets/images/studyinggirl.png')} 
+    picture={require('../assets/images/girlstudying.png')} 
     headerText={'Short and sweet'}
-    bodyText={'The key to effective learning is short and actively engaged studying. Try to invoke thought inorder to solidify concepts2!'}
+    bodyText={'The key to effective learning is short and actively engaged studying. Try to invoke thought inorder to solidify concepts!'}
     />
 
     <GuideComponent 
-    picture={require('../assets/images/boybutterfly.png')} 
+    picture={require('../assets/images/spendingtime.png')} 
     headerText={'Decide on what you are going to do'}
     bodyText={'Before you start a study session, have an idea of what you want to do .'}
     />
 
     <GuideComponent 
-    picture={require('../assets/images/girltakingnotes.png')} 
+    picture={require('../assets/images/studytime.png')} 
     headerText={'Start a study session.'}
     bodyText={' The key to being productive is to make continuous progress, A study sessions is a 25 minute period were you are commited on focusing. Using a timer to keep track of. During this time, engage and actively thinking about what you are reading.'}
     />
@@ -44,7 +44,7 @@ function HowToLearn(){
     />
 
     <GuideComponent 
-    picture={require('../assets/images/relaxingbed.png')} 
+    picture={require('../assets/images/takeabreak.png')} 
     headerText={'Take a break'}
     bodyText={'After a study session, take a break. Spend some time unwinding or doing something of leisure'}
     />

@@ -45,6 +45,7 @@ function TimerScreenFunc(){
 const theme = useTheme()
 const userData = useContext(UserDataContext)
 const lastStudied = userData.lastStudied
+const startedStudying = userData.startedStudying
 const [visible, setVisible] = useState(false)
 const [confirmBackVisible, setConfirmBackVisible] = useState(false)
 const [isPlaying, setIsPlaying] = useState(null)
@@ -147,7 +148,7 @@ const backgroundTimerEnded = () => {
   setHasEnded(true)
   //Vibration.vibrate()
 
-  updateUserLastStudied(authContext.user.uid, differenceInLastStudied)
+  updateUserLastStudied(authContext.user.uid, differenceInLastStudied, startedStudying)
   BackgroundTimer.stopBackgroundTimer()
 
   setTimeout(() => {
@@ -206,7 +207,7 @@ return (
   }
 
   {hasEnded && 
-  <View style={{borderColor:'red', borderWidth:0, flex:1, padding:16 }}>
+  <View style={{ flex:1, padding:16, alignItems:'center' }}>
 
   <Image
           style={{
@@ -214,13 +215,13 @@ return (
             height:300,
             resizeMode:'contain'
           }}
-          source={require('../assets/images/studycomplete.png')}
+          source={require('../assets/images/studycompletev2.png')}
         />
-  <View style={{flex:1, justifyContent:'center'}}>
+  <View style={{flex:1, justifyContent:'center',}}>
   
-  <Text category='h6' style={{textAlign:'center'}}>You just got a little bit smarter!</Text>
+  <Text category='h5' style={{textAlign:'center'}}>Thats it for studying!</Text>
   </View>
-  <View style={{ flex:1,justifyContent:'flex-end', borderColor:'blue', borderWidth:0}}>
+  <View style={{ flex:1,justifyContent:'flex-end'}}>
   <Button  onPress={confirmCompleted}>On to recall</Button>
   </View>
   </View>

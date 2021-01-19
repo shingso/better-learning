@@ -20,7 +20,7 @@ function WhatIsLearning(){
     
 
     <GuideComponent 
-    picture={require('../assets/images/buildingidea.png')} 
+    picture={require('../assets/images/buildingpuzzle.png')} 
     headerText={'Building on past information'}
     bodyText={'Learning is about taking information you already know and building on top of it'}
     />
@@ -32,7 +32,7 @@ function WhatIsLearning(){
     />
 
     <GuideComponent 
-    picture={require('../assets/images/girltakingnotes.png')} 
+    picture={require('../assets/images/growingidea.png')} 
     headerText={'Learning is a constant process'}
     bodyText={'Learning is slowly figuring out concepts. This process occurs over weeks, not days. Inorder to build valuable'}
     />

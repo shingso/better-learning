@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground, Image } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native';
-import { Text, Button, Layout } from '@ui-kitten/components';
+import { Text, Button, Layout, useTheme } from '@ui-kitten/components';
 import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 
@@ -13,7 +13,7 @@ import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 function StudyFinished(){
    
     const navigation = useNavigation()
-    
+    const theme = useTheme()
 
 
     return (
@@ -24,12 +24,28 @@ function StudyFinished(){
       <StudyProgressIndicator currentStep={4}/>
   
 
-      <View style={{flex:1, alignItems:'center',padding:20, justifyContent:'space-around'}}>
-      <Text category='h5' style={{marginBottom:20, marginTop:60}}>Session Complete!</Text>
-      <Text category='s1' style={{marginBottom:40}}>time for a break</Text>
+    <View style={{flex:1, marginVertical:40, alignItems:'center', justifyContent:'center',paddingHorizontal:32}}>
+    <Image
+          style={{
+            width:420,
+            height:230,
+            alignSelf:'center',
+            resizeMode:'contain',
+            marginBottom:48
+          }}
+          source={require('../assets/images/studyfinishedv1.png')}
+        />
+    
+    
+    
 
-      <Button onPress={()=>{navigation.dispatch(StackActions.popToTop())}}>Completed</Button>
-      </View>
+    <View>
+    <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>Study Session Complete!</Text></Text>
+    <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:16,color:theme['color-basic-600'], textAlign:'center'}}>Its time for a break </Text>
+    </View>
+    </View>
+      <Button style={{marginBottom:60, marginHorizontal:32}} onPress={()=>{navigation.dispatch(StackActions.popToTop())}}>Complete</Button>
+      
       </SafeAreaView>
       </Layout>
 

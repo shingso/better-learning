@@ -44,11 +44,12 @@ function NotesHome({ navigation }){
 
     const renderEmpty = () => (
 
-      <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
-      <Text style={{textAlign:'center', marginTop:20}}>Add a new folder to better organize your notes</Text>
-      <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top right to add a new note</Text>
+      <Card onPress={()=>navigation.navigate('AddSubject')} style={{marginTop:8, borderWidth:1, paddingVertical:60, borderColor:theme['color-primary-600']}}>
+      <View>
+      <Text style={{textAlign:'center', color:theme['color-primary-600']}} category='s1'>Add a Folder</Text>
+      <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center', fontSize:14}}>You dont have any folders yet, add a folder to better organize your notes</Text>
       </View>
-      
+      </Card>
     )
 
 
@@ -84,17 +85,17 @@ function NotesHome({ navigation }){
   
 
     </Card>
-      
-      <Card onPress={()=>navigation.navigate('GlobalNotes')} style={styles.item}>   
-      <Text style={{textAlign:'center'}} category='s1'>All Notes</Text>
-      <Text style={{textAlign:'center', color:theme['color-basic-600'], marginTop:8}} category='label'>A collection of your thoughts</Text>
-      </Card>
+  
+    <Card onPress={()=>navigation.navigate('GlobalNotes')} style={styles.item}>   
+    <Text style={{textAlign:'center'}} category='s1'>All Notes</Text>
+    <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center', fontSize:14}} category='label'>A collection of your thoughts</Text>
+    </Card>
 
-      <Card onPress={()=>navigation.navigate('RecalledNotes')} style={styles.item}>
-      <Text style={{textAlign:'center'}} category='s1'>Daily Recall Notes</Text>
-      <Text style={{textAlign:'center', color:theme['color-basic-600'], marginTop:8}} category='label'>Notes from your daily recall sessions</Text>
-      </Card>
-      </View>
+    <Card onPress={()=>navigation.navigate('RecalledNotes')} style={styles.item}>
+    <Text style={{textAlign:'center'}} category='s1'>Daily Recall Notes</Text>
+    <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center', fontSize:14}} category='label'>Notes from your daily recall sessions</Text>
+    </Card>
+    </View>
 
     );
  
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
  
   
   item: {
-    paddingVertical:8,
+    paddingVertical:12,
     alignItems:'center',
     marginVertical:8,
     borderWidth:0.5

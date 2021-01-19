@@ -46,7 +46,7 @@ function GuidesHome(){
       </View>
       </ImageBackground>
  */}
-      <Text category='s1' style={{marginBottom:8, textAlign:'center' }}>{info.item.title}</Text>
+      <Text category='h6' style={{marginBottom:8, textAlign:'center' }}>{info.item.title}</Text>
       <Text  style={{marginBottom:16, textAlign:'center', letterSpacing:0.2, color:theme['color-basic-600']}}>{info.item.bodyText}</Text>
 
     

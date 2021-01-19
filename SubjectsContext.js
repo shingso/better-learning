@@ -11,7 +11,7 @@ export function SubjectsContextWrapper(props) {
   const userID = authContext.user.uid
   
   const [initializing, setInitializing] = useState(true)
-  const [subjects, setSubjects] = useState(null)
+  const [subjects, setSubjects] = useState([])
   const [lastUsedSubject, setLastUsedSubject] = useState(null)
 
   function subjectsSet(result) {
@@ -34,8 +34,10 @@ export function SubjectsContextWrapper(props) {
           });
         });
 
-        subjectsSet(list);
-        setLastUsedSubject(list[0])
+
+          subjectsSet(list);
+          setLastUsedSubject(list[0])
+     
 
       })
 

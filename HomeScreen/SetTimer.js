@@ -55,21 +55,21 @@ function SetTimer({ route }){
   
     <View style={{flex:1, justifyContent:'center'}}>
     
-    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>When you start the study session a <Text category='h4' style={{fontWeight:"bold"}}>25 minute timer</Text> will begin.</Text>
-    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12, marginTop:32}}>While the timer is running, stay <Text category='h4' style={{fontWeight:'bold'}}>focused and engaged</Text>.</Text>
+    <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>Start the study session and a <Text category='h5' style={{fontWeight:"bold"}}>25 minute timer</Text> will begin.</Text>
+    <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12, marginTop:32}}>While the timer is running, stay <Text category='h5' style={{fontWeight:'bold'}}>focused and engaged</Text> on studying.</Text>
 
     </View>
     
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
     
-    <View style={{flexDirection:'row',  marginBottom:12, alignItems:'center'}}>
+    <View style={{flexDirection:'row',  marginBottom:16, alignItems:'center'}}>
     <Text category='c1'>Active Studiers: </Text>
     <Text  category='c1' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
     </View>
 
     <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
 {/*     <Button status={'basic'} appearance='outline' style={{marginRight:16, flex:1}}>Back</Button> */}
-    <Button style={{flex:5}} onPress={customNav}>
+    <Button style={{flex:1, borderRadius:30}} size={'large'} onPress={customNav}>
       Start
     </Button>
     </View>

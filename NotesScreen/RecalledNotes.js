@@ -6,11 +6,9 @@ import { AuthContext } from '../AuthContext'
 import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { useNavigation } from '@react-navigation/native';
-import { deleteSubject } from '../helperFunctions';
 
-const TrashIcon = (props) => (
-  <Icon {...props} width={20} height={20} name='trash-2-outline' />
-);
+
+
 
 
 function RecalledNotes({ navigation }){

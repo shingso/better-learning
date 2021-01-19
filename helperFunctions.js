@@ -49,6 +49,7 @@ export async function addUser(userID) {
     await ref.set({
       timeStamp: firestore.FieldValue.serverTimestamp(),
       lastStudied: firestore.FieldValue.serverTimestamp(),
+      lastRecalled: null,
       startedStudying: null
     });
  
@@ -57,7 +58,7 @@ export async function addUser(userID) {
 
 
 
-export async function updateUserLastStudied(userID, dateSinceLastStudy) {
+export async function updateUserLastStudied(userID, dateSinceLastStudy, startedStudy) {
 
     const docID = uuid()
     const batch = firestore().batch();
@@ -65,7 +66,10 @@ export async function updateUserLastStudied(userID, dateSinceLastStudy) {
     const ref = firestore().collection('Users').doc(userID)
     const ref2 = firestore().collection('Users').doc(userID).collection('DatesStudied').doc(docID)
     //if the date since last study is greater than 14 than we need to update started studying
-    if(dateSinceLastStudy < 14){
+    //if there isnt a started studying date - then we need to update it
+
+    
+    if(dateSinceLastStudy < 14 && startedStudy != null){
       batch.update(ref, {
         lastStudied: firestore.FieldValue.serverTimestamp()
       })

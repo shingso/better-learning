@@ -90,6 +90,7 @@ function AppleSignIn() {
       style={{
         width:'100%',
         height: 45,
+        borderRadius:30
       }}
       onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
     />
@@ -129,7 +130,7 @@ function SignInComponent(){
     
         <View>
 
-        <Button accessoryLeft={GoogleIcon} appearance={'outline'}  onPress={() => onGoogleButtonPress()} style={{marginBottom:20}}> 
+        <Button accessoryLeft={GoogleIcon} appearance={'outline'}  onPress={() => onGoogleButtonPress()} style={{marginBottom:20, borderRadius:30}}> 
         Sign in with Google 
         </Button>
 

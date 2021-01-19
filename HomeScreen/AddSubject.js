@@ -11,6 +11,7 @@ import TopHeader from '../UtilComponents/TopHeader'
 //sign up
 
 
+
 const SubjectSchema = Yup.object().shape({
   subject: Yup.string()
     .min(1, 'Too Short!')
@@ -59,7 +60,7 @@ function AddSubject(){
       />
     
     <View style={{ justifyContent:'flex-end'}}>
-    <Button style={{marginTop:40}} onPress={()=>formikProps.handleSubmit()}>
+    <Button style={{marginTop:40, borderRadius:30}} onPress={()=>formikProps.handleSubmit()}>
       Add Folder
     </Button>
     </View>
@@ -76,7 +77,7 @@ function AddSubject(){
     </View>
     
     <View style={{flex:1, justifyContent:'flex-end'}}>
-    <Button size='small' style={{marginBottom:8}} onPress={()=>{navigation.navigate('Home')}}>
+    <Button size='small' style={{marginBottom:8}} onPress={()=>{navigation.goBack()}}>
     DISMISS
     </Button>
     </View>

@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { BottomNavigation, BottomNavigationTab, Icon, useTheme } from '@ui-kitten/components'
+import { BottomNavigation, BottomNavigationTab, Icon, useTheme, withStyles } from '@ui-kitten/components'
 
 import HomeScreen from './HomeScreen/HomeScreen'
 import AddNotes from './HomeScreen/AddNotes';
@@ -66,20 +66,20 @@ const Tab = createBottomTabNavigator();
 
 
 const HomeIcon = (props) => (
-  <Icon {...props} name='home'/>
+  <Icon {...props} name='home-outline'/>
 );
 
 const BookIcon = (props) => (
-  <Icon {...props} name='book'/>
+  <Icon {...props} name='book-outline'/>
 );
 
 
 const ChartIcon = (props) => (
-  <Icon {...props} name='calendar'/>
+  <Icon {...props} name='calendar-outline'/>
 );
 
 const UserIcon = (props) => (
-  <Icon {...props} name='person'/>
+  <Icon {...props} name='person-outline'/>
 );
 //export const AuthContext = createContext(null)
 
@@ -105,7 +105,7 @@ const UserInfoWithContext = () => {
   )
 }
 
-const HomeScreenWithContext = () => {
+const HomeScreenWithContex = () => {
   return(
 
 
@@ -117,6 +117,14 @@ const HomeScreenWithContext = () => {
 
   )
 }
+
+const HomeScreenWithContext = withStyles(HomeScreenWithContex , (theme) => ({
+  awesome: {
+    backgroundColor: theme['color-primary-500'],
+  },
+}));
+
+
 const TimerScreenWithContext = (props) => {
   return(
   <UserDataContextWrapper>

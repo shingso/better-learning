@@ -78,7 +78,7 @@ function SignUp(){
      return (
 
        
-    <View style={{ flex: 1, justifyContent:'center', padding:16}}>
+    <View style={{ flex: 1, justifyContent:'center', padding:20}}>
     <Text category='h1' style={{marginBottom:24}}>Sign Up</Text>
     <Formik
     initialValues={{ email:'', password:''}}
@@ -119,13 +119,13 @@ function SignUp(){
     />
 
 
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
+    <Button style={{marginVertical:16, borderRadius:30, marginBottom:40}} onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
 
     <SignInComponent/>
 
 
 
-    <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
+    <Text category='label' style={{alignSelf:'center', marginVertical:0, marginTop:30}}> 
     Already have an account?
     </Text>
     <Button appearance={'ghost'} onPress={() =>  navigation.navigate('Login')}>

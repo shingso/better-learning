@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground, Image } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
-import { AuthContext } from '../AuthContext'
+import { Card, List, Text, Button, Icon, Layout, useTheme , withStyles} from '@ui-kitten/components';
 import CalendarStrip from 'react-native-calendar-strip'
 import { ScrollView } from 'react-native-gesture-handler';
 import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays } from 'date-fns'
@@ -11,12 +10,20 @@ import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 
 
-function HomeScreen(){
+
+
+function HomeScreen(props){
 
   
 
+
     const theme = useTheme()
     const studyStatsData = useContext(StudyStatsContext)
+    const timesStuidedToday = studyStatsData.timesStudiedToday
+
+    useEffect(() => {
+     
+    }, [theme]);
 
     const markedDatesFunc = date => {
       // Dot
@@ -45,7 +52,7 @@ function HomeScreen(){
 
     const navigation = useNavigation();
     const userData = useContext(UserDataContext)
-    const userLastRecalled = userData.lastRecalled
+
     const currentDate = new Date()
     const startOfCurrentWeek = startOfWeek(currentDate)
     const endOfCurrentWeek =  endOfWeek(currentDate)
@@ -54,7 +61,10 @@ function HomeScreen(){
     
     const getRecallAvailable = () => {
 
-      const startOfLastRecalled = startOfDay(userLastRecalled.toDate())
+      if(userData.lastRecalled == null){
+        return true
+      }
+      const startOfLastRecalled = startOfDay(userData.lastRecalled.toDate())
       const currentDate = new Date()
       const differenceInLastRecall = differenceInDays(currentDate, startOfLastRecalled)
       if(differenceInLastRecall > 0){
@@ -131,73 +141,40 @@ function HomeScreen(){
 
     <Card style={{marginTop:16,borderWidth:0.6}}  onPress={()=>navigation.navigate('SetTimer')}>
     <View style={{  alignItems:'center', justifyContent:'center'}}>
-    {/* <Icon style={{marginBottom:16}} fill={theme['color-primary-400']} width={45} height={45} name='play-circle' /> borderColor:theme['color-primary-700'] */}
-     <Image
+    <Image
           style={{
             height:160,
             width: screenWidth,
             marginBottom:28,
             marginTop:-16,
-
-            
-          
           }}
-
-          
-
-          source={require('../assets/images/manstudying.png')}
-        />
+          source={require('../assets/images/startstudying.png')}
+      />
       
     <Text category='h6' style={{fontWeight:'bold',color:theme['color-primary-800'], fontSize:18, letterSpacing:0.5}}>Start Study Session</Text>
-    <Text  style={{marginTop:12, marginBottom:28,fontSize:14, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-600']}}>Stay focused and learn more effectively with a guided study session</Text>
-
+    
+    <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-basic-100'], padding:8, paddingHorizontal:12,borderRadius:4}}>
+    <Text style={{color:theme['color-primary-800'], fontSize:16, fontWeight:'bold'}}>{timesStuidedToday}</Text>  
+    </View> 
+    <Text style={{marginTop:12, marginBottom:28,fontSize:14, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-600']}}>Stay focused and learn more effectively with a guided study session</Text>
     </View>
     </Card> 
 
-   
-
-{/* 
-    <Card disabled={!getRecallAvailable()} style={{marginTop:16}} onPress={()=>{navigation.navigate('NotesRecallExplain')}}>
-    <ImageBackground opacity={0.00} resizeMode='cover'  source={require('../assets/images/8600.5.png')} style={styles.image}>
-    <View style={{ alignItems:'center', justifyContent:'center' }}>
-    <Text category='h6'>Daily Recall</Text>
-    <View style={{marginTop:8, flexDirection:'row', alignItems:'center'}}>
-    {getRecallAvailable() ?
-    <Icon name='alert-circle-outline' fill={theme['color-info-500']} height={14} width={14}/> :
-    <Icon name='checkmark-circle' fill={theme['color-primary-700']} height={15} width={15}/>
-    }
-    <Text status={'info'} style={{marginLeft:4,color: getRecallAvailable() ? theme['color-info-500'] : theme['color-primary-700'] }}>{getRecallAvailable() ? 'Available' : 'Completed for today'}</Text>
-    </View>
-    <Text style={{marginTop:16, textAlign:'center', lineHeight:20}}>Take a look at past note and write some thoughts about it</Text>
-    </View>
-    </ImageBackground>
-    </Card>
-    
-    //navigation.navigate('NotesHome') */}
-
-    
     <Card onPress={()=>{navigation.navigate('NotesHome')}} style={{marginTop:16, justifyContent:'center', alignItems:'center', borderWidth:0.5 }}>
     <Image
           style={{
-            height:120,
+            height:90,
             width:screenWidth,
-            
             marginBottom:28,
             marginTop:-16,
-            transform: [
-              { scaleX: -1 }
-            ]
           }}
-  
-          source={require('../assets/images/womenthinking.png')}
+          source={require('../assets/images/yournotesv1orange.png')}
         />
     <View style={{alignItems:'center'}}>
-    <Text category='h6' >Your Notes</Text>
+    <Text category='h6'>Your Notes</Text>
     <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600']}}>A collection of your thoughts</Text>
     </View>
-
     </Card>
-
     </SafeAreaView>
     </ScrollView>
 
@@ -238,3 +215,8 @@ const styles = StyleSheet.create({
 
 export default HomeScreen
 
+export const ThemedAwesomeView = withStyles(HomeScreen, (theme) => ({
+  awesome: {
+    backgroundColor: theme['color-primary-500'],
+  },
+}));

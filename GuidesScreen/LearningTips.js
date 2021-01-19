@@ -25,8 +25,8 @@ function LearningTips(){
     />
 
     <GuideComponent 
-    picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Getting good sleep'}
+    picture={require('../assets/images/wellrested.png')} 
+    headerText={'Get good sleep'}
     bodyText={'Our brains process information deeply when we sleep. Getting adequte sleep is nessecary when trying to learn'}
     />
 

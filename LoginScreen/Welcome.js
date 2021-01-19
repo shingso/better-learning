@@ -18,14 +18,14 @@ function Welcome(){
   return(
            
     <View style={{ flex: 1 }}>
-    <ImageBackground opacity={0.90}  source={require('../assets/images/progress.png')} style={{flex:1, padding:16}}>
+  
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
 
     <Text style={{marginTop:20, marginLeft:8}} category='h1'>Discover </Text>
 
     <Text style={{marginTop:8, marginLeft:8, fontSize:46}} category='h1'>Learning</Text>
     </View>
-    </ImageBackground>
+
     <View style={{flex: 1, justifyContent:'center', marginBottom:36, padding:16}}>
 
  
@@ -34,7 +34,7 @@ function Welcome(){
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Don't have an account?
     </Text>
-    <Button style={{marginBottom:40}} size='large' onPress={() => navigation.navigate('SignUp')}>
+    <Button style={{marginBottom:40, borderRadius:30}} size='large' onPress={() => navigation.navigate('SignUp')}>
     Sign Up
     </Button>
 

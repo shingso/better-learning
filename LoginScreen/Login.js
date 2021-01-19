@@ -66,7 +66,7 @@ function Login(){
       <View style={{ flex: 1, justifyContent:'center', padding:16, paddingBottom:40}}>
       
       <View>
-      <Text category='s1' style={{marginBottom:4, textAlign:'center'}}>Enter your email and well sen</Text>
+      <Text category='s1' style={{marginBottom:4, textAlign:'center'}}></Text>
       </View>
 
       <Formik
@@ -106,7 +106,7 @@ function Login(){
     onChangeText={formikProps.handleChange('password')}
     />
 
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
+    <Button style={{marginVertical:16, borderRadius:30}} onPress={()=>formikProps.handleSubmit()}>
     Login
     </Button>
     <Button appearance='ghost' onPress={()=>{navigation.navigate('ForgotPassword')}}>Forgot your password?</Button>

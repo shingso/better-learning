@@ -35,16 +35,24 @@ function GlobalNotes({ navigation }){
 
     const renderEmpty = () => (
 
-      <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
+    <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
    
-      <Image
-        style={{width: 650, height: 250, resizeMode:'contain'}}
-        source={require('../assets/images/notesv1.png')}
-      />
-
-      <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
-      <Text style={{textAlign:'center', marginTop:20, marginBottom:40}}>You can press the <Icon fill={'black'} width={25} height={25} name='edit'/> on the top left to add a note when you make connections about new ideas</Text>
-      </View>
+    <Image
+          style={{
+            height:120,
+            width:400,
+            marginBottom:28,
+            marginTop:-16,
+ 
+          }}
+  
+          source={require('../assets/images/yournotesv1orange.png')}
+        />
+    <View style={{alignItems:'center'}}>
+    <Text category='h6'>Your Notes</Text>
+    <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2}}>A collection of your thoughts</Text>
+    </View>
+    </View>
       
     )
 
@@ -65,8 +73,8 @@ function GlobalNotes({ navigation }){
     
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes')
-        return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
+        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('recallNote', '==', false)
+        return ref.orderBy("timeStamp", 'desc').onSnapshot(querySnapshot => {
           if(!querySnapshot.metadata.hasPendingWrites){
           const list = [];
           querySnapshot.forEach(doc => {

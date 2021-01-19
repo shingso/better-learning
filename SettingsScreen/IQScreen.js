@@ -34,6 +34,8 @@ const findVariance = (arr) => {
   return varianceTotal/lengthOfArray
 
 }
+
+
  
 
 function IQScreen(){
@@ -47,8 +49,6 @@ function IQScreen(){
   const timesStudiedTwoWeek = studyStatsData.timesStudiedTwoWeek
   const timesStudiedTwoWeeksUnique = studyStatsData.timesStudiedTwoWeeksUnique
   
-
-
   const uniqueDates = studyStatsData.uniqueDates
 
   const datesStudiedPastSeven = studyStatsData.datesStudiedPastSeven
@@ -57,7 +57,9 @@ function IQScreen(){
   const dateStats = studyStatsData.dates
   const userStartDate = userData.timeStamp
   const userStartStudyingDate = userData.startedStudying
+
   const allDateStats = studyStatsData.allDates
+  
   const lastStudied = userData.lastStudied
   
   const lastWeekStudiedCount = studyStatsData.lastWeekStudiedCount
@@ -65,13 +67,50 @@ function IQScreen(){
   const currentWeekStudiedCount = studyStatsData.timesStudiedWeek
   const currentWeekStudiedSet = studyStatsData.currentWeekStudiedSet
 
-  const daysSinceLastStudy = differenceInDays(new Date(), lastStudied.toDate())
-  const daysSinceStartStudying = differenceInDays(new Date(), userStartStudyingDate.toDate())
+  
+  //need to refactor this 
+  //const daysSinceLastStudy = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
 
-  //global consts
+
+
+  const calculateDaysSinceStartedStudy = () =>{
+
+    if(userStartStudyingDate != null){
+      return differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
+    } else {
+      return 0
+    }
+
+  }
+
+  const calculateCurrentPosition = () =>{
+
+    if(userStartStudyingDate != null){
+      let difference = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
+      if(difference > 7){
+        return 0
+      } else {
+        return difference
+      }
+    } else {
+      return 0
+    }
+
+  }
+
+  const calculateDaysSinceLastStudy = () =>{
+
+    if(lastStudied != null){
+      return differenceInDays(new Date(), startOfDay(lastStudied.toDate()))
+    } else {
+      return 99
+    }
+
+  }
 
   const todaysDate = new Date()
   const startOfToday = startOfDay(todaysDate)
+  const endOfToday = endOfDay(todaysDate)
   const currentDayOfWeek = getDay(todaysDate)
   
 
@@ -86,79 +125,56 @@ function IQScreen(){
 
   const calculateStudyFrequency = () => {
     
-    const _Date = new Date()
-    const currentDate = startOfDay(new Date())
-    const weeklyFrequencyDict = { 0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0 }
-
+    const weeklyFrequencyDict = { 0:0,1:0,2:0,3:0,4:0 }
 
     const weeklyFrequencyArr = []
+    const startOfCurrentWeek = startOfWeek(startOfToday)
+    const endOfCurrentWeek = endOfWeek(startOfToday)
 
-    const startOfCurrentWeek = startOfWeek(currentDate)
-    const endOfCurrentWeek = endOfWeek(currentDate)
-
-    const sevenDaysAgo = subDays(currentDate, 7)
-    const eightDaysAgo = subDays(currentDate, 8)
+    const sevenDaysAgo = subDays(startOfToday, 7)
+    const eightDaysAgo = subDays(startOfToday, 8)
     const endOfDayEight = endOfDay(eightDaysAgo)
     //console.log('log', sevenDaysAgo, eightDaysAgo, endOfDayEight)
-    const fourteenDaysAgo = subDays(currentDate, 14)
+    const fourteenDaysAgo = subDays(startOfToday, 14)
 
 
 
 
-    const oneWeekAgo = subWeeks(currentDate, 1)
+    const oneWeekAgo = subWeeks(startOfToday, 1)
     const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
     const endOfWeekOneWeek = endOfWeek(oneWeekAgo)
 
-    const twoWeeksAgo = subWeeks(currentDate, 2)
+    const twoWeeksAgo = subWeeks(startOfToday, 2)
     const startOfWeekTwoWeek = startOfWeek(twoWeeksAgo)
     const endOfWeekTwoWeek = endOfWeek(twoWeeksAgo)
 
-    const threeWeeksAgo = subWeeks(currentDate, 3)
+    const threeWeeksAgo = subWeeks(startOfToday, 3)
     const startOfWeekThreeWeek = startOfWeek(threeWeeksAgo)
     const endOfWeekThreeWeek = endOfWeek(threeWeeksAgo)
 
-    const fourWeeksAgo = subWeeks(currentDate, 4)
+    const fourWeeksAgo = subWeeks(startOfToday, 4)
     const startOfWeekFourWeek = startOfWeek(fourWeeksAgo)
     const endOfWeekFourWeek = endOfWeek(fourWeeksAgo)
-
-    const fiveWeeksAgo = subWeeks(currentDate, 5)
-    const startOfWeekFiveWeek = startOfWeek(fiveWeeksAgo)
-    const endOfWeekFiveWeek = endOfWeek(fiveWeeksAgo)
-
-    const sixWeeksAgo = subWeeks(currentDate, 6)
-    const startOfWeekSixWeek = startOfWeek(sixWeeksAgo)
-    const endOfWeekSixWeek = endOfWeek(sixWeeksAgo)
-
-    const sevenWeeksAgo = subWeeks(currentDate, 7)
-    const startOfWeekSevenWeek = startOfWeek(sevenWeeksAgo)
-    const endOfWeekSevenWeek = endOfWeek(sevenWeeksAgo)
-
-    const eightWeeksAgo = subWeeks(currentDate, 8)
-    const startOfWeekEightWeek = startOfWeek(eightWeeksAgo)
-    const endOfWeekEightWeek = endOfWeek(eightWeeksAgo)
-    
-    
+ 
     let count = 0
     let monthlyAverage = 0
     let lastSevenDaysCount = 0
     let lastFourteenDaysCount = 0
+
 
     allDateStats.forEach(element => {
 
       let newDate = new Date(element.date)
 
 
-      if(isWithinInterval(newDate, {start:sevenDaysAgo, end: _Date})){
+
+      if(isWithinInterval(newDate, {start:sevenDaysAgo, end: endOfToday})){
         lastSevenDaysCount += 1
       } 
-      
+       
       if(isWithinInterval(newDate, {start:fourteenDaysAgo, end: eightDaysAgo})){
         lastFourteenDaysCount += 1
       } 
-
-      
-     
-  
 
       if(isWithinInterval(newDate, {start:startOfCurrentWeek, end:endOfCurrentWeek})){
         weeklyFrequencyDict[0] += 1
@@ -167,6 +183,7 @@ function IQScreen(){
       } else if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end:endOfWeekOneWeek})){
         weeklyFrequencyDict[1] += 1
         count += 1
+
       } else if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
         weeklyFrequencyDict[2] += 1
         count += 1
@@ -179,63 +196,34 @@ function IQScreen(){
         weeklyFrequencyDict[4] += 1
         count += 1
        
-      } else if(isWithinInterval(newDate, {start:startOfWeekFiveWeek, end:endOfWeekFiveWeek})){
-        weeklyFrequencyDict[5] += 1
-        count += 1
-        
-      } else if(isWithinInterval(newDate, {start:startOfWeekSixWeek, end:endOfWeekSixWeek})){
-        weeklyFrequencyDict[6] += 1
-        count += 1
-      
-      } else if(isWithinInterval(newDate, {start:startOfWeekSevenWeek, end:endOfWeekSevenWeek})){
-        weeklyFrequencyDict[7] += 1
-        count += 1
-      
-      } else if(isWithinInterval(newDate, {start:startOfWeekEightWeek, end:endOfWeekEightWeek})){
-        weeklyFrequencyDict[8] += 1
-        count += 1
-      
-      }
+      } 
 
 
     });
 
 
     for (const [key, value] of Object.entries(weeklyFrequencyDict)) {
-        weeklyFrequencyArr.push(value)
+
+        if(value != 0 && key != 0){
+          weeklyFrequencyArr.push(value)
+        }
+
     }
 
-    //console.log(findVariance(weeklyFrequencyArr))
-    // if last seven day count is greater or equal to 
-    // so this is the number that dictates the percentage chan ge
+    let totalStudiedPastMonth = 0
+    for (let x of weeklyFrequencyArr) {
+      totalStudiedPastMonth += x
+    }
 
-    // 1 would mean no change
-    // .8 would mean that it went down 20%
-    // 2 would mean an increase of 100%
-    // any improvment should be a boost, but there is no 
-    // this score will never impact your score if it is negative
+    
 
-    // What would be another important number
 
-    // what is the mean of the last seven days over the mean of the last monmth
+
+    console.log( Math.floor(totalStudiedPastMonth/weeklyFrequencyArr.length))
     let percentageChangeLastSeven = lastSevenDaysCount/lastFourteenDaysCount
     let sevenDayAverage = lastSevenDaysCount/7
 
-    // we can also look at percentage change two weeks
 
-    // should we compare it to the last 21 days?
-      
-  //consistency
-
-  // only using uniques
-  // so this would cap out at 7
-  // we should take an average of this so its easier
-
-
-
-  
-  
-  //console.log(weeklyFrequencyDict)
 
   return count/8
   
@@ -243,15 +231,10 @@ function IQScreen(){
   }
       
   
-  
   // the glitch is that the color is messed up 
 
-  // times studied in current week/month
-  // monthly average per week
-  // weekly consistency vs past two weeks - last 7 days vs last 14 days
-  // last 7 days vs last 21 days
-
   const newFunction = () => {
+
     let _userStartDate = new Date(userStartDate.toDate())
     let _userStartDateBegin = startOfDay(_userStartDate)
     let userStartedStudying = new Date(userStartStudyingDate.toDate())
@@ -262,12 +245,8 @@ function IQScreen(){
     let sevenDaysAfterStart = addDays(_userStartDate, 6)
     let userStartWeek = eachDayOfInterval({start:_userStartDate, end:sevenDaysAfterStart})
 
-
-    //get starting week date
-    //get all of the current week - up to its current points and then we can subtract
     //to get the current week get look the at interval at the start of the current week to the end of today
 
-    //
 
    let startOfStartedStudyingWeek = startOfWeek(userStartedStudying)
 
@@ -286,7 +265,7 @@ function IQScreen(){
     }); */
 
 
-/*     const startDate = startOfDay(userStartStudyingDate.toDate())
+/*  const startDate = startOfDay(userStartStudyingDate.toDate())
     const endDate = addDays(startDate, 6)
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
     const stringConvertedDates = []
@@ -305,6 +284,8 @@ function IQScreen(){
     let averageCurrentWeekStudiedUnique = currentWeekStudiedSet.size/(currentDayOfWeek + 1)
     // 
     console.log(averageLastWeekStudied, averageLastWeekStudiedUnique, averageCurrentWeekStudied, averageCurrentWeekStudiedUnique)
+
+    
     //is it fair to use 
     //get the last seven days of study or all the days of study at this point
     //console.log(userStartWeek)
@@ -332,32 +313,27 @@ function IQScreen(){
 
 
   const returnLabels = (number) => {
+
     const addedDates = 0 + number
-    const startDate = startOfDay(userStartStudyingDate.toDate())
+    let startDate = todaysDate
+
+    if(userStartStudyingDate != null){
+      if(differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate())) < 8){
+        startDate = startOfDay(userStartStudyingDate.toDate())
+      }
+    }
+
     const startDateAdded = addDays(startDate, addedDates)
     const endDate = addDays(startDate, 6 + addedDates)
     const daysInWeek = eachDayOfInterval({start:startDateAdded, end:endDate})
     const stringConvertedDates = []
-
     daysInWeek.forEach(item => stringConvertedDates.push(format(item,'M-dd')))
     return stringConvertedDates
   }
 
 
 
-  const renderSettingBenchmark = () => (
-
-    
-
-    //need to get the next 7 days 
-    //need to get last 7 days of study form today
-    //need to match them up 
-    <View style={{marginTop:20}}>
-    <Button onPress={()=>newFunction()}/>
-    </View>
-  )
-
-  
+ 
 
 
   const customStyles = {
@@ -389,7 +365,12 @@ function IQScreen(){
 
   const getStepIndicatorIconConfig = ({ position, stepStatus }) => {
 
-    const startDate = startOfDay(userStartStudyingDate.toDate())
+    let startDate = todaysDate
+
+    if(userStartStudyingDate != null){
+      startDate = startOfDay(userStartStudyingDate.toDate())
+    }
+
     const endDate = addDays(startDate, 6)
  
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
@@ -502,17 +483,19 @@ function IQScreen(){
   const renderStepIndicator = (params) => (
     <Icon {...getStepIndicatorIconConfig(params)}/>
   );
-//(daysSinceLastStudy > 15 || daysSinceStartStudying < 7)
+//(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) - check these condtiona what id its exact 14 days? - if days since last studied
+//(calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7) - Condition for showing strength score
   return (
 
-    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight:800}}>
-    <SafeAreaView style={{flex: 1}}>
 
-    <Layout level='2' style={{flex:1, padding:16}}>
+  <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight:800}}>
+  <SafeAreaView style={{flex: 1}}>
 
-    {true &&
+  <Layout level='2' style={{flex:1, padding:16}}>
 
-  <Card  style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
+  {(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) &&
+
+  <Card onPress={calculateDaysSinceLastStudy} style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
   <Image
     style={{
       height:120,
@@ -545,27 +528,21 @@ function IQScreen(){
     <View style={{marginHorizontal:32, marginBottom:32}}>
     <StepIndicator
          customStyles={customStyles}
-         currentPosition={4}
+         currentPosition={calculateCurrentPosition()}
          stepCount={7}
          renderStepIndicator={renderStepIndicator}
          labels={returnLabels(0)}
         
     />
     </View>
-   
-    
-    
-    
-  
-
     </Card>
 
     }
 
   
-
-    {daysSinceLastStudy < 14 &&
-    <Card onPress={()=>{newFunction()}} style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
+    
+    {(calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7) &&
+    <Card onPress={()=>calculateStudyFrequency()} style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
      <Image
           style={{
             height:120,
@@ -584,12 +561,20 @@ function IQScreen(){
    <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:12 }}>Study score is a measure on how well you are studying. It takes your consistency and improvement into consideration</Text>
    </View> 
 
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12, marginHorizontal:32}}>
-    <Text>Week Over Week Consistency</Text>
-    <Text category='s1' style={{color:theme['color-primary-500']}}>Good</Text> 
-    </View> 
 
-    </Card>
+   <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-around', marginBottom:40}}>
+   <View style={{alignItems:'center'}}>
+   <Text category='h4'>{datesStudiedPastSeven.size}</Text>
+   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Recommended Days Studied</Text>
+   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Per Week</Text>
+   </View>
+   <View style={{alignItems:'center'}}>
+   <Text category='h4'>{sevenDaysCount}</Text> 
+   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Recommended Sessions</Text>
+   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Per Day</Text>
+   </View>
+   </View>
+   </Card>
     }
 
 
@@ -631,7 +616,13 @@ function IQScreen(){
     textSectionTitleColor: theme['color-basic-900'],
     todayTextColor: theme['color-primary-800'],
     textMonthFontWeight: 'bold',
+    
     textDayFontSize: 13,
+  
+    calendarBackground: theme["background-basic-color-1"],
+    calendarHeaderStyle:{
+      color:'green'
+    },
     textMonthFontSize: 18,
     textDayHeaderFontSize: 13,
     textDayHeaderFontFamily:'OpenSans-Bold',
@@ -643,28 +634,9 @@ function IQScreen(){
     />
     </Card>
 
-
-
-
-    {/* <Card style={{marginBottom:12, paddingVertical:40,}}>
-    <ImageBackground opacity={0.00} resizeMode='cover'  source={require('../assets/images/walkingwithoutbackground.png')} style={styles.image}>
-    <View style={{ justifyContent:'space-between', alignItems:'center', marginBottom:16}}>
-    <Text style={{marginBottom:16}} category={'h6'}>Recommended Study</Text>
-    <View style={{alignItems:'center'}}>
-    <Text category='h1'>{5}</Text>
-    <Text category='label'>times per week</Text>
-    </View>
-    </View>
-    <Text style={{lineHeight:20, textAlign:'center', marginTop:12}}>Space out your study sessions over a period of the week.</Text>
-    </ImageBackground>
-    </Card> */}
-
-    
-
    
     </Layout>
     </SafeAreaView>
-
     </ScrollView>
       
       );
