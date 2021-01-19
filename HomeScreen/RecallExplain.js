@@ -10,7 +10,7 @@ const TextComponent = (props) => {
 
     return(
         <View style={{ flex:1, justifyContent:'center', alignItems:'center', padding:16}}>
-        <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>{props.bodyText}</Text>
+        <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>{props.bodyText}</Text>
         </View>
     )
 }
@@ -60,32 +60,29 @@ function RecallExplain(){
     <Layout style={{flex:1}}>
    
     <StudyProgressIndicator currentStep={2}/>
-   
+    <View style={{flex:1, marginVertical:40, alignItems:'center', justifyContent:'center',paddingHorizontal:32}}>
+    <Image
+          style={{
+            width:420,
+            height:180,
+            alignSelf:'center',
+            resizeMode:'contain',
+            marginBottom:48
+          }}
+          source={require('../assets/images/recallexplain.png')}
+        />
     
     
     
-    <View style={{flex:1, marginVertical:20}}>
-    <TextComponent
-    bodyText={'To further solidify what we have learned, we need to recall.'}
-    />
 
-   
-
-    <View style={{ flex:1, justifyContent:'center', alignItems:'center', padding:16}}>
-    <Text category='h4' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>In the next screen, <Text category='h4' style={{fontWeight:'bold'}}>write down what you have just learned</Text></Text>
+    <View>
+    <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>Write down what you have just learned</Text></Text>
+    <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:16,color:theme['color-basic-600'], textAlign:'center'}}>In the next screen, type out what you can recall about what you just learned</Text>
     </View>
-
-
-    
-
-
-    <TextComponent
-    bodyText={'Everything you write down should be from memory, do not refer to notes'}
-    />
-  </View>
+    </View>
    
 
-    <Button style='small' style={{marginHorizontal:20, marginBottom:40}} onPress={navigateToRecall}>I'm ready</Button>
+    <Button style='small' style={{marginHorizontal:20, marginBottom:40, borderRadius:40}} onPress={navigateToRecall}>I'm ready to write</Button>
 
     
 
@@ -137,6 +134,10 @@ const styles = StyleSheet.create({
     padding:14, 
     borderRadius:6, 
     paddingHorizontal:22
+  },
+
+  backdrop:{
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   }
 
 });
