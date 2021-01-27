@@ -22,7 +22,7 @@ function HowOften(){
     <GuideComponent 
     picture={require('../assets/images/girlthinkingbackground.png')} 
     headerText={'Do what is sustainable'}
-    bodyText={'Build consistent studying habits. Meaning aim to study everyday. This means doing what you think you can do over a period of a week.'}
+    bodyText={'Build consistent studying habits. Aim to study everyday. This means doing what you think you can do over a period of a week.'}
     />
 
     <GuideComponent 

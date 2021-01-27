@@ -26,9 +26,9 @@ function TopHeader(props){
 
     return (
        
-      <View style={{alignSelf:'flex-start',marginLeft: -20, flexDirection:'row', alignItems:'center'}}>
+      <View style={{alignSelf:'flex-start',marginLeft: -20, flexDirection:'row', alignItems:'center', flexShrink:1}}>
       <Button size='small'  status='basic' appearance='ghost' accessoryLeft={BackIcon} onPress={props.func == 'top' ? popToTop : navigateBack}></Button>
-      {props.title != null && <Text style={{fontWeight:'bold', fontSize:16, marginLeft:2}}>{props.title}</Text>}
+      {props.title != null && <Text numberOfLines={1} style={{fontWeight:'bold', fontSize:16, marginLeft:2, flexShrink:1}}>{props.title}</Text>}
       </View>
       
       );

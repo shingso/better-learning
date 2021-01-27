@@ -43,7 +43,7 @@ function AddSubject(){
     {formikProps => (
    
    <React.Fragment >
-   <TopHeader title={'Add a new subject folder'}/>
+   <TopHeader title={'Add a New Folder'}/>
 
    <Text style={{marginBottom:8,marginTop:20}}>Use folders to furthur organize your notes.</Text>
    <Text style={{marginBottom:40}}>You can select a folder to store your note into when you are adding a note</Text>

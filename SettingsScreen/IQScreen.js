@@ -3,17 +3,16 @@ import { View, StyleSheet, SafeAreaView, Dimensions, ImageBackground, Image } fr
 import { useNavigation } from '@react-navigation/native';
 import { endOfDay, subDays , startOfDay, differenceInCalendarWeeks, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays, getDay} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
-import { Layout, Card, List, Text, Button, Icon, useTheme } from '@ui-kitten/components';
+import { Layout, Card, List, Text, Button, Icon, useTheme, Divider } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
+import { sessionsToHours } from '../helperFunctions';
 
+import PushNotification from 'react-native-push-notification';
 
-const InfoIcon = (props) => (
-  <Icon {...props} name='info'/>
-);
 
 const findVariance = (arr) => {
 
@@ -36,12 +35,10 @@ const findVariance = (arr) => {
 }
 
 
- 
 
 function IQScreen(){
 
-
-
+  
   const theme = useTheme()
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
@@ -71,7 +68,63 @@ function IQScreen(){
   //need to refactor this 
   //const daysSinceLastStudy = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
 
+  const TimeComponent = (props) => {
+    //borderBottomWidth:0.2, borderColor:theme['color-basic-300']
+    return(
+    
+  /*   <View style={{  alignItems:'center', paddingVertical:20, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
+    <Text style={{fontSize:14,  marginBottom:4, fontWeight:'bold'}}>{props.title}</Text>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:20}}>
+    <Text style={{fontSize:10, color:theme['color-basic-600'], marginRight:4}}>{props.weekLabel}</Text>
+    <Icon name='calendar-outline' fill={theme['color-basic-600']} height={11} width={11}/>
+    </View>
+    <View style={{justifyContent:"space-between", flexDirection:'row', width:'100%'}}>
+    
+    <View style={{flexDirection:'row', alignItems:'center', marginRight:20}}>
+    <Text style={{marginRight:4,  fontSize:14, fontWeight:'bold'}}>{props.sessionCount} <Text style={{fontSize:11, color:theme['color-basic-600']}}>sessions</Text></Text>
+    <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
+    </View>
 
+
+    
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Text style={{marginRight:8}}>{sessionsToHours(props.sessionCount)}</Text>
+    <Icon name='clock' fill={theme['color-info-300']} height={14} width={14}/>
+    </View>
+    </View>
+
+    </View> */
+
+    <View style={{  flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingTop:24, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
+    
+    <View>
+    <Text style={{fontSize:14,  marginBottom:8, fontWeight:'bold'}}>{props.title}</Text>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:20}}>
+    <Text style={{fontSize:10, color:theme['color-basic-600'], marginRight:4}}>{props.weekLabel}</Text>
+    <Icon name='calendar-outline' fill={theme['color-basic-600']} height={11} width={11}/>
+    </View>
+    </View>
+
+    <View style={{alignItems:'flex-end'}}>
+    
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:8}}>
+    <Text style={{marginRight:8,  fontSize:14, fontWeight:'bold'}}>{props.sessionCount} <Text style={{fontSize:11, color:theme['color-basic-600']}}>sessions</Text></Text>
+    <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
+    </View>
+
+
+    
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Text style={{marginRight:8}}>{sessionsToHours(props.sessionCount)}</Text>
+    <Icon name='clock' fill={theme['color-info-300']} height={14} width={14}/>
+    </View>
+    </View>
+
+    </View>
+
+    )
+ }
+   
 
   const calculateDaysSinceStartedStudy = () =>{
 
@@ -113,183 +166,70 @@ function IQScreen(){
   const endOfToday = endOfDay(todaysDate)
   const currentDayOfWeek = getDay(todaysDate)
   
-
+  const startOfCurrentWeek = startOfWeek(startOfToday)
+  const endOfCurrentWeek = endOfWeek(startOfToday)
   // if its greater than 14 days
 
-  const convertDateToString = (date) => {
-    return format(date,'yyyy-MM-dd')
-  }
+  const oneWeekAgo = subWeeks(startOfToday, 1)
+  const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
+  const endOfWeekOneWeek = endOfWeek(oneWeekAgo)
 
+  const twoWeekAgo = subWeeks(startOfToday, 2)
+  const startOfWeekTwoWeek = startOfWeek(twoWeekAgo)
+  const endOfWeekTwoWeek = endOfWeek(twoWeekAgo)
 
+  const [currentWeekCount, setCurrentWeekCount] = useState(0)
+  const [oneWeekAgoCount, setOneWeekAgoCount] = useState(0)
+  const [twoWeekAgoCount, setTwoWeekAgoCount] = useState(0)
 
+  useEffect(()=>{
 
-  const calculateStudyFrequency = () => {
-    
-    const weeklyFrequencyDict = { 0:0,1:0,2:0,3:0,4:0 }
-
-    const weeklyFrequencyArr = []
-    const startOfCurrentWeek = startOfWeek(startOfToday)
-    const endOfCurrentWeek = endOfWeek(startOfToday)
-
-    const sevenDaysAgo = subDays(startOfToday, 7)
-    const eightDaysAgo = subDays(startOfToday, 8)
-    const endOfDayEight = endOfDay(eightDaysAgo)
-    //console.log('log', sevenDaysAgo, eightDaysAgo, endOfDayEight)
-    const fourteenDaysAgo = subDays(startOfToday, 14)
-
-
-
-
-    const oneWeekAgo = subWeeks(startOfToday, 1)
-    const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
-    const endOfWeekOneWeek = endOfWeek(oneWeekAgo)
-
-    const twoWeeksAgo = subWeeks(startOfToday, 2)
-    const startOfWeekTwoWeek = startOfWeek(twoWeeksAgo)
-    const endOfWeekTwoWeek = endOfWeek(twoWeeksAgo)
-
-    const threeWeeksAgo = subWeeks(startOfToday, 3)
-    const startOfWeekThreeWeek = startOfWeek(threeWeeksAgo)
-    const endOfWeekThreeWeek = endOfWeek(threeWeeksAgo)
-
-    const fourWeeksAgo = subWeeks(startOfToday, 4)
-    const startOfWeekFourWeek = startOfWeek(fourWeeksAgo)
-    const endOfWeekFourWeek = endOfWeek(fourWeeksAgo)
- 
-    let count = 0
-    let monthlyAverage = 0
-    let lastSevenDaysCount = 0
-    let lastFourteenDaysCount = 0
-
+    let currentWeekCount = 0
+    let oneWeekAgoCount = 0
+    let twoWeekAgoCount = 0
 
     allDateStats.forEach(element => {
 
       let newDate = new Date(element.date)
 
-
-
-      if(isWithinInterval(newDate, {start:sevenDaysAgo, end: endOfToday})){
-        lastSevenDaysCount += 1
+      if(isWithinInterval(newDate, {start:startOfCurrentWeek, end: endOfCurrentWeek})){
+        currentWeekCount += 1
       } 
        
-      if(isWithinInterval(newDate, {start:fourteenDaysAgo, end: eightDaysAgo})){
-        lastFourteenDaysCount += 1
+      if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end: endOfWeekOneWeek})){
+        oneWeekAgoCount += 1
       } 
 
-      if(isWithinInterval(newDate, {start:startOfCurrentWeek, end:endOfCurrentWeek})){
-        weeklyFrequencyDict[0] += 1
-        count += 1
-        
-      } else if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end:endOfWeekOneWeek})){
-        weeklyFrequencyDict[1] += 1
-        count += 1
-
-      } else if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
-        weeklyFrequencyDict[2] += 1
-        count += 1
+      if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
+        twoWeekAgoCount += 1
+      }
       
-      } else if(isWithinInterval(newDate, {start:startOfWeekThreeWeek, end:endOfWeekThreeWeek})){
-        weeklyFrequencyDict[3] += 1
-        count += 1
-       
-      } else if(isWithinInterval(newDate, {start:startOfWeekFourWeek, end:endOfWeekFourWeek})){
-        weeklyFrequencyDict[4] += 1
-        count += 1
-       
-      } 
-
-
     });
 
+    setCurrentWeekCount(currentWeekCount)
+    setOneWeekAgoCount(oneWeekAgoCount)
+    setTwoWeekAgoCount(twoWeekAgoCount)
 
-    for (const [key, value] of Object.entries(weeklyFrequencyDict)) {
-
-        if(value != 0 && key != 0){
-          weeklyFrequencyArr.push(value)
-        }
-
-    }
-
-    let totalStudiedPastMonth = 0
-    for (let x of weeklyFrequencyArr) {
-      totalStudiedPastMonth += x
-    }
-
-    
-
-
-
-    console.log( Math.floor(totalStudiedPastMonth/weeklyFrequencyArr.length))
-    let percentageChangeLastSeven = lastSevenDaysCount/lastFourteenDaysCount
-    let sevenDayAverage = lastSevenDaysCount/7
-
-
-
-  return count/8
   
+  },[allDateStats])
 
+
+  const convertDateToString = (date) => {
+    return format(date,'yyyy-MM-dd')
   }
-      
-  
-  // the glitch is that the color is messed up 
 
-  const newFunction = () => {
-
-    let _userStartDate = new Date(userStartDate.toDate())
-    let _userStartDateBegin = startOfDay(_userStartDate)
-    let userStartedStudying = new Date(userStartStudyingDate.toDate())
-    //with this number we can find the how far from the benchmark date
-    
-
-    let differenceInStartDays = differenceInDays(todaysDate, userStartedStudying)
-    let sevenDaysAfterStart = addDays(_userStartDate, 6)
-    let userStartWeek = eachDayOfInterval({start:_userStartDate, end:sevenDaysAfterStart})
-
-    //to get the current week get look the at interval at the start of the current week to the end of today
+  const getCurrentWeekLabel = () => {
+      return format(startOfCurrentWeek,'MMM dd') + '  -  ' + format(endOfCurrentWeek,'MMM dd') 
+  }
 
 
-   let startOfStartedStudyingWeek = startOfWeek(userStartedStudying)
-
-    /* if(isWithinInterval(newDate, {start:startOfCurrentWeek, end:endOfCurrentWeek})){
-      weekCount += 1
-      currentWeekStudiedSet.add(newDateConverted)
-    } */
-    
-    let diffInWeeks = differenceInCalendarWeeks(todaysDate, userStartedStudying)
-
-    const newDict = {}
-
-    /* uniqueDates.forEach(element => {
-      console.log(element)
-      
-    }); */
+  const getLastWeekLabel = () => {
+    return format(startOfWeekOneWeek,'MMM dd') + '  -  ' + format(endOfWeekOneWeek,'MMM dd')
+  }
 
 
-/*  const startDate = startOfDay(userStartStudyingDate.toDate())
-    const endDate = addDays(startDate, 6)
-    const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
-    const stringConvertedDates = []
-
-    daysInWeek.forEach(item => stringConvertedDates.push(format(item,'yyyy-MM-dd')))
-    
-    uniqueDates.forEach(item => newDict[item] = {selected:true}) */
-    
-    //14.3 is the approximate change in 1 day
-    // How much of a percent change per score - 
-
-    let averageLastWeekStudied = lastWeekStudiedCount/7
-    let averageLastWeekStudiedUnique = lastWeekStudiedSet.size/7
-
-    let averageCurrentWeekStudied = currentWeekStudiedCount/(currentDayOfWeek + 1)
-    let averageCurrentWeekStudiedUnique = currentWeekStudiedSet.size/(currentDayOfWeek + 1)
-    // 
-    console.log(averageLastWeekStudied, averageLastWeekStudiedUnique, averageCurrentWeekStudied, averageCurrentWeekStudiedUnique)
-
-    
-    //is it fair to use 
-    //get the last seven days of study or all the days of study at this point
-    //console.log(userStartWeek)
-   
+  const getTwoWeeksAgoLabel = () => {
+    return format(startOfWeekTwoWeek,'MMM dd') + '  -  ' + format(endOfWeekTwoWeek,'MMM dd')
   }
 
   const returnMarkedDates = () => {
@@ -309,7 +249,6 @@ function IQScreen(){
     })
     return newDict
   }
-
 
 
   const returnLabels = (number) => {
@@ -338,9 +277,9 @@ function IQScreen(){
 
   const customStyles = {
     
-    stepIndicatorSize: 35,
-    currentStepIndicatorSize:35,
-    separatorStrokeWidth:35,
+    stepIndicatorSize: 45,
+    currentStepIndicatorSize:45,
+    separatorStrokeWidth:45,
     currentStepStrokeWidth: 2,
     stepStrokeCurrentColor: theme['color-primary-500'],
     stepStrokeWidth: 1.5,
@@ -366,20 +305,16 @@ function IQScreen(){
   const getStepIndicatorIconConfig = ({ position, stepStatus }) => {
 
     let startDate = todaysDate
-
     if(userStartStudyingDate != null){
       startDate = startOfDay(userStartStudyingDate.toDate())
     }
-
     const endDate = addDays(startDate, 6)
- 
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
-
     const iconConfig = {
       name: 'close-outline',
-      fill: stepStatus == 'finished' ? theme['color-basic-400'] : null, //theme['color-danger-400']
-      width:16,
-      height:16
+      fill: stepStatus == 'finished' ? theme['color-basic-600'] : null, //theme['color-danger-400']
+      width:18,
+      height:18
     };
 
 
@@ -480,6 +415,7 @@ function IQScreen(){
   };
 
 
+
   const renderStepIndicator = (params) => (
     <Icon {...getStepIndicatorIconConfig(params)}/>
   );
@@ -493,9 +429,46 @@ function IQScreen(){
 
   <Layout level='2' style={{flex:1, padding:16}}>
 
+
+  <Card style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
+
+  <ImageBackground
+       style={{
+         height:120,
+         width:410,
+         marginBottom:0,
+         marginTop:-16,
+         marginLeft:-24,
+         justifyContent:'center',
+         alignItems:'center'
+      
+         
+       }}
+
+       source={require('../assets/images/piggytime.png')}
+     >
+        {/* <View style={{backgroundColor:theme['color-basic-100'], paddingVertical:8, paddingHorizontal:24, borderRadius:30, borderColor:theme['color-primary-400'], borderWidth:0, opacity:0.9}}>
+        <Text category={'s1'} style={{fontSize:16, color:theme['color-basic-300']}}>Time Spent Studying</Text>
+        </View> */} 
+  </ImageBackground>
+
+  <View style={{}}>
+  <TimeComponent title={'Current Week'} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()}/>
+  </View>
+
+  <View>
+  <TimeComponent title={'Last Week'} sessionCount={oneWeekAgoCount} weekLabel={getLastWeekLabel()}/>
+  </View>
+  <TimeComponent title={'Two Weeks Ago'} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
+  {/* <TimeComponent title={'28 day Weekly Average'} sessionCount={11} weekLabel={get28DaysLabel()}/>
+  <TimeComponent title={'Since Started Weekly Average'} sessionCount={8} weekLabel={getStartDateLabel()}/> */}
+  </Card>
+
+
+
   {(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) &&
 
-  <Card onPress={calculateDaysSinceLastStudy} style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
+  <Card style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
   <Image
     style={{
       height:120,
@@ -519,6 +492,7 @@ function IQScreen(){
     <Text category='h4'>{datesStudiedPastSeven.size}</Text>
     <Text style={{fontSize:11, color:theme['color-basic-600']}}>days studied</Text>
     </View>
+
     <View style={{alignItems:'center'}}>
     <Text category='h4'>{sevenDaysCount}</Text> 
     <Text style={{fontSize:11, color:theme['color-basic-600']}}>total sessions</Text>
@@ -539,10 +513,10 @@ function IQScreen(){
 
     }
 
-  
+{/* calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7 */}
     
-    {(calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7) &&
-    <Card onPress={()=>calculateStudyFrequency()} style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
+    {(calculateDaysSinceLastStudy() > 28 && calculateDaysSinceStartedStudy() > 7) &&
+    <Card style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
      <Image
           style={{
             height:120,
@@ -585,41 +559,27 @@ function IQScreen(){
 
   markingType={'custom'}
   markedDates={returnMarkedDates()}
-  // Initially visible month. Default = Date()
   current={convertDateToString(new Date())}
-  // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
   minDate={'2020-05-10'}
-  // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
   maxDate={'2021-01-31'}
   monthFormat={'MMMM'}
-  // Replace default arrows with custom ones (direction can be 'left' or 'right')
   renderArrow={(direction) => (direction == 'left' ? <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-back-outline'/></View> 
   : <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-forward-outline'/></View>)}
-  
   hideExtraDays={false}
-  // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-  // day from another month that is visible in calendar page. Default = false
   disableMonthChange={true}
   // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
   firstDay={0}
-  // Hide day names. Default = false
-  hideDayNames={false}
-  // Show week numbers to the left. Default = false
-  showWeekNumbers={false}
   // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
   disableAllTouchEventsForDisabledDays={true}
   // Replace default month and year title with custom one. the function receive a date as parameter.
   // Enable the option to swipe between months. Default = false
-  //enableSwipeMonths={true}
   futureScrollRange={0}
   theme={{
     textSectionTitleColor: theme['color-basic-900'],
     todayTextColor: theme['color-primary-800'],
     textMonthFontWeight: 'bold',
-    
     textDayFontSize: 13,
-  
-    calendarBackground: theme["background-basic-color-1"],
+    calendarBackground: theme['color-basic-100'],
     calendarHeaderStyle:{
       color:'green'
     },
@@ -633,6 +593,12 @@ function IQScreen(){
   }}
     />
     </Card>
+
+   {/*  {(calculateDaysSinceLastStudy() > 28 && calculateDaysSinceStartedStudy() > 7) &&
+    // for rendering the stats component
+    } */}
+
+  
 
    
     </Layout>

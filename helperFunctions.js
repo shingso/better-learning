@@ -1,8 +1,9 @@
+import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { Text, useTheme } from '@ui-kitten/components';
 
 
 export async function saveThemeValue(value){
@@ -241,5 +242,46 @@ export async function addNote(userID, subject, text, textTheme) {
 }
 
 
+export function sessionsToHours(sessions){
+  const theme = useTheme()
+  const labelStyle = {
+    fontSize:11,
+    color:theme['color-basic-600']
+  }
 
+  const headerStyle = {
+    fontSize:14,
+    fontWeight:'bold'
+  }
 
+  
+
+  let minutes = (sessions * (25))
+  let hours = Math.floor(minutes/60)
+  let remainingMinutes = (minutes % 60)
+
+  //let seconds = Math.floor((duration / 1000) % 60)
+  //let minutes = Math.floor((duration / (1000 * 60)) % 60)
+  //minutes = (minutes < 10) ? "0" + minutes : minutes;
+      //seconds = (seconds < 10) ? "0" 
+  console.log(minutes, hours, remainingMinutes)
+
+  if(remainingMinutes === 0 && hours === 0){
+    return <Text style={headerStyle}>0  <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  if(remainingMinutes > 0 && hours === 0){
+    return <Text style={headerStyle}>{remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  if(remainingMinutes > 0 && hours === 1){
+    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hour</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  if(remainingMinutes > 0){
+    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text></Text>
+
+}

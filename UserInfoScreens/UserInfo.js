@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground } from 'react-native'
+import { View, SafeAreaView, Dimensions, Image, StyleSheet, ImageBackground } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
@@ -8,83 +8,124 @@ import { endOfMonth, format } from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { UserDataContext } from '../UserDataContext'
+import auth from '@react-native-firebase/auth';
 
-const SettingsIcon = (props) => (
-    <Icon {...props} width='25' height='25' name='settings-outline' />
-);
+import { sessionsToHours } from '../helperFunctions';
 
+
+
+function signOut(){     
+  auth()
+  .signOut()
+  .then(() => console.log('User signed out!'));
+}
 
 
 function UserInfo(){
 
+
     const studyStatsData = useContext(StudyStatsContext)
     const userData = useContext(UserDataContext)
     const theme = useTheme()
-    //const studyStatsData = useContext(StudyStatsContext)
-    const authContext = useContext(AuthContext)
-    const userID = authContext.user.uid
-    const navigation = useNavigation();
 
-    const userStartDate = userData.timeStamp
-    const allDateStats = studyStatsData.allDates  
+    const navigation = useNavigation();
+    const userStartDate = userData.timeStamp  
     const timesStudiedStat = studyStatsData.timesStudied
+
+    const ListComponent = (props)=>(
+      <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
+      <View style={{flexDirection:'row', alignItems:'center'}}>
+      <Icon fill={theme['color-basic-500']} width={18} height={18} name={props.iconName}/>
+      <Text style={{marginLeft:16}} category='s1'>{props.title}</Text>
+      </View>
+      </Card>
+    )
 
     return (
 
-    
-    <Layout level='2' style={{ flex:1, padding:16 }}>
-    <SafeAreaView style={{flex: 1}}>
     <ScrollView showsVerticalScrollIndicator={false}>
-    <View style={{marginBottom:12, flexDirection:'row', justifyContent:'space-between'}}>
-    <Text category='h1'></Text>
-    <Button size='small' appearance={'ghost'} accessoryRight={SettingsIcon} onPress={()=>navigation.navigate('SettingsOptions')}></Button>
+    <Layout level='2' style={{ flex:1, padding:16, paddingTop:24 }}>
+    <SafeAreaView style={{flex: 1}}>
+    
+    <Card style={{marginBottom:2, paddingBottom:8, borderWidth:0.5}}>
+    <Image
+          style={{
+            height:80,
+            width:500,
+            marginBottom:28,
+            marginTop:-16,
+            marginLeft:-24,
+            alignItems:'center',
+            justifyContent:'center'
+            
+          }}
+          source={require('../assets/images/yournotesv1orange.png')}
+        >
+       {/*  <View style={{backgroundColor:theme['color-primary-600'], paddingVertical:12, paddingHorizontal:32, borderRadius:30}}>
+        <Text category={'s1'} style={{fontSize:18, color:'white'}}>Settings</Text>
+        </View> */}
+    </Image>
+
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:32, paddingTop:16}}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon fill={theme['color-basic-500']} width={18} height={18} name='flag-outline'/>
+    <Text style={{marginLeft:16}} category={'s1'}>Started</Text>
+    </View>
+    <Text style={{fontWeight:'bold'}}>{format(new Date(userStartDate.toDate()), 'MMMM d yyyy')}</Text>
     </View>
 
-    <Card style={{marginBottom:16, paddingVertical:20}}>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:20}}>
-    <Text category={'s1'}>Started</Text>
-    <Text>{format(new Date(userStartDate.toDate()), 'MMM d yyyy')}</Text>
+
+    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:32}}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon fill={theme['color-basic-500']} width={18} height={18} name='calendar-outline'/>
+    <Text style={{marginLeft:16}} category={'s1'}>Days Studied</Text>
     </View>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:20}}>
-    <Text category={'s1'}>Total Studied</Text>
-    <Text>{timesStudiedStat}</Text>
+   
+    <Text style={{fontSize:14,fontWeight:'bold'}}>{86}<Text style={{color:theme['color-basic-600'], fontSize:11}}> days</Text></Text>
+
+
     </View>
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center' }}>
-    <Text category={'s1'}>Times Studied this Month</Text>
-    <Text>{timesStudiedStat}</Text>
+
+
+    <View style={{marginBottom:32, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon fill={theme['color-basic-500']} width={18} height={18} name='trending-up-outline'/>
+    <Text style={{marginLeft:16}} category={'s1'}>Total Sessions</Text>
     </View>
+    <Text style={{fontSize:14,fontWeight:'bold'}}>{timesStudiedStat} <Text style={{color:theme['color-basic-600'], fontSize:11}}> sessions</Text></Text>
+    </View>
+
+    <View style={{marginBottom:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon fill={theme['color-basic-500']} width={18} height={18} name='clock-outline'/>
+    <Text style={{marginLeft:16}} category={'s1'}>Total Time</Text>
+    </View>
+    <Text>{sessionsToHours(timesStudiedStat)}</Text>
+    </View>
+
     </Card> 
 
-   
-    
 
+    <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/>
+    <ListComponent path={'TermsOfService'} iconName={'file-text-outline'} title={'Terms And Conditions'}/>
+    <ListComponent path={'PrivacyPolicy'} iconName={'lock-outline'} title={'Privacy Policy'}/>
+    <ListComponent path={'Open Source Libraries'} iconName={'droplet-outline'} title={'Theme Settings'}/>
+    <ListComponent path={'ThemeSettings'} iconName={'book-open-outline'} title={'Open Source Libraries'}/>
 
-
-    <Card style={{justifyContent:'center', paddingVertical:12, alignItems:'center', height:280}}>
- 
-
-  
-    <CalendarHeatmap
-    endDate={endOfMonth(new Date())}
-    //the number of dates should be the number of days inbetween  between the starting date and end of the month or 90
-    numDays={65}
-    //need to pass in style prop to mon
-    //Need to pass in our own color array 
-    colorArray={[theme['background-basic-color-2'], theme['color-primary-100'], theme['color-primary-200'], theme['color-primary-300'], theme['color-primary-400'],theme['color-primary-500']]}
-    values={allDateStats}
-    monthLabelsStyle={{fontSize:12,fill:theme['text-basic-color']}}
-    monthLabelsColor={theme['text-basic-color']}
-    />
-  
+    <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon fill={theme['color-danger-700']} width={18} height={18} name='log-out-outline'/>
+    <Text style={{marginLeft:16, color:theme['color-danger-700']}} category='s1'>Sign Out</Text>
+    </View>
     </Card>
- 
+
+      
     
-   
-    
-    </ScrollView>
 
     </SafeAreaView>
     </Layout>
+    </ScrollView>
       
     );
 

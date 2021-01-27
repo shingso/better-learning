@@ -3,19 +3,19 @@ import { View, StyleSheet, SafeAreaView, Image } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
-import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Modal, Input, Layout, useTheme } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
 
 const TrashIcon = (props) => (
-  <Icon {...props} width={20} height={20} name='trash-2-outline' />
+  <Icon {...props} width={22} height={22} name='trash-2-outline' />
 );
 
 
 function NotesFocused({ route, navigation }){
     
- 
+    const theme = useTheme()
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
   
@@ -25,7 +25,7 @@ function NotesFocused({ route, navigation }){
     const [ todos, setTodos ] = useState([]);
     const [ visible, setVisible ] = useState(false)
     const [ visibleConfirm, setVisibleConfirm ] = useState(false)
-    const [ value, setValue ] = React.useState('');
+ 
 
     const renderItem = (info) => (
       
@@ -44,13 +44,13 @@ function NotesFocused({ route, navigation }){
       <View style={{flex: 1,alignItems:'center', marginTop:60,justifyContent:'center',padding:16}}>
       
       <Image
-        style={{width: 650, height: 250, resizeMode:'contain'}}
-        source={require('../assets/images/notesv1.png')}
+        style={{width: 420, height: 250, resizeMode:'contain', marginRight:70, marginBottom:12}}
+        source={require('../assets/images/notesemptynoline.png')}
       
       />
 
-      <Text style={{textAlign:'center', marginTop:40}}>Your notes for <Text category='s1'>{title}</Text> will be organized here.</Text>
-      <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
+      <Text style={{textAlign:'center', marginTop:40, fontSize:16}}>Notes for <Text category='h6'>{title}</Text> will be organized here</Text>
+      <Text style={{marginTop:20, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center'}}>You don't have any notes for {title} yet</Text>
 
      
       </View>
@@ -99,13 +99,13 @@ function NotesFocused({ route, navigation }){
         
       <View style={{marginBottom:12}}>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-      <TopHeader/>
+      <TopHeader title={title}/>
       <View style={{flexDirection:'row'}}>
       
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       </View>
       </View>
-      <Text style={{marginTop:12, fontWeight:'bold'}} category='h6'>{title}</Text>
+   {/*    <Text style={{marginTop:12, fontWeight:'bold'}} category='h6'>{title}</Text> */}
       </View>
     );
  

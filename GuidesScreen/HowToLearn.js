@@ -33,7 +33,7 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/studytime.png')} 
     headerText={'Start a study session.'}
-    bodyText={' The key to being productive is to make continuous progress, A study sessions is a 25 minute period were you are commited on focusing. Using a timer to keep track of. During this time, engage and actively thinking about what you are reading.'}
+    bodyText={'A study session is a 25 minute period were you are commited to studying. During this time, engage and actively think about what you are studying.'}
     />
 
     

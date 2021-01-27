@@ -12,7 +12,7 @@ import { UserDataContext } from '../UserDataContext'
 
 
 
-function HomeScreen(props){
+function HomeScreen(){
 
   
 
@@ -82,6 +82,8 @@ function HomeScreen(props){
       return true; 
 
     }
+
+     
 
 
     return (

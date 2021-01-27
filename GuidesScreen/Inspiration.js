@@ -16,25 +16,25 @@ function Inspiration(){
     <Text style={{fontWeight:'bold', fontSize:16, marginLeft:4}}>Inspiration</Text>
     </View>
     
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} loop={false} index={0}>
     
 
     <GuideComponent 
-    picture={require('../assets/images/becomesmarter.png')} 
+    picture={require('../assets/images/becomesmarterv1.png')} 
     headerText={'Become Smarter'}
-    bodyText={'The more your study the smarter you become, meaning that you will learn faster'}
+    bodyText={'Learning is a skill that can be developed. The more you study the smarter you will become.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
     headerText={'Put in the time and the results will come'}
-    bodyText={'Small amounts add up more than you can imagine. Day by day progress might seem small but over long periods of time, youre progress will become apparent'}
+    bodyText={'Small amounts of progress add up. Day by day progress might seem insignificant, but'}
     />
 
     <GuideComponent 
-    picture={require('../assets/images/makingprogress.png')} 
+    picture={require('../assets/images/success.png')} 
     headerText={'You can go further than you think'}
-    bodyText={"Eventually difficult concepts will be easy and you'll want to see how far you can push"}
+    bodyText={"With enough time and effort you can solve difficult problems and understand complex concepts."}
     />
 
     

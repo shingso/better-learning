@@ -97,7 +97,7 @@ const CustomBackHeader = () => {
 
 useEffect(() => {
  
-    setInitialTimeSet(4000)
+    setInitialTimeSet(5000)
     setIsPlaying(true)
 }, [])
 
@@ -108,6 +108,7 @@ useEffect(() => {
 
     BackgroundTimer.runBackgroundTimer(() => { 
       setTimeElaspased(timeElaspased => timeElaspased + 1000)
+ 
       }, 
       1000);
 
@@ -146,7 +147,7 @@ const backgroundTimerEnded = () => {
 
   setIsPlaying(false)
   setHasEnded(true)
-  //Vibration.vibrate()
+  Vibration.vibrate()
 
   updateUserLastStudied(authContext.user.uid, differenceInLastStudied, startedStudying)
   BackgroundTimer.stopBackgroundTimer()
@@ -192,7 +193,7 @@ return (
 
 
 
-  {!hasEnded &&
+{/*   {!hasEnded &&
   <View>
   {isPlaying ?
   <View>
@@ -204,9 +205,9 @@ return (
   </View> 
   }
   </View>
-  }
+  } */}
 
-  {hasEnded && 
+  {(hasEnded && visible) &&
   <View style={{ flex:1, padding:16, alignItems:'center' }}>
 
   <Image

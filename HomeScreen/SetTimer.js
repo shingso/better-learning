@@ -6,7 +6,7 @@ import TopHeader from '../UtilComponents/TopHeader'
 import firestore from '@react-native-firebase/firestore';
 import { incrementActiveUsers } from '../helperFunctions';
 import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
-
+import NotifService from '../UtilComponents/NotifService';
 
 
   const ClockIcon = (props) => (
@@ -15,11 +15,13 @@ import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 
 
 function SetTimer({ route }){
- 
+    const notif = new NotifService();
     const [ activeUsers, setActiveUsers] = useState(0)
     const navigation = useNavigation();
 
     const customNav = () => {
+      navigation.pop()
+      notif.scheduleNotif()
       incrementActiveUsers()
       navigation.navigate("TimerScreen")
     }
@@ -46,15 +48,8 @@ function SetTimer({ route }){
     <StudyProgressIndicator currentStep={0}/>
     <SafeAreaView style={{flex: 1, padding:16}}>
     
-    <View style={{flexDirection:'row', justifyContent:'center'}}>
-    {/* <TopHeader/> */}
-    
-    </View>
-    
-    <View style={{ flex:1}}>
-  
-    <View style={{flex:1, justifyContent:'center'}}>
-    
+    <View style={{flex:1}}>
+    <View style={{flex:1, justifyContent:'center'}}> 
     <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>Start the study session and a <Text category='h5' style={{fontWeight:"bold"}}>25 minute timer</Text> will begin.</Text>
     <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12, marginTop:32}}>While the timer is running, stay <Text category='h5' style={{fontWeight:'bold'}}>focused and engaged</Text> on studying.</Text>
 

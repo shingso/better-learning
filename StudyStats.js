@@ -47,6 +47,7 @@ export function StudyStatsContextWrapper(props) {
 
     const startOfCurrentWeek = startOfDay(startOfWeek(currentDate))
     const endOfCurrentWeek = endOfDay(endOfWeek(currentDate))
+    
     const twoWeeksAgo = startOfDay(subDays(currentDate, 14))
     const sixDaysAgo = startOfDay(subDays(currentDate, 6))
 
@@ -125,6 +126,8 @@ export function StudyStatsContextWrapper(props) {
             twoWeekCount += 1
             twoWeekDatesSet.add(newDateConverted)
           }
+
+
 
           if(isWithinInterval(newDate, {start:sixDaysAgo, end:endOfCurrentDate})){
             pastSevenDaysSet.add(newDateConverted)

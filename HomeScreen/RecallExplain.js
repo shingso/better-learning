@@ -27,7 +27,9 @@ function RecallExplain(){
   }
 
   const navigateToRecall = () =>{
+    
     setLeaveScreen(true)
+    //navigation.pop()
     navigation.navigate('Recall')
   }
 

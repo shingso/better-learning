@@ -37,13 +37,13 @@ function RecalledNotes({ navigation }){
       <View style={{flex: 1,alignItems:'center', marginTop:60,justifyContent:'center',padding:16}}>
       
       <Image
-        style={{width: 650, height: 250, resizeMode:'contain'}}
-        source={require('../assets/images/notesv1.png')}
+        style={{width: 650, height: 250, marginBottom:12}}
+        source={require('../assets/images/notesemptynoline.png')}
       
       />
 
-      <Text style={{textAlign:'center', marginTop:40}}>Your notes for <Text category='s1'>{title}</Text> will be organized here.</Text>
-      <Text style={{textAlign:'center', marginTop:20}}>If you come up with thoughts write it down, typing it out will reinforce the idea in our heads</Text>
+      <Text style={{textAlign:'center', marginTop:40}}>Your notes for recall will be organized here</Text>
+     
 
      
       </View>
