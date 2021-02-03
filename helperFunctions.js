@@ -59,7 +59,7 @@ export async function addUser(userID) {
 
 
 
-export async function updateUserLastStudied(userID, dateSinceLastStudy, startedStudy) {
+export async function updateUserLastStudied(userID, dateSinceLastStudy, startedStudy, minutesStudied) {
 
     const docID = uuid()
     const batch = firestore().batch();
@@ -87,6 +87,8 @@ export async function updateUserLastStudied(userID, dateSinceLastStudy, startedS
 
     batch.set(ref2, {   
       timeStamp: firestore.FieldValue.serverTimestamp(),
+      minutesStudied: minutesStudied
+
     })
 
     batch.commit()
@@ -209,7 +211,7 @@ export async function addNote(userID, subject, text, textTheme) {
   } else if(textTheme == '' && subject != ''){
     
     await ref.add({
-      
+      textTheme: null,
       text: text,
       subject: subject,
       timeStamp: firestore.FieldValue.serverTimestamp(),
@@ -230,7 +232,7 @@ export async function addNote(userID, subject, text, textTheme) {
   } else {
 
     await ref.add({
-      
+      textTheme: null,
       text: text,
       timeStamp: firestore.FieldValue.serverTimestamp(),
       recalled:false
@@ -284,4 +286,59 @@ export function sessionsToHours(sessions){
 
   return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text></Text>
 
+}
+
+
+export function formatMinutes(time){
+  const theme = useTheme()
+  const labelStyle = {
+    fontSize:11,
+    color:theme['color-basic-600']
+  }
+
+  const headerStyle = {
+    fontSize:14,
+    fontWeight:'bold'
+  }
+
+  
+
+  let minutes = (time)
+  let hours = Math.floor(minutes/60)
+  let remainingMinutes = (minutes % 60)
+
+  //let seconds = Math.floor((duration / 1000) % 60)
+  //let minutes = Math.floor((duration / (1000 * 60)) % 60)
+  //minutes = (minutes < 10) ? "0" + minutes : minutes;
+      //seconds = (seconds < 10) ? "0" 
+  console.log(minutes, hours, remainingMinutes)
+
+  if(remainingMinutes === 0 && hours === 0){
+    return <Text style={headerStyle}>0  <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  if(remainingMinutes > 0 && hours === 0){
+    return <Text style={headerStyle}>{remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  if(remainingMinutes > 0 && hours === 1){
+    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hour</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  if(remainingMinutes > 0){
+    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+  }
+
+  return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text></Text>
+
+}
+
+
+export function msToTime(duration){
+
+  let seconds = Math.floor((duration / 1000) % 60)
+  let minutes = Math.floor((duration / (1000 * 60)) % 60)
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return  minutes + ":" + seconds
 }

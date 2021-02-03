@@ -104,19 +104,19 @@ function FolderSelectionComponent(){
    return (
    
    <View>
-   <View style={{marginLeft:20, marginRight:50}}> 
+   <View style={{marginRight:50}}> 
    <TouchableOpacity onPress={()=>openModal()}>
     
    {subjectsContext.lastUsedSubject != null &&
    <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
-   <Icon style={{marginRight:8}} fill={theme["color-primary-600"]} width='16' height='16' name={'folder'} />
-   <Text style={{fontSize:15,color:theme["color-primary-700"], fontWeight:'bold'}}>{subjectsContext.lastUsedSubject.title}</Text>
+   <Icon style={{marginRight:12}} fill={theme["color-primary-500"]} width='20' height='20' name={'folder'} />
+   <Text style={{fontSize:16,color:theme["color-primary-600"], fontWeight:'bold'}}>{subjectsContext.lastUsedSubject.title}</Text>
    </View>
    }
 
    {subjectsContext.lastUsedSubject == null &&
    <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
-   <Icon style={{marginRight:8}} fill={theme["color-info-500"]} width='15' height='15' name={'plus-circle-outline'} />
+   <Icon style={{marginRight:12}} fill={theme["color-info-500"]} width='15' height='15' name={'plus-circle-outline'} />
    <Text style={{fontSize:13,color:theme["color-info-500"], fontWeight:'bold'}}>{'Create a new folder'}</Text>
    </View>
    }

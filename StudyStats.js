@@ -18,16 +18,15 @@ export function StudyStatsContextWrapper(props) {
  
   const [timesStudiedToday, setTimesStudiedToday] = React.useState(0);
   const [timesStudiedWeek, setTimesStudiedWeek] = React.useState(0);
-  const [timesStudiedTwoWeek, setTimesStudiedTwoWeek] = React.useState(0);
-  const [timesStudiedTwoWeeksUnique, setTimesStudiedTwoWeeksUnique] = React.useState(0);
-  const [timesStudiedMonth, setTimesStudiedMonth] = React.useState(0);
+
+  const [totalMinutesStudied, setTotalMinutesStudied] = React.useState(0);
 
 
   const [currentWeekStudiedSet, setCurrentWeekStudiedSet] = React.useState(0);
   const [allDates, setAllDates] = React.useState(0);
   const [uniqueDates, setUniqueDates] = React.useState(0);
-  const [lastWeekStudiedSet, setLastWeekStudiedSet] = useState({})
-  const [lastWeekStudiedCount, setLastWeekStudiedCount] = useState(0)
+
+
 
   //stats by week over week
 
@@ -70,37 +69,32 @@ export function StudyStatsContextWrapper(props) {
       const list = [];
       const allList = [];
       const datesDict = {}
-      const twoWeekDatesSet = new Set()
+
       const currentWeekStudySet = new Set()
       const pastSevenDaysSet = new Set()
       let sevenDaysCount = 0
-      let count = 0
       let weekCount = 0
-      let twoWeekCount = 0
-
-   
-      let lastWeekStudyCount = 0
-      let lastWeekStudySet = new Set()
       let todayCount = 0
-  
 
+      let totalMinutesStudied = 0
+
+ 
       querySnapshot.forEach(doc => {
 
           const timeStamp = doc.get('timeStamp', { serverTimestamps: 'estimate' })
+          const minutesStudied = doc.get('minutesStudied')
           const newDate = new Date(timeStamp.toDate())
           const newDateConverted = format(newDate, 'yyyy-MM-dd')
           let currentItem = {};
-          currentItem.date = newDateConverted
+          currentItem.minutesStudied = parseInt(minutesStudied)
+          currentItem.date = newDate
           allList.push(currentItem)
         
           //check if date is within the current Week
-
-
-
+          totalMinutesStudied += parseInt(minutesStudied)
+        
           //____Stats for this week vs last week
-
-
-         
+        
 
           if(isWithinInterval(newDate, {start:startOfCurrentWeek, end:endOfCurrentWeek})){
 
@@ -112,32 +106,9 @@ export function StudyStatsContextWrapper(props) {
             currentWeekStudySet.add(newDateConverted)
           }
 
-
-          if(isWithinInterval(newDate, {start:startOfLastWeek, end:endOfLastWeek})){
-   
-            lastWeekStudyCount += 1
-            lastWeekStudySet.add(newDateConverted)
-          }
-
-
-          //
-
-          if(isWithinInterval(newDate, {start:twoWeeksAgo, end:currentDate})){
-            twoWeekCount += 1
-            twoWeekDatesSet.add(newDateConverted)
-          }
-
-
-
           if(isWithinInterval(newDate, {start:sixDaysAgo, end:endOfCurrentDate})){
             pastSevenDaysSet.add(newDateConverted)
             sevenDaysCount += 1
-          }
-
-
-          //check iof date is within current month and year
-          if(isThisMonth(newDate) && isThisYear(newDate)){
-            count +=1
           }
 
           if(newDateConverted in datesDict){
@@ -160,7 +131,6 @@ export function StudyStatsContextWrapper(props) {
      }
     
       setDatesStudiedPastSeven(pastSevenDaysSet)
-
       setPastSevenDaysCount(sevenDaysCount)
 
       setTimesStudiedToday(todayCount)
@@ -168,20 +138,18 @@ export function StudyStatsContextWrapper(props) {
       setAllDates(allList)
       setTimesStudied(querySnapshot.size)
       setTimesStudiedWeek(weekCount)
-      setTimesStudiedTwoWeek(twoWeekCount)
-      setTimesStudiedTwoWeeksUnique(twoWeekDatesSet.size)
-      setTimesStudiedMonth(count)
       setDates(list);
-
       setCurrentWeekStudiedSet(currentWeekStudySet)
-      setLastWeekStudiedCount(lastWeekStudyCount)
-      setLastWeekStudiedSet(lastWeekStudySet)
-      
+  
       setUniqueDates(uniqueDates)
+
+
+      setTotalMinutesStudied(totalMinutesStudied)
 
 
       setInitializing(false)
 
+      
     }
   });
   
@@ -192,7 +160,7 @@ export function StudyStatsContextWrapper(props) {
     return null
   }
 
-  return (<StudyStatsContext.Provider value={{ timesStudiedToday,currentWeekStudiedSet, lastWeekStudiedSet, lastWeekStudiedCount,pastSevenDaysCount,datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedMonth, timesStudiedWeek, timesStudiedTwoWeek, timesStudiedTwoWeeksUnique, allDates}}>
+  return (<StudyStatsContext.Provider value={{ totalMinutesStudied,timesStudiedToday,currentWeekStudiedSet,pastSevenDaysCount,datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedWeek, allDates}}>
     {props.children}
     </StudyStatsContext.Provider>
     );

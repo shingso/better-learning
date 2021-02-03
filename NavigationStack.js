@@ -9,7 +9,8 @@ import { BottomNavigation, BottomNavigationTab, Icon, useTheme, withStyles } fro
 
 import HomeScreen from './HomeScreen/HomeScreen'
 import AddNotes from './HomeScreen/AddNotes';
-import Recall from './HomeScreen/Recall';
+
+import Session from './HomeScreen/Session';
 
 import NotesFocused from './NotesScreen/NotesFocused'
 import RecalledNotes from './NotesScreen/RecalledNotes'
@@ -25,15 +26,12 @@ import Discouraged from './GuidesScreen/Discouraged'
 import Inspiration from './GuidesScreen/Inspiration'
 import LearningTips from './GuidesScreen/LearningTips'
 
-import TimerScreenFunc from './HomeScreen/TimerScreenFunc'
-import SetTimer from './HomeScreen/SetTimer'
 import AddSubject from './HomeScreen/AddSubject'
-import TipsPage from './HomeScreen/TipsPage'
+
 import NotesRecall from './HomeScreen/NotesRecall'
 import NotesRecallExplain from './HomeScreen/NotesRecallExplain'
 import NotesRecallComplete from './HomeScreen/NotesRecallComplete'
-import RecallExplain from './HomeScreen/RecallExplain'
-import StudyFinished from './HomeScreen/StudyFinished'
+
 
 import SignUp from './LoginScreen/SignUp';
 import Login from './LoginScreen/Login';
@@ -41,11 +39,11 @@ import Welcome from './LoginScreen/Welcome';
 import ForgotPassword from './LoginScreen/ForgotPassword';
 
 import IQScreen from './SettingsScreen/IQScreen';
-import SettingsOptions from './SettingsScreen/SettingsOptions';
 import PrivacyPolicy from './SettingsScreen/PrivacyPolicy';
 import TermsOfService from './SettingsScreen/TermsOfService';
 import ThemeSettings from './SettingsScreen/ThemeSettings';
 import OpenSource from './SettingsScreen/OpenSource';
+import TimerSettings from './SettingsScreen/TimerSettings';
 
 import UserInfo from './UserInfoScreens/UserInfo';
 
@@ -55,6 +53,7 @@ import { UserDataContextWrapper } from './UserDataContext'
 import { StudyStatsContextWrapper } from './StudyStats'
 import { AuthContext } from './AuthContext'
 import { SubjectsContextWrapper } from './SubjectsContext'
+import { TimerSettingsContextWrapper } from './TimerSettingsContext'
 
 import Onboard from './GuidesScreen/Onboard';
 
@@ -82,6 +81,9 @@ const UserIcon = (props) => (
   <Icon {...props} name='person-outline'/>
 );
 //export const AuthContext = createContext(null)
+
+
+
 
 
 const IQScreenWithContext = () => {
@@ -125,11 +127,17 @@ const HomeScreenWithContext = withStyles(HomeScreenWithContex , (theme) => ({
 }));
 
 
-const TimerScreenWithContext = (props) => {
+
+
+const SessionScreenWithContext = (props) => {
   return(
+
+  <SubjectsContextWrapper>
   <UserDataContextWrapper>
-  <TimerScreenFunc {...props}/>
+  <Session {...props}/>
   </UserDataContextWrapper>
+  </SubjectsContextWrapper>
+
   )
 }
 
@@ -142,14 +150,6 @@ const AddNotesWithContext = (props) => {
   )
 }
 
-
-const RecallWithContext = (props) => {
-  return(
-  <SubjectsContextWrapper>
-  <Recall {...props}/>
-  </SubjectsContextWrapper>
-  )
-}
 
 
 
@@ -173,22 +173,20 @@ function HomeStack() {
     return (
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Home" component={HomeScreenWithContext} />
+        <Stack.Screen name="Session" component={SessionScreenWithContext} />
         <Stack.Screen name="NotesRecall" component={NotesRecall} />
         <Stack.Screen name="NotesRecallExplain" component={NotesRecallExplain} />
         <Stack.Screen name="NotesRecallComplete" component={NotesRecallComplete} />
-        <Stack.Screen name="RecallExplain" component={RecallExplain} />
+      
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
-        <Stack.Screen name="Recall" component={RecallWithContext} />
         <Stack.Screen name="AddSubject" component={AddSubject} />
-        <Stack.Screen name="SetTimer" component={SetTimer} />
-        <Stack.Screen name="TimerScreen" component={TimerScreenWithContext} />
-        <Stack.Screen name="TipsPage" component={TipsPage} />
+
+        <Stack.Screen name="NotesHome" component={NotesHome} />
         <Stack.Screen name="NotesFocused" component={NotesFocused} />
         <Stack.Screen name="RecalledNotes" component={RecalledNotes} />
-
         <Stack.Screen name="GlobalNotes" component={GlobalNotes} />
-        <Stack.Screen name="StudyFinished" component={StudyFinished} />
-        <Stack.Screen name="NotesHome" component={NotesHome} />
+
+    
    
         </Stack.Navigator>
     );
@@ -239,11 +237,11 @@ function UserStatsStack() {
 
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="UserInfo" component={UserInfoWithContext} />
-        <Stack.Screen name="SettingsOptions" component={SettingsOptions} />
         <Stack.Screen name="OpenSource" component={OpenSource} />
         <Stack.Screen name="TermsOfService" component={TermsOfService} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
         <Stack.Screen name="ThemeSettings" component={ThemeSettings} />
+        <Stack.Screen name="TimerSettings" component={TimerSettings} />
         </Stack.Navigator>
     );
   }

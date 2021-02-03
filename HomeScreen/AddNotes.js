@@ -67,7 +67,7 @@ function AddNotes(){
 
    <Input
    textStyle={{fontSize:16, fontWeight:'bold'}}
-   style={{marginBottom:4, marginTop:4, borderColor:'white', backgroundColor:theme["color-basic-100"]}}
+   style={{marginBottom:4, marginTop:4, borderColor:theme['background-basic-color-1'], backgroundColor:theme['background-basic-color-1']}}
    placeholder={'Main topic'}
    onChangeText={formikProps.handleChange('textTheme')}
     />
@@ -75,7 +75,7 @@ function AddNotes(){
   {/*  {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null} */}
    <Input
     placeholder={'Write something here'}
-    style={{backgroundColor:theme["color-basic-100"], borderColor:theme["color-basic-100"], marginTop:12}}
+    style={{backgroundColor:theme['background-basic-color-1'], borderColor:theme['background-basic-color-1'], marginTop:12}}
     textAlignVertical={'top'}
     textStyle={{fontSize:15, height:120}}
     multiline={true}

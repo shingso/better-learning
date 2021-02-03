@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, View, TouchableOpacity, SafeAreaView, } from 'react-native';
-import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction, Layout } from '@ui-kitten/components';
+import { Text, Layout } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -10,32 +10,31 @@ function TermsOfService(){
 
   return (
    
-    <Layout level='2' style={{ flex: 1, padding:16 }}>
-    <SafeAreaView style={{ flex: 1}}>
-    <TopHeader/>
-    <Text style={{marginBottom:20}} category='h2'>Terms and Conditions</Text>
-    <ScrollView>
+    <Layout level='2' style={{ flex: 1, paddingTop:20, paddingHorizontal:20 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+    <TopHeader title={'Terms and Conditions'}/>
+
+    <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 20}}>
     
     <Text style={styles.bodyText}>
-    By downloading or using the app, these terms will automatically apply to you – 
-    you should make sure therefore that you read them carefully before using the app. 
-    You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not 
-    allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other 
-    languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights 
-    and other intellectual property rights related to it, still belong to Shing So.
+    By downloading or using this application, these terms and conditions will automatically apply to you.
+    You are obligated to read and understand these terms carefully before using this application. 
+    You are not allowed to copy or modify this application, any parts of the application, or trademarks in any way. You are not 
+    allowed to attempt to extract the source code of the application, nor attempt to make derivative versions of this application. The application itself, and all the trademarks, copyrights, database rights 
+    and other intellectual property rights related to it belong to the developer of this application.
     </Text>
 
 
     <Text style={styles.bodyText}>
-    I am committed to ensuring that the app is as useful and efficient as possible. For that reason, we reserve 
-    the right to make changes to the app or to charge for its services, at any time and for any reason. We will never 
-    charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+    The development team is committed to ensuring that this application is as useful and efficient as possible. For that reason, we reserve 
+    the right, at any time and for any reason, to make changes to the app or to charge for its services. We will never 
+    charge you for the app or its services without making it clear to you exactly what you’re paying for.
     </Text>
 
 
     <Text style={styles.bodyText}>
-    The Better Learning app stores and processes personal data that you have provided to us, in order to provide my Service. 
-    It’s your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not 
+    The Better Learning app stores and processes personal data that you have provided to us. 
+    It is your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not 
     jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the
     official operating system of your device. It could make your phone vulnerable to malware/viruses/malicious programs, 
     compromise your phone’s security features and it could mean that the Better Learning app won’t work properly or at all.
@@ -43,8 +42,8 @@ function TermsOfService(){
 
 
     <Text style={styles.bodyText}>
-    The app does use third party services that declare their own Terms and Conditions.
-    Please refer to the Terms and Conditions of third party service providers used by this app:
+    This app uses third party services that declare their own Terms and Conditions.
+    Please refer to the Terms and Conditions of third party service providers used by this app for more information:
     Google Play Services,
     Google Analytics for Firebase
     </Text>
@@ -62,7 +61,7 @@ function TermsOfService(){
     If you’re using the app outside of an area with Wi-Fi, you should remember that your 
     terms of the agreement with your mobile network provider will still apply. As a result, 
     you may be charged by your mobile provider for the cost of data for the duration of the 
-    connection while accessing the app, or other third party charges. In using the app, you’re 
+    connection while accessing the app, or other third party charges. In using the app, you are
     accepting responsibility for any such charges, including roaming data charges if you use the app 
     outside of your home territory (i.e. region or country) without turning off data roaming. If you 
     are not the bill payer for the device on which you’re using the app, please be aware that we assume 
@@ -112,7 +111,7 @@ function TermsOfService(){
 
 
     <Text style={styles.bodyText}>
-    If you have any questions or suggestions about my Terms and Conditions, 
+    If you have any questions or suggestions about these Terms and Conditions, 
     do not hesitate to contact me at betterlearningdev@gmail.com.
     </Text>
 
@@ -129,7 +128,8 @@ const styles = StyleSheet.create({
 
   bodyText: {
     marginBottom:12,
-    marginHorizontal:4
+    marginHorizontal:4,
+    lineHeight:24
   },
 
 });

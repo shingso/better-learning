@@ -9,7 +9,7 @@ import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
-import { sessionsToHours } from '../helperFunctions';
+import { sessionsToHours, formatMinutes } from '../helperFunctions';
 
 import PushNotification from 'react-native-push-notification';
 
@@ -37,15 +37,13 @@ const findVariance = (arr) => {
 
 
 function IQScreen(){
-
-  
   const theme = useTheme()
+
+  //useEffect(()=>{console.log('ran')}, [theme])
+  
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
-  const timesStudiedMonthStat = studyStatsData.timesStudiedMonth
-  const timesStudiedTwoWeek = studyStatsData.timesStudiedTwoWeek
-  const timesStudiedTwoWeeksUnique = studyStatsData.timesStudiedTwoWeeksUnique
-  
+
   const uniqueDates = studyStatsData.uniqueDates
 
   const datesStudiedPastSeven = studyStatsData.datesStudiedPastSeven
@@ -56,11 +54,9 @@ function IQScreen(){
   const userStartStudyingDate = userData.startedStudying
 
   const allDateStats = studyStatsData.allDates
-  
+
   const lastStudied = userData.lastStudied
   
-  const lastWeekStudiedCount = studyStatsData.lastWeekStudiedCount
-  const lastWeekStudiedSet = studyStatsData.lastWeekStudiedSet
   const currentWeekStudiedCount = studyStatsData.timesStudiedWeek
   const currentWeekStudiedSet = studyStatsData.currentWeekStudiedSet
 
@@ -72,29 +68,6 @@ function IQScreen(){
     //borderBottomWidth:0.2, borderColor:theme['color-basic-300']
     return(
     
-  /*   <View style={{  alignItems:'center', paddingVertical:20, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
-    <Text style={{fontSize:14,  marginBottom:4, fontWeight:'bold'}}>{props.title}</Text>
-    <View style={{flexDirection:'row', alignItems:'center', marginBottom:20}}>
-    <Text style={{fontSize:10, color:theme['color-basic-600'], marginRight:4}}>{props.weekLabel}</Text>
-    <Icon name='calendar-outline' fill={theme['color-basic-600']} height={11} width={11}/>
-    </View>
-    <View style={{justifyContent:"space-between", flexDirection:'row', width:'100%'}}>
-    
-    <View style={{flexDirection:'row', alignItems:'center', marginRight:20}}>
-    <Text style={{marginRight:4,  fontSize:14, fontWeight:'bold'}}>{props.sessionCount} <Text style={{fontSize:11, color:theme['color-basic-600']}}>sessions</Text></Text>
-    <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
-    </View>
-
-
-    
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Text style={{marginRight:8}}>{sessionsToHours(props.sessionCount)}</Text>
-    <Icon name='clock' fill={theme['color-info-300']} height={14} width={14}/>
-    </View>
-    </View>
-
-    </View> */
-
     <View style={{  flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingTop:24, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
     
     <View>
@@ -115,7 +88,7 @@ function IQScreen(){
 
     
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Text style={{marginRight:8}}>{sessionsToHours(props.sessionCount)}</Text>
+    <Text style={{marginRight:8}}>{formatMinutes(props.minutesStudied)}</Text>
     <Icon name='clock' fill={theme['color-info-300']} height={14} width={14}/>
     </View>
     </View>
@@ -182,11 +155,20 @@ function IQScreen(){
   const [oneWeekAgoCount, setOneWeekAgoCount] = useState(0)
   const [twoWeekAgoCount, setTwoWeekAgoCount] = useState(0)
 
+
+  const [currentWeekMinutesStudied, setCurrentWeekMinutesStudied] = useState(0)
+  const [oneWeekAgoMinutesStudied, setOneWeekAgoMinutesStudied] = useState(0)
+  const [twoWeekAgoMinutesStudied , setTwoWeekAgoMinutesStudied ] = useState(0)
+
   useEffect(()=>{
 
     let currentWeekCount = 0
     let oneWeekAgoCount = 0
     let twoWeekAgoCount = 0
+
+    let currentWeekMinutesStudied = 0
+    let oneWeekAgoMinutesStudied = 0
+    let twoWeekAgoMinutesStudied = 0
 
     allDateStats.forEach(element => {
 
@@ -194,14 +176,17 @@ function IQScreen(){
 
       if(isWithinInterval(newDate, {start:startOfCurrentWeek, end: endOfCurrentWeek})){
         currentWeekCount += 1
+        currentWeekMinutesStudied += element.minutesStudied
       } 
        
       if(isWithinInterval(newDate, {start:startOfWeekOneWeek, end: endOfWeekOneWeek})){
         oneWeekAgoCount += 1
+        oneWeekAgoMinutesStudied += element.minutesStudied
       } 
 
       if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
         twoWeekAgoCount += 1
+        twoWeekAgoMinutesStudied  += element.minutesStudied
       }
       
     });
@@ -209,6 +194,11 @@ function IQScreen(){
     setCurrentWeekCount(currentWeekCount)
     setOneWeekAgoCount(oneWeekAgoCount)
     setTwoWeekAgoCount(twoWeekAgoCount)
+
+    setCurrentWeekMinutesStudied(currentWeekMinutesStudied)
+    setOneWeekAgoMinutesStudied(oneWeekAgoMinutesStudied)
+    setTwoWeekAgoMinutesStudied(twoWeekAgoMinutesStudied)
+
 
   
   },[allDateStats])
@@ -430,7 +420,7 @@ function IQScreen(){
   <Layout level='2' style={{flex:1, padding:16}}>
 
 
-  <Card style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
+  <Card onPress={()=>{console.log(theme['background-basic-color-4'])}} style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
 
   <ImageBackground
        style={{
@@ -453,13 +443,13 @@ function IQScreen(){
   </ImageBackground>
 
   <View style={{}}>
-  <TimeComponent title={'Current Week'} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()}/>
+  <TimeComponent title={'Current Week'} minutesStudied={currentWeekMinutesStudied} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()}/>
   </View>
 
   <View>
-  <TimeComponent title={'Last Week'} sessionCount={oneWeekAgoCount} weekLabel={getLastWeekLabel()}/>
+  <TimeComponent title={'Last Week'} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()}/>
   </View>
-  <TimeComponent title={'Two Weeks Ago'} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
+  <TimeComponent title={'Two Weeks Ago'} minutesStudied={twoWeekAgoMinutesStudied} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
   {/* <TimeComponent title={'28 day Weekly Average'} sessionCount={11} weekLabel={get28DaysLabel()}/>
   <TimeComponent title={'Since Started Weekly Average'} sessionCount={8} weekLabel={getStartDateLabel()}/> */}
   </Card>
@@ -516,7 +506,7 @@ function IQScreen(){
 {/* calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7 */}
     
     {(calculateDaysSinceLastStudy() > 28 && calculateDaysSinceStartedStudy() > 7) &&
-    <Card style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
+    <Card  style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
      <Image
           style={{
             height:120,
@@ -579,7 +569,7 @@ function IQScreen(){
     todayTextColor: theme['color-primary-800'],
     textMonthFontWeight: 'bold',
     textDayFontSize: 13,
-    calendarBackground: theme['color-basic-100'],
+    calendarBackground: null,
     calendarHeaderStyle:{
       color:'green'
     },
@@ -587,8 +577,11 @@ function IQScreen(){
     textDayHeaderFontSize: 13,
     textDayHeaderFontFamily:'OpenSans-Bold',
     textDayFontFamily:'OpenSans-Regular',
+    textDisabledColor:'red',
     textDayStyle:{
-      marginTop:6
+      marginTop:6,
+      color: 'purple'//theme['text-basic-color']
+      
     }
   }}
     />

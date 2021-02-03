@@ -27,8 +27,8 @@ function Discouraged(){
 
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Just start'}
-    bodyText={'If you are procrasting, start a study session and work for the timer'}
+    headerText={'Try to start everyday'}
+    bodyText={'If you are procrasting, start a study session and work for the timer. Starting is the hardest part'}
     />
 
     <GuideComponent 
@@ -39,9 +39,9 @@ function Discouraged(){
 
     
     <GuideComponent 
-    picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Focus on putting in the time, not whether you figured something out'}
-    bodyText={'Dont judge a study session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
+    picture={require('../assets/images/puttingintime.png')} 
+    headerText={'Focus on the process and putting in the time'}
+    bodyText={'Judge a session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
     />
 
    

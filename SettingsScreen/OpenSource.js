@@ -10,11 +10,11 @@ function OpenSource(){
 
   return (
    
-    <Layout level='2' style={{ flex: 1, padding:16 }}>
-    <SafeAreaView style={{ flex: 1}}>
-    <TopHeader/>
-    <Text style={{marginBottom:20}} category='h2'>Open Source Libraries</Text>
-    <ScrollView>
+    <Layout level='2' style={{ flex: 1, paddingTop:20, paddingHorizontal:20 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+    <TopHeader title={'Open Source Libraries'}/>
+
+    <ScrollView style={{marginTop: 20}}>
     
 
     <Text style={styles.bodyText} category='s1'>react-native-ui-kitten</Text>

@@ -28,7 +28,7 @@ function Inspiration(){
     <GuideComponent 
     picture={require('../assets/images/boybutterfly.png')} 
     headerText={'Put in the time and the results will come'}
-    bodyText={'Small amounts of progress add up. Day by day progress might seem insignificant, but'}
+    bodyText={'Small amounts of progress add up. Day by day progress might seem insignificant, but over a long period of time, your progress will become more apparent.'}
     />
 
     <GuideComponent 

@@ -39,8 +39,8 @@ function HowOften(){
 
     <GuideComponent 
     picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Use your own judgement and scale up slowly'}
-    bodyText={'Remember that one per day over the span of a week will result in better learning than many study sessions in one day'}
+    headerText={'Slowly ramp up your study session'}
+    bodyText={'When you get into the rhythm of studying consistently, you can add more study sessions.'}
     //Lot in one day is not conductive to building good study habits. The more that you do in a day the more tired and difficult working the other days will bve
     />
 

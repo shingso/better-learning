@@ -9,7 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
 
 const TrashIcon = (props) => (
-  <Icon {...props} width={22} height={22} name='trash-2-outline' />
+  <Icon {...props} width={20} height={20} name='trash-2-outline' />
+);
+
+const SearchIcon = (props) => (
+  <Icon {...props} width={16} height={16} name='search-outline' />
 );
 
 
@@ -22,9 +26,26 @@ function NotesFocused({ route, navigation }){
     const { subjectID } = route.params
     const { title } = route.params
     const [ loading, setLoading ] = useState(true);
-    const [ todos, setTodos ] = useState([]);
+    const [ notes, setNotes ] = useState([]);
+    const [ filteredNotes, setFilteredNotes ] = useState([]);
     const [ visible, setVisible ] = useState(false)
     const [ visibleConfirm, setVisibleConfirm ] = useState(false)
+    const [ value, setValue ] = useState('');
+
+
+    const textInputChange = (input) => {
+      
+      if(input != ''){
+      const regexp = new RegExp(input, 'i')
+      const result = notes.filter(x => regexp.test(x.textTheme) && x.textTheme != null)
+      console.log(input, result)
+      setFilteredNotes(result)
+      setValue(input)
+      } else {
+        setFilteredNotes(notes)
+        setValue(input)
+      }
+    }
  
 
     const renderItem = (info) => (
@@ -49,13 +70,16 @@ function NotesFocused({ route, navigation }){
       
       />
 
-      <Text style={{textAlign:'center', marginTop:40, fontSize:16}}>Notes for <Text category='h6'>{title}</Text> will be organized here</Text>
+      <Text style={{textAlign:'center', marginTop:40, fontSize:16}}>No Notes Found</Text>
       <Text style={{marginTop:20, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center'}}>You don't have any notes for {title} yet</Text>
 
      
       </View>
       
     )
+
+
+
 
 
 
@@ -95,32 +119,28 @@ function NotesFocused({ route, navigation }){
 
 
    
-    const renderHeader = () => (
+    /* const renderHeader = () => (
         
-      <View style={{marginBottom:12}}>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+
+      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
       <TopHeader title={title}/>
-      <View style={{flexDirection:'row'}}>
-      
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       </View>
-      </View>
-   {/*    <Text style={{marginTop:12, fontWeight:'bold'}} category='h6'>{title}</Text> */}
-      </View>
-    );
+
+    ); */
  
     
+  
  
     
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('subject', '==', subjectID)
+        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('subject', '==', subjectID).orderBy('timeStamp','desc')
         return ref.onSnapshot(querySnapshot => {
           if(!querySnapshot.metadata.hasPendingWrites){
           const list = [];
           querySnapshot.forEach(doc => {
-
-
+      
             const { text, timeStamp, textTheme } = doc.data();
 
             list.push({
@@ -132,13 +152,14 @@ function NotesFocused({ route, navigation }){
             });
           });
       
-          setTodos(list);
+          setNotes(list);
+          setFilteredNotes(list)
     
           if (loading) {
             setLoading(false);
           }
 
-        }
+          }
 
         });
       }, []);
@@ -147,23 +168,56 @@ function NotesFocused({ route, navigation }){
         return null; 
     }
 
+
+    if(notes.length == 0){
+      return(   
+      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingVertical:12}}>
+      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+      <TopHeader title={title}/>
+      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
+      </View>
+      <View style={{flex: 1,alignItems:'center', marginTop:60,justifyContent:'center',padding:16}}>
+      <Image
+        style={{width: 420, height: 250, resizeMode:'contain', marginRight:70, marginBottom:12}}
+        source={require('../assets/images/notesemptynoline.png')}
+      
+      />
+
+      <Text style={{textAlign:'center', marginTop:40, fontSize:16}}>Notes for <Text category='h6'>{title}</Text> will be organized here</Text>
+      <Text style={{marginTop:20, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center'}}>You don't have any notes for {title} yet</Text>  
+      </View>
+      </SafeAreaView>
+      )
+    }
   
 
     return (
-       
 
-       
 
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingVertical:12}}>
+
+      <View style={{marginBottom:12}}>
+      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:8}}>
+      <TopHeader title={title}/>
+      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       
-   
+      </View>
+      <Input
+            placeholder='Search themes'
+            value={value}
+            accessoryLeft={SearchIcon}
+            onChangeText={nextValue => textInputChange(nextValue)}
+          />
+      </View>
+      
+     
       <List
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
-         data={todos}
+         data={filteredNotes}
          renderItem={renderItem}
          ListEmptyComponent={renderEmpty}
-         ListHeaderComponent={renderHeader}
+         showsVerticalScrollIndicator={false}
          />
 
         <Modal
@@ -171,11 +225,9 @@ function NotesFocused({ route, navigation }){
           backdropStyle={styles.backdrop}
           >
           <Card style={{marginHorizontal:40}} disabled={true}>
-          
           <View style={{justifyContent:'center', alignItems:'center'}}>
           <Text style={{marginVertical:12, textAlign:'center'}}>Delete this subject?</Text> 
           <Text style={{marginBottom:20 ,textAlign:'center'}}>All notes will be lost and cannot be recovered</Text>
-
           <Text style={{  marginBottom:12 }}>Type Delete to confirm</Text>  
           <StatefulModalContent/>
           
@@ -219,21 +271,19 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    marginVertical:12,
-    marginHorizontal:20,
-    paddingBottom:100,
-    borderColor:'red',
-    
+  
+    paddingBottom:80,
+      
   },
 
   container:{
   
   },
 
- 
   
   item: {
-    paddingVertical:32,
+    paddingTop:8,
+    paddingBottom:32,
    
   },
 

@@ -3,12 +3,8 @@ import { StyleSheet, View, TouchableOpacity, SafeAreaView, } from 'react-native'
 import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction, Layout } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../themeContext';
+import TopHeader from '../UtilComponents/TopHeader'
 
-
-
-const BackIcon = (props) => (
-  <Icon {...props} name='arrow-back' />
-);
 
 
 
@@ -16,23 +12,17 @@ function ThemeSettings(){
 
   const themeContext = useContext(ThemeContext);
   const navigation = useNavigation();
- 
- 
-  const navigateBack = () => {
-    navigation.goBack();
-  };
-  
-  const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
-  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <TopNavigation  alignment='center' accessoryLeft={BackAction}/>
-    
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Layout style={{ flex: 1, paddingHorizontal:20, paddingTop:12 }}>
+    <TopHeader title={'Theme Settings'}/>
+    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+    <Text style={{textAlign:'center', marginBottom:32 }}>Toggle the theme of the application between dark and light mode</Text>
 
-      <Button style={{ marginVertical: 4 }} onPress={themeContext.toggleTheme}>TOGGLE THEME</Button>
+  <Text style={{textAlign:'center', marginBottom:32 }}>Current Theme: {themeContext.theme}</Text>
+    <Button style={{ borderRadius:30, paddingHorizontal:20 }} onPress={themeContext.toggleTheme}>TOGGLE THEME</Button>
+    </View>
     </Layout>
   </SafeAreaView>
   );

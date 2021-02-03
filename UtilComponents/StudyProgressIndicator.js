@@ -119,7 +119,6 @@ function StudyProgressIndicator(props){
         stepIndicatorFinishedColor: theme['color-primary-200'],
         stepIndicatorUnFinishedColor:  theme['color-basic-400'],
         stepIndicatorCurrentColor: theme['color-primary-200'],
-    
         labelColor: theme['color-basic-600'],
         labelSize: 9,
         currentStepLabelColor: theme['color-primary-700'],

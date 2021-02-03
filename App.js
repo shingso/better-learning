@@ -10,6 +10,7 @@ import { default as mapping } from './mapping.json';
 import { ThemeContext } from './themeContext';
 import { AuthContextWrapper } from './AuthContext'
 import { saveThemeValue } from './helperFunctions'
+import { TimerSettingsContextWrapper } from './TimerSettingsContext'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -48,7 +49,9 @@ export default  () => {
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <ApplicationProvider customMapping={mapping} {...eva} theme={{...eva[theme], ...themeJson}}>
             <AuthContextWrapper>
+            <TimerSettingsContextWrapper>
                 <NavigationStack/>
+            </TimerSettingsContextWrapper>
             </AuthContextWrapper>
             </ApplicationProvider>
             </ThemeContext.Provider>

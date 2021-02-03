@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground, Image } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,7 @@ import { UserDataContext } from '../UserDataContext'
 
 function HomeScreen(){
 
-  
+    const ref = useRef(markedDatesFunc);
 
 
     const theme = useTheme()
@@ -22,7 +22,7 @@ function HomeScreen(){
     const timesStuidedToday = studyStatsData.timesStudiedToday
 
     useEffect(() => {
-     
+    
     }, [theme]);
 
     const markedDatesFunc = date => {
@@ -30,7 +30,7 @@ function HomeScreen(){
 
       let result = new Date(date)
       let newDateConverted = format(result, 'yyyy-MM-dd')
-  
+    
 
       //if the date is in the dictonary then mark it. 
       if (studyStatsData.uniqueDates.has(newDateConverted)) { // Thursdays
@@ -57,6 +57,7 @@ function HomeScreen(){
     const startOfCurrentWeek = startOfWeek(currentDate)
     const endOfCurrentWeek =  endOfWeek(currentDate)
     const startOfCurrentMonth = startOfMonth(currentDate)
+    //const startDate = userData.timeStamp.toDate()
 
     
     const getRecallAvailable = () => {
@@ -101,7 +102,7 @@ function HomeScreen(){
       highlightDateNameStyle={{color:theme['color-info-600'], fontWeight:'bold'}}
       showMonth={false}
       calendarAnimation={{type:"parallel", duration:0}}
-      
+      ref={ref}
       style={{height:80, paddingTop: 0, paddingBottom: 0, marginHorizontal: -16,
         marginVertical: -20, backgroundColor:theme["background-basic-color-1"]}}
       calendarHeaderStyle={{color:'white'}}
@@ -141,7 +142,7 @@ function HomeScreen(){
 
 
 
-    <Card style={{marginTop:16,borderWidth:0.6}}  onPress={()=>navigation.navigate('SetTimer')}>
+    <Card style={{marginTop:16,borderWidth:0.6}}  onPress={()=>navigation.navigate('Session')}>
     <View style={{  alignItems:'center', justifyContent:'center'}}>
     <Image
           style={{

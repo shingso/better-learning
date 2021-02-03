@@ -7,12 +7,7 @@ import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider } from '@
 import TopHeader from '../UtilComponents/TopHeader'
 
 
-const EditIcon = (props) => (
-  <Icon {...props} width={25} height={25} name='edit-outline'/>
-);
-
-
-function GlobalNotes({ navigation }){
+function GlobalNotes(){
     
  
     const authContext = useContext(AuthContext)
@@ -69,12 +64,12 @@ function GlobalNotes({ navigation }){
     );
  
     
- 
-    
+ //
+    //
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('recallNote', '==', false)
-        return ref.orderBy("timeStamp", 'desc').onSnapshot(querySnapshot => {
+        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('recalled', '==', false).orderBy("timeStamp", 'desc')
+        return ref.onSnapshot(querySnapshot => {
           if(!querySnapshot.metadata.hasPendingWrites){
           const list = [];
           querySnapshot.forEach(doc => {

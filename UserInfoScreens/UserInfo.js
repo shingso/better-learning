@@ -10,7 +10,7 @@ import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { UserDataContext } from '../UserDataContext'
 import auth from '@react-native-firebase/auth';
 
-import { sessionsToHours } from '../helperFunctions';
+import { sessionsToHours, formatMinutes } from '../helperFunctions';
 
 
 
@@ -30,7 +30,7 @@ function UserInfo(){
 
     const navigation = useNavigation();
     const userStartDate = userData.timeStamp  
-    const timesStudiedStat = studyStatsData.timesStudied
+    const timesStudiedStat = studyStatsData.totalMinutesStudied
 
     const ListComponent = (props)=>(
       <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
@@ -81,7 +81,7 @@ function UserInfo(){
     <Text style={{marginLeft:16}} category={'s1'}>Days Studied</Text>
     </View>
    
-    <Text style={{fontSize:14,fontWeight:'bold'}}>{86}<Text style={{color:theme['color-basic-600'], fontSize:11}}> days</Text></Text>
+    <Text style={{fontSize:14,fontWeight:'bold'}}>{studyStatsData.uniqueDates.size} <Text style={{color:theme['color-basic-600'], fontSize:11}}> days</Text></Text>
 
 
     </View>
@@ -93,7 +93,7 @@ function UserInfo(){
     <Icon fill={theme['color-basic-500']} width={18} height={18} name='trending-up-outline'/>
     <Text style={{marginLeft:16}} category={'s1'}>Total Sessions</Text>
     </View>
-    <Text style={{fontSize:14,fontWeight:'bold'}}>{timesStudiedStat} <Text style={{color:theme['color-basic-600'], fontSize:11}}> sessions</Text></Text>
+    <Text style={{fontSize:14,fontWeight:'bold'}}>{studyStatsData.timesStudied} <Text style={{color:theme['color-basic-600'], fontSize:11}}> sessions</Text></Text>
     </View>
 
     <View style={{marginBottom:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
@@ -101,17 +101,18 @@ function UserInfo(){
     <Icon fill={theme['color-basic-500']} width={18} height={18} name='clock-outline'/>
     <Text style={{marginLeft:16}} category={'s1'}>Total Time</Text>
     </View>
-    <Text>{sessionsToHours(timesStudiedStat)}</Text>
+    <Text>{formatMinutes(timesStudiedStat)}</Text>
     </View>
 
     </Card> 
 
 
     <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/>
+    <ListComponent path={'TimerSettings'} iconName={'bell-outline'} title={'Session Timer Settings'}/>
     <ListComponent path={'TermsOfService'} iconName={'file-text-outline'} title={'Terms And Conditions'}/>
     <ListComponent path={'PrivacyPolicy'} iconName={'lock-outline'} title={'Privacy Policy'}/>
-    <ListComponent path={'Open Source Libraries'} iconName={'droplet-outline'} title={'Theme Settings'}/>
-    <ListComponent path={'ThemeSettings'} iconName={'book-open-outline'} title={'Open Source Libraries'}/>
+    <ListComponent path={'OpenSource'} iconName={'book-open-outline'} title={'Open Source Libraries'}/>
+
 
     <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>

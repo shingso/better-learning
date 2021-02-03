@@ -39,7 +39,7 @@ function LearningTips(){
     <GuideComponent 
     picture={require('../assets/images/girltakingnotes.png')} 
     headerText={'Be energized and ready to study'}
-    bodyText={'Study when you are feeling good. The more energized you are the most focused and attentive you will be'}
+    bodyText={'The more energized you are, the more focused and attentive you will be. The more attentive you are, the better you will learn'}
     />
 
     
