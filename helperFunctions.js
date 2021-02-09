@@ -51,7 +51,10 @@ export async function addUser(userID) {
       timeStamp: firestore.FieldValue.serverTimestamp(),
       lastStudied: firestore.FieldValue.serverTimestamp(),
       lastRecalled: null,
-      startedStudying: null
+      startedStudying: null,
+      totalNotes:0,
+      totalRecallNotes:0,
+      
     });
  
     }
@@ -165,11 +168,12 @@ export async function addRecallNote(userID, ID, text, textTheme, subject) {
   const batch = firestore().batch();
   const ref = firestore().collection('Users').doc(userID)
   const ref2 = firestore().collection('Users').doc(userID).collection('GlobalNotes').doc(docID)
-
+  const increment = firestore.FieldValue.increment(1);
   //if the date since last study is greater than 14 than we need to update started studying
 
   batch.update(ref, {
-    lastRecalled: firestore.FieldValue.serverTimestamp()
+    lastRecalled: firestore.FieldValue.serverTimestamp(),
+    totalRecallNotes: increment
   })
 
   batch.set(ref2, {   
@@ -186,13 +190,19 @@ export async function addRecallNote(userID, ID, text, textTheme, subject) {
 }
 
 export async function addNote(userID, subject, text, textTheme) {
-
+  const increment = firestore.FieldValue.increment(1);
   const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes')
+
+  const ref3 = firestore().collection('Users').doc(userID)
+  await ref3.update({
+    totalNotes: increment
+  });
 
   if(subject != ''){
     const ref2 = firestore().collection('Users').doc(userID).collection('Subjects').doc(subject)
     await ref2.update({
-      lastUsed: firestore.FieldValue.serverTimestamp()
+      lastUsed: firestore.FieldValue.serverTimestamp(),
+      noteCount: increment
     });
 
   }
@@ -244,65 +254,14 @@ export async function addNote(userID, subject, text, textTheme) {
 }
 
 
-export function sessionsToHours(sessions){
-  const theme = useTheme()
-  const labelStyle = {
-    fontSize:11,
-    color:theme['color-basic-600']
-  }
-
-  const headerStyle = {
-    fontSize:14,
-    fontWeight:'bold'
-  }
-
-  
-
-  let minutes = (sessions * (25))
-  let hours = Math.floor(minutes/60)
-  let remainingMinutes = (minutes % 60)
-
-  //let seconds = Math.floor((duration / 1000) % 60)
-  //let minutes = Math.floor((duration / (1000 * 60)) % 60)
-  //minutes = (minutes < 10) ? "0" + minutes : minutes;
-      //seconds = (seconds < 10) ? "0" 
-  console.log(minutes, hours, remainingMinutes)
-
-  if(remainingMinutes === 0 && hours === 0){
-    return <Text style={headerStyle}>0  <Text style={labelStyle}>mins</Text></Text>
-  }
-
-  if(remainingMinutes > 0 && hours === 0){
-    return <Text style={headerStyle}>{remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
-  }
-
-  if(remainingMinutes > 0 && hours === 1){
-    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hour</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
-  }
-
-  if(remainingMinutes > 0){
-    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
-  }
-
-  return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text></Text>
-
-}
-
 
 export function formatMinutes(time){
   const theme = useTheme()
   const labelStyle = {
-    fontSize:11,
-    color:theme['color-basic-600']
-  }
-
-  const headerStyle = {
-    fontSize:14,
-    fontWeight:'bold'
+    color:theme['text-hint-color']
   }
 
   
-
   let minutes = (time)
   let hours = Math.floor(minutes/60)
   let remainingMinutes = (minutes % 60)
@@ -314,22 +273,22 @@ export function formatMinutes(time){
   console.log(minutes, hours, remainingMinutes)
 
   if(remainingMinutes === 0 && hours === 0){
-    return <Text style={headerStyle}>0  <Text style={labelStyle}>mins</Text></Text>
+    return <Text category='s2'>0  <Text category='c2' style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0 && hours === 0){
-    return <Text style={headerStyle}>{remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+    return <Text category='s2'>{remainingMinutes} <Text category='c2' style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0 && hours === 1){
-    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hour</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+    return <Text category='s2'>{hours} <Text category='c2' style={labelStyle}>hour</Text>  {remainingMinutes} <Text category='c2' style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0){
-    return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text>  {remainingMinutes} <Text style={labelStyle}>mins</Text></Text>
+    return <Text category='s2'>{hours} <Text category='c2' style={labelStyle}>hours</Text>  {remainingMinutes} <Text category='c2' style={labelStyle}>mins</Text></Text>
   }
 
-  return <Text style={headerStyle}>{hours} <Text style={labelStyle}>hours</Text></Text>
+  return <Text category='s2'>{hours} <Text category='c2' style={labelStyle}>hours</Text></Text>
 
 }
 
@@ -340,5 +299,8 @@ export function msToTime(duration){
   let minutes = Math.floor((duration / (1000 * 60)) % 60)
   seconds = (seconds < 10) ? "0" + seconds : seconds;
 
+  if(minutes == 0){
+    return seconds
+  }
   return  minutes + ":" + seconds
 }

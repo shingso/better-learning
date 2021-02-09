@@ -125,7 +125,7 @@ function HomeScreen(){
     </Card>
 
 
-    <Card disabled={!getRecallAvailable()} style={{marginTop:16, borderWidth:0.5}} onPress={()=>{navigation.navigate('NotesRecallExplain')}}>
+    <Card disabled={false} style={{marginTop:16, borderWidth:0.5}} onPress={()=>{navigation.navigate('NotesRecallExplain')}}>
   
     <View style={{ flexDirection:'row', justifyContent:'space-between', paddingVertical:4 }}>
     <Text style={{marginRight:20, fontSize:15, fontWeight:'bold', letterSpacing:0.5}} >Daily Recall</Text>
@@ -159,7 +159,7 @@ function HomeScreen(){
     <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-basic-100'], padding:8, paddingHorizontal:12,borderRadius:4}}>
     <Text style={{color:theme['color-primary-800'], fontSize:16, fontWeight:'bold'}}>{timesStuidedToday}</Text>  
     </View> 
-    <Text style={{marginTop:12, marginBottom:28,fontSize:14, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-600']}}>Stay focused and learn more effectively with a guided study session</Text>
+    <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['text-hint-color']}}>Learn more effectively with a guided study session</Text>
     </View>
     </Card> 
 
@@ -175,7 +175,7 @@ function HomeScreen(){
         />
     <View style={{alignItems:'center'}}>
     <Text category='h6'>Your Notes</Text>
-    <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600']}}>A collection of your thoughts</Text>
+    <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['text-hint-color']}}>A collection of your thoughts</Text>
     </View>
     </Card>
     </SafeAreaView>

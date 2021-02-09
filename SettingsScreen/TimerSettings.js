@@ -42,6 +42,8 @@ function TimerSettings(){
     <Layout style={{ flex: 1, paddingHorizontal:20, paddingTop:12 }}>
     <TopHeader title={'Session Timer Settings'}/>
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+
+    <Text style={{marginBottom:40}} category='h1'>{timerSettings.timeSettings}</Text> 
     <Text style={{marginBottom:12}}>Current study session time is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings}</Text> minutes</Text>
     
     <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -54,9 +56,12 @@ function TimerSettings(){
         onSelect={index => setSelectedIndex(index)}>
         {data.map(renderOption)}
     </Select>
-    <Button style={{marginLeft:8 }} onPress={()=>storeData(data[selectedIndex.row].time)}>C</Button>
+    
     </View>
 
+    <View style={{flexDirection:'row'}}>
+    <Button style={{marginTop:20, borderRadius:30, flex:1, marginHorizontal:20}} onPress={()=>storeData(data[selectedIndex.row].time)}>Set Session Timer</Button>
+    </View>
    
     </View>
     </Layout>

@@ -16,7 +16,7 @@ function GuidesHome(){
 
   
 
-    const todos = [{title:'How do I Learn?', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
+    const topics = [{title:'What is a study session?', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
      {title:'What Is Learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendarmark.png')},
      {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouragedbackground.png')},
@@ -30,7 +30,7 @@ function GuidesHome(){
 
       <Image
           style={{
-            height:120,
+            height:100,
             width:screenWidth,
             marginBottom:28,
             marginTop:-16,
@@ -39,16 +39,9 @@ function GuidesHome(){
   
           source={info.item.imagePath}
         />
-      {/* <ImageBackground opacity={0.51} resizeMode='cover'  source={info.item.imagePath} style={styles.image}>
-      <View style={{justifyContent:'space-between'}}>
-      <Text category='s1' style={{marginBottom:8 }}>{info.item.title}</Text>
-      <Text>{info.item.bodyText}</Text>
-      </View>
-      </ImageBackground>
- */}
-      <Text category='h6' style={{marginBottom:8, textAlign:'center' }}>{info.item.title}</Text>
-      <Text  style={{marginBottom:16, textAlign:'center', letterSpacing:0.2, color:theme['color-basic-600']}}>{info.item.bodyText}</Text>
-
+     
+      <Text category='h6' style={{marginBottom:12, textAlign:'center' }}>{info.item.title}</Text>
+      <Text category='p1' style={{marginBottom:16, textAlign:'center', letterSpacing:0.2, color:theme['text-hint-color']}}>{info.item.bodyText}</Text>
     
       </Card>
 
@@ -64,9 +57,9 @@ function GuidesHome(){
         <SafeAreaView style={{flex: 1}}>
      
         <List
-        style={styles.container}
+   
         contentContainerStyle={styles.contentContainer}
-        data={todos}
+        data={topics}
         renderItem={renderItem}
 
         />
@@ -84,11 +77,7 @@ export default GuidesHome
 
 
 const styles = StyleSheet.create({
-    container: {
-      paddingVertical:12,
-     
-    },
-
+    
     image: {
       flex: 1,
       marginTop:-24,
@@ -102,7 +91,8 @@ const styles = StyleSheet.create({
     contentContainer: {
       paddingHorizontal: 20,
       paddingVertical: 8,
-      paddingBottom:32
+      paddingBottom:32,
+ 
     },
 
     item: {

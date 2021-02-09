@@ -26,8 +26,29 @@ const TextSchema = Yup.object().shape({
   
   });
   
-  
+
 let notif = new NotifService();
+
+
+const BodyComponent = (props) => (
+  <View style={{flex:1, justifyContent:'center'}}>
+  <Image
+        style={{
+          width:420,
+          height:180,
+          alignSelf:'center',
+          resizeMode:'contain',
+          marginBottom:48
+        }}
+        source={props.pictureFile}
+      />
+  
+  <View>
+  <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>{props.title}</Text></Text>
+  <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:14,color:props.bodyTextColor, textAlign:'center', marginHorizontal:12}}>{props.bodyText}</Text>
+  </View>
+  </View>
+)
 
 function Session(){
     
@@ -47,6 +68,10 @@ function Session(){
     const navigation = useNavigation();
     const authContext = useContext(AuthContext)
     const timerSettings = useContext(TimerSettingsContext)
+
+
+  
+      
 
     useEffect(() => {
 
@@ -93,6 +118,7 @@ function Session(){
         }
       
         return function cleanup(){
+          // snotif.cancelAll()
           BackgroundTimer.stopBackgroundTimer()
         }
       
@@ -161,14 +187,43 @@ function Session(){
     
     {studySessionPosition == 0 &&
     <View style={{flex:1}}>
-    <View style={{flex:1, justifyContent:'center'}}> 
+
+    
+    <BodyComponent
+    pictureFile={require('../assets/images/timev2-01.png')}
+    title={'Get ready to focus on studying'}
+    bodyText={<Text>Start the study session and a <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will start. During this time stay engaged in studying.</Text>}
+    bodyTextColor={theme['color-basic-700']}
+   />
+
+  {/* <View style={{flex:1, justifyContent:'center'}}>
+      <Image
+            style={{
+              width:420,
+              height:180,
+              alignSelf:'center',
+              resizeMode:'contain',
+              marginBottom:48
+            }}
+            source={require('../assets/images/timev2-01.png')}
+          />
+      
+      <View>
+      <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>{'Get ready to focus on studying'}</Text></Text>
+      <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:14,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:12}}><Text>Start the study session and a <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will start. During this time stay engaged in studying.</Text></Text>
+      </View>
+      </View> */}
+
+    {/* <View style={{flex:1, justifyContent:'center'}}> 
     <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>Start the study session and a <Text category='h5' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will begin.</Text>
     <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12, marginTop:32}}>While the timer is running, stay <Text category='h5' style={{fontWeight:'bold'}}>focused and engaged</Text> on studying.</Text>
-    </View>
+    </View> */}
+
+    
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
-    <View style={{flexDirection:'row',  marginBottom:16, alignItems:'center'}}>
-    <Text category='c1'>Active Studiers: </Text>
-    <Text  category='c1' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
+    <View style={{flexDirection:'row',  marginBottom:16, alignItems:'flex-end'}}>
+    <Text category='c2' style={{color:theme['text-hint-color']}}>Active Studiers: </Text>
+    <Text category='c1' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
     </View>
     <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
     <Button style={styles.button} size={'large'} onPress={startStudySession}>
@@ -184,27 +239,22 @@ function Session(){
     {!hasEnded &&
 
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-    <Animated.Text style={{ fontSize:70,fontFamily:'OpenSans-Bold', color:theme['text-basic-color']}}>
-    { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : '00:00'}
+    <Animated.Text style={{fontSize:60, color:theme['text-basic-color']}}>
+    { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : ''}
     </Animated.Text>
     </View>
 
     }
 
     {(hasEnded && visible) &&
+    
     <View style={{flex:1}}>
-    <Image
-        style={{
-            width:350,
-            height:300,
-            resizeMode:'contain'
-        }}
-        source={require('../assets/images/studycompletev2.png')}
+    <BodyComponent
+    pictureFile={require('../assets/images/studycompletev2.png')}
+    title={'Thats it for studying!'}
+    bodyText={'Focus study time is complete'}
+    bodyTextColor={theme['color-basic-700']}
     />
-
-    <View style={{flex:1, justifyContent:'center',}}>
-    <Text category='h5' style={{textAlign:'center'}}>Thats it for studying!</Text>
-    </View>
     <View style={styles.buttonContainer}>
     <Button style={styles.button} size='large' onPress={()=>toRecall()}>On to recall</Button>
     </View>
@@ -215,24 +265,14 @@ function Session(){
 
 
     {studySessionPosition == 2 &&
-    <View style={{flex:1, justifyContent:'center', backgroundColor:'blue'}}>
     <View style={{flex:1, justifyContent:'center'}}>
-    <Image
-          style={{
-            width:420,
-            height:180,
-            alignSelf:'center',
-            resizeMode:'contain',
-            marginBottom:48
-          }}
-          source={require('../assets/images/recallexplain.png')}
-        />
-    
-    <View>
-    <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>Write down what you have just learned</Text></Text>
-    <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:16,color:theme['color-basic-600'], textAlign:'center'}}>In the next screen, type out what you can recall about what you just learned</Text>
-    </View>
-    </View>
+
+    <BodyComponent pictureFile={require('../assets/images/recallexplain.png')} 
+    title={'Write down what you have just learned'}
+    bodyText={'In the next screen, type out what you can recall about what you just learned'}
+    bodyTextColor={theme['color-basic-700']}
+    />
+
     <View style={styles.buttonContainer}>
     <Button size='large' style={styles.button} onPress={()=>setStudySessionPosition(studySessionPosition+1)}>I'm ready to write</Button>
     </View>
@@ -254,7 +294,7 @@ function Session(){
        
     {formikProps => (
     <React.Fragment> 
-   {/*  <Text category='h5' style={{marginTop:20, marginBottom:12, fontWeight:'bold', lineHeight:26}}>Think about what you just learned and type it out</Text> */}
+
     <View style={{flex:1, marginHorizontal:8}}>
     <View style={{marginBottom:20, marginLeft:18}}>
     <FolderSelectionComponent/>
@@ -294,23 +334,14 @@ function Session(){
 
     {studySessionPosition == 4 && 
     <View style={{flex:1, justifyContent:'center'}}>
-    <View style={{flex:1}}>
-    <Image
-    style={{
-        width:420,
-        height:230,
-        alignSelf:'center',
-        resizeMode:'contain',
-        marginBottom:48
-        }}
-        source={require('../assets/images/studyfinishedv1.png')}
+
+    <BodyComponent
+    pictureFile={require('../assets/images/studyfinishedv1.png')}
+    title={'Study Session Complete!'}
+    bodyText={'Its time for a break'}
+    bodyTextColor={theme['color-basic-700']}
     />
-        
-    <View>
-    <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>Study Session Complete!</Text></Text>
-    <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:16,color:theme['color-basic-600'], textAlign:'center'}}>Its time for a break </Text>
-    </View>
-    </View>
+
     <View style={styles.buttonContainer}>
     <Button style={styles.button} size='large' onPress={()=>{navigation.dispatch(StackActions.popToTop())}}>Complete</Button>
     </View>

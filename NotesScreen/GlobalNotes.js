@@ -56,8 +56,8 @@ function GlobalNotes(){
     const renderHeader = () => (
         
       <View style={{marginBottom:12, flexDirection:'row', alignItems:'center'}}>
-      <TopHeader/>
-      <Text category='s1'>All Notes</Text>
+      <TopHeader title='All Notes'/>
+    
       {/*  <Button accessoryLeft={EditIcon}  size='small'  onPress={()=>navigation.navigate('AddNotes')}/> */}
       </View>
 

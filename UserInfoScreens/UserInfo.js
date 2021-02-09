@@ -23,6 +23,8 @@ function signOut(){
 
 function UserInfo(){
 
+  
+
 
     const studyStatsData = useContext(StudyStatsContext)
     const userData = useContext(UserDataContext)
@@ -32,19 +34,28 @@ function UserInfo(){
     const userStartDate = userData.timeStamp  
     const timesStudiedStat = studyStatsData.totalMinutesStudied
 
+    const iconStyle={
+      fill:theme['color-basic-500'],
+      width:18,
+      height:18
+
+    }
+
+
     const ListComponent = (props)=>(
       <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
       <View style={{flexDirection:'row', alignItems:'center'}}>
-      <Icon fill={theme['color-basic-500']} width={18} height={18} name={props.iconName}/>
+      <Icon {...iconStyle} name={props.iconName}/>
       <Text style={{marginLeft:16}} category='s1'>{props.title}</Text>
       </View>
       </Card>
     )
 
+    
     return (
 
     <ScrollView showsVerticalScrollIndicator={false}>
-    <Layout level='2' style={{ flex:1, padding:16, paddingTop:24 }}>
+    <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
     <SafeAreaView style={{flex: 1}}>
     
     <Card style={{marginBottom:2, paddingBottom:8, borderWidth:0.5}}>
@@ -68,7 +79,7 @@ function UserInfo(){
 
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:32, paddingTop:16}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon fill={theme['color-basic-500']} width={18} height={18} name='flag-outline'/>
+    <Icon {...iconStyle}  name='flag-outline'/>
     <Text style={{marginLeft:16}} category={'s1'}>Started</Text>
     </View>
     <Text style={{fontWeight:'bold'}}>{format(new Date(userStartDate.toDate()), 'MMMM d yyyy')}</Text>
@@ -77,11 +88,11 @@ function UserInfo(){
 
     <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:32}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon fill={theme['color-basic-500']} width={18} height={18} name='calendar-outline'/>
+    <Icon {...iconStyle} name='calendar-outline'/>
     <Text style={{marginLeft:16}} category={'s1'}>Days Studied</Text>
     </View>
    
-    <Text style={{fontSize:14,fontWeight:'bold'}}>{studyStatsData.uniqueDates.size} <Text style={{color:theme['color-basic-600'], fontSize:11}}> days</Text></Text>
+    <Text category='s1'>{studyStatsData.uniqueDates.size}<Text style={{color:theme['text-hint-color']}} category='c2'> days</Text></Text>
 
 
     </View>
@@ -90,15 +101,15 @@ function UserInfo(){
     <View style={{marginBottom:32, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon fill={theme['color-basic-500']} width={18} height={18} name='trending-up-outline'/>
+    <Icon {...iconStyle}  name='trending-up-outline'/>
     <Text style={{marginLeft:16}} category={'s1'}>Total Sessions</Text>
     </View>
-    <Text style={{fontSize:14,fontWeight:'bold'}}>{studyStatsData.timesStudied} <Text style={{color:theme['color-basic-600'], fontSize:11}}> sessions</Text></Text>
+    <Text style={{fontSize:14,fontWeight:'bold'}}>{studyStatsData.timesStudied}<Text style={{color:theme['text-hint-color']}} category='c2'> sessions</Text></Text>
     </View>
 
     <View style={{marginBottom:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon fill={theme['color-basic-500']} width={18} height={18} name='clock-outline'/>
+    <Icon {...iconStyle}  name='clock-outline'/>
     <Text style={{marginLeft:16}} category={'s1'}>Total Time</Text>
     </View>
     <Text>{formatMinutes(timesStudiedStat)}</Text>

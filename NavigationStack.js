@@ -150,6 +150,13 @@ const AddNotesWithContext = (props) => {
   )
 }
 
+const NotesHomeWithContext = (props) => {
+  return(
+  <UserDataContextWrapper>
+  <NotesHome {...props}/>
+  </UserDataContextWrapper>
+  )
+}
 
 
 
@@ -177,11 +184,9 @@ function HomeStack() {
         <Stack.Screen name="NotesRecall" component={NotesRecall} />
         <Stack.Screen name="NotesRecallExplain" component={NotesRecallExplain} />
         <Stack.Screen name="NotesRecallComplete" component={NotesRecallComplete} />
-      
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
         <Stack.Screen name="AddSubject" component={AddSubject} />
-
-        <Stack.Screen name="NotesHome" component={NotesHome} />
+        <Stack.Screen name="NotesHome" component={NotesHomeWithContext} />
         <Stack.Screen name="NotesFocused" component={NotesFocused} />
         <Stack.Screen name="RecalledNotes" component={RecalledNotes} />
         <Stack.Screen name="GlobalNotes" component={GlobalNotes} />

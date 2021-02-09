@@ -71,17 +71,17 @@ function IQScreen(){
     <View style={{  flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingTop:24, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
     
     <View>
-    <Text style={{fontSize:14,  marginBottom:8, fontWeight:'bold'}}>{props.title}</Text>
+    <Text style={{ marginBottom:8}} category='s2'>{props.title}</Text>
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:20}}>
-    <Text style={{fontSize:10, color:theme['color-basic-600'], marginRight:4}}>{props.weekLabel}</Text>
-    <Icon name='calendar-outline' fill={theme['color-basic-600']} height={11} width={11}/>
+    <Text category='c2' style={{color:theme['text-hint-color'], marginRight:4}}>{props.weekLabel}</Text>
+    <Icon name='calendar-outline' fill={theme['text-hint-color']} height={13} width={13}/>
     </View>
     </View>
 
     <View style={{alignItems:'flex-end'}}>
     
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:8}}>
-    <Text style={{marginRight:8,  fontSize:14, fontWeight:'bold'}}>{props.sessionCount} <Text style={{fontSize:11, color:theme['color-basic-600']}}>sessions</Text></Text>
+    <Text style={{marginRight:8}} category='s1'>{props.sessionCount} <Text category='c2' style={{color:theme['text-hint-color']}}>sessions</Text></Text>
     <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
     </View>
 
@@ -222,6 +222,23 @@ function IQScreen(){
     return format(startOfWeekTwoWeek,'MMM dd') + '  -  ' + format(endOfWeekTwoWeek,'MMM dd')
   }
 
+
+  const vacation = {key:'vacation', color: 'green',};
+  const massage = {key:'massage', color: 'green' };
+  const workout = {key:'workout', color: 'green'};
+  
+  const returnMultiDotMarkedDates = () => {
+    const newDict = {}
+    uniqueDates.forEach(item => newDict[item] = {
+      dots: [vacation, massage], selectedColor:'red', customStyles: {
+        container: {
+          backgroundColor: theme['color-primary-100'],
+          
+        }}
+    })
+    return newDict
+  }
+
   const returnMarkedDates = () => {
     const newDict = {}
     uniqueDates.forEach(item => newDict[item] = {
@@ -302,7 +319,7 @@ function IQScreen(){
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
     const iconConfig = {
       name: 'close-outline',
-      fill: stepStatus == 'finished' ? theme['color-basic-600'] : null, //theme['color-danger-400']
+      fill: stepStatus == 'finished' ? theme['color-basic-500'] : null, //theme['color-danger-400']
       width:18,
       height:18
     };
@@ -450,8 +467,7 @@ function IQScreen(){
   <TimeComponent title={'Last Week'} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()}/>
   </View>
   <TimeComponent title={'Two Weeks Ago'} minutesStudied={twoWeekAgoMinutesStudied} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
-  {/* <TimeComponent title={'28 day Weekly Average'} sessionCount={11} weekLabel={get28DaysLabel()}/>
-  <TimeComponent title={'Since Started Weekly Average'} sessionCount={8} weekLabel={getStartDateLabel()}/> */}
+ 
   </Card>
 
 
@@ -503,43 +519,7 @@ function IQScreen(){
 
     }
 
-{/* calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7 */}
-    
-    {(calculateDaysSinceLastStudy() > 28 && calculateDaysSinceStartedStudy() > 7) &&
-    <Card  style={{marginBottom:16, alignItems:'center', borderWidth:0.5}}>
-     <Image
-          style={{
-            height:120,
-            width:410,
-            marginBottom:28,
-            marginTop:-16,
-            marginLeft:-24
-            
-          }}
-  
-          source={require('../assets/images/womenthinking.png')}
-        />
 
-   <View style={{ alignItems:'center', justifyContent:'center'}}>
-   <Text category={'h6'}>Study Score</Text>
-   <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:12 }}>Study score is a measure on how well you are studying. It takes your consistency and improvement into consideration</Text>
-   </View> 
-
-
-   <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-around', marginBottom:40}}>
-   <View style={{alignItems:'center'}}>
-   <Text category='h4'>{datesStudiedPastSeven.size}</Text>
-   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Recommended Days Studied</Text>
-   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Per Week</Text>
-   </View>
-   <View style={{alignItems:'center'}}>
-   <Text category='h4'>{sevenDaysCount}</Text> 
-   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Recommended Sessions</Text>
-   <Text style={{fontSize:11, color:theme['color-basic-600']}}>Per Day</Text>
-   </View>
-   </View>
-   </Card>
-    }
 
 
   
@@ -547,8 +527,8 @@ function IQScreen(){
   <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0.5}}>
   <Calendar
 
-  markingType={'custom'}
-  markedDates={returnMarkedDates()}
+  markingType={'multi-dot'}
+  markedDates={returnMultiDotMarkedDates()}
   current={convertDateToString(new Date())}
   minDate={'2020-05-10'}
   maxDate={'2021-01-31'}
@@ -577,10 +557,10 @@ function IQScreen(){
     textDayHeaderFontSize: 13,
     textDayHeaderFontFamily:'OpenSans-Bold',
     textDayFontFamily:'OpenSans-Regular',
-    textDisabledColor:'red',
+    textDisabledColor:theme['color-basic-600'],
     textDayStyle:{
       marginTop:6,
-      color: 'purple'//theme['text-basic-color']
+      color: theme['text-basic-color']//'purple'//theme['text-basic-color']
       
     }
   }}

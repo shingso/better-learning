@@ -27,8 +27,8 @@ function TopHeader(props){
     return (
        
       <View style={{alignSelf:'flex-start',marginLeft: -20, flexDirection:'row', alignItems:'center', flexShrink:1}}>
-      <Button size='small'  appearance='ghost' accessoryLeft={BackIcon} onPress={props.func == 'top' ? popToTop : navigateBack}></Button>
-      {props.title != null && <Text numberOfLines={1} style={{fontWeight:'bold', fontSize:18, marginLeft:2, flexShrink:1}}>{props.title}</Text>}
+      <Button size='small' appearance='ghost' accessoryLeft={BackIcon} onPress={props.func == 'top' ? popToTop : navigateBack}></Button>
+      {props.title != null && <Text numberOfLines={1}  style={{ fontSize:16, fontWeight:'bold', flexShrink:1}}>{props.title}</Text>}
       </View>
       
       );
@@ -38,19 +38,3 @@ function TopHeader(props){
 export default TopHeader
 
 
-const styles = StyleSheet.create({
-    topContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    card: {
-        marginBottom:20
-    },
-    footerContainer: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-    },
-    footerControl: {
-      marginHorizontal: 2,
-    },
-  });

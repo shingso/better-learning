@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
 
 const TrashIcon = (props) => (
-  <Icon {...props} width={20} height={20} name='trash-2-outline' />
+  <Icon {...props} width={20} height={20} name='trash-outline' />
 );
 
 const SearchIcon = (props) => (
@@ -29,6 +29,7 @@ function NotesFocused({ route, navigation }){
     const [ notes, setNotes ] = useState([]);
     const [ filteredNotes, setFilteredNotes ] = useState([]);
     const [ visible, setVisible ] = useState(false)
+    const [ searchVisible, setSearchVisible ] = useState(false)
     const [ visibleConfirm, setVisibleConfirm ] = useState(false)
     const [ value, setValue ] = useState('');
 
@@ -51,33 +52,13 @@ function NotesFocused({ route, navigation }){
     const renderItem = (info) => (
       
       <View style={styles.item}>
-      <Text category='label' style={{marginBottom:8, fontSize:10}} appearance='hint'>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
-      {info.item.textTheme != null && <Text category='s1' style={{fontWeight:'bold', marginBottom:8}}>{info.item.textTheme}</Text>}
-      <Text style={{lineHeight:22}} >{info.item.text}</Text>
+      <Text category='c1' style={{marginBottom:8, color:theme['text-hint-color']}}>{format(new Date(info.item.timeStamp.toDate()), 'MMM d yyyy')}</Text>
+      {info.item.textTheme != null && <Text category='s1' style={{marginBottom:8}}>{info.item.textTheme}</Text>}
+      <Text category='p2' style={{lineHeight:22}} >{info.item.text}</Text>
       </View>
       
 
     );
-
-
-    const renderEmpty = () => (
-
-      <View style={{flex: 1,alignItems:'center', marginTop:60,justifyContent:'center',padding:16}}>
-      
-      <Image
-        style={{width: 420, height: 250, resizeMode:'contain', marginRight:70, marginBottom:12}}
-        source={require('../assets/images/notesemptynoline.png')}
-      
-      />
-
-      <Text style={{textAlign:'center', marginTop:40, fontSize:16}}>No Notes Found</Text>
-      <Text style={{marginTop:20, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center'}}>You don't have any notes for {title} yet</Text>
-
-     
-      </View>
-      
-    )
-
 
 
 
@@ -171,20 +152,20 @@ function NotesFocused({ route, navigation }){
 
     if(notes.length == 0){
       return(   
-      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingVertical:12}}>
+      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingTop:12}}>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
       <TopHeader title={title}/>
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       </View>
-      <View style={{flex: 1,alignItems:'center', marginTop:60,justifyContent:'center',padding:16}}>
+      <View style={{flex: 1,alignItems:'center',justifyContent:'center', paddingBottom:60}}>
       <Image
-        style={{width: 420, height: 250, resizeMode:'contain', marginRight:70, marginBottom:12}}
-        source={require('../assets/images/notesemptynoline.png')}
+        style={{width: 380, height: 200, resizeMode:'contain',}}
+        source={require('../assets/images/notesempty.png')}
       
       />
 
-      <Text style={{textAlign:'center', marginTop:40, fontSize:16}}>Notes for <Text category='h6'>{title}</Text> will be organized here</Text>
-      <Text style={{marginTop:20, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center'}}>You don't have any notes for {title} yet</Text>  
+      <Text style={{textAlign:'center', marginTop:40, fontSize:15}}>Notes for <Text style={{fontWeight:'bold', fontSize:16}}>{title}</Text> will be stored here</Text>
+
       </View>
       </SafeAreaView>
       )
@@ -194,21 +175,24 @@ function NotesFocused({ route, navigation }){
     return (
 
 
-      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingVertical:12}}>
+      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingTop:8}}>
 
-      <View style={{marginBottom:12}}>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:8}}>
+      <View>
+      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', }}>
       <TopHeader title={title}/>
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
       
       </View>
+      {searchVisible &&
       <Input
             placeholder='Search themes'
             value={value}
             accessoryLeft={SearchIcon}
             onChangeText={nextValue => textInputChange(nextValue)}
           />
+      }
       </View>
+      
       
      
       <List
@@ -216,7 +200,6 @@ function NotesFocused({ route, navigation }){
          contentContainerStyle={styles.contentContainer}
          data={filteredNotes}
          renderItem={renderItem}
-         ListEmptyComponent={renderEmpty}
          showsVerticalScrollIndicator={false}
          />
 
@@ -271,7 +254,7 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-  
+    paddingTop:12,
     paddingBottom:80,
       
   },
@@ -283,7 +266,8 @@ const styles = StyleSheet.create({
   
   item: {
     paddingTop:8,
-    paddingBottom:32,
+    paddingHorizontal:4,
+    paddingBottom:40,
    
   },
 

@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { View , StyleSheet, Image, ImageBackground } from 'react-native';
-import { Button, Text ,Icon , Input, Modal, Card , useTheme} from '@ui-kitten/components';
-import { useNavigation, StackActions } from '@react-navigation/native';
-import TopHeader from '../UtilComponents/TopHeader'
+import { View , StyleSheet } from 'react-native';
+import { Button, Text, useTheme} from '@ui-kitten/components';
 import Swiper from 'react-native-swiper'
 import { AuthContext } from '../AuthContext'
 import SwiperButtons from '../UtilComponents/SwiperButtons'
@@ -15,66 +13,36 @@ function Onboard(){
 
 
   return (
-    <View style={{flex:1}}>
+    <View style={{flex:1,paddingVertical:40}}>
     <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
 
-     
-    
-    <View style={styles.container}>
-        {/* <Image
-          style={{
-            flex:3,         
-            resizeMode:'contain'
-          }}
-          source={require('../assets/images/girlthinkingbackground.png')}
-        /> */}
-     
-        <View style={{alignItems:'center',flex:1}}>
-        <Text category='h1' >{'Welcome'}</Text>
-        <Text category='h2' style={{marginTop:20}}>{'to'}</Text>
-        <Text category='h2' style={{marginTop:20}}>{'the'}</Text>
-        <Text category='h1' style={{marginTop:20}}>{'Start'}</Text>
-        <Text category='h2' style={{marginTop:20}}>{'of'}</Text>
-        <Text category='h2' style={{marginTop:20}}>{'a'}</Text>
-        <Text category='h1' style={{marginTop:20}}>{'Smarter'}</Text>
-        <Text category='h1' style={{marginTop:20}}>{'You'}</Text>
-        </View>
-    
-    </View>
-  
-
     <GuideComponent 
-    picture={require('../assets/images/girlthinkingbackground.png')} 
+    picture={require('../assets/images/reshapev1.png')} 
     headerText={'Reshape the way you learn'}
-    bodyText={'Discover learning as a meaningful'}
+    bodyText={'Discover learning as the process of putting small pieces of information to build an undestanding'}
     />
  
-
- 
-
     <GuideComponent 
-    picture={require('../assets/images/boybutterfly.png')} 
-    headerText={'Become comfortable with studying'}
-    bodyText={'Overcome procrastination. Slowly build consistent studying habits and become more comfortable with learning'}
+    picture={require('../assets/images/comfortablelearningv3.png')} 
+    headerText={'Become comfortable with learning'}
+    bodyText={'Build consistent studying habits and become more comfortable with learning. As you study youll become more comfortable with studying'}
     />
 
-
     <GuideComponent 
-    picture={require('../assets/images/girltakingnotes.png')} 
-    headerText={'Learn and grow'}
-    bodyText={'As you continue in your learning journey, you will continue face more and more complex problems.'}
+    picture={require('../assets/images/learnefficiently.png')} 
+    headerText={'Learn efficiently'}
+    bodyText={'Learn more in less time. Spend your study sessions better. Focus better. Retain more information, understand, learn. Retain information better '}
     />
 
 
     <View style={styles.slide1}>
-      
     <GuideComponent 
-    picture={require('../assets/images/walkingwithoutbackground.png')} 
-    headerText={'Work towards becoming the best you'}
-    bodyText={'Learning and growing is one of most fufilling things you can do. Learning is about doing, trying, and making progress.'}
+    picture={require('../assets/images/makingprogressbackground.png')} 
+    headerText={'Work towards becoming a smarter you'}
+    bodyText={'Learning is a process. '}
     />
-    
-    <Button style={{ marginBottom:100, marginHorizontal:32}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start my learning adventure</Button>
+
+    <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start my learning adventure</Button>
     </View>
 
 
