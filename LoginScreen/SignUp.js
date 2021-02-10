@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import { Button, Text ,Icon , Input} from '@ui-kitten/components';
 import * as Yup from 'yup';
 import SignInComponent from '../UtilComponents/SignInComponent'
-
+import { AuthContext } from '../AuthContext'
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email()
@@ -30,7 +30,7 @@ const AlertIcon = (props) => (
 
 
 function SignUp(){
-
+  const authContext = useContext(AuthContext)
   const navigation = useNavigation();
   const [secureTextEntry, setSecureTextEntry] = useState(false)
 
@@ -39,6 +39,7 @@ function SignUp(){
       .createUserWithEmailAndPassword(email, password)
       .then((currentUser) => {
         if(currentUser != null){
+        authContext.setNewUser(currentUser.additionalUserInfo.isNewUser)
         addUser(currentUser.user.uid)
         }
       })

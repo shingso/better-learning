@@ -1,20 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { View , StyleSheet } from 'react-native';
 import { Button, Text, useTheme} from '@ui-kitten/components';
-import Swiper from 'react-native-swiper'
 import { AuthContext } from '../AuthContext'
-import SwiperButtons from '../UtilComponents/SwiperButtons'
 import GuideComponent from '../UtilComponents/GuideComponent'
+import GlobalSwiper from '../UtilComponents/GlobalSwiper'
 
 function Onboard(){
 
-  const theme = useTheme();
-  const authContext = useContext(AuthContext)
 
+  const authContext = useContext(AuthContext)
 
   return (
     <View style={{flex:1,paddingVertical:40}}>
-    <Swiper showsButtons={true} activeDotColor={theme['color-primary-default']} activeDotStyle={{marginBottom:20}} dotStyle={{marginBottom:20}} prevButton={<Text></Text>} nextButton={<SwiperButtons/>} buttonWrapperStyle={{alignItems:'flex-end'}} style={styles.wrapper} loop={false} index={0}>
+    <GlobalSwiper>
 
     <GuideComponent 
     picture={require('../assets/images/reshapev1.png')} 
@@ -46,7 +44,7 @@ function Onboard(){
     </View>
 
 
-    </Swiper>
+    </GlobalSwiper>
     </View>
   )
 };

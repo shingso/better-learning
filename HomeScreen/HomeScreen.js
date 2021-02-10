@@ -62,7 +62,11 @@ function HomeScreen(){
     
     const getRecallAvailable = () => {
 
-      if(userData.lastRecalled == null){
+      if(userData){
+        if(userData.lastRecalled == null){
+          return true
+        }
+      } else {
         return true
       }
       const startOfLastRecalled = startOfDay(userData.lastRecalled.toDate())

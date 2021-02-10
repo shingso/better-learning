@@ -22,8 +22,8 @@ export default SwiperButtons
 
 const styles = StyleSheet.create({
     nextButtonStyle:{
-        marginBottom:12, 
-        marginRight:20, 
+        marginBottom:28, 
+        marginRight:28, 
         padding:14, 
         borderRadius:30, 
         paddingHorizontal:26

@@ -26,7 +26,6 @@ export function UserDataContextWrapper(props) {
     const subscriber = ref.onSnapshot(documentSnapshot => {
       if(!documentSnapshot.metadata.hasPendingWrites){
       UserDataSet(documentSnapshot.data());
-      console.log(documentSnapshot.data())
       }
       });
 

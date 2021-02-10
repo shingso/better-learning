@@ -14,14 +14,14 @@ export function AuthContextWrapper(props) {
 
 
   function onAuthStateChanged(result) {
+
     setUser(result)
-  
     if (initializing) setInitializing(false)
   }
   
   useEffect(() => {
     const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged)
-
+  
     // unsubscribe on unmount
     return authSubscriber
   }, [])

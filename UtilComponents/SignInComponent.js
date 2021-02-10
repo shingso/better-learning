@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, Platform } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid'
 import { GoogleSignin, GoogleSigninButton, statusCodes  } from '@react-native-community/google-signin';
-
+import { AuthContext } from '../AuthContext'
 import appleAuth, {
   appleAuthAndroid,
 } from '@invertase/react-native-apple-authentication';
@@ -74,6 +74,7 @@ async function onAppleButtonPressApple() {
 
   // Sign the user in with the credential
   const authResponse = await auth().signInWithCredential(appleCredential);
+  authContext.setNewUser(authResponse.additionalUserInfo.isNewUser)
   addUser(authResponse.user.uid)
   return authResponse
 }
@@ -101,13 +102,14 @@ function AppleSignIn() {
 function SignInComponent(){
  
 
-
+  const authContext = useContext(AuthContext)
   async function onGoogleButtonPress() {
 
     try{ 
     const { idToken } = await GoogleSignin.signIn()
     const googleCredential = auth.GoogleAuthProvider.credential(idToken)
     const response = await auth().signInWithCredential(googleCredential)  
+    authContext.setNewUser(response.additionalUserInfo.isNewUser)
     addUser(response.user.uid)
     return response
     } catch(e){

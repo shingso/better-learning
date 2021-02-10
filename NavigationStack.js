@@ -255,7 +255,7 @@ function App() {
 
 const theme = useTheme();
 const authContext = useContext(AuthContext)
-  //authContext.newUser)
+
   if(authContext.newUser){
  
     return (
