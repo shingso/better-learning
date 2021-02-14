@@ -42,7 +42,7 @@ export default class NotifService {
 
   scheduleNotif(time) {
     this.lastId++;
-    console.log('log', this.lastId)
+
     PushNotification.localNotificationSchedule({
       date: new Date(Date.now() + time * 1000), // in 30 secs
       

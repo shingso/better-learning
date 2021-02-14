@@ -17,7 +17,7 @@ function Onboard(){
     <GuideComponent 
     picture={require('../assets/images/reshapev1.png')} 
     headerText={'Reshape the way you learn'}
-    bodyText={'Discover learning as the process of putting small pieces of information to build an undestanding'}
+    bodyText={'Reshape the way you think about learning in order to learn quicker'}
     />
  
     <GuideComponent 
@@ -35,12 +35,12 @@ function Onboard(){
 
     <View style={styles.slide1}>
     <GuideComponent 
-    picture={require('../assets/images/makingprogressbackground.png')} 
-    headerText={'Work towards becoming a smarter you'}
-    bodyText={'Learning is a process. '}
+    picture={require('../assets/images/becomesmarterv2.png')} 
+    headerText={'Work towards being a smarter you'}
+    bodyText={'Develop your intelligence by spending time learning.'}
     />
 
-    <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start my learning adventure</Button>
+    <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} size='large' onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start learning</Button>
     </View>
 
 

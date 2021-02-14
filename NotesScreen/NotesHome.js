@@ -46,7 +46,7 @@ function NotesHome({ navigation }){
       <Text style={{ color:theme['color-basic-600'], fontSize:10, marginTop:2}}><Text style={{fontSize:11, fontWeight:'bold', color:theme['color-basic-600']}}>1 day ago</Text></Text> */}
       </View>
       </View>
-      <Icon fill={theme['color-basic-400']} width={20} height={20} name='arrow-ios-forward-outline'/> 
+      {/* <Icon fill={theme['color-basic-400']} width={20} height={20} name='arrow-ios-forward-outline'/>  */}
       </View>
       </Card>
       

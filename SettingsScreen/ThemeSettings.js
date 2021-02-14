@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, } from 'react-native';
-import { Card, List, Text, Button, Icon, TopNavigation, TopNavigationAction, Layout } from '@ui-kitten/components';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Dimensions, SafeAreaView, Image } from 'react-native';
+import { Text, Button, Layout } from '@ui-kitten/components';
 import { ThemeContext } from '../themeContext';
 import TopHeader from '../UtilComponents/TopHeader'
 
@@ -11,20 +10,40 @@ import TopHeader from '../UtilComponents/TopHeader'
 function ThemeSettings(){
 
   const themeContext = useContext(ThemeContext);
-  const navigation = useNavigation();
+  const width = Dimensions.get('screen').width
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
     <Layout style={{ flex: 1, paddingHorizontal:20, paddingTop:12 }}>
     <TopHeader title={'Theme Settings'}/>
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-    <Text style={{textAlign:'center', marginBottom:32 }}>Toggle the theme of the application between dark and light mode</Text>
 
-  <Text style={{textAlign:'center', marginBottom:32 }}>Current Theme: {themeContext.theme}</Text>
-    <Button style={{ borderRadius:30, paddingHorizontal:20 }} onPress={themeContext.toggleTheme}>TOGGLE THEME</Button>
-    </View>
-    </Layout>
-  </SafeAreaView>
+    <Image
+          style={{
+            width:width-64,
+            height:200,
+            
+            resizeMode:'contain',
+            marginBottom:96,
+            marginTop:32
+            
+          }}
+          source={require('../assets/images/themesettings.png')}
+    />
+
+   <Text style={{textAlign:'center'}} category='h1'><Text style={{textTransform:'capitalize', fontSize:36, fontWeight:'bold'}}>{themeContext.theme}</Text></Text>
+   
+   <View style={{flex:1, justifyContent:'flex-end', paddingBottom:64}}>
+   <Text category='s2' style={{textAlign:'center', marginBottom:16 }}>Toggle the theme between dark and light mode</Text>
+   <View style={{flexDirection:'row',}}>
+   <Button style={{ borderRadius:30, paddingHorizontal:20, flex:1 }} onPress={themeContext.toggleTheme}>Toggle Theme</Button>
+   </View>
+   </View>
+
+
+   </View>
+   </Layout>
+   </SafeAreaView>
   );
 };
 

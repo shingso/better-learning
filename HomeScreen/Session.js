@@ -287,7 +287,14 @@ function Session(){
     initialValues={{ text:'', textTheme:'', subject:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
+        
+        if(subjectsContext.lastUsedSubject != null){
+        console.log('ran')
         addNote( authContext.user.uid, subjectsContext.lastUsedSubject.id , values.text, values.textTheme)
+        } else {
+         console.log('ran3')
+         addNote( authContext.user.uid, '', values.text, values.textTheme)
+        }
         setStudySessionPosition(studySessionPosition+1)
        }}
     >

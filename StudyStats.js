@@ -27,6 +27,9 @@ export function StudyStatsContextWrapper(props) {
   const [uniqueDates, setUniqueDates] = React.useState(0);
 
 
+  const [allDatesDict, setAllDatesDict] = React.useState(0);
+
+
 
   //stats by week over week
 
@@ -146,7 +149,7 @@ export function StudyStatsContextWrapper(props) {
 
       setTotalMinutesStudied(totalMinutesStudied)
 
-
+      setAllDatesDict(datesDict)
       setInitializing(false)
 
       
@@ -160,7 +163,7 @@ export function StudyStatsContextWrapper(props) {
     return null
   }
 
-  return (<StudyStatsContext.Provider value={{ totalMinutesStudied,timesStudiedToday,currentWeekStudiedSet,pastSevenDaysCount,datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedWeek, allDates}}>
+  return (<StudyStatsContext.Provider value={{allDatesDict ,totalMinutesStudied,timesStudiedToday,currentWeekStudiedSet,pastSevenDaysCount,datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedWeek, allDates}}>
     {props.children}
     </StudyStatsContext.Provider>
     );

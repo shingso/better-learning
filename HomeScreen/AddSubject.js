@@ -7,8 +7,10 @@ import { AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 import TopHeader from '../UtilComponents/TopHeader'
-//background timer module
-//sign up
+import ConfirmComponent from '../UtilComponents/ConfirmComponent'
+
+
+
 
 
 
@@ -22,10 +24,28 @@ const SubjectSchema = Yup.object().shape({
 
 
 function AddSubject(){
-  const [visible, setVisible] = React.useState(false);
+  const [folderAdded, setFolderAdded] = React.useState(false);
   const authContext = useContext(AuthContext)
   const navigation = useNavigation();
   const theme = useTheme()
+
+
+
+  if(folderAdded){
+    return(
+      <Layout style={{ flex: 1, padding:16}}>
+
+      <ConfirmComponent 
+      picture={require('../assets/images/newfolder.png')}
+      buttonText={'Go Back'}
+      bodyText={'Folder Added'}
+      onPress={()=>{navigation.goBack()}}
+      />
+
+
+      </Layout>
+    )
+  }
 
   return(
            
@@ -36,21 +56,21 @@ function AddSubject(){
     onSubmit={(values, actions) => {
      addSubject( authContext.user.uid, values.subject )
      actions.setSubmitting(false);
-     setVisible(true)
+     setFolderAdded(true)
     }}
    >
 
     {formikProps => (
    
    <React.Fragment >
-   <TopHeader title={'Add a New Folder'}/>
+   <TopHeader title={'Add Folder'}/>
 
-   <Text style={{marginBottom:8,marginTop:20}}>Use folders to furthur organize your notes.</Text>
-   <Text style={{marginBottom:40}}>You can select a folder to store your note into when you are adding a note</Text>
+   <Text style={{marginBottom:8,marginTop:20}}>Use folders to organize to your notes.</Text>
+   <Text style={{marginBottom:40}}>Select a folder when adding a note</Text>
    
     <Text>{formikProps.errors.subject}</Text>
     <Input
-    placeholder='What are you learning about?'
+    placeholder="What's your folder title?"
     value={formikProps.values.subject}
     size='large'
     onChangeText={formikProps.handleChange('subject')}
@@ -64,54 +84,15 @@ function AddSubject(){
       Add Folder
     </Button>
     </View>
-
-    <Modal
-    visible={visible}
-    backdropStyle={styles.backdrop}>
-    <Card style={{width:180, height:160}} disabled={true}>
-    <ImageBackground opacity={0.10} resizeMode='contain'source={require('../assets/images/progress.png')} style={styles.image}>
-    <View style={{ height:140}}>
-    <View style={{flex:1}}>
-    <Text category='s1' style={{textAlign:'center', marginTop:12}}>The first step...</Text>
-    <Text category='s1' style={{textAlign:'center', marginTop:12}}>But just one of many to come</Text>
-    </View>
-    
-    <View style={{flex:1, justifyContent:'flex-end'}}>
-    <Button size='small' style={{marginBottom:8}} onPress={()=>{navigation.goBack()}}>
-    DISMISS
-    </Button>
-    </View>
-    
-    </View>
-
-
-    </ImageBackground>
-    </Card>
-    </Modal>  
+ 
     </React.Fragment>
     )}
-  </Formik>
-  </Layout>
+    </Formik>
+    </Layout>
 
 
     )
 };
 
-const styles = StyleSheet.create({
-  container: {
-    minHeight: 192,
-  },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-
-  image: {
-
-    height:180,
-    margin:-24,
-    padding:18
-
-  }
-});
 
 export default AddSubject

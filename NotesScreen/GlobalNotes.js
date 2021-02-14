@@ -101,7 +101,7 @@ function GlobalNotes(){
         return null; 
     }
 
-  
+    
 
     return (
        

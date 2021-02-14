@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions, ImageBackground, Image } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+
 import { endOfDay, subDays , startOfDay, differenceInCalendarWeeks, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays, getDay} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
 import { Layout, Card, List, Text, Button, Icon, useTheme, Divider } from '@ui-kitten/components';
@@ -9,9 +9,8 @@ import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
-import { sessionsToHours, formatMinutes } from '../helperFunctions';
+import { formatMinutes } from '../helperFunctions';
 
-import PushNotification from 'react-native-push-notification';
 
 
 const findVariance = (arr) => {
@@ -54,6 +53,8 @@ function IQScreen(){
   const userStartStudyingDate = userData.startedStudying
 
   const allDateStats = studyStatsData.allDates
+
+  const allDatesDict = studyStatsData.allDatesDict
 
   const lastStudied = userData.lastStudied
   
@@ -223,37 +224,174 @@ function IQScreen(){
   }
 
 
-  const vacation = {key:'vacation', color: 'green',};
-  const massage = {key:'massage', color: 'green' };
-  const workout = {key:'workout', color: 'green'};
-  
-  const returnMultiDotMarkedDates = () => {
-    const newDict = {}
-    uniqueDates.forEach(item => newDict[item] = {
-      dots: [vacation, massage], selectedColor:'red', customStyles: {
-        container: {
-          backgroundColor: theme['color-primary-100'],
-          
-        }}
-    })
-    return newDict
-  }
 
   const returnMarkedDates = () => {
     const newDict = {}
-    uniqueDates.forEach(item => newDict[item] = {
-      customStyles: {
-        container: {
-          backgroundColor: theme['color-primary-100'],
-          
-        },
-        text: {
-          color:theme['color-primary-800'],
-          fontWeight:'bold',
-          
-        }
-      }
-    })
+
+    for (const [key, value] of Object.entries(allDatesDict)) {
+
+      switch(value) {
+        case 1:
+          newDict[key] = {
+            customStyles: {
+              container: {
+                backgroundColor: theme['color-primary-300'],
+                
+              },
+              text: {
+                color:theme['color-basic-100'],
+                fontWeight:'bold',
+                
+              }
+            }
+          }
+          break;
+        case 2:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-300'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+          break;
+
+        case 3:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-500'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+          break;
+        
+        case 4:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-500'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        break;
+
+        case 5:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-700'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        break;
+       
+        case 6:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-700'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        break;
+
+        case 7:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-800'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        break;
+
+      
+        case 8:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-800'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        break;
+
+        case 9:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-900'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        break;
+
+        default:
+            newDict[key] = {
+              customStyles: {
+                container: {
+                  backgroundColor: theme['color-primary-900'],
+                  
+                },
+                text: {
+                  color:theme['color-basic-100'],
+                  fontWeight:'bold',
+                  
+                }
+              }
+            }
+        }     
+    }
+    
     return newDict
   }
 
@@ -433,48 +571,14 @@ function IQScreen(){
 
   <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{minHeight:800}}>
   <SafeAreaView style={{flex: 1}}>
-
   <Layout level='2' style={{flex:1, padding:16}}>
 
-
-  <Card onPress={()=>{console.log(theme['background-basic-color-4'])}} style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
-
-  <ImageBackground
-       style={{
-         height:120,
-         width:410,
-         marginBottom:0,
-         marginTop:-16,
-         marginLeft:-24,
-         justifyContent:'center',
-         alignItems:'center'
-      
-         
-       }}
-
-       source={require('../assets/images/piggytime.png')}
-     >
-        {/* <View style={{backgroundColor:theme['color-basic-100'], paddingVertical:8, paddingHorizontal:24, borderRadius:30, borderColor:theme['color-primary-400'], borderWidth:0, opacity:0.9}}>
-        <Text category={'s1'} style={{fontSize:16, color:theme['color-basic-300']}}>Time Spent Studying</Text>
-        </View> */} 
-  </ImageBackground>
-
-  <View style={{}}>
-  <TimeComponent title={'Current Week'} minutesStudied={currentWeekMinutesStudied} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()}/>
-  </View>
-
-  <View>
-  <TimeComponent title={'Last Week'} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()}/>
-  </View>
-  <TimeComponent title={'Two Weeks Ago'} minutesStudied={twoWeekAgoMinutesStudied} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
- 
-  </Card>
 
 
 
   {(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) &&
 
-  <Card style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
+  <Card  style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
   <Image
     style={{
       height:120,
@@ -487,8 +591,11 @@ function IQScreen(){
 
 
    <View style={{ justifyContent:'center', alignItems:'center'}}>
-   <Text category={'h6'}>Your Benchmark</Text>
-   <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:32}}>Learning is about consistency. It's crucial to study over periods of days. The first seven days will serve as a benchmark for improvement.</Text>
+   <Text category={'h6'}>Your First Week</Text>
+   <Text 
+   style={{marginTop:12, marginBottom:24,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:32}}>
+    Try to study once per day.
+     </Text>
    </View> 
 
    {/*  <Text category='c2' style={{alignSelf:'center', fontSize:11, color:theme['color-basic-600']}}> {daysSinceStartStudying >= 6 ? 'Last day' : 6-daysSinceStartStudying + "days left"}</Text> */}
@@ -521,14 +628,52 @@ function IQScreen(){
 
 
 
+<Card onPress={()=>returnMarkedDates()} style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
+  <ImageBackground
+       style={{
+         height:120,
+         width:410,
+         marginBottom:0,
+         marginTop:-16,
+         marginLeft:-24,
+         justifyContent:'center',
+         alignItems:'center'
+      
+         
+       }}
+
+       source={require('../assets/images/piggytime.png')}
+     >
+        {/* <View style={{backgroundColor:theme['color-basic-100'], paddingVertical:8, paddingHorizontal:24, borderRadius:30, borderColor:theme['color-primary-400'], borderWidth:0, opacity:0.9}}>
+        <Text category={'s1'} style={{fontSize:16, color:theme['color-basic-300']}}>Time Spent Studying</Text>
+        </View> */} 
+  </ImageBackground>
+  
+  
+  <View style={{}}>
+  <TimeComponent title={'Current Week'} minutesStudied={currentWeekMinutesStudied} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()}/>
+  </View>
+  
+  {calculateDaysSinceStartedStudy() > 7 &&
+  <View>
+  <TimeComponent title={'Last Week'} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()}/>
+  </View>
+  }
+  {calculateDaysSinceStartedStudy() > 14 &&
+  <TimeComponent title={'Two Weeks Ago'} minutesStudied={twoWeekAgoMinutesStudied} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
+  } 
+  </Card>
+
+
+
 
   
 
   <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0.5}}>
   <Calendar
 
-  markingType={'multi-dot'}
-  markedDates={returnMultiDotMarkedDates()}
+  markingType={'custom'}
+  markedDates={returnMarkedDates()}
   current={convertDateToString(new Date())}
   minDate={'2020-05-10'}
   maxDate={'2021-01-31'}
@@ -584,14 +729,3 @@ function IQScreen(){
     }
 
 export default IQScreen
-
-const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-    margin:-40,
-    padding:40,
- 
-  },
-
-
-});

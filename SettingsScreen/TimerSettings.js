@@ -20,8 +20,8 @@ function TimerSettings(){
   
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
   
-  const renderOption = (title) => (
-    <SelectItem accessoryLeft={ClockIcon} title={title.title}/>
+  const renderOption = (data) => (
+    <SelectItem accessoryLeft={ClockIcon} key={data.title} title={data.title}/>
   );
   const displayValue = data[selectedIndex.row].title;
   
@@ -46,10 +46,11 @@ function TimerSettings(){
     <Text style={{marginBottom:40}} category='h1'>{timerSettings.timeSettings}</Text> 
     <Text style={{marginBottom:12}}>Current study session time is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings}</Text> minutes</Text>
     
-    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <View style={{flex:1, justifyContent:'flex-end', marginBottom:64}}>
+    <View style={{}}>
     <Select
         size={'large'}
-        style={{flex:1}}
+        style={{width:300}}
         placeholder={timerSettings.timeSettings}
         value={displayValue}
         selectedIndex={selectedIndex}
@@ -58,11 +59,11 @@ function TimerSettings(){
     </Select>
     
     </View>
-
     <View style={{flexDirection:'row'}}>
-    <Button style={{marginTop:20, borderRadius:30, flex:1, marginHorizontal:20}} onPress={()=>storeData(data[selectedIndex.row].time)}>Set Session Timer</Button>
+    <Button style={{marginTop:20, borderRadius:30, flex:1}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button>
     </View>
-   
+    </View>
+
     </View>
     </Layout>
   </SafeAreaView>

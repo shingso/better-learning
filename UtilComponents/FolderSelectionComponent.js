@@ -18,7 +18,7 @@ function FolderSelectionComponent(){
     const [selectVisible, setSelectVisible] = React.useState(false);
     const subjectsContext = useContext(SubjectsContext)
     const navigation = useNavigation();
-    
+    const [number, setNumber] = React.useState(0);
     const navigateToAddSubject = () => {
         setSelectVisible(false)
         navigation.navigate('AddSubject')
@@ -52,10 +52,10 @@ function FolderSelectionComponent(){
         }
         </View>
     ) 
-    
+    //subjectsContext.setLastUsedSubject(info.item)
     const renderItem = (info) => (
         
-    <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject(info.item)}>
+    <TouchableOpacity onPress={()=>setNumber(number+1)}>
     <View style={{flexDirection:'row', alignItems:'center', marginVertical:20}}>
 
     <Icon style={{width:20, height:20, marginRight:20}} 

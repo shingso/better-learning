@@ -128,7 +128,7 @@ function HomeScreen(){
     />
     </Card>
 
-
+{/* 
     <Card disabled={false} style={{marginTop:16, borderWidth:0.5}} onPress={()=>{navigation.navigate('NotesRecallExplain')}}>
   
     <View style={{ flexDirection:'row', justifyContent:'space-between', paddingVertical:4 }}>
@@ -142,7 +142,7 @@ function HomeScreen(){
     </View>
     </View>
 
-    </Card>
+    </Card> */}
 
 
 

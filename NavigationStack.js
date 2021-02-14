@@ -255,8 +255,8 @@ function App() {
 
 const theme = useTheme();
 const authContext = useContext(AuthContext)
-
-  if(authContext.newUser){
+//authContext.newUser
+  if(true){
  
     return (
     <NavigationContainer>

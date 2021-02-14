@@ -16,6 +16,10 @@ const SearchIcon = (props) => (
   <Icon {...props} width={16} height={16} name='search-outline' />
 );
 
+const SearchIconLarge = (props) => (
+  <Icon {...props} width={22} height={22} name='search-outline' />
+);
+
 
 function NotesFocused({ route, navigation }){
     
@@ -98,23 +102,43 @@ function NotesFocused({ route, navigation }){
       );
     };
 
+    const ReusedDelete = () => {
+      return(
+      <View>
+      <Modal
+      visible={visible}
+      backdropStyle={styles.backdrop}
+      >
+      <Card style={{marginHorizontal:40}} disabled={true}>
+      <View style={{justifyContent:'center', alignItems:'center'}}>
+      <Text style={{marginVertical:12, textAlign:'center'}}>Delete this subject?</Text> 
+      <Text style={{marginBottom:20 ,textAlign:'center'}}>All notes will be lost and cannot be recovered</Text>
+      <Text style={{  marginBottom:12 }}>Type Delete to confirm</Text>  
+      <StatefulModalContent/>
+      
+    </View>
+    </Card>
+    </Modal>   
 
-   
-    /* const renderHeader = () => (
-        
+    <Modal
+      visible={visibleConfirm}
+      backdropStyle={styles.backdrop}
+      >
+    <Card style={{marginHorizontal:40}} disabled={true}>
+      
+    <View style={{justifyContent:'center', alignItems:'center'}}>
+    <Text style={{marginVertical:12, textAlign:'center'}}>Subject Deleted.</Text> 
+    <Button onPress={()=> navigation.navigate('Home')}>
+      Close
+    </Button>
+      
+    </View>
+    </Card>
+    </Modal>
+    </View> 
+      )
+    }
 
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-      <TopHeader title={title}/>
-      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
-      </View>
-
-    ); */
- 
-    
-  
- 
-    
-    
     useEffect(() => {
         const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('subject', '==', subjectID).orderBy('timeStamp','desc')
         return ref.onSnapshot(querySnapshot => {
@@ -167,6 +191,7 @@ function NotesFocused({ route, navigation }){
       <Text style={{textAlign:'center', marginTop:40, fontSize:15}}>Notes for <Text style={{fontWeight:'bold', fontSize:16}}>{title}</Text> will be stored here</Text>
 
       </View>
+      <ReusedDelete/>
       </SafeAreaView>
       )
     }
@@ -180,8 +205,10 @@ function NotesFocused({ route, navigation }){
       <View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', }}>
       <TopHeader title={title}/>
+      <View style={{flexDirection:'row'}}>
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>setVisible(true)}></Button>
-      
+      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={SearchIconLarge} onPress={()=>setSearchVisible(!searchVisible)}></Button>
+      </View>
       </View>
       {searchVisible &&
       <Input
@@ -209,8 +236,7 @@ function NotesFocused({ route, navigation }){
           >
           <Card style={{marginHorizontal:40}} disabled={true}>
           <View style={{justifyContent:'center', alignItems:'center'}}>
-          <Text style={{marginVertical:12, textAlign:'center'}}>Delete this subject?</Text> 
-          <Text style={{marginBottom:20 ,textAlign:'center'}}>All notes will be lost and cannot be recovered</Text>
+          <Text style={{marginVertical:12, textAlign:'center'}}>Delete this Folder?</Text> 
           <Text style={{  marginBottom:12 }}>Type Delete to confirm</Text>  
           <StatefulModalContent/>
           

@@ -35,8 +35,10 @@ export function SubjectsContextWrapper(props) {
         });
 
 
-          subjectsSet(list);
+        subjectsSet(list);
+        if(list[0] != null){
           setLastUsedSubject(list[0])
+        }
      
 
       })

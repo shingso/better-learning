@@ -21,16 +21,14 @@ function Welcome(){
   
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
 
-    <Text style={{marginTop:20, marginLeft:8}} category='h1'>Discover </Text>
+    <Text style={{marginTop:20, marginLeft:8}} category='h1'>Learn</Text>
 
-    <Text style={{marginTop:8, marginLeft:8, fontSize:46}} category='h1'>Learning</Text>
+    <Text style={{marginTop:8, marginLeft:8, fontSize:46}} category='h1'>Smarter</Text>
     </View>
 
     <View style={{flex: 1, justifyContent:'center', marginBottom:36, padding:16}}>
 
  
-
-
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     Don't have an account?
     </Text>
