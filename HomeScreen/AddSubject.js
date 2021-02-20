@@ -17,8 +17,8 @@ import ConfirmComponent from '../UtilComponents/ConfirmComponent'
 const SubjectSchema = Yup.object().shape({
   subject: Yup.string()
     .min(1, 'Too Short!')
-    .max(80, 'Too Long!')
-    .required('You need to put a title'),
+    .max(80, 'Maximum 80 characters for folder title')
+    .required('Folder Title Required'),
 
 });
 
@@ -37,8 +37,9 @@ function AddSubject(){
 
       <ConfirmComponent 
       picture={require('../assets/images/newfolder.png')}
-      buttonText={'Go Back'}
-      bodyText={'Folder Added'}
+      buttonText={'Back'}
+      headerText={'Folder Created!'}
+      bodyText={'Use folders to group together notes of a similar subject.'}
       onPress={()=>{navigation.goBack()}}
       />
 
@@ -65,12 +66,15 @@ function AddSubject(){
    <React.Fragment >
    <TopHeader title={'Add Folder'}/>
 
-   <Text style={{marginBottom:8,marginTop:20}}>Use folders to organize to your notes.</Text>
-   <Text style={{marginBottom:40}}>Select a folder when adding a note</Text>
-   
-    <Text>{formikProps.errors.subject}</Text>
+   <View style={{marginLeft:20}}>
+   <Text style={{marginBottom:32,marginTop:20, fontWeight:'bold'}}>Use folders to group notes of a subject together.</Text>
+
+
+   <Text>{formikProps.errors.subject}</Text>
+   </View>
+
     <Input
-    placeholder="What's your folder title?"
+    placeholder="What's your folder title? ex: Algebra, English, "
     value={formikProps.values.subject}
     size='large'
     onChangeText={formikProps.handleChange('subject')}
@@ -80,7 +84,7 @@ function AddSubject(){
       />
     
     <View style={{ justifyContent:'flex-end'}}>
-    <Button style={{marginTop:40, borderRadius:30}} onPress={()=>formikProps.handleSubmit()}>
+    <Button style={{marginTop:52, borderRadius:30, marginHorizontal:8}} onPress={()=>formikProps.handleSubmit()}>
       Add Folder
     </Button>
     </View>

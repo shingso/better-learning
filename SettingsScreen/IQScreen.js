@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Dimensions, ImageBackground, Image } from 'react-native'
 
-import { endOfDay, subDays , startOfDay, differenceInCalendarWeeks, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays, getDay} from 'date-fns'
+import { endOfDay, startOfDay, endOfMonth, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays, getDay, startOfMonth} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
 import { Layout, Card, List, Text, Button, Icon, useTheme, Divider } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
-import CalendarHeatmap from 'react-native-calendar-heatmap';
+
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
@@ -13,32 +13,12 @@ import { formatMinutes } from '../helperFunctions';
 
 
 
-const findVariance = (arr) => {
-
-  let currentTotal = 0
-  let lengthOfArray = arr.length
-  let varianceTotal = 0
-
-  arr.forEach(element => {
-    currentTotal += element
-  });
-
-  let meanOfArr = currentTotal/lengthOfArray
-
-  arr.forEach(element => {
-    varianceTotal += Math.abs(meanOfArr - element) 
-  })
-
-  return varianceTotal/lengthOfArray
-
-}
-
 
 
 function IQScreen(){
   const theme = useTheme()
 
-  //useEffect(()=>{console.log('ran')}, [theme])
+
   
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
@@ -64,6 +44,9 @@ function IQScreen(){
   
   //need to refactor this 
   //const daysSinceLastStudy = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
+
+ 
+
 
   const TimeComponent = (props) => {
     //borderBottomWidth:0.2, borderColor:theme['color-basic-300']
@@ -208,6 +191,9 @@ function IQScreen(){
   const convertDateToString = (date) => {
     return format(date,'yyyy-MM-dd')
   }
+
+
+
 
   const getCurrentWeekLabel = () => {
       return format(startOfCurrentWeek,'MMM dd') + '  -  ' + format(endOfCurrentWeek,'MMM dd') 
@@ -435,12 +421,11 @@ function IQScreen(){
     stepIndicatorFinishedColor: theme['color-primary-200'],
     stepIndicatorUnFinishedColor: theme['color-basic-400'],
     stepIndicatorCurrentColor: theme['color-primary-200'],
-    
     stepIndicatorLabelCurrentColor: 'red',
     stepIndicatorLabelFinishedColor: 'green',
     stepIndicatorLabelUnFinishedColor: 'red',
     labelColor: theme['color-basic-600'],
-    labelSize: 9,
+    labelSize: 11,
     currentStepLabelColor: theme['color-primary-700']
 
   }
@@ -586,36 +571,39 @@ function IQScreen(){
       marginBottom:28,
       marginTop:-16,
     }}
-    source={require('../assets/images/calendarmark.png')}
+    source={require('../assets/images/firstweekv5.png')}
   />
 
 
    <View style={{ justifyContent:'center', alignItems:'center'}}>
-   <Text category={'h6'}>Your First Week</Text>
+   <Text category={'h6'}>The process of learning</Text>
    <Text 
-   style={{marginTop:12, marginBottom:24,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:32}}>
-    Try to study once per day.
-     </Text>
+   style={{marginTop:12, marginBottom:20,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:32}}>
+   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+   </Text>
    </View> 
 
    {/*  <Text category='c2' style={{alignSelf:'center', fontSize:11, color:theme['color-basic-600']}}> {daysSinceStartStudying >= 6 ? 'Last day' : 6-daysSinceStartStudying + "days left"}</Text> */}
 
     <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-around', marginBottom:40}}>
     <View style={{alignItems:'center'}}>
-    <Text category='h4'>{datesStudiedPastSeven.size}</Text>
-    <Text style={{fontSize:11, color:theme['color-basic-600']}}>days studied</Text>
+    <Text style={{fontSize:50, fontFamily:'OpenSans-SemiBold',color:theme['color-basic-700']}}>{datesStudiedPastSeven.size}</Text>
+    <Text style={{fontSize:13, color:theme['color-basic-600'], letterSpacing:0.2}}>Days Studied</Text>
     </View>
 
-    <View style={{alignItems:'center'}}>
+    {/* <View style={{alignItems:'center'}}>
     <Text category='h4'>{sevenDaysCount}</Text> 
     <Text style={{fontSize:11, color:theme['color-basic-600']}}>total sessions</Text>
     </View>
+    
+    calculateCurrentPosition()*/}
     </View>
 
     <View style={{marginHorizontal:32, marginBottom:32}}>
+      
     <StepIndicator
          customStyles={customStyles}
-         currentPosition={calculateCurrentPosition()}
+         currentPosition={6}
          stepCount={7}
          renderStepIndicator={renderStepIndicator}
          labels={returnLabels(0)}
@@ -628,7 +616,7 @@ function IQScreen(){
 
 
 
-<Card onPress={()=>returnMarkedDates()} style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
+<Card style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
   <ImageBackground
        style={{
          height:120,
@@ -675,8 +663,8 @@ function IQScreen(){
   markingType={'custom'}
   markedDates={returnMarkedDates()}
   current={convertDateToString(new Date())}
-  minDate={'2020-05-10'}
-  maxDate={'2021-01-31'}
+  minDate={convertDateToString(startOfMonth(userStartDate.toDate()))}
+  maxDate={convertDateToString(endOfMonth(new Date()))}
   monthFormat={'MMMM'}
   renderArrow={(direction) => (direction == 'left' ? <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-back-outline'/></View> 
   : <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-forward-outline'/></View>)}
@@ -692,17 +680,23 @@ function IQScreen(){
   theme={{
     textSectionTitleColor: theme['color-basic-900'],
     todayTextColor: theme['color-primary-800'],
-    textMonthFontWeight: 'bold',
+   
     textDayFontSize: 13,
     calendarBackground: null,
     calendarHeaderStyle:{
       color:'green'
     },
-    textMonthFontSize: 18,
+
+    //Month Styling - January/Feburary
+    textMonthFontSize: 24,
+    monthTextColor:theme['color-basic-800'],
+    textMonthFontWeight: 'bold',
+
+
     textDayHeaderFontSize: 13,
     textDayHeaderFontFamily:'OpenSans-Bold',
     textDayFontFamily:'OpenSans-Regular',
-    textDisabledColor:theme['color-basic-600'],
+    //textDisabledColor:theme['color-basic-600'],
     textDayStyle:{
       marginTop:6,
       color: theme['text-basic-color']//'purple'//theme['text-basic-color']

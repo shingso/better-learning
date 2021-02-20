@@ -147,7 +147,7 @@ function HomeScreen(){
 
 
     <Card style={{marginTop:16,borderWidth:0.6}}  onPress={()=>navigation.navigate('Session')}>
-    <View style={{  alignItems:'center', justifyContent:'center'}}>
+    <View style={{alignItems:'center', justifyContent:'center'}}>
     <Image
           style={{
             height:160,
@@ -170,16 +170,16 @@ function HomeScreen(){
     <Card onPress={()=>{navigation.navigate('NotesHome')}} style={{marginTop:16, justifyContent:'center', alignItems:'center', borderWidth:0.5 }}>
     <Image
           style={{
-            height:90,
+            height:100,
             width:screenWidth,
             marginBottom:28,
             marginTop:-16,
           }}
-          source={require('../assets/images/yournotesv1orange.png')}
+          source={require('../assets/images/yournotesv2.png')}
         />
     <View style={{alignItems:'center'}}>
     <Text category='h6'>Your Notes</Text>
-    <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['text-hint-color']}}>A collection of your thoughts</Text>
+    <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['text-hint-color'], marginHorizontal:30, lineHeight:24, textAlign:'center'}}>A collection of your thoughts</Text>
     </View>
     </Card>
     </SafeAreaView>

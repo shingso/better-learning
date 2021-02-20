@@ -22,7 +22,7 @@ export default class NotifService {
 
     PushNotification.createChannel(
       {
-        channelId: "sound-channel-id18", // (required)
+        channelId: "General", // (required)
         channelName: `Sound channel`, // (required)
         channelDescription: "A sound channel", // (optional) default: undefined.
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
@@ -44,11 +44,11 @@ export default class NotifService {
     this.lastId++;
 
     PushNotification.localNotificationSchedule({
-      date: new Date(Date.now() + time * 1000), // in 30 secs
+      date: new Date(Date.now() + time), // in 30 secs
       
  
       /* Android Only Properties */
-      channelId: 'sound-channel-id18',
+      channelId: 'General',
 
       autoCancel: true, // (optional) default: true
       //largeIcon: 'ic_launcher', // (optional) default: "ic_launcher"

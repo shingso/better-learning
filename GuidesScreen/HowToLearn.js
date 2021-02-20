@@ -11,21 +11,21 @@ function HowToLearn(){
   return (
     <Layout style={{flex:1}}>
     <View style={{paddingLeft:16, paddingTop:4}}>
-    <TopHeader title={'What is a study session?'}/>
+    <TopHeader title={'How should I be learning?'}/>
     </View>
     
     <GlobalSwiper>
 
     <GuideComponent 
     picture={require('../assets/images/studytime.png')} 
-    headerText={'Time spent toward learning'}
-    bodyText={'The most important aspect in understanding and learning anything is putting in the time. '}
+    headerText={'Short and sweet'}
+    bodyText={'In order to learn effectively, study sessions need to be short and sweet. Fully engaged short bursts of studying. By studying in short bursts we can stay engaged easier'}
     />
     
     <GuideComponent 
     picture={require('../assets/images/studytime.png')} 
-    headerText={'Study Time'}
-    bodyText={'When you start the study session a timer will start. This time is meant for study.'}
+    headerText={'Focused study period'}
+    bodyText={'Using a timer, we can allocate a period for dedicated studying. Remove distractions and stay on the task at hand.'}
     />
 
     
@@ -38,7 +38,7 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/takeabreak.png')} 
     headerText={'Take a break'}
-    bodyText={'When your done recalling, take a break. Breaks are important in learning'}
+    bodyText={'When your done with a study sessions, take a break. Breaks are important in reseting our though process.'}
     />
 
     </GlobalSwiper>

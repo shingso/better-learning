@@ -269,8 +269,8 @@ export function formatMinutes(time){
   //let seconds = Math.floor((duration / 1000) % 60)
   //let minutes = Math.floor((duration / (1000 * 60)) % 60)
   //minutes = (minutes < 10) ? "0" + minutes : minutes;
-      //seconds = (seconds < 10) ? "0" 
-  console.log(minutes, hours, remainingMinutes)
+  //seconds = (seconds < 10) ? "0" 
+  //console.log(minutes, hours, remainingMinutes)
 
   if(remainingMinutes === 0 && hours === 0){
     return <Text category='s2'>0  <Text category='c2' style={labelStyle}>mins</Text></Text>

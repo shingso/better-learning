@@ -39,9 +39,10 @@ function AddNotes(){
       <Layout style={{ flex: 1, padding:16}}>
 
       <ConfirmComponent 
-      picture={require('../assets/images/progress.png')}
+      picture={require('../assets/images/noteaddedv2.png')}
       buttonText={'Confirm'}
-      bodyText={'Note Added'}
+      headerText={'Note Added!'}
+      bodyText={'Every note that you type out helps your brain process and retain information.'}
       onPress={confirmAddNote}
       />
 
@@ -59,7 +60,7 @@ function AddNotes(){
     initialValues={{ text:'', textTheme:'' }}
     validationSchema={TextSchema}
     onSubmit={(values) => {
-      
+    
      if(subjectsContext.lastUsedSubject != null){
       addNote( authContext.user.uid, subjectsContext.lastUsedSubject.id  , values.text, values.textTheme)
      } else {
@@ -88,11 +89,12 @@ function AddNotes(){
    <Input
    textStyle={{fontSize:16, fontWeight:'bold'}}
    style={{marginBottom:4, marginTop:4, borderColor:theme['background-basic-color-1'], backgroundColor:theme['background-basic-color-1']}}
-   placeholder={'Main topic'}
-   onChangeText={()=>formikProps.handleChange('textTheme')}
+   placeholder={'Tag'}
+   onChangeText={formikProps.handleChange('textTheme')}
     />
 
   {/*  {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null} */}
+
    <Input
     placeholder={'Write something here'}
     style={{backgroundColor:theme['background-basic-color-1'], borderColor:theme['background-basic-color-1'], marginTop:12}}
@@ -101,7 +103,7 @@ function AddNotes(){
     multiline={true}
     autoFocus={true}
     size={'large'}
-    onChangeText={()=>formikProps.handleChange('text')}
+    onChangeText={formikProps.handleChange('text')}
     />
   
    <Button style={{marginVertical:16, marginHorizontal:20, borderRadius:30}} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()}>Done</Button>

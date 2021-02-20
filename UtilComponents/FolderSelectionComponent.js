@@ -82,14 +82,7 @@ function FolderSelectionComponent(){
     const renderEmpty = () => (
 
     <View style={{flex: 1}}>
-    <Text style={{textAlign:'center', color:theme['color-info-500'], fontWeight:'bold',letterSpacing:0.4}}>You don't have any folders yet</Text>
-    <Text style={{textAlign:'center', marginVertical:12}}>Add a folder to better organize your notes and review them</Text>
-    <Card onPress={navigateToAddSubject} style={{alignItems:'center', paddingVertical:40, marginVertical:20, borderWidth:0 ,backgroundColor:theme['color-primary-600']}}> 
-    <View style={{alignItems:'center'}}>
-    <Icon width={30} height={30} fill={theme['color-basic-200']} style={{marginBottom:8}}  name={'folder-add-outline'}/>
-    <Text category='s1' style={{color:theme['color-basic-200']}}>Add Folder</Text>
-    </View>
-    </Card>
+    <Text style={{textAlign:'center', fontWeight:'bold',letterSpacing:0.4, fontSize:16, marginVertical:12}}>You don't have any folders yet</Text>
     </View>
         
     )
@@ -100,12 +93,11 @@ function FolderSelectionComponent(){
     }
 
 
-
    return (
-   
+ 
    <View>
    <View style={{marginRight:50}}> 
-   <TouchableOpacity onPress={()=>openModal()}>
+   <TouchableOpacity onPress={subjectsContext.lastUsedSubject != null ? ()=>openModal() : ()=>navigation.navigate('AddSubject')}>
     
    {subjectsContext.lastUsedSubject != null &&
    <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
@@ -116,13 +108,15 @@ function FolderSelectionComponent(){
 
    {subjectsContext.lastUsedSubject == null &&
    <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
-   <Icon style={{marginRight:12}} fill={theme["color-info-500"]} width='15' height='15' name={'plus-circle-outline'} />
-   <Text style={{fontSize:13,color:theme["color-info-500"], fontWeight:'bold'}}>{'Create a new folder'}</Text>
+   <Icon style={{marginRight:8}} fill={theme["color-info-500"]} width='15' height='15' name={'plus-circle-outline'} />
+   <Text style={{fontSize:13,color:theme["color-info-500"], fontWeight:'bold'}}>{'Create a folder'}</Text>
    </View>
    }
 
 
    </TouchableOpacity>
+
+
    </View>
     <Modal
     visible={selectVisible}

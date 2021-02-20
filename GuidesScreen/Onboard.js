@@ -17,19 +17,19 @@ function Onboard(){
     <GuideComponent 
     picture={require('../assets/images/reshapev1.png')} 
     headerText={'Reshape the way you learn'}
-    bodyText={'Reshape the way you think about learning in order to learn quicker'}
+    bodyText={'Rediscover learning in a progress oriented approach that is managable and effective.'}
     />
  
     <GuideComponent 
     picture={require('../assets/images/comfortablelearningv3.png')} 
     headerText={'Become comfortable with learning'}
-    bodyText={'Build consistent studying habits and become more comfortable with learning. As you study youll become more comfortable with studying'}
+    bodyText={'End procrastination when needing to study by building confidence in your ability to learn'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/learnefficiently.png')} 
-    headerText={'Learn efficiently'}
-    bodyText={'Learn more in less time. Spend your study sessions better. Focus better. Retain more information, understand, learn. Retain information better '}
+    headerText={'Learn more efficiently'}
+    bodyText={'Use simple guided study sessions which result better retention of information and a leads to a better understanding.'}
     />
 
 
@@ -37,10 +37,10 @@ function Onboard(){
     <GuideComponent 
     picture={require('../assets/images/becomesmarterv2.png')} 
     headerText={'Work towards being a smarter you'}
-    bodyText={'Develop your intelligence by spending time learning.'}
+    bodyText={'Develop your intelligence by spending time learning. The more you learn and study the smarter you will become!'}
     />
 
-    <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} size='large' onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start learning</Button>
+    <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start learning</Button>
     </View>
 
 

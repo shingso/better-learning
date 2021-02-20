@@ -14,7 +14,7 @@ import Session from './HomeScreen/Session';
 
 import NotesFocused from './NotesScreen/NotesFocused'
 import RecalledNotes from './NotesScreen/RecalledNotes'
-
+import DeleteFolder from './NotesScreen/DeleteFolder'
 import GlobalNotes from './NotesScreen/GlobalNotes'
 import NotesHome from './NotesScreen/NotesHome'
 
@@ -160,18 +160,6 @@ const NotesHomeWithContext = (props) => {
 
 
 
-const BottomTabBar = ({ navigation, state }) => (
-  <BottomNavigation
-  
-    selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab icon={HomeIcon}/>
-    <BottomNavigationTab icon={ChartIcon}/>
-    <BottomNavigationTab icon={BookIcon}/>
-    <BottomNavigationTab icon={UserIcon}/>
-  </BottomNavigation>
-);
-
 
 
 
@@ -188,6 +176,7 @@ function HomeStack() {
         <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="NotesHome" component={NotesHomeWithContext} />
         <Stack.Screen name="NotesFocused" component={NotesFocused} />
+        <Stack.Screen name="DeleteFolder" component={DeleteFolder} />
         <Stack.Screen name="RecalledNotes" component={RecalledNotes} />
         <Stack.Screen name="GlobalNotes" component={GlobalNotes} />
 
@@ -255,8 +244,25 @@ function App() {
 
 const theme = useTheme();
 const authContext = useContext(AuthContext)
+
+const BottomTabBar = ({ navigation, state }) => (
+  <BottomNavigation
+    appearance={'noIndicator'}
+    style={{borderTopWidth:1, borderTopColor:theme['color-basic-300']}}
+    selectedIndex={state.index}
+    onSelect={index => navigation.navigate(state.routeNames[index])}>
+
+
+    <BottomNavigationTab icon={HomeIcon}/>
+    <BottomNavigationTab icon={ChartIcon}/>
+    <BottomNavigationTab icon={BookIcon}/>
+    <BottomNavigationTab icon={UserIcon}/>
+  </BottomNavigation>
+);
+
+
 //authContext.newUser
-  if(true){
+  if(authContext.newUser){
  
     return (
     <NavigationContainer>

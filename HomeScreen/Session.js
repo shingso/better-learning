@@ -83,6 +83,7 @@ function Session(){
     
           setIsPlaying(false)
           e.preventDefault();
+          notif.cancelAll()
           setConfirmBackVisible(true)
     
         })
@@ -93,6 +94,17 @@ function Session(){
      
       [confirmBackVisible, studySessionPosition]
     );
+
+
+    const closeBackModal = () => {
+      if(studySessionPosition == 1){
+        setIsPlaying(true)
+        notif.scheduleNotif(initialTimeSet-timeElaspased)
+        
+      }
+      setConfirmBackVisible(false)
+
+    };
 
     const popToTop = () => {
         if(studySessionPosition == 1){
@@ -118,7 +130,7 @@ function Session(){
         }
       
         return function cleanup(){
-          // snotif.cancelAll()
+          // notif.cancelAll()
           BackgroundTimer.stopBackgroundTimer()
         }
       
@@ -143,6 +155,7 @@ function Session(){
       }
 
       fetchData()
+      //timerSettings.timeSettings * 60 * 1000
       setInitialTimeSet(10000)
       
     }, []);
@@ -165,8 +178,7 @@ function Session(){
 
 
     const startStudySession = () =>{
-        notif.scheduleNotif(5)
-
+        notif.scheduleNotif(initialTimeSet)
         incrementActiveUsers()
         setStudySessionPosition(studySessionPosition + 1)
         setIsPlaying(true)
@@ -188,38 +200,15 @@ function Session(){
     {studySessionPosition == 0 &&
     <View style={{flex:1}}>
 
-    
+  
     <BodyComponent
     pictureFile={require('../assets/images/timev2-01.png')}
-    title={'Get ready to focus on studying'}
-    bodyText={<Text>Start the study session and a <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will start. During this time stay engaged in studying.</Text>}
+    title={'A period of focused studying'}
+    bodyText={<Text>Press start and a <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will begin. During this time stay engaged in learning by being in continuous thought.</Text>}
     bodyTextColor={theme['color-basic-700']}
    />
 
-  {/* <View style={{flex:1, justifyContent:'center'}}>
-      <Image
-            style={{
-              width:420,
-              height:180,
-              alignSelf:'center',
-              resizeMode:'contain',
-              marginBottom:48
-            }}
-            source={require('../assets/images/timev2-01.png')}
-          />
-      
-      <View>
-      <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>{'Get ready to focus on studying'}</Text></Text>
-      <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:14,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:12}}><Text>Start the study session and a <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will start. During this time stay engaged in studying.</Text></Text>
-      </View>
-      </View> */}
 
-    {/* <View style={{flex:1, justifyContent:'center'}}> 
-    <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12}}>Start the study session and a <Text category='h5' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will begin.</Text>
-    <Text category='h5' style={{textAlign:'center', lineHeight:36, paddingHorizontal:12, marginTop:32}}>While the timer is running, stay <Text category='h5' style={{fontWeight:'bold'}}>focused and engaged</Text> on studying.</Text>
-    </View> */}
-
-    
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
     <View style={{flexDirection:'row',  marginBottom:16, alignItems:'flex-end'}}>
     <Text category='c2' style={{color:theme['text-hint-color']}}>Active Studiers: </Text>
@@ -250,9 +239,9 @@ function Session(){
     
     <View style={{flex:1}}>
     <BodyComponent
-    pictureFile={require('../assets/images/studycompletev2.png')}
-    title={'Thats it for studying!'}
-    bodyText={'Focus study time is complete'}
+    pictureFile={require('../assets/images/studyperiodover.png')}
+    title={'The study period is over!'}
+    bodyText={'We can furthur internalize what we have learned by thinking about what we have just learned.'}
     bodyTextColor={theme['color-basic-700']}
     />
     <View style={styles.buttonContainer}>
@@ -268,8 +257,8 @@ function Session(){
     <View style={{flex:1, justifyContent:'center'}}>
 
     <BodyComponent pictureFile={require('../assets/images/recallexplain.png')} 
-    title={'Write down what you have just learned'}
-    bodyText={'In the next screen, type out what you can recall about what you just learned'}
+    title={'Think about what you have just learned'}
+    bodyText={'In the next screen, type out from memory what you have just learned about.'}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -310,12 +299,12 @@ function Session(){
     <Input
     textStyle={{fontSize:16, fontWeight:'bold'}}
     style={{marginBottom:4, marginTop:4, borderColor:theme['background-basic-color-2'], backgroundColor:theme["background-basic-color-2"]}}
-    placeholder={'Main topic'}
+    placeholder={'Tag'}
     onChangeText={formikProps.handleChange('textTheme')}
     />
           
     <Input
-    placeholder={'Think about what you just learned and type it out. Everything you type out should be from memory, do not refer to any notes.'}
+    placeholder={'Think about what you just learned and type it out. Everything you type out should be from memory. Do not refer to any study materials.'}
     style={{backgroundColor:theme['background-basic-color-2'], borderColor:theme['background-basic-color-2'], marginTop:12}}
     textAlignVertical={'top'}
 
@@ -344,8 +333,8 @@ function Session(){
 
     <BodyComponent
     pictureFile={require('../assets/images/studyfinishedv1.png')}
-    title={'Study Session Complete!'}
-    bodyText={'Its time for a break'}
+    title={'Your done!'}
+    bodyText={"Now that you've completed studying, its best to take a break. Breaks help refresh our mind which helps in knowledge retention and furthur continued focus."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -372,7 +361,7 @@ function Session(){
     End Study Session
     </Button>
 
-    <Button appearance='outline' onPress={()=>setConfirmBackVisible(false)}>
+    <Button appearance='outline' onPress={()=>closeBackModal()}>
     Close
     </Button>
     </View>

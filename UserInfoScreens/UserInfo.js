@@ -6,7 +6,6 @@ import { AuthContext } from '../AuthContext'
 import { ScrollView } from 'react-native-gesture-handler';
 import { endOfMonth, format } from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
-import CalendarHeatmap from 'react-native-calendar-heatmap';
 import { UserDataContext } from '../UserDataContext'
 import auth from '@react-native-firebase/auth';
 
@@ -70,7 +69,7 @@ function UserInfo(){
             justifyContent:'center'
             
           }}
-          source={require('../assets/images/yournotesv1orange.png')}
+          source={require('../assets/images/settingsv1.png')}
         >
        {/*  <View style={{backgroundColor:theme['color-primary-600'], paddingVertical:12, paddingHorizontal:32, borderRadius:30}}>
         <Text category={'s1'} style={{fontSize:18, color:'white'}}>Settings</Text>
@@ -118,7 +117,7 @@ function UserInfo(){
     </Card> 
 
 
-    <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/>
+    {/* <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/> */}
     <ListComponent path={'TimerSettings'} iconName={'bell-outline'} title={'Session Timer Settings'}/>
     <ListComponent path={'TermsOfService'} iconName={'file-text-outline'} title={'Terms And Conditions'}/>
     <ListComponent path={'PrivacyPolicy'} iconName={'lock-outline'} title={'Privacy Policy'}/>

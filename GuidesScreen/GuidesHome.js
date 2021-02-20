@@ -16,7 +16,7 @@ function GuidesHome(){
 
   
 
-    const topics = [{title:'What is a study session?', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
+    const topics = [{title:'How should I be learning?', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
      {title:'What Is Learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendarmark.png')},
      {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouragedbackground.png')},

@@ -15,19 +15,22 @@ function GuideComponent(props){
         <View style={styles.container}>
         <Image
           style={{
-            width:width-64,
+            width:width-96,
             height:200,
             resizeMode:'contain',
-            alignSelf:'center'
+            alignSelf:'center',
+            flex:2.5
           }}
           source={props.picture}
         />
      
-   
-        <Text category='h6' style={styles.bodyText}>{props.bodyText}</Text>
-        
-        <View style={{flexDirection:'row', alignItems:'flex-end', flex:1}}>
-        <Button style={{flex:1, borderRadius:30}} size='large' onPress={props.onPress}>{props.buttonText}</Button>
+        <View style={{flex:1}}>
+        <Text style={styles.headerText}>{props.headerText}</Text>
+        <Text style={{textAlign:'center', marginTop:24, marginHorizontal:16, lineHeight:24, letterSpacing:0.1}}>{props.bodyText}</Text>
+        </View>
+
+        <View style={{flexDirection:'row', alignItems:'flex-end', flex:1, paddingBottom:40}}>
+        <Button style={{flex:1, borderRadius:30, marginBottom:32}} size='large' onPress={props.onPress}>{props.buttonText}</Button>
         </View>
   
     
@@ -42,11 +45,12 @@ export default GuideComponent
 
 const styles = StyleSheet.create({
   
-    bodyText:{
+    headerText:{
       textAlign:'center', 
-      lineHeight: 28,
+  
       marginHorizontal:12,
-      fontSize:15,
+      fontSize:22,
+      fontFamily:'OpenSans-Bold',
       letterSpacing:0.1
     },
   
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
      
       paddingBottom:32,
       paddingHorizontal:20,
-      paddingTop:80,
+  
       flex:1,
 
   

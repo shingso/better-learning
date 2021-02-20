@@ -18,7 +18,7 @@ function Discouraged(){
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Learning new concepts is tough'}
-    bodyText={'Everyone struggles. It takes a concentrated effort along with time.'}
+    bodyText={'Everyone struggles when it comes to learning. It takes a concentrated effort along with time. Know that with time you can learn and grow.'}
     />
 
     <GuideComponent 

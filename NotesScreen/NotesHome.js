@@ -63,9 +63,19 @@ function NotesHome({ navigation }){
 
     const renderEmpty = () => (
 
-      <Card onPress={()=>navigation.navigate('AddSubject')} style={{marginTop:8, borderWidth:1, paddingVertical:60, borderWidth:0.5}}>
-      <View>
-      <Text style={{textAlign:'center'}} category='h6'>Add a Folder</Text>
+      <Card onPress={()=>navigation.navigate('AddSubject')} style={{marginTop:12, paddingBottom:40,borderWidth:0.3}}>
+      <View style={{alignItems:'center'}}>
+      <Image
+          style={{
+            height:120,
+            width: 400,
+            marginBottom:40,
+            marginTop:-16,
+          }}
+          source={require('../assets/images/addafolder.png')}
+      />
+      
+      <Text style={{textAlign:'center', color:theme['color-primary-800'], fontSize:18, fontWeight:'bold', letterSpacing:0.5}} >Add Your Own Folder</Text>
       <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center', fontSize:14}}>Add a folder to better organize your notes</Text>
       </View>
       </Card>
@@ -83,42 +93,6 @@ function NotesHome({ navigation }){
     <Button  onPress={()=>navigation.navigate('AddSubject')} size='large' accessoryLeft={FolderIcon} appearance='ghost'></Button>
     </View> 
     </View>
- 
-
-     {/* <Image
-          style={{
-            height:80,
-            width:410,
-            
-            marginBottom:16,
-            marginTop:-16,
-           
-          }}
-  
-          source={require(('../assets/images/yournotesv1orange.png'))}
-        />  */}
-    
-    {/* <Text  style={{ fontSize:14, letterSpacing:0.2,marginHorizontal:32,textAlign:'center', lineHeight:24, color:theme['color-basic-600']}}>Review and organize your notes</Text> */}
-
-    
-    {/* 
-    <View style={{flexDirection:'row', justifyContent:'space-between', marginVertical:16, paddingHorizontal:4 }}>
-
-      
-    <Button  onPress={()=>navigation.navigate('AddNotes')} accessoryLeft={EditIcon} appearance='outline' style={{flex:1, height:40, marginRight:8}}>Add Note</Button>
-    <Button  onPress={()=>navigation.navigate('AddSubject')} accessoryLeft={FolderIcon} appearance='outline'  style={{flex:1, height:40, marginLeft:8}}>Add Folder</Button>
-    </View> */}
-
-  {/*   <Card onPress={()=>navigation.navigate('AddNotes')}  style={{marginVertical:4, paddingHorizontal:4, paddingVertical:4, borderWidth:0.3, marginTop:16}}>
-    <View style={{flexDirection:'row', alignItems:'center',}}>
-    <View>
-    <Icon fill={theme['color-primary-700']} width={35} height={35} style={{marginRight:24}} name='folder-add'/> 
-    </View>
-    <View style={{flex:1}}>
-    <Text category='s2' style={{letterSpacing:0.1, color:theme['color-primary-700']}}>Add a new folder</Text>
-    </View>
-    </View>
-    </Card> */}
     
     <FolderComponent 
     navigate={()=>navigation.navigate('GlobalNotes')} 
@@ -126,11 +100,11 @@ function NotesHome({ navigation }){
     noteCount={userData.totalNotes} 
     color={theme['color-info-200']}/>
     
-    <FolderComponent 
+{/*     <FolderComponent 
     navigate={()=>navigation.navigate('RecalledNotes')} 
     title={"Daily Recall"} 
     noteCount={userData.totalRecallNotes} 
-    color={theme['color-info-200']}/>
+    color={theme['color-info-200']}/> */}
 
 
     </View>

@@ -15,23 +15,23 @@ function LearningTips(){
     </View>
     
     <GlobalSwiper>
-    <GuideComponent 
+   {/*  <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Take care of yourself'}
     bodyText={'External factors that influence our rate of learning. Taking care of our bodies is critical to learning'}
     />
-
+ */}
     <GuideComponent 
     picture={require('../assets/images/wellrested.png')} 
     headerText={'Get good sleep'}
-    bodyText={'Our brains process information deeply when we sleep. Getting adequte sleep is nessecary when trying to learn'}
+    bodyText={'Our brains process information deeply when we sleep. Getting adequte sleep is curcial to learning and information retention.'}
     />
 
 
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Know that you can learn'}
+    headerText={'Focus on the process'}
     bodyText={'The more energized you are, the more focused and attentive you will be. The more attentive you are, the better you will learn'}
     />
 

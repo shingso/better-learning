@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Card, List, Text, Button, Layout, Select , IndexPath, SelectItem, Icon} from '@ui-kitten/components';
 import { TimerSettingsContext } from '../TimerSettingsContext';
 import TopHeader from '../UtilComponents/TopHeader'
@@ -42,9 +42,22 @@ function TimerSettings(){
     <Layout style={{ flex: 1, paddingHorizontal:20, paddingTop:12 }}>
     <TopHeader title={'Session Timer Settings'}/>
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-
-    <Text style={{marginBottom:40}} category='h1'>{timerSettings.timeSettings}</Text> 
-    <Text style={{marginBottom:12}}>Current study session time is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings}</Text> minutes</Text>
+    <Image
+        style={{
+          width:420,
+          height:180,
+          alignSelf:'center',
+          resizeMode:'contain',
+          marginBottom:48,
+          marginTop:48
+        }}
+        source={require('../assets/images/timev2-01.png')}
+      />
+    <View style={{alignItems:'center'}}>
+    <Text category='h1'>{timerSettings.timeSettings}</Text> 
+    <Text style={{marginBottom:40}} category='s1'>{'minutes'}</Text> 
+    </View>
+    <Text style={{marginBottom:8}}>Current study session time is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings}</Text> minutes</Text>
     
     <View style={{flex:1, justifyContent:'flex-end', marginBottom:64}}>
     <View style={{}}>

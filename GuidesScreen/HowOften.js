@@ -28,11 +28,11 @@ function HowOften(){
     bodyText={'Do not push yourself to the point of exhaustion everyday. The more managable to set up your study goals, the more likely you will stick with it for the long term'}
     />
 
-    <GuideComponent 
+   {/*  <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Once per day is a good starting goal'}
     bodyText={'Try to study once per day. If you can manage one study session per day, you will make extradionary amounts of progress'}
-    />
+    /> */}
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
