@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import GuideComponent from '../UtilComponents/GuideComponent'
@@ -9,6 +9,7 @@ function HowOften(){
 
   return (
     <Layout style={{flex:1}}>
+    <SafeAreaView style={{flex:1}}>
     <View style={{paddingLeft:16, paddingTop:4}}>
     <TopHeader title='How often should I study?'/>
     </View>
@@ -43,6 +44,7 @@ function HowOften(){
 
   
     </GlobalSwiper>
+    </SafeAreaView>
     </Layout>)
 };
 

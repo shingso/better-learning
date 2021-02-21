@@ -10,6 +10,7 @@ function Inspiration(){
 
   return (
     <Layout style={{flex:1}}>
+    <SafeAreaView style={{flex:1}}>
     <View style={{paddingLeft:16, paddingTop:4, flexDirection:'row', alignItems:'center'}}>
     <TopHeader title='Inspiration'/>
     </View>
@@ -36,6 +37,7 @@ function Inspiration(){
 
   
     </GlobalSwiper>
+    </SafeAreaView>
     </Layout>)
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, ImageBackground } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import { Formik } from 'formik';
 import { addSubject } from '../helperFunctions';
 import { Button, Text ,Icon , Modal, Input, Card, useTheme, Layout } from '@ui-kitten/components';
@@ -34,7 +34,7 @@ function AddSubject(){
   if(folderAdded){
     return(
       <Layout style={{ flex: 1, padding:16}}>
-
+      <SafeAreaView style={{flex:1}}>
       <ConfirmComponent 
       picture={require('../assets/images/newfolder.png')}
       buttonText={'Back'}
@@ -42,8 +42,8 @@ function AddSubject(){
       bodyText={'Use folders to group together notes of a similar subject.'}
       onPress={()=>{navigation.goBack()}}
       />
-
-
+    
+      </SafeAreaView>
       </Layout>
     )
   }
@@ -51,6 +51,7 @@ function AddSubject(){
   return(
            
     <Layout style={{padding:20 , flex:1}}>
+    <SafeAreaView style={{flex:1}}>
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
@@ -92,6 +93,7 @@ function AddSubject(){
     </React.Fragment>
     )}
     </Formik>
+    </SafeAreaView>
     </Layout>
 
 

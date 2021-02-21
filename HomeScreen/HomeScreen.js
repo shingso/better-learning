@@ -76,12 +76,12 @@ function HomeScreen(){
 
     
     <Layout level='2' style={{ flex:1 }}>
-    <ScrollView  showsVerticalScrollIndicator={false}>
-    <SafeAreaView style={{flex: 1, paddingVertical:20, paddingHorizontal:16}}>
+    <SafeAreaView style={{flex: 1}}>
+    <ScrollView style={{ paddingVertical:20, paddingHorizontal:16}} showsVerticalScrollIndicator={false}>
+    
     <Card style={{bodyPaddingHorizontal:-12, borderWidth:0.5}}>
 
     <CalendarStrip
-     //currently not getting rerendered on change of theme
       selectedDate={new Date()}
       highlightDateNumberStyle={{color:theme['color-info-600']}}
       highlightDateNameStyle={{color:theme['color-info-600'], fontWeight:'bold'}}
@@ -146,10 +146,10 @@ function HomeScreen(){
     <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['text-hint-color'], marginHorizontal:30, lineHeight:24, textAlign:'center'}}>A collection of your thoughts</Text>
     </View>
     </Card>
-    </SafeAreaView>
+    
     </ScrollView>
 
-   
+    </SafeAreaView>
     </Layout>
       
     );

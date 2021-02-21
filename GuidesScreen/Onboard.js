@@ -12,6 +12,7 @@ function Onboard(){
 
   return (
     <View style={{flex:1,paddingVertical:40}}>
+    <SafeAreaView style={{flex:1}}>
     <GlobalSwiper>
 
     <GuideComponent 
@@ -45,6 +46,7 @@ function Onboard(){
 
 
     </GlobalSwiper>
+    </SafeAreaView>
     </View>
   )
 };

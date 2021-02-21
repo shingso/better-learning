@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View , Image } from 'react-native';
+import { View , SafeAreaView } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
 import { Button, Text ,Icon , Input, Layout, useTheme, Divider} from '@ui-kitten/components';
@@ -55,7 +55,7 @@ function AddNotes(){
   return(
            
     <Layout style={{ flex: 1, padding:16}}>
-    
+    <SafeAreaView>
     <Formik
     initialValues={{ text:'', textTheme:'' }}
     validationSchema={TextSchema}
@@ -114,6 +114,7 @@ function AddNotes(){
     )}
 
   </Formik>
+  </SafeAreaView>
   </Layout>
 
     )

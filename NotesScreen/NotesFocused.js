@@ -102,7 +102,8 @@ function NotesFocused({ route, navigation }){
 
     if(notes.length == 0){
       return(   
-      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingTop:12}}>
+      <SafeAreaView style={{flex: 1}}>
+      <View style={{paddingHorizontal:20, paddingTop:12, flex:1}}>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
       <TopHeader title={title}/>
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})}></Button>
@@ -116,6 +117,7 @@ function NotesFocused({ route, navigation }){
       <Text style={{textAlign:'center', marginTop:32,  fontSize:20, fontFamily:'OpenSans-Bold',letterSpacing:0.1}}>You dont have any notes yet</Text>
       <Text style={{textAlign:'center', marginTop:32, fontFamily:'OpenSans-SemiBold'}}>Notes for <Text style={{fontWeight:'bold', fontSize:16}}>{title}</Text> will be stored here</Text>
       </View>
+      </View>
       </SafeAreaView>
       )
     }
@@ -125,7 +127,7 @@ function NotesFocused({ route, navigation }){
 
 
       <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingTop:8}}>
-
+      <View style={{paddingHorizontal:20, paddingTop:12, flex:1}}>
       <View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', }}>
       <TopHeader title={title}/>
@@ -154,7 +156,7 @@ function NotesFocused({ route, navigation }){
          showsVerticalScrollIndicator={false}
          />
  
-  
+        </View>
        </SafeAreaView>
       
       
