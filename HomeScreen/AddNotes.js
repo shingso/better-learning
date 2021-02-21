@@ -36,8 +36,8 @@ function AddNotes(){
 
   if(noteAdded){
     return(
-      <Layout style={{ flex: 1, padding:16}}>
 
+      <Layout style={{ flex: 1, padding:16}}>
       <ConfirmComponent 
       picture={require('../assets/images/noteaddedv2.png')}
       buttonText={'Confirm'}
@@ -54,8 +54,9 @@ function AddNotes(){
 
   return(
            
-    <Layout style={{ flex: 1, padding:16}}>
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1}}>
+    <TopHeader title={'Add Note'}/>
+    <Layout style={{ padding:16}}>
     <Formik
     initialValues={{ text:'', textTheme:'' }}
     validationSchema={TextSchema}
@@ -76,7 +77,7 @@ function AddNotes(){
 
    <React.Fragment>
    <View>
-   <TopHeader title={'Add Note'}/>
+   
    <View style={{marginLeft:20}}>
    <FolderSelectionComponent/> 
    </View>
@@ -114,8 +115,8 @@ function AddNotes(){
     )}
 
   </Formik>
-  </SafeAreaView>
   </Layout>
+  </SafeAreaView>
 
     )
 };

@@ -12,11 +12,11 @@ function PrivacyPolicy(){
 
   return (
    
-    <Layout level='2' style={{ flex: 1, padding:16, paddingTop:20, paddingHorizontal:20  }}>
+    <Layout level='2' style={{ flex: 1 }}>
     <SafeAreaView style={{ flex: 1}}>
     <TopHeader title={'Privacy Policy'}/>
 
-    <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 20}}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:20, paddingHorizontal:20}}>
     
     <Text style={styles.bodyText}>
     Better Learning is a free application which is provided by at no cost and is intended for use as is.

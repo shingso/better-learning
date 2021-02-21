@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import GuideComponent from '../UtilComponents/GuideComponent'
@@ -10,9 +10,8 @@ function WhatIsLearning(){
   return (
     <Layout style={{flex:1}}>
     <SafeAreaView style={{flex:1}}>
-    <View style={{paddingLeft:16, paddingTop:4, flexDirection:'row', alignItems:'center'}}>
     <TopHeader title={'What is Learning?'}/>
-    </View>
+
   
     <GlobalSwiper>
 

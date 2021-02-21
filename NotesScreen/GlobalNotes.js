@@ -52,20 +52,8 @@ function GlobalNotes(){
     )
 
 
-   
-    const renderHeader = () => (
-        
-      <View style={{marginBottom:12, flexDirection:'row', alignItems:'center'}}>
-      <TopHeader title='All Notes'/>
-    
-      {/*  <Button accessoryLeft={EditIcon}  size='small'  onPress={()=>navigation.navigate('AddNotes')}/> */}
-      </View>
 
-    );
- 
-    
- //
-    //
+
     
     useEffect(() => {
         const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('recalled', '==', false).orderBy("timeStamp", 'desc')
@@ -106,13 +94,14 @@ function GlobalNotes(){
     return (
        
       <SafeAreaView style={{flex: 1}}>
+      <TopHeader title='All Notes'/>
       <List
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
          data={todos}
          renderItem={renderItem}
          ListEmptyComponent={renderEmpty}
-         ListHeaderComponent={renderHeader}
+     
          />
        </SafeAreaView>
       
@@ -134,8 +123,8 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    marginVertical:12,
-    marginHorizontal:20,
+    
+    paddingHorizontal:24,
     paddingBottom:100,
    
     

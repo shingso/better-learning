@@ -1,11 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { View , StyleSheet, ImageBackground } from 'react-native';
-
 import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
-
 import { useNavigation, StackActions } from '@react-navigation/native';
-import TopHeader from '../UtilComponents/TopHeader'
-import * as Yup from 'yup';
+
 
 
 

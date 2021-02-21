@@ -50,8 +50,10 @@ function AddSubject(){
 
   return(
            
-    <Layout style={{padding:20 , flex:1}}>
     <SafeAreaView style={{flex:1}}>
+    <TopHeader title={'Add Folder'}/>
+    <Layout style={{padding:20}}>
+    
     <Formik
     initialValues={{ subject:''}}
     validationSchema={SubjectSchema}
@@ -65,7 +67,7 @@ function AddSubject(){
     {formikProps => (
    
    <React.Fragment >
-   <TopHeader title={'Add Folder'}/>
+   
 
    <View style={{marginLeft:20}}>
    <Text style={{marginBottom:32,marginTop:20, fontWeight:'bold'}}>Use folders to group notes of a subject together.</Text>
@@ -93,8 +95,8 @@ function AddSubject(){
     </React.Fragment>
     )}
     </Formik>
-    </SafeAreaView>
     </Layout>
+    </SafeAreaView>
 
 
     )

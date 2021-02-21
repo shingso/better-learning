@@ -2,22 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, Image, ImageBackground } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../AuthContext'
-import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider, useTheme } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider, useTheme,  TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { UserDataContext } from '../UserDataContext'
 
 
 const EditIcon = (props) => (
-  <Icon {...props}  name='edit-2-outline'/>
+  <Icon {...props} height={22} width={22}  name='edit-2-outline'/>
 );
 
 
 const FolderIcon = (props) => (
-  <Icon {...props}  name='folder-add-outline'/>
+  <Icon {...props} height={22} width={22}  name='folder-add-outline'/>
 );
-
-
-
 
 
 function NotesHome({ navigation }){
@@ -56,8 +53,6 @@ function NotesHome({ navigation }){
 
       <FolderComponent navigate={()=>navigation.navigate('NotesFocused',{ title: info.item.title, subjectID: info.item.id})} title={info.item.title} noteCount={info.item.noteCount} color={theme['color-primary-300']}/>
       
-
-
     );
 
 
@@ -82,18 +77,18 @@ function NotesHome({ navigation }){
     )
 
 
+  const renderRightAcessory = () => (
+    <View style={{flexDirection:'row', marginRight:8}}>
+    <TopNavigationAction style={{marginRight:16}} onPress={()=>navigation.navigate('AddNotes')} icon={EditIcon}/>
+    <TopNavigationAction onPress={()=>navigation.navigate('AddSubject')} icon={FolderIcon}/>
+    </View>
+  )
+
+
    
     const renderHeader = () => (
         
     <View>
-    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-    <TopHeader title={'Notes'}/>
-    <View style={{flexDirection:'row'}}>
-    <Button  onPress={()=>navigation.navigate('AddNotes')} size='large' accessoryLeft={EditIcon} appearance='ghost'></Button>
-    <Button  onPress={()=>navigation.navigate('AddSubject')} size='large' accessoryLeft={FolderIcon} appearance='ghost'></Button>
-    </View> 
-    </View>
-    
     <FolderComponent 
     navigate={()=>navigation.navigate('GlobalNotes')} 
     title={"All Notes"} 
@@ -143,7 +138,7 @@ function NotesHome({ navigation }){
     return (
        
       <SafeAreaView style={{flex: 1}}>
-      
+      <TopHeader title={'Notes'} rightAccessory={renderRightAcessory}/>
       <List
          style={styles.container}
          contentContainerStyle={styles.contentContainer}

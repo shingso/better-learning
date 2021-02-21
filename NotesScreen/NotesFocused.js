@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, Image, Dimensions } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
-import { Card, List, Text, Button, Icon, Modal, Input, Layout, useTheme } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Modal, Input, Layout, useTheme, TopNavigationAction } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
@@ -21,6 +21,7 @@ const SearchIconLarge = (props) => (
 );
 
 
+
 function NotesFocused({ route, navigation }){
 
     const screenWidth = Dimensions.get('window').width
@@ -36,6 +37,8 @@ function NotesFocused({ route, navigation }){
     const [ searchVisible, setSearchVisible ] = useState(false)
     const [ value, setValue ] = useState('');
 
+
+   
 
     const textInputChange = (input) => {
       
@@ -63,6 +66,20 @@ function NotesFocused({ route, navigation }){
 
     );
 
+    const renderRightAcessory = () => (
+      <View style={{flexDirection:'row', marginRight:8}}>
+      <TopNavigationAction style={{marginRight:16}} onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})} icon={TrashIcon}/>
+      <TopNavigationAction onPress={()=>setSearchVisible(!searchVisible)} icon={SearchIconLarge}/>
+      </View>
+    )
+  
+
+    const renderRightAcessoryNoSearch = () => (
+      <View style={{marginRight:8}}>
+      <TopNavigationAction onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})} icon={TrashIcon}/>
+      </View>
+    )
+  
 
 
     useEffect(() => {
@@ -103,11 +120,12 @@ function NotesFocused({ route, navigation }){
     if(notes.length == 0){
       return(   
       <SafeAreaView style={{flex: 1}}>
+      <TopHeader title={title} rightAccessory={renderRightAcessoryNoSearch}/>
       <View style={{paddingHorizontal:20, paddingTop:12, flex:1}}>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+      {/* <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
       <TopHeader title={title}/>
       <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})}></Button>
-      </View>
+      </View> */}
       <View style={{flex: 1,alignItems:'center',justifyContent:'center', marginBottom:100}}>
       <Image
         style={{width: screenWidth-64, height: 200, resizeMode:'contain'}}
@@ -115,7 +133,7 @@ function NotesFocused({ route, navigation }){
       
       />
       <Text style={{textAlign:'center', marginTop:32,  fontSize:20, fontFamily:'OpenSans-Bold',letterSpacing:0.1}}>You dont have any notes yet</Text>
-      <Text style={{textAlign:'center', marginTop:32, fontFamily:'OpenSans-SemiBold'}}>Notes for <Text style={{fontWeight:'bold', fontSize:16}}>{title}</Text> will be stored here</Text>
+      <Text style={{textAlign:'center', marginTop:32, fontFamily:'OpenSans-SemiBold'}}>Notes for <Text style={{fontWeight:'bold'}}>{title}</Text> will be stored here</Text>
       </View>
       </View>
       </SafeAreaView>
@@ -126,16 +144,10 @@ function NotesFocused({ route, navigation }){
     return (
 
 
-      <SafeAreaView style={{flex: 1, paddingHorizontal:20, paddingTop:8}}>
+      <SafeAreaView style={{flex: 1}}>
+      <TopHeader title={title} rightAccessory={renderRightAcessory}/>
       <View style={{paddingHorizontal:20, paddingTop:12, flex:1}}>
       <View>
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', }}>
-      <TopHeader title={title}/>
-      <View style={{flexDirection:'row'}}>
-      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})}></Button>
-      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={SearchIconLarge} onPress={()=>setSearchVisible(!searchVisible)}></Button>
-      </View>
-      </View>
       {searchVisible &&
       <Input
             placeholder='Search tags'

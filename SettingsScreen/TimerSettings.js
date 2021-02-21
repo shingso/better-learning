@@ -39,9 +39,9 @@ function TimerSettings(){
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <Layout style={{ flex: 1, paddingHorizontal:20, paddingTop:12 }}>
+    <Layout style={{ flex: 1 }}>
     <TopHeader title={'Session Timer Settings'}/>
-    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+    <View style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:20, paddingTop:12 }}>
     <Image
         style={{
           width:420,
