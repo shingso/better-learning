@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, createContext, useContext } from 'react';
-
+import { Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -248,7 +248,7 @@ const authContext = useContext(AuthContext)
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
     appearance={'noIndicator'}
-    style={{borderTopWidth:1, borderTopColor:theme['color-basic-300']}}
+    style={{borderTopWidth:1, borderTopColor:theme['color-basic-300'], marginBottom:Platform.OS == 'ios' ? 48: 0, marginTop: Platform.OS == 'ios' ? 20: 0}}
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
 
