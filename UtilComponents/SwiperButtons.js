@@ -4,7 +4,7 @@ import { Card, List, Text, useTheme } from '@ui-kitten/components';
 
 
 
-function SwiperButtons(props){
+function SwiperButtons(){
 
     const theme = useTheme()
   
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         marginBottom:28, 
         marginRight:28, 
         padding:14, 
-        borderRadius:30, 
+        borderRadius:24, 
+        overflow:'hidden',
         paddingHorizontal:26
         
       },

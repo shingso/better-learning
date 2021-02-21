@@ -193,10 +193,9 @@ function Session(){
 
     return (
     <Layout level='2' style={{flex:1}}>
-
+    <SafeAreaView style={{flex: 1}}>
     <StudyProgressIndicator currentStep={studySessionPosition}/>
-    <SafeAreaView style={{flex: 1, padding:16}}>
-    
+    <View style={{flex:1, padding:16}}>
     {studySessionPosition == 0 &&
     <View style={{flex:1}}>
 
@@ -369,7 +368,7 @@ function Session(){
     </Card>
     </Modal>    
 
-
+    </View>
     </SafeAreaView>
     </Layout>
       

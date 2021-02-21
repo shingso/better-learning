@@ -99,14 +99,6 @@ function NotesHome({ navigation }){
     title={"All Notes"} 
     noteCount={userData.totalNotes} 
     color={theme['color-info-200']}/>
-    
-{/*     <FolderComponent 
-    navigate={()=>navigation.navigate('RecalledNotes')} 
-    title={"Daily Recall"} 
-    noteCount={userData.totalRecallNotes} 
-    color={theme['color-info-200']}/> */}
-
-
     </View>
 
     );

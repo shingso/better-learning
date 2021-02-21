@@ -59,24 +59,6 @@ function HomeScreen(){
     const startOfCurrentMonth = startOfMonth(currentDate)
     //const startDate = userData.timeStamp.toDate()
 
-    
-    const getRecallAvailable = () => {
-
-      if(userData){
-        if(userData.lastRecalled == null){
-          return true
-        }
-      } else {
-        return true
-      }
-      const startOfLastRecalled = startOfDay(userData.lastRecalled.toDate())
-      const currentDate = new Date()
-      const differenceInLastRecall = differenceInDays(currentDate, startOfLastRecalled)
-      if(differenceInLastRecall > 0){
-        return true
-      } 
-      return false
-    }
 
     const datesBlacklistFunc = date => {
 
@@ -89,7 +71,6 @@ function HomeScreen(){
     }
 
      
-
 
     return (
 
@@ -127,23 +108,6 @@ function HomeScreen(){
       disabledDateOpacity={1}
     />
     </Card>
-
-{/* 
-    <Card disabled={false} style={{marginTop:16, borderWidth:0.5}} onPress={()=>{navigation.navigate('NotesRecallExplain')}}>
-  
-    <View style={{ flexDirection:'row', justifyContent:'space-between', paddingVertical:4 }}>
-    <Text style={{marginRight:20, fontSize:15, fontWeight:'bold', letterSpacing:0.5}} >Daily Recall</Text>
-    <View style={{ flexDirection:'row', alignItems:'center',}}>
-    {getRecallAvailable() ?
-    <Icon name='alert-circle' fill={theme['color-info-500']} height={14} width={14}/> :
-    <Icon name='checkmark-circle' fill={theme['color-primary-700']} height={15} width={15}/>
-    }
-    <Text category='s1' style={{ marginLeft:6, color: getRecallAvailable() ? theme['color-info-500'] : theme['color-primary-700'] }}>{getRecallAvailable() ? 'Available' : 'Completed'}</Text>
-    </View>
-    </View>
-
-    </Card> */}
-
 
 
     <Card style={{marginTop:16,borderWidth:0.6}}  onPress={()=>navigation.navigate('Session')}>
@@ -190,35 +154,9 @@ function HomeScreen(){
       
     );
 
-      //we need to update state when we add an item
     
     }
 
-
-const styles = StyleSheet.create({
-  item: {
-
-    marginBottom:8,
-
-  },
-  //contanier that holds everything 
-  contentContainer: {
-
-  },
-  
-  container:{
-    marginTop:16,
-    backgroundColor:'red'
-  },
-
-  image: {
-
-    margin:-24,
-    padding:24,
-    paddingVertical:60
-    
-  },
-});
 
 export default HomeScreen
 

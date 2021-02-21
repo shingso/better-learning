@@ -617,7 +617,7 @@ function IQScreen(){
 
 
 <Card style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
-  <ImageBackground
+<ImageBackground
        style={{
          height:120,
          width:410,
