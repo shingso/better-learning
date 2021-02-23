@@ -65,7 +65,7 @@ function IQScreen(){
     <View style={{alignItems:'flex-end'}}>
     
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:8}}>
-    <Text style={{marginRight:8}} category='s1'>{props.sessionCount} <Text category='c2' style={{color:theme['text-hint-color']}}>sessions</Text></Text>
+    <Text style={{marginRight:8}} category='s2'>{props.sessionCount} <Text category='c2' style={{color:theme['text-hint-color']}}>sessions</Text></Text>
     <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
     </View>
 
@@ -690,12 +690,12 @@ function IQScreen(){
     //Month Styling - January/Feburary
     textMonthFontSize: 24,
     monthTextColor:theme['color-basic-800'],
-    textMonthFontWeight: 'bold',
+    //textMonthFontWeight: 'bold',
 
 
     textDayHeaderFontSize: 13,
-    textDayHeaderFontFamily:'OpenSans-Bold',
-    textDayFontFamily:'OpenSans-Regular',
+    //textDayHeaderFontFamily:'OpenSans-Bold',
+    //textDayFontFamily:'OpenSans-Regular',
     //textDisabledColor:theme['color-basic-600'],
     textDayStyle:{
       marginTop:6,

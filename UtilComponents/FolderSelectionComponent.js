@@ -123,6 +123,7 @@ function FolderSelectionComponent(){
     backdropStyle={styles.backdrop}>
     <Card style={{paddingHorizontal:12, paddingVertical:20, marginHorizontal:20, borderWidth:0.5, width:width-60}} disabled={true}>
     <List
+      showsVerticalScrollIndicator={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       data={subjectsContext.subjects}

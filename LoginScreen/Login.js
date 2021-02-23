@@ -6,7 +6,7 @@ import { firebase } from '@react-native-firebase/firestore';
 import { Formik } from 'formik';
 import { Button, Text ,Icon, Input, Layout } from '@ui-kitten/components';
 import * as Yup from 'yup';
-import { AuthContext } from '../AuthContext'
+
 
 import SignInComponent from '../UtilComponents/SignInComponent'
 
@@ -28,7 +28,7 @@ const LoginSchema = Yup.object().shape({
 
 function Login(){
  
- const authContext = useContext(AuthContext)
+
  const navigation = useNavigation();
  const [secureTextEntry, setSecureTextEntry] = useState(false)
 

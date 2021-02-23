@@ -14,8 +14,6 @@ import { UserDataContext } from '../UserDataContext'
 
 function HomeScreen(){
 
-    const ref = useRef(markedDatesFunc);
-
 
     const theme = useTheme()
     const studyStatsData = useContext(StudyStatsContext)
@@ -79,7 +77,7 @@ function HomeScreen(){
     <SafeAreaView style={{flex: 1}}>
     <ScrollView style={{ paddingVertical:20, paddingHorizontal:16}} showsVerticalScrollIndicator={false}>
     
-    <Card style={{bodyPaddingHorizontal:-12, borderWidth:0.5}}>
+    <Card style={{bodyPaddingHorizontal:-12, borderWidth:0.3}}>
 
     <CalendarStrip
       selectedDate={new Date()}
@@ -87,7 +85,6 @@ function HomeScreen(){
       highlightDateNameStyle={{color:theme['color-info-600'], fontWeight:'bold'}}
       showMonth={false}
       calendarAnimation={{type:"parallel", duration:0}}
-      ref={ref}
       style={{height:80, paddingTop: 0, paddingBottom: 0, marginHorizontal: -16,
         marginVertical: -20, backgroundColor:theme["background-basic-color-1"]}}
       calendarHeaderStyle={{color:'white'}}
@@ -127,7 +124,7 @@ function HomeScreen(){
     <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-basic-100'], padding:8, paddingHorizontal:12,borderRadius:4}}>
     <Text style={{color:theme['color-primary-800'], fontSize:16, fontWeight:'bold'}}>{timesStuidedToday}</Text>  
     </View> 
-    <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['text-hint-color']}}>Learn more effectively with a guided study session</Text>
+    <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-700']}}>Learn more effectively with a guided study session</Text>
     </View>
     </Card> 
 
@@ -143,7 +140,7 @@ function HomeScreen(){
         />
     <View style={{alignItems:'center'}}>
     <Text category='h6'>Your Notes</Text>
-    <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['text-hint-color'], marginHorizontal:30, lineHeight:24, textAlign:'center'}}>A collection of your thoughts</Text>
+    <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-700'], marginHorizontal:30, lineHeight:24, textAlign:'center'}}>A collection of your thoughts</Text>
     </View>
     </Card>
     

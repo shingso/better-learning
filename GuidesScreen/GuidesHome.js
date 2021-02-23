@@ -40,8 +40,8 @@ function GuidesHome(){
           source={info.item.imagePath}
         />
      
-      <Text category='h6' style={{marginBottom:12, textAlign:'center' }}>{info.item.title}</Text>
-      <Text category='p1' style={{marginBottom:16, textAlign:'center', letterSpacing:0.2, color:theme['text-hint-color']}}>{info.item.bodyText}</Text>
+      <Text category='h6' style={{marginBottom:16, textAlign:'center' }}>{info.item.title}</Text>
+      <Text category='p1' style={{marginBottom:20, textAlign:'center', letterSpacing:0.2, color:theme['color-basic-700']}}>{info.item.bodyText}</Text>
     
       </Card>
 
@@ -57,7 +57,7 @@ function GuidesHome(){
         <SafeAreaView style={{flex: 1}}>
      
         <List
-   
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.contentContainer}
         data={topics}
         renderItem={renderItem}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, SafeAreaView, Dimensions, Image, StyleSheet, ImageBackground } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
+import { Card, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { ScrollView } from 'react-native-gesture-handler';
 import { endOfMonth, format } from 'date-fns'
@@ -34,7 +34,7 @@ function UserInfo(){
     const timesStudiedStat = studyStatsData.totalMinutesStudied
 
     const iconStyle={
-      fill:theme['color-basic-500'],
+      fill:theme['color-basic-800'],
       width:18,
       height:18
 
@@ -54,8 +54,8 @@ function UserInfo(){
     return (
 
     <ScrollView showsVerticalScrollIndicator={false}>
-    <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
     <SafeAreaView style={{flex: 1}}>
+    <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
     
     <Card style={{marginBottom:2, paddingBottom:8, borderWidth:0.5}}>
     <Image
@@ -131,11 +131,9 @@ function UserInfo(){
     </View>
     </Card>
 
-      
     
-
-    </SafeAreaView>
     </Layout>
+    </SafeAreaView>
     </ScrollView>
       
     );

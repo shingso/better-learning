@@ -96,12 +96,12 @@ function GlobalNotes(){
       <SafeAreaView style={{flex: 1}}>
       <TopHeader title='All Notes'/>
       <List
+         showsVerticalScrollIndicator={false}
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
          data={todos}
          renderItem={renderItem}
          ListEmptyComponent={renderEmpty}
-     
          />
        </SafeAreaView>
       

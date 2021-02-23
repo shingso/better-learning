@@ -19,90 +19,95 @@ const GoogleIcon = (props) => (
 );
 
 
-async function onAppleButtonPress() {
- 
-  const rawNonce = uuid();
-  const state = uuid();
-
-
-  appleAuthAndroid.configure({
-
-    clientId: 'com.shing.betterlearning',
-    redirectUri: 'https://betterlearning-88c6f.firebaseapp.com/__/auth/handler',
-    responseType: appleAuthAndroid.ResponseType.ALL,
-    scope: appleAuthAndroid.Scope.ALL,
-    nonce: rawNonce,
-    state,
-  });
-
-  try{
-
-  const response = await appleAuthAndroid.signIn();
-  if (response.state === state) {
-    const credentials = auth.AppleAuthProvider.credential(
-      response.id_token,
-      rawNonce, 
-    )
-    const authResponse = await auth().signInWithCredential(credentials) 
-    addUser(authResponse.user.uid)
-    return authResponse
-    }
-
-  } catch(e){
-    console.log(e)
-  }
-
-
-}
-
-
-async function onAppleButtonPressApple() {
-  // Start the sign-in request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-  });
-
-  // Ensure Apple returned a user identityToken
-  if (!appleAuthRequestResponse.identityToken) {
-    throw 'Apple Sign-In failed - no identify token returned';
-  }
-
-  // Create a Firebase credential from the response
-  const { identityToken, nonce } = appleAuthRequestResponse;
-  const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
-
-  // Sign the user in with the credential
-  const authResponse = await auth().signInWithCredential(appleCredential);
-  authContext.setNewUser(authResponse.additionalUserInfo.isNewUser)
-  addUser(authResponse.user.uid)
-  return authResponse
-}
-   
-
-
-
-
-function AppleSignIn() {
-  return (
-    <AppleButton
-      buttonStyle={AppleButton.Style.WHITE_OUTLINE}
-      buttonType={AppleButton.Type.SIGN_IN}
-      style={{
-        width:'100%',
-        height: 45,
-        borderRadius:30
-      }}
-      onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
-    />
-  );
-} 
 
 
 function SignInComponent(){
  
 
   const authContext = useContext(AuthContext)
+
+
+  async function onAppleButtonPress() {
+ 
+    const rawNonce = uuid();
+    const state = uuid();
+  
+  
+    appleAuthAndroid.configure({
+  
+      clientId: 'com.shing.betterlearning',
+      redirectUri: 'https://betterlearning-88c6f.firebaseapp.com/__/auth/handler',
+      responseType: appleAuthAndroid.ResponseType.ALL,
+      scope: appleAuthAndroid.Scope.ALL,
+      nonce: rawNonce,
+      state,
+    });
+  
+    try{
+  
+    const response = await appleAuthAndroid.signIn();
+    if (response.state === state) {
+      const credentials = auth.AppleAuthProvider.credential(
+        response.id_token,
+        rawNonce, 
+      )
+      const authResponse = await auth().signInWithCredential(credentials) 
+      addUser(authResponse.user.uid)
+      return authResponse
+      }
+  
+    } catch(e){
+      console.log(e)
+    }
+  
+  
+  }
+  
+  
+  async function onAppleButtonPressApple() {
+    // Start the sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+  
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw 'Apple Sign-In failed - no identify token returned';
+    }
+  
+    // Create a Firebase credential from the response
+    const { identityToken, nonce } = appleAuthRequestResponse;
+    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+  
+    // Sign the user in with the credential
+    const authResponse = await auth().signInWithCredential(appleCredential);
+    authContext.setNewUser(authResponse.additionalUserInfo.isNewUser)
+    addUser(authResponse.user.uid)
+    return authResponse
+  }
+     
+  
+  
+  
+  
+  function AppleSignIn() {
+    return (
+      <AppleButton
+        buttonStyle={AppleButton.Style.WHITE_OUTLINE}
+        buttonType={AppleButton.Type.SIGN_IN}
+        style={{
+          width:'100%',
+          height: 45,
+          borderRadius:30
+        }}
+        onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
+      />
+    );
+  } 
+
+  
+  
   async function onGoogleButtonPress() {
 
     try{ 

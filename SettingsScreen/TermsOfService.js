@@ -10,10 +10,9 @@ function TermsOfService(){
 
   return (
    
-    <Layout level='2' style={{ flex: 1 }}>
+    <Layout level='2' style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
     <TopHeader title={'Terms and Conditions'}/>
-    <SafeAreaView style={{ flex: 1 }}>
-    
 
     <ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:20, paddingHorizontal:20}}>
     

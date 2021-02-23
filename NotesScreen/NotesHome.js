@@ -140,6 +140,7 @@ function NotesHome({ navigation }){
       <SafeAreaView style={{flex: 1}}>
       <TopHeader title={'Notes'} rightAccessory={renderRightAcessory}/>
       <List
+         showsVerticalScrollIndicator={false}
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
          data={subjects}
