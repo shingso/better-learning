@@ -55,9 +55,9 @@ function IQScreen(){
     <View style={{  flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingTop:24, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
     
     <View>
-    <Text style={{ marginBottom:8}} category='s2'>{props.title}</Text>
+    <Text style={{ marginBottom:8}} >{props.title}</Text>
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:20}}>
-    <Text category='c2' style={{color:theme['text-hint-color'], marginRight:4}}>{props.weekLabel}</Text>
+    <Text  style={{color:theme['text-hint-color'], marginRight:4}}>{props.weekLabel}</Text>
     <Icon name='calendar-outline' fill={theme['text-hint-color']} height={13} width={13}/>
     </View>
     </View>
@@ -65,7 +65,7 @@ function IQScreen(){
     <View style={{alignItems:'flex-end'}}>
     
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:8}}>
-    <Text style={{marginRight:8}} category='s2'>{props.sessionCount} <Text category='c2' style={{color:theme['text-hint-color']}}>sessions</Text></Text>
+    <Text style={{marginRight:8, fontWeight:'500', fontSize:14, fontFamily:'OpenSans-SemiBold'}} >{props.sessionCount} <Text style={{color:theme['text-hint-color'], fontSize:12}}>sessions</Text></Text>
     <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
     </View>
 
@@ -563,7 +563,7 @@ function IQScreen(){
 
   {(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) &&
 
-  <Card  style={{marginBottom:16, alignItems:'center' , borderWidth:0.5}}>
+  <Card  style={{marginBottom:16, alignItems:'center' , borderWidth:0}}>
   <Image
     style={{
       height:120,
@@ -616,8 +616,8 @@ function IQScreen(){
 
 
 
-<Card style={{marginBottom:16, borderWidth:0.5, paddingBottom:0}}>
-<ImageBackground
+<Card style={{marginBottom:12, borderWidth:0, paddingBottom:0, borderRadius:12}}>
+{/* <ImageBackground
        style={{
          height:120,
          width:410,
@@ -632,10 +632,7 @@ function IQScreen(){
 
        source={require('../assets/images/piggytime.png')}
      >
-        {/* <View style={{backgroundColor:theme['color-basic-100'], paddingVertical:8, paddingHorizontal:24, borderRadius:30, borderColor:theme['color-primary-400'], borderWidth:0, opacity:0.9}}>
-        <Text category={'s1'} style={{fontSize:16, color:theme['color-basic-300']}}>Time Spent Studying</Text>
-        </View> */} 
-  </ImageBackground>
+  </ImageBackground> */}
   
   
   <View style={{}}>
@@ -657,7 +654,7 @@ function IQScreen(){
 
   
 
-  <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0.5}}>
+  <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0, borderRadius:12}}>
   <Calendar
 
   markingType={'custom'}
@@ -698,7 +695,7 @@ function IQScreen(){
     //textDayFontFamily:'OpenSans-Regular',
     //textDisabledColor:theme['color-basic-600'],
     textDayStyle:{
-      marginTop:6,
+      marginTop:8,
       color: theme['text-basic-color']//'purple'//theme['text-basic-color']
       
     }

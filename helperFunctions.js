@@ -261,6 +261,12 @@ export function formatMinutes(time){
     color:theme['text-hint-color']
   }
 
+  const numberStyle = {
+    fontWeight:'500', 
+    fontSize:15, 
+    fontFamily:'OpenSans-SemiBold'
+  } 
+
   
   let minutes = (time)
   let hours = Math.floor(minutes/60)
@@ -273,22 +279,22 @@ export function formatMinutes(time){
   //console.log(minutes, hours, remainingMinutes)
 
   if(remainingMinutes === 0 && hours === 0){
-    return <Text category='s2'>0  <Text category='c2' style={labelStyle}>mins</Text></Text>
+    return <Text style={numberStyle}>0 <Text  style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0 && hours === 0){
-    return <Text category='s2'>{remainingMinutes} <Text category='c2' style={labelStyle}>mins</Text></Text>
+    return <Text style={numberStyle}>{remainingMinutes} <Text  style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0 && hours === 1){
-    return <Text category='s2'>{hours} <Text category='c2' style={labelStyle}>hour</Text>  {remainingMinutes} <Text category='c2' style={labelStyle}>mins</Text></Text>
+    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hour</Text>  {remainingMinutes} <Text  style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0){
-    return <Text category='s2'>{hours} <Text category='c2' style={labelStyle}>hours</Text>  {remainingMinutes} <Text category='c2' style={labelStyle}>mins</Text></Text>
+    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text>  {remainingMinutes} <Text  style={labelStyle}>mins</Text></Text>
   }
 
-  return <Text category='s2'>{hours} <Text category='c2' style={labelStyle}>hours</Text></Text>
+  return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text></Text>
 
 }
 

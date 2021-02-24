@@ -96,9 +96,11 @@ const styles = StyleSheet.create({
     },
 
     item: {
-      marginVertical:8,
+      marginVertical:6,
       alignItems:'center',
-      borderWidth:0.5
+      borderWidth:0,
+      borderRadius:10
+
       
     
     },

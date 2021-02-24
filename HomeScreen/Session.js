@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import {  View, SafeAreaView, StyleSheet, ImageBackground, Vibration, Animated, Image } from 'react-native'
+import {  View, SafeAreaView, StyleSheet, ImageBackground, Vibration, Animated, Image, TouchableOpacity } from 'react-native'
 import { Button, Icon,  Card, Text, Layout, useTheme, Input, Modal } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -351,21 +351,24 @@ function Session(){
     backdropStyle={styles.backdrop}
     >
 
-    <Card style={{marginHorizontal:40}} disabled={true}>
+    <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginHorizontal:60}}>
     <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text style={{marginVertical:12, marginBottom:24 ,textAlign:'center'}}>Are you sure you want to leave this current study session?</Text> 
-    <View style={{flexDirection:'row', marginBottom:8}}>
-        
-    <Button status='danger' style={{marginRight:12}} onPress={popToTop}>
-    End Study Session
-    </Button>
+    <Text style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24}}>Are you sure you want to leave the current study session?</Text> 
+   
+    <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+    <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+    <TouchableOpacity onPress={()=>closeBackModal()} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'] }}>
+    <Text category='s1' style={{ textAlign:"center", height:50,textAlignVertical:'center', color:theme['color-info-500'] }}>Close</Text>
+    </TouchableOpacity>
+    <TouchableOpacity  onPress={()=>popToTop()} style={{flex:1, height:50}}>
+    <Text category='s1' style={{ textAlign:"center", height:50, textAlignVertical:'center', color:theme['color-danger-600']}}>End Session</Text>
+    </TouchableOpacity>
+    </View>
+    </View>
 
-    <Button appearance='outline' onPress={()=>closeBackModal()}>
-    Close
-    </Button>
+
     </View>
-    </View>
-    </Card>
+    </Layout>
     </Modal>    
 
     </View>

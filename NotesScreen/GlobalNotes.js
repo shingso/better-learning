@@ -3,8 +3,16 @@ import { View, StyleSheet, SafeAreaView, Image } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
-import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider } from '@ui-kitten/components';
+import { List, Text, TopNavigationAction, Icon, Input } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
+
+const SearchIconLarge = (props) => (
+  <Icon {...props} width={22} height={22} name='search-outline' />
+);
+
+const SearchIcon = (props) => (
+  <Icon {...props} width={16} height={16} name='search-outline' />
+);
 
 
 function GlobalNotes(){
@@ -12,9 +20,11 @@ function GlobalNotes(){
  
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
-
     const [ loading, setLoading ] = useState(true);
-    const [ todos, setTodos ] = useState([]);
+    const [ filteredNotes, setFilteredNotes ] = useState([]);
+    const [ searchVisible, setSearchVisible ] = useState(false)
+    const [ value, setValue ] = useState('');
+    const [ notes, setNotes ] = useState([]);
     
     const renderItem = (info) => (
       
@@ -28,19 +38,32 @@ function GlobalNotes(){
     );
 
 
+    const textInputChange = (input) => {
+      
+      if(input != ''){
+      const regexp = new RegExp(input, 'i')
+      const result = notes.filter(x => regexp.test(x.textTheme) && x.textTheme != null)
+      setFilteredNotes(result)
+      setValue(input)
+      } else {
+        setFilteredNotes(notes)
+        setValue(input)
+      }
+    }
+ 
+
+
     const renderEmpty = () => (
 
     <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
    
     <Image
-          style={{
-            height:120,
-            width:400,
-            marginBottom:28,
-            marginTop:-16,
- 
-          }}
-  
+        style={{
+          height:120,
+          width:400,
+          marginBottom:28,
+          marginTop:-16,
+        }}
           source={require('../assets/images/yournotesv1orange.png')}
         />
     <View style={{alignItems:'center'}}>
@@ -49,6 +72,13 @@ function GlobalNotes(){
     </View>
     </View>
       
+    )
+
+
+    const renderRightAcessory = () => (
+      <View style={{flexDirection:'row', marginRight:8 }}>
+      <TopNavigationAction onPress={()=>setSearchVisible(!searchVisible)} icon={SearchIconLarge}/>
+      </View>
     )
 
 
@@ -74,7 +104,8 @@ function GlobalNotes(){
             });
           });
       
-          setTodos(list);
+          setNotes(list);
+          setFilteredNotes(list)
     
           if (loading) {
             setLoading(false);
@@ -94,12 +125,22 @@ function GlobalNotes(){
     return (
        
       <SafeAreaView style={{flex: 1}}>
-      <TopHeader title='All Notes'/>
+      <TopHeader title='All Notes' rightAccessory={renderRightAcessory}/>
+      <View style={{paddingHorizontal:20}}>
+      {searchVisible &&
+      <Input
+            placeholder='Search tags'
+            value={value}
+            accessoryLeft={SearchIcon}
+            onChangeText={nextValue => textInputChange(nextValue)}
+          />
+      }
+      </View>
       <List
          showsVerticalScrollIndicator={false}
          style={styles.container}
          contentContainerStyle={styles.contentContainer}
-         data={todos}
+         data={filteredNotes}
          renderItem={renderItem}
          ListEmptyComponent={renderEmpty}
          />

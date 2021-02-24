@@ -19,12 +19,6 @@ function FolderSelectionComponent(){
     const subjectsContext = useContext(SubjectsContext)
     const navigation = useNavigation();
     const [number, setNumber] = React.useState(0);
-    const navigateToAddSubject = () => {
-        setSelectVisible(false)
-        navigation.navigate('AddSubject')
-      }
-
-      
 
     const renderFooter = () => (
         <View>

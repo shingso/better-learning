@@ -42,7 +42,7 @@ function UserInfo(){
 
 
     const ListComponent = (props)=>(
-      <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
+      <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12}}>
       <View style={{flexDirection:'row', alignItems:'center'}}>
       <Icon {...iconStyle} name={props.iconName}/>
       <Text style={{marginLeft:16}} category='s1'>{props.title}</Text>
@@ -57,7 +57,7 @@ function UserInfo(){
     <SafeAreaView style={{flex: 1}}>
     <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
     
-    <Card style={{marginBottom:2, paddingBottom:8, borderWidth:0.5}}>
+    <Card style={{marginBottom:2, paddingBottom:8, borderWidth:0, borderRadius:12}}>
     <Image
           style={{
             height:80,
@@ -124,7 +124,7 @@ function UserInfo(){
     <ListComponent path={'OpenSource'} iconName={'book-open-outline'} title={'Open Source Libraries'}/>
 
 
-    <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0.5, paddingVertical:2}}>
+    <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
     <Icon fill={theme['color-danger-700']} width={18} height={18} name='log-out-outline'/>
     <Text style={{marginLeft:16, color:theme['color-danger-700']}} category='s1'>Sign Out</Text>
@@ -143,8 +143,6 @@ function UserInfo(){
     }
 
 
-const styles = StyleSheet.create({
 
-});
 
 export default UserInfo

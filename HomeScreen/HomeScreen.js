@@ -77,7 +77,7 @@ function HomeScreen(){
     <SafeAreaView style={{flex: 1}}>
     <ScrollView style={{ paddingVertical:20, paddingHorizontal:16}} showsVerticalScrollIndicator={false}>
     
-    <Card style={{bodyPaddingHorizontal:-12, borderWidth:0.3}}>
+    <Card style={{bodyPaddingHorizontal:-12, borderWidth:0, borderRadius:12}}>
 
     <CalendarStrip
       selectedDate={new Date()}
@@ -107,11 +107,11 @@ function HomeScreen(){
     </Card>
 
 
-    <Card style={{marginTop:16,borderWidth:0.6}}  onPress={()=>navigation.navigate('Session')}>
+    <Card style={{marginTop:12,borderWidth:0, borderRadius:12}}  onPress={()=>navigation.navigate('Session')}>
     <View style={{alignItems:'center', justifyContent:'center'}}>
     <Image
           style={{
-            height:160,
+            height:180,
             width: screenWidth,
             marginBottom:28,
             marginTop:-16,
@@ -121,14 +121,14 @@ function HomeScreen(){
       
     <Text category='h6' style={{fontWeight:'bold',color:theme['color-primary-800'], fontSize:18, letterSpacing:0.5}}>Start Study Session</Text>
     
-    <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-basic-100'], padding:8, paddingHorizontal:12,borderRadius:4}}>
+    <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-basic-100'], padding:8, paddingHorizontal:16,borderRadius:8}}>
     <Text style={{color:theme['color-primary-800'], fontSize:16, fontWeight:'bold'}}>{timesStuidedToday}</Text>  
     </View> 
     <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-700']}}>Learn more effectively with a guided study session</Text>
     </View>
     </Card> 
 
-    <Card onPress={()=>{navigation.navigate('NotesHome')}} style={{marginTop:16, justifyContent:'center', alignItems:'center', borderWidth:0.5 }}>
+    <Card onPress={()=>{navigation.navigate('NotesHome')}} style={{marginTop:12, justifyContent:'center', alignItems:'center', borderWidth:0, borderRadius:12}}>
     <Image
           style={{
             height:100,
@@ -136,7 +136,7 @@ function HomeScreen(){
             marginBottom:28,
             marginTop:-16,
           }}
-          source={require('../assets/images/yournotesv2.png')}
+          source={require('../assets/images/yournotesv1orange.png')}
         />
     <View style={{alignItems:'center'}}>
     <Text category='h6'>Your Notes</Text>

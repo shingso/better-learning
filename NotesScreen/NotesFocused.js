@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView, Image, Dimensions } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image, Dimensions, TouchableOpacity } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
 import { Card, List, Text, Button, Icon, Modal, Input, Layout, useTheme, TopNavigationAction } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
-import { useNavigation } from '@react-navigation/native';
 import { deleteSubject } from '../helperFunctions';
 
 const TrashIcon = (props) => (
@@ -35,8 +34,62 @@ function NotesFocused({ route, navigation }){
     const [ notes, setNotes ] = useState([]);
     const [ filteredNotes, setFilteredNotes ] = useState([]);
     const [ searchVisible, setSearchVisible ] = useState(false)
+    const [ visible, setVisible ] = useState(false)
     const [ value, setValue ] = useState('');
 
+    const StatefulModalContent = () => {
+      const [inputValue, setInputValue] = React.useState();
+      const [deleteConfirm, setDeleteConfirm] = React.useState();
+      const deleteSubjectFunction = ( user, subjectID ) => {
+
+        if(inputValue == 'Delete'){
+          deleteSubject(user, subjectID)
+          setDeleteConfirm(true)
+        } 
+
+      }
+
+      if(deleteConfirm){
+        return (
+          <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
+          <View>
+          <Text category='s1' style={{textAlign:'center', marginBottom:4}}>Folder Removed</Text>
+          </View>
+        
+          <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+          <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+        
+          <TouchableOpacity  onPress={()=>navigation.goBack()} style={{flex:1, height:50}}>
+          <Text category='s1' style={{flex:1, textAlign:"center", height:50, textAlignVertical:'center', color:theme['color-primary-600']}}>Back</Text>
+          </TouchableOpacity>
+          </View>
+          </View>
+  
+          </Layout>
+        );
+      }
+
+      return (
+        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
+        <View>
+        <Text category='s1' style={{textAlign:'center', marginBottom:4}}>Remove Folder</Text>
+        <Text category='p2' style={{textAlign:'center', marginBottom:20}}>Enter 'Delete' to remove folder</Text>
+        </View>
+        <Input value={inputValue} onChangeText={setInputValue} />
+      
+        <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+        <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'] }}>
+        <Text category='s1' style={{flex:1, textAlign:"center", height:50,textAlignVertical:'center' }}>Close</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={()=> deleteSubjectFunction(userID, subjectID)} style={{flex:1, height:50}}>
+        <Text category='s1' style={{flex:1, textAlign:"center", height:50, textAlignVertical:'center', color:theme['color-danger-600']}}>Delete</Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+        </Layout>
+      );
+    };
 
    
 
@@ -67,16 +120,18 @@ function NotesFocused({ route, navigation }){
     );
 
     const renderRightAcessory = () => (
-      <View style={{flexDirection:'row', marginRight:8}}>
-      <TopNavigationAction style={{marginRight:16}} onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})} icon={TrashIcon}/>
+      <View style={{flexDirection:'row', marginRight:8 }}>
+     
+      <TopNavigationAction style={{marginRight:16}} onPress={()=>setVisible(true)} icon={TrashIcon}/>
       <TopNavigationAction onPress={()=>setSearchVisible(!searchVisible)} icon={SearchIconLarge}/>
+
       </View>
     )
   
 
     const renderRightAcessoryNoSearch = () => (
       <View style={{marginRight:8}}>
-      <TopNavigationAction onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})} icon={TrashIcon}/>
+      <TopNavigationAction onPress={()=>setVisible(true)} icon={TrashIcon}/>
       </View>
     )
   
@@ -122,10 +177,6 @@ function NotesFocused({ route, navigation }){
       <SafeAreaView style={{flex: 1}}>
       <TopHeader title={title} rightAccessory={renderRightAcessoryNoSearch}/>
       <View style={{paddingHorizontal:20, paddingTop:12, flex:1}}>
-      {/* <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-      <TopHeader title={title}/>
-      <Button style={{marginRight:-12}} status='basic' size='small' appearance='ghost' accessoryLeft={TrashIcon} onPress={()=>navigation.navigate('DeleteFolder',{folderID:subjectID})}></Button>
-      </View> */}
       <View style={{flex: 1,alignItems:'center',justifyContent:'center', marginBottom:100}}>
       <Image
         style={{width: screenWidth-64, height: 200, resizeMode:'contain'}}
@@ -136,6 +187,12 @@ function NotesFocused({ route, navigation }){
       <Text style={{textAlign:'center', marginTop:32, fontFamily:'OpenSans-SemiBold'}}>Notes for <Text style={{fontWeight:'bold'}}>{title}</Text> will be stored here</Text>
       </View>
       </View>
+      <Modal
+          visible={visible}
+          backdropStyle={styles.backdrop}
+          >
+       <StatefulModalContent/>
+       </Modal>
       </SafeAreaView>
       )
     }
@@ -169,6 +226,12 @@ function NotesFocused({ route, navigation }){
          />
  
         </View>
+        <Modal
+          visible={visible}
+          backdropStyle={styles.backdrop}
+          >
+       <StatefulModalContent/>
+       </Modal>
        </SafeAreaView>
       
       

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView, Image, ImageBackground } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image, ImageBackground, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../AuthContext'
-import { Card, List, Text, Button, Icon, Modal, Input, Layout, Divider, useTheme,  TopNavigation, TopNavigationAction } from '@ui-kitten/components';
+import { Formik } from 'formik';
+import { Card, List, Text, Button, Icon, Modal, Input, Layout, useTheme,  TopNavigationAction, } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { UserDataContext } from '../UserDataContext'
+import * as Yup from 'yup';
+import { addSubject } from '../helperFunctions';
 
 
 const EditIcon = (props) => (
@@ -16,6 +19,13 @@ const FolderIcon = (props) => (
   <Icon {...props} height={22} width={22}  name='folder-add-outline'/>
 );
 
+const FolderTitleSchema = Yup.object().shape({
+  folderTitle: Yup.string()
+    .min(1, 'Too Short!')
+    .max(80, 'Maximum 80 characters for folder title')
+    .required('Folder Title Required'),
+
+})
 
 function NotesHome({ navigation }){
     
@@ -27,23 +37,74 @@ function NotesHome({ navigation }){
 
     const [ loading, setLoading ] = useState(true);
     const [ subjects, setSubjects ] = useState([]);
+    const [ visible, setVisible ] = useState(false);
+
+
+    const StatefulModalContent = () => {
+   
+    
+    
+      return (
+        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
+           <Formik
+            initialValues={{ folderTitle:''}}
+            validationSchema={FolderTitleSchema}
+            onSubmit={(values, actions) => {
+            addSubject( authContext.user.uid, values.folderTitle)
+            actions.setSubmitting(false);
+            setVisible(false)
+            }}
+          >
+
+      {formikProps => (
+        <View>
+        <View>
+        <Text category='s1' style={{textAlign:'center', marginBottom:4}}>Add a Folder</Text>
+        <Text category='p2' style={{textAlign:'center', marginBottom:20}}>Enter a title for the folder</Text>
+        </View>
+        <Input
+        placeholder={'Folder Title'}
+        value={formikProps.values.folderTitle}
+       
+        onChangeText={formikProps.handleChange('folderTitle')}
+        status={formikProps.errors.folderTitle != null ? 'danger' : 'basic'}
+       // autoFocus={true}
+        />
+
+        <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+        <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'] }}>
+        <Text category='s1' style={{flex:1, textAlign:"center", height:50,textAlignVertical:'center' }}>Close</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.folderTitle} style={{flex:1, height:50}}>
+        <Text category='s1' style={{flex:1, textAlign:"center", height:50, textAlignVertical:'center', color:formikProps.errors.folderTitle ? theme['color-basic-600'] : theme['color-primary-600']}}>Confirm</Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+
+
+
+        </View>
+        )}
+        </Formik>
+        </Layout>
+      );
+    };
+
 
 
     const FolderComponent = (props) => (
       <Card onPress={props.navigate} style={styles.item}>
       <View style={{flexDirection:'row', alignItems:'center',}}>
       <View>
-      <Icon fill={props.color} width={35} height={35} style={{marginRight:24}} name='folder'/> 
+      <Icon fill={props.color} width={22} height={22} style={{marginRight:12}} name='folder'/> 
       </View>
       <View style={{flex:1}}>
-      <Text category='s2' style={{lineHeight:22, flexShrink:1, letterSpacing:0.1, marginBottom:2}}>{props.title}</Text>
-      <View style={{flexDirection:'row', alignItems:'center'}}>
-      <Text category='c2' style={{ color:theme['text-hint-color'], marginTop:2}}><Text style={{fontSize:12, fontWeight:'bold', color:theme['color-basic-700']}}>{props.noteCount}</Text> notes</Text>
-      {/*<Text style={{fontSize:5, marginHorizontal:12, color:theme['color-basic-600']}}>{'\u2B24'}</Text>
-      <Text style={{ color:theme['color-basic-600'], fontSize:10, marginTop:2}}><Text style={{fontSize:11, fontWeight:'bold', color:theme['color-basic-600']}}>1 day ago</Text></Text> */}
+      <Text category='s2' style={{lineHeight:22, flexShrink:1, letterSpacing:0.1}}>{props.title}</Text>
       </View>
+      <View style={{paddingLeft:16}}>
+      <Text style={{fontSize:12, fontWeight:'bold', color:theme['color-basic-700']}}>{props.noteCount}</Text>
       </View>
-      {/* <Icon fill={theme['color-basic-400']} width={20} height={20} name='arrow-ios-forward-outline'/>  */}
       </View>
       </Card>
       
@@ -80,7 +141,7 @@ function NotesHome({ navigation }){
   const renderRightAcessory = () => (
     <View style={{flexDirection:'row', marginRight:8}}>
     <TopNavigationAction style={{marginRight:16}} onPress={()=>navigation.navigate('AddNotes')} icon={EditIcon}/>
-    <TopNavigationAction onPress={()=>navigation.navigate('AddSubject')} icon={FolderIcon}/>
+    <TopNavigationAction onPress={()=>setVisible(true)} icon={FolderIcon}/>
     </View>
   )
 
@@ -141,13 +202,20 @@ function NotesHome({ navigation }){
       <TopHeader title={'Notes'} rightAccessory={renderRightAcessory}/>
       <List
          showsVerticalScrollIndicator={false}
-         style={styles.container}
          contentContainerStyle={styles.contentContainer}
          data={subjects}
          renderItem={renderItem}
          ListEmptyComponent={renderEmpty}
          ListHeaderComponent={renderHeader}
          />
+   
+        <Modal
+          visible={visible}
+          backdropStyle={styles.backdrop}
+          >
+       <StatefulModalContent/>
+       </Modal>
+    
        </SafeAreaView>
       
       
@@ -168,26 +236,21 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    marginVertical:12,
+    marginVertical:8,
     marginHorizontal:20,
     paddingBottom:100,
     borderColor:'red',
     
   },
-
-  container:{
-  
-  },
-
- 
   
   item: {
 
 
     marginVertical:4,
     paddingHorizontal:4,
-    paddingVertical:12,
-    borderWidth:0.3
+    paddingVertical:8,
+    borderWidth:0,
+    borderRadius:12
   
    
   },
