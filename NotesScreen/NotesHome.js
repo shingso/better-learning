@@ -42,10 +42,10 @@ function NotesHome({ navigation }){
 
     const StatefulModalContent = () => {
    
-    
+     
     
       return (
-        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
+        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginBottom:300}}>
            <Formik
             initialValues={{ folderTitle:''}}
             validationSchema={FolderTitleSchema}
@@ -68,16 +68,18 @@ function NotesHome({ navigation }){
        
         onChangeText={formikProps.handleChange('folderTitle')}
         status={formikProps.errors.folderTitle != null ? 'danger' : 'basic'}
-       // autoFocus={true}
+        autoFocus={true}
         />
 
         <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
-        <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
-        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'] }}>
-        <Text category='s1' style={{flex:1, textAlign:"center", height:50,textAlignVertical:'center' }}>Close</Text>
+        <View style={{flexDirection:"row"}}>
+        
+        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center'}}>
+        <Text category='s1' style={{textAlign:"center"}}>Close</Text>
         </TouchableOpacity>
-        <TouchableOpacity  onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.folderTitle} style={{flex:1, height:50}}>
-        <Text category='s1' style={{flex:1, textAlign:"center", height:50, textAlignVertical:'center', color:formikProps.errors.folderTitle ? theme['color-basic-600'] : theme['color-primary-600']}}>Confirm</Text>
+        
+        <TouchableOpacity  onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.folderTitle} style={{flex:1, height:50, justifyContent:'center'}}>
+        <Text category='s1' style={{textAlign:"center", color:!(formikProps.isValid && formikProps.dirty) ? theme['color-basic-600'] : theme['color-primary-600']}}>Confirm</Text>
         </TouchableOpacity>
         </View>
         </View>
@@ -97,7 +99,7 @@ function NotesHome({ navigation }){
       <Card onPress={props.navigate} style={styles.item}>
       <View style={{flexDirection:'row', alignItems:'center',}}>
       <View>
-      <Icon fill={props.color} width={22} height={22} style={{marginRight:12}} name='folder'/> 
+      <Icon fill={props.color} width={26} height={26} style={{marginRight:12}} name='folder'/> 
       </View>
       <View style={{flex:1}}>
       <Text category='s2' style={{lineHeight:22, flexShrink:1, letterSpacing:0.1}}>{props.title}</Text>
@@ -119,11 +121,11 @@ function NotesHome({ navigation }){
 
     const renderEmpty = () => (
 
-      <Card onPress={()=>navigation.navigate('AddSubject')} style={{marginTop:12, paddingBottom:40,borderWidth:0.3}}>
+      <Card onPress={()=>setVisible(true)} style={{marginTop:12, paddingBottom:40,borderWidth:0, borderRadius:12}}>
       <View style={{alignItems:'center'}}>
       <Image
           style={{
-            height:120,
+            height:180,
             width: 400,
             marginBottom:40,
             marginTop:-16,
@@ -132,7 +134,7 @@ function NotesHome({ navigation }){
       />
       
       <Text style={{textAlign:'center', color:theme['color-primary-800'], fontSize:18, fontWeight:'bold', letterSpacing:0.5}} >Add Your Own Folder</Text>
-      <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-600'], textAlign:'center', fontSize:14}}>Add a folder to better organize your notes</Text>
+      <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-700'], textAlign:'center', fontSize:14}}>Add a folder to better organize your notes</Text>
       </View>
       </Card>
     )
@@ -208,7 +210,7 @@ function NotesHome({ navigation }){
          ListEmptyComponent={renderEmpty}
          ListHeaderComponent={renderHeader}
          />
-   
+
         <Modal
           visible={visible}
           backdropStyle={styles.backdrop}
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
 
     marginVertical:4,
     paddingHorizontal:4,
-    paddingVertical:8,
+    paddingVertical:4,
     borderWidth:0,
     borderRadius:12
   

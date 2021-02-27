@@ -72,10 +72,11 @@ function HomeScreen(){
 
     return (
 
-    
-    <Layout level='2' style={{ flex:1 }}>
+    <ScrollView  showsVerticalScrollIndicator={false}>
     <SafeAreaView style={{flex: 1}}>
-    <ScrollView style={{ paddingVertical:20, paddingHorizontal:16}} showsVerticalScrollIndicator={false}>
+    <Layout level='2' style={{ flex:1 , paddingVertical:20, paddingHorizontal:16, paddingBottom:100}}>
+    
+    
     
     <Card style={{bodyPaddingHorizontal:-12, borderWidth:0, borderRadius:12}}>
 
@@ -131,7 +132,7 @@ function HomeScreen(){
     <Card onPress={()=>{navigation.navigate('NotesHome')}} style={{marginTop:12, justifyContent:'center', alignItems:'center', borderWidth:0, borderRadius:12}}>
     <Image
           style={{
-            height:100,
+            height:140,
             width:screenWidth,
             marginBottom:28,
             marginTop:-16,
@@ -144,10 +145,11 @@ function HomeScreen(){
     </View>
     </Card>
     
-    </ScrollView>
-
-    </SafeAreaView>
+    
     </Layout>
+    </SafeAreaView>
+    </ScrollView>
+    
       
     );
 

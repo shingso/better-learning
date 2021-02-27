@@ -27,7 +27,6 @@ function NotesFocused({ route, navigation }){
     const theme = useTheme()
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
-  
     const { subjectID } = route.params
     const { title } = route.params
     const [ loading, setLoading ] = useState(true);
@@ -48,19 +47,19 @@ function NotesFocused({ route, navigation }){
         } 
 
       }
-
+  
       if(deleteConfirm){
         return (
           <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
           <View>
-          <Text category='s1' style={{textAlign:'center', marginBottom:4}}>Folder Removed</Text>
+          <Text category='s1' style={{textAlign:'center', marginBottom:4, paddingVertical:20}}>Folder Removed</Text>
           </View>
         
           <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
           <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
         
-          <TouchableOpacity  onPress={()=>navigation.goBack()} style={{flex:1, height:50}}>
-          <Text category='s1' style={{flex:1, textAlign:"center", height:50, textAlignVertical:'center', color:theme['color-primary-600']}}>Back</Text>
+          <TouchableOpacity  onPress={()=>navigation.goBack()} style={{flex:1, height:50, justifyContent:'center', alignItems:'center'}}>
+          <Text category='s1' style={{color:theme['color-info-500']}}>Back</Text>
           </TouchableOpacity>
           </View>
           </View>
@@ -70,7 +69,7 @@ function NotesFocused({ route, navigation }){
       }
 
       return (
-        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
+        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginBottom:300}}>
         <View>
         <Text category='s1' style={{textAlign:'center', marginBottom:4}}>Remove Folder</Text>
         <Text category='p2' style={{textAlign:'center', marginBottom:20}}>Enter 'Delete' to remove folder</Text>
@@ -79,11 +78,13 @@ function NotesFocused({ route, navigation }){
       
         <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
         <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
-        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'] }}>
-        <Text category='s1' style={{flex:1, textAlign:"center", height:50,textAlignVertical:'center' }}>Close</Text>
+
+        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center' }}>
+        <Text category='s1' style={{textAlign:"center",}}>Close</Text>
         </TouchableOpacity>
-        <TouchableOpacity  onPress={()=> deleteSubjectFunction(userID, subjectID)} style={{flex:1, height:50}}>
-        <Text category='s1' style={{flex:1, textAlign:"center", height:50, textAlignVertical:'center', color:theme['color-danger-600']}}>Delete</Text>
+
+        <TouchableOpacity  onPress={()=> deleteSubjectFunction(userID, subjectID)} style={{flex:1, height:50, justifyContent:'center'}}>
+        <Text category='s1' style={{textAlign:"center", color:theme['color-danger-600']}}>Delete</Text>
         </TouchableOpacity>
         </View>
         </View>
@@ -245,8 +246,6 @@ export default NotesFocused
 
 const styles = StyleSheet.create({
   
-  
-
   backdrop:{
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },

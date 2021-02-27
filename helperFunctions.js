@@ -299,6 +299,56 @@ export function formatMinutes(time){
 }
 
 
+
+export function formatMinutes2(time){
+  const theme = useTheme()
+  const labelStyle = {
+    //color:theme['text-hint-color'],
+    //color: theme['text-hint-color'],
+    fontWeight:'500',
+    fontSize:13,
+  }
+
+  const numberStyle = {
+    fontWeight:'800', 
+    fontSize:20, 
+    fontFamily:'OpenSans-Bold',
+    color: theme['color-basic-800'],
+  } 
+
+  
+  let minutes = (time)
+  let hours = Math.floor(minutes/60)
+  let remainingMinutes = (minutes % 60)
+
+  //let seconds = Math.floor((duration / 1000) % 60)
+  //let minutes = Math.floor((duration / (1000 * 60)) % 60)
+  //minutes = (minutes < 10) ? "0" + minutes : minutes;
+  //seconds = (seconds < 10) ? "0" 
+  //console.log(minutes, hours, remainingMinutes)
+
+  if(remainingMinutes === 0 && hours === 0){
+    return <Text style={numberStyle}>0 <Text  style={labelStyle}>minutes</Text></Text>
+  }
+
+  if(remainingMinutes > 0 && hours === 0){
+    return <Text style={numberStyle}>{remainingMinutes} <Text  style={labelStyle}>minutes</Text></Text>
+  }
+
+  if(remainingMinutes > 0 && hours === 1){
+    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hour</Text>  {remainingMinutes} <Text  style={labelStyle}>minutes</Text></Text>
+  }
+
+  if(remainingMinutes > 0){
+    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text>  {remainingMinutes} <Text  style={labelStyle}>minutes</Text></Text>
+  }
+
+  return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text></Text>
+
+}
+
+
+
 export function msToTime(duration){
 
   let seconds = Math.floor((duration / 1000) % 60)

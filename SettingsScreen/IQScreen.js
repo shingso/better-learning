@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView, Dimensions, ImageBackground, Image } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Platform, Image, Dimensions } from 'react-native'
 
-import { endOfDay, startOfDay, endOfMonth, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays, getDay, startOfMonth} from 'date-fns'
+import { endOfDay, startOfDay, endOfMonth, format, differenceInDays, differenceInCalendarDays, subWeeks, startOfWeek, endOfWeek, isWithinInterval, eachDayOfInterval, addDays, getDay, startOfMonth, maxTime} from 'date-fns'
 import { UserDataContext } from '../UserDataContext'
 import { Layout, Card, List, Text, Button, Icon, useTheme, Divider } from '@ui-kitten/components';
 import { StudyStatsContext } from '../StudyStats'
@@ -9,17 +9,42 @@ import { StudyStatsContext } from '../StudyStats'
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
-import { formatMinutes } from '../helperFunctions';
+import { formatMinutes2 } from '../helperFunctions';
 
 
 
 
 
 function IQScreen(){
-  const theme = useTheme()
 
 
+  const todaysDate = new Date()
+  const startOfToday = startOfDay(todaysDate)
+  const endOfToday = endOfDay(todaysDate)
+  const currentDayOfWeek = getDay(todaysDate)
   
+  const startOfCurrentWeek = startOfWeek(startOfToday)
+  const endOfCurrentWeek = endOfWeek(startOfToday)
+  // if its greater than 14 days
+
+  const oneWeekAgo = subWeeks(startOfToday, 1)
+  const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
+  const endOfWeekOneWeek = endOfWeek(oneWeekAgo)
+
+  const twoWeekAgo = subWeeks(startOfToday, 2)
+  const startOfWeekTwoWeek = startOfWeek(twoWeekAgo)
+  const endOfWeekTwoWeek = endOfWeek(twoWeekAgo)
+
+  const [currentWeekCount, setCurrentWeekCount] = useState(0)
+  const [oneWeekAgoCount, setOneWeekAgoCount] = useState(0)
+  const [twoWeekAgoCount, setTwoWeekAgoCount] = useState(0)
+
+
+  const [currentWeekMinutesStudied, setCurrentWeekMinutesStudied] = useState(0)
+  const [oneWeekAgoMinutesStudied, setOneWeekAgoMinutesStudied] = useState(0)
+  const [twoWeekAgoMinutesStudied , setTwoWeekAgoMinutesStudied ] = useState(0)
+
+  const theme = useTheme()
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
 
@@ -27,60 +52,59 @@ function IQScreen(){
 
   const datesStudiedPastSeven = studyStatsData.datesStudiedPastSeven
   const sevenDaysCount = studyStatsData.pastSevenDaysCount
-
   const dateStats = studyStatsData.dates
   const userStartDate = userData.timeStamp
   const userStartStudyingDate = userData.startedStudying
 
   const allDateStats = studyStatsData.allDates
-
   const allDatesDict = studyStatsData.allDatesDict
-
   const lastStudied = userData.lastStudied
   
   const currentWeekStudiedCount = studyStatsData.timesStudiedWeek
   const currentWeekStudiedSet = studyStatsData.currentWeekStudiedSet
 
-  
+  const screenWidth = Dimensions.get('window').width
   //need to refactor this 
   //const daysSinceLastStudy = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
 
  
 
 
-  const TimeComponent = (props) => {
-    //borderBottomWidth:0.2, borderColor:theme['color-basic-300']
-    return(
-    
-    <View style={{  flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingTop:24, borderTopWidth:0.7, borderTopColor:theme['color-basic-300'], marginHorizontal:-24, paddingHorizontal:24}}>
-    
-    <View>
-    <Text style={{ marginBottom:8}} >{props.title}</Text>
-    <View style={{flexDirection:'row', alignItems:'center', marginBottom:20}}>
-    <Text  style={{color:theme['text-hint-color'], marginRight:4}}>{props.weekLabel}</Text>
-    <Icon name='calendar-outline' fill={theme['text-hint-color']} height={13} width={13}/>
-    </View>
-    </View>
+ const TimeComponent = (props) => {
+  //borderBottomWidth:0.2, borderColor:theme['color-basic-300']
 
-    <View style={{alignItems:'flex-end'}}>
-    
-    <View style={{flexDirection:'row', alignItems:'center', marginBottom:8}}>
-    <Text style={{marginRight:8, fontWeight:'500', fontSize:14, fontFamily:'OpenSans-SemiBold'}} >{props.sessionCount} <Text style={{color:theme['text-hint-color'], fontSize:12}}>sessions</Text></Text>
-    <Icon name='checkmark-circle-2' fill={theme['color-primary-300']} height={14} width={14}/>
-    </View>
+  const maxBarWidth = screenWidth - 104
 
+  const maxTimeStudied = Math.max(currentWeekMinutesStudied, oneWeekAgoMinutesStudied)
+  const amountOfBar = props.minutesStudied/maxTimeStudied
+  let barWidth = maxBarWidth * amountOfBar
+  if(!(isFinite(barWidth)) || barWidth < 10){
+    barWidth = 5
+  }
+  
+  return(
+  
+  <View style={{  flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingVertical:24}}>
+  <View>
+  
+  <Text style={{ marginBottom:12, fontFamily:'OpenSans-Bold', fontWeight:'800'}}>{props.title}</Text>
+  
+  <View style={{flexDirection:'row', alignItems:'center', marginBottom:8}}>
+  <Text style={{marginRight:8, fontWeight:'500', fontSize:14, fontFamily:'OpenSans-SemiBold'}}>{props.sessionCount} 
+  <Text style={{color:theme['color-basic-600'], fontSize:12}}> sessions for a total of</Text>
+  </Text>
+  </View>
 
-    
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Text style={{marginRight:8}}>{formatMinutes(props.minutesStudied)}</Text>
-    <Icon name='clock' fill={theme['color-info-300']} height={14} width={14}/>
-    </View>
-    </View>
+  <Text style={{marginRight:8, marginBottom:4}}>{formatMinutes2(props.minutesStudied)}</Text>
+  <View style={{flexDirection:'row', alignItems:'center'}}>
+  <View style={{height:14, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8}}></View> 
+  <Icon name='clock'  fill={props.barColor} height={16} width={16}/>
+  </View>
+  </View>
+  </View>
 
-    </View>
-
-    )
- }
+  )
+}
    
 
   const calculateDaysSinceStartedStudy = () =>{
@@ -118,32 +142,7 @@ function IQScreen(){
 
   }
 
-  const todaysDate = new Date()
-  const startOfToday = startOfDay(todaysDate)
-  const endOfToday = endOfDay(todaysDate)
-  const currentDayOfWeek = getDay(todaysDate)
   
-  const startOfCurrentWeek = startOfWeek(startOfToday)
-  const endOfCurrentWeek = endOfWeek(startOfToday)
-  // if its greater than 14 days
-
-  const oneWeekAgo = subWeeks(startOfToday, 1)
-  const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
-  const endOfWeekOneWeek = endOfWeek(oneWeekAgo)
-
-  const twoWeekAgo = subWeeks(startOfToday, 2)
-  const startOfWeekTwoWeek = startOfWeek(twoWeekAgo)
-  const endOfWeekTwoWeek = endOfWeek(twoWeekAgo)
-
-  const [currentWeekCount, setCurrentWeekCount] = useState(0)
-  const [oneWeekAgoCount, setOneWeekAgoCount] = useState(0)
-  const [twoWeekAgoCount, setTwoWeekAgoCount] = useState(0)
-
-
-  const [currentWeekMinutesStudied, setCurrentWeekMinutesStudied] = useState(0)
-  const [oneWeekAgoMinutesStudied, setOneWeekAgoMinutesStudied] = useState(0)
-  const [twoWeekAgoMinutesStudied , setTwoWeekAgoMinutesStudied ] = useState(0)
-
   useEffect(()=>{
 
     let currentWeekCount = 0
@@ -196,17 +195,17 @@ function IQScreen(){
 
 
   const getCurrentWeekLabel = () => {
-      return format(startOfCurrentWeek,'MMM dd') + '  -  ' + format(endOfCurrentWeek,'MMM dd') 
+      return format(startOfCurrentWeek,'MMMM dd') + '  -  ' + format(endOfCurrentWeek,'MMMM dd') 
   }
 
 
   const getLastWeekLabel = () => {
-    return format(startOfWeekOneWeek,'MMM dd') + '  -  ' + format(endOfWeekOneWeek,'MMM dd')
+    return format(startOfWeekOneWeek,'MMMM dd') + '  -  ' + format(endOfWeekOneWeek,'MMMM dd')
   }
 
 
   const getTwoWeeksAgoLabel = () => {
-    return format(startOfWeekTwoWeek,'MMM dd') + '  -  ' + format(endOfWeekTwoWeek,'MMM dd')
+    return format(startOfWeekTwoWeek,'MMMM dd') + '  -  ' + format(endOfWeekTwoWeek,'MMMM dd')
   }
 
 
@@ -561,9 +560,9 @@ function IQScreen(){
 
 
 
-  {(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) &&
+  {(true) &&
 
-  <Card  style={{marginBottom:16, alignItems:'center' , borderWidth:0}}>
+  <Card  style={{marginBottom:16, alignItems:'center' , borderWidth:0, borderRadius:12}}>
   <Image
     style={{
       height:120,
@@ -578,17 +577,17 @@ function IQScreen(){
    <View style={{ justifyContent:'center', alignItems:'center'}}>
    <Text category={'h6'}>The process of learning</Text>
    <Text 
-   style={{marginTop:12, marginBottom:20,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-600'], textAlign:'center', marginHorizontal:32}}>
+   style={{marginTop:12, marginBottom:20,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center', marginHorizontal:32}}>
    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
    </Text>
    </View> 
 
-   {/*  <Text category='c2' style={{alignSelf:'center', fontSize:11, color:theme['color-basic-600']}}> {daysSinceStartStudying >= 6 ? 'Last day' : 6-daysSinceStartStudying + "days left"}</Text> */}
+   {/* //datesStudiedPastSeven.size  <Text category='c2' style={{alignSelf:'center', fontSize:11, color:theme['color-basic-600']}}> {daysSinceStartStudying >= 6 ? 'Last day' : 6-daysSinceStartStudying + "days left"}</Text> */}
 
     <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-around', marginBottom:40}}>
     <View style={{alignItems:'center'}}>
-    <Text style={{fontSize:50, fontFamily:'OpenSans-SemiBold',color:theme['color-basic-700']}}>{datesStudiedPastSeven.size}</Text>
-    <Text style={{fontSize:13, color:theme['color-basic-600'], letterSpacing:0.2}}>Days Studied</Text>
+    <Text style={{fontSize:40, fontWeight:'500',fontFamily:'OpenSans-SemiBold'}}>{datesStudiedPastSeven.size}</Text>
+    <Text style={{fontSize:13, color:theme['color-basic-700'], letterSpacing:0.2}}>Days Studied</Text>
     </View>
 
     {/* <View style={{alignItems:'center'}}>
@@ -634,19 +633,31 @@ function IQScreen(){
      >
   </ImageBackground> */}
   
-  
-  <View style={{}}>
-  <TimeComponent title={'Current Week'} minutesStudied={currentWeekMinutesStudied} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()}/>
+  <View style={{ justifyContent:'center', alignItems:'center', marginTop:28, marginBottom:8}}>
+   <Text category={'h6'}>Time spent studying</Text>
+   <Text 
+   style={{marginTop:8, marginBottom:4,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center'}}>
+   Your are on track to reaching last weeks time studied!
+   </Text>
+   </View> 
+
+  <Text></Text>
+
+  <View style={{borderTopColor:theme['color-basic-400'], borderTopWidth:0.6}}>
+  <TimeComponent title={'This week'} minutesStudied={currentWeekMinutesStudied} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()} barColor={theme['color-primary-300']}/>
   </View>
   
   {calculateDaysSinceStartedStudy() > 7 &&
   <View>
-  <TimeComponent title={'Last Week'} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()}/>
+  <TimeComponent title={'Last week'} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()} barColor={theme['color-basic-400']}/>
   </View>
+
   }
-  {calculateDaysSinceStartedStudy() > 14 &&
+  {/* {calculateDaysSinceStartedStudy() > 14 &&
+  <View style={{borderTopColor:theme['color-basic-400'], borderTopWidth:0.6}}>
   <TimeComponent title={'Two Weeks Ago'} minutesStudied={twoWeekAgoMinutesStudied} sessionCount={twoWeekAgoCount} weekLabel={getTwoWeeksAgoLabel()}/>
-  } 
+  </View>
+  }  */}
   </Card>
 
 
@@ -662,7 +673,7 @@ function IQScreen(){
   current={convertDateToString(new Date())}
   minDate={convertDateToString(startOfMonth(userStartDate.toDate()))}
   maxDate={convertDateToString(endOfMonth(new Date()))}
-  monthFormat={'MMMM'}
+  monthFormat={'MMMM yyyy'}
   renderArrow={(direction) => (direction == 'left' ? <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-back-outline'/></View> 
   : <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-forward-outline'/></View>)}
   hideExtraDays={false}
@@ -685,7 +696,7 @@ function IQScreen(){
     },
 
     //Month Styling - January/Feburary
-    textMonthFontSize: 24,
+    textMonthFontSize: 18,
     monthTextColor:theme['color-basic-800'],
     //textMonthFontWeight: 'bold',
 
@@ -695,7 +706,7 @@ function IQScreen(){
     //textDayFontFamily:'OpenSans-Regular',
     //textDisabledColor:theme['color-basic-600'],
     textDayStyle:{
-      marginTop:8,
+      marginTop:Platform.OS ==='ios' ? 8 : 7,
       color: theme['text-basic-color']//'purple'//theme['text-basic-color']
       
     }

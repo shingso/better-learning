@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import { View , SafeAreaView } from 'react-native';
+import { View , SafeAreaView, Keyboard, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
-import { Button, Text ,Icon , Input, Layout, useTheme, Divider} from '@ui-kitten/components';
+import { Button, Text ,Icon , Input, Layout, useTheme, Modal} from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
-import { useNavigation, StackActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
 import { SubjectsContext } from '../SubjectsContext';
 import FolderSelectionComponent from '../UtilComponents/FolderSelectionComponent'
-import ConfirmComponent from '../UtilComponents/ConfirmComponent'
+
 
 
 const TextSchema = Yup.object().shape({
@@ -24,51 +24,31 @@ const TextSchema = Yup.object().shape({
 function AddNotes(){
 
   const theme = useTheme()
-  const [noteAdded, setNoteAdded] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
   const authContext = useContext(AuthContext)
   const navigation = useNavigation();
   const subjectsContext = useContext(SubjectsContext)
 
-
-  const confirmAddNote = () => {
-    navigation.dispatch(StackActions.popToTop())
-  }
-
-  if(noteAdded){
-    return(
-
-      <Layout style={{ flex: 1, padding:16}}>
-      <ConfirmComponent 
-      picture={require('../assets/images/noteaddedv2.png')}
-      buttonText={'Confirm'}
-      headerText={'Note Added!'}
-      bodyText={'Every note that you type out helps your brain process and retain information.'}
-      onPress={confirmAddNote}
-      />
-
-
-      </Layout>
-    )
-  }
-
-
   return(
-           
+
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+    <Layout style={{ padding:16, flex:1}}>
     <SafeAreaView style={{ flex: 1}}>
     <TopHeader title={'Add Note'}/>
-    <Layout style={{ padding:16}}>
+   
     <Formik
     initialValues={{ text:'', textTheme:'' }}
     validationSchema={TextSchema}
     onSubmit={(values) => {
     
+
      if(subjectsContext.lastUsedSubject != null){
       addNote( authContext.user.uid, subjectsContext.lastUsedSubject.id  , values.text, values.textTheme)
      } else {
       addNote( authContext.user.uid, '', values.text, values.textTheme)
      }
-
-     setNoteAdded(true)
+     Keyboard.dismiss()
+     setVisible(true)
 
     }}
    >
@@ -84,9 +64,6 @@ function AddNotes(){
    </View>
 
    <View style={{marginVertical:20}}>
-
-
-
    <Input
    textStyle={{fontSize:16, fontWeight:'bold'}}
    style={{marginBottom:4, marginTop:4, borderColor:theme['background-basic-color-1'], backgroundColor:theme['background-basic-color-1']}}
@@ -97,7 +74,7 @@ function AddNotes(){
   {/*  {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null} */}
 
    <Input
-    placeholder={'Write something here'}
+    placeholder={'Write a new note'}
     style={{backgroundColor:theme['background-basic-color-1'], borderColor:theme['background-basic-color-1'], marginTop:12}}
     textAlignVertical={'top'}
     textStyle={{fontSize:15, height:120}}
@@ -115,11 +92,41 @@ function AddNotes(){
     )}
 
   </Formik>
-  </Layout>
-  </SafeAreaView>
 
-    )
+
+  <Modal
+   visible={visible}
+   backdropStyle={styles.backdrop}>
+  <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
+  <View>
+  <Text category='s1' style={{textAlign:'center', marginBottom:4, paddingVertical:20}}>Note Added</Text>
+  </View>
+  <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+  <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+  <TouchableOpacity  onPress={()=>navigation.goBack()} style={{flex:1, height:50, justifyContent:'center', alignItems:'center'}}>
+  <Text category='s1' style={{color:theme['color-info-500']}}>Back</Text>
+  </TouchableOpacity>
+  </View>
+  </View>
+  </Layout>
+  </Modal>
+
+
+  </SafeAreaView>
+  </Layout>
+  </TouchableWithoutFeedback>
+
+  )
 };
 
 
 export default AddNotes
+
+
+const styles = StyleSheet.create({
+  
+  backdrop:{
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+
+});

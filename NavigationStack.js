@@ -65,20 +65,20 @@ const Tab = createBottomTabNavigator();
 
 
 const HomeIcon = (props) => (
-  <Icon {...props} name='home-outline'/>
+  <Icon {...props}  name='home-outline'/>
 );
 
 const BookIcon = (props) => (
-  <Icon {...props} name='book-outline'/>
+  <Icon {...props}  name='book-outline'/>
 );
 
 
 const ChartIcon = (props) => (
-  <Icon {...props} name='calendar-outline'/>
+  <Icon {...props}  name='calendar-outline'/>
 );
 
 const UserIcon = (props) => (
-  <Icon {...props} name='person-outline'/>
+  <Icon {...props}  name='person-outline'/>
 );
 //export const AuthContext = createContext(null)
 
@@ -107,7 +107,7 @@ const UserInfoWithContext = () => {
   )
 }
 
-const HomeScreenWithContex = () => {
+const HomeScreenWithContext = () => {
   return(
 
 
@@ -120,11 +120,6 @@ const HomeScreenWithContex = () => {
   )
 }
 
-const HomeScreenWithContext = withStyles(HomeScreenWithContex , (theme) => ({
-  awesome: {
-    backgroundColor: theme['color-primary-500'],
-  },
-}));
 
 
 

@@ -9,7 +9,7 @@ import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import auth from '@react-native-firebase/auth';
 
-import { sessionsToHours, formatMinutes } from '../helperFunctions';
+import { sessionsToHours, formatMinutes2 } from '../helperFunctions';
 
 
 
@@ -28,16 +28,44 @@ function UserInfo(){
     const studyStatsData = useContext(StudyStatsContext)
     const userData = useContext(UserDataContext)
     const theme = useTheme()
-
     const navigation = useNavigation();
     const userStartDate = userData.timeStamp  
     const timesStudiedStat = studyStatsData.totalMinutesStudied
 
     const iconStyle={
       fill:theme['color-basic-800'],
-      width:18,
-      height:18
+      width:22,
+      height:22
+    
 
+    }
+
+    const iconStyleStats={
+      fill:theme['color-primary-600'],
+      width:22,
+      height:22
+    }
+
+
+    const headerStatStyle={
+       color:theme['color-basic-700'],
+       fontFamily:'OpenSans-Bold',
+       fontWeight:'400'
+    }
+
+
+    const bodyStatsStyle={
+      fontSize:20, 
+      fontFamily:'OpenSans-Bold',
+      fontWeight:'800',
+      marginLeft:12
+    }
+
+    const labelStatsStyle={
+      color:theme['text-hint-color'], 
+      fontFamily:'OpenSans-Regular', 
+      fontSize:13,
+      fontWeight:'600'
     }
 
 
@@ -57,8 +85,8 @@ function UserInfo(){
     <SafeAreaView style={{flex: 1}}>
     <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
     
-    <Card style={{marginBottom:2, paddingBottom:8, borderWidth:0, borderRadius:12}}>
-    <Image
+    <Card style={{marginBottom:2, borderWidth:0, borderRadius:12}}>
+    {/* <Image
           style={{
             height:80,
             width:500,
@@ -71,53 +99,53 @@ function UserInfo(){
           }}
           source={require('../assets/images/settingsv1.png')}
         >
-       {/*  <View style={{backgroundColor:theme['color-primary-600'], paddingVertical:12, paddingHorizontal:32, borderRadius:30}}>
-        <Text category={'s1'} style={{fontSize:18, color:'white'}}>Settings</Text>
-        </View> */}
+     
     </Image>
-
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:32, paddingTop:16}}>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon {...iconStyle}  name='flag-outline'/>
-    <Text style={{marginLeft:16}} category={'s1'}>Started</Text>
+ */}
+    <View style={{justifyContent:'space-between', paddingBottom:22, paddingTop:16, borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.5}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
+    
+    <Text style={{...headerStatStyle}}>Started</Text>
     </View>
-    <Text style={{fontWeight:'bold'}}>{format(new Date(userStartDate.toDate()), 'MMMM d yyyy')}</Text>
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon {...iconStyleStats}  name='flag'/>
+    <Text style={{...bodyStatsStyle}}>{format(new Date(userStartDate.toDate()), 'MMMM d, yyyy')}</Text>
+    </View>
+    
     </View>
 
 
-    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:32}}>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon {...iconStyle} name='calendar-outline'/>
-    <Text style={{marginLeft:16}} category={'s1'}>Days Studied</Text>
+    <View style={{ justifyContent:'space-between', paddingVertical:22, borderBottomWidth:0.5, borderBottomColor:theme['color-basic-400']}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
+    <Icon {...iconStyleStats} name='calendar-outline'/>
+    <Text style={{...headerStatStyle}}>Days Studied</Text>
     </View>
    
-    <Text category='s1'>{studyStatsData.uniqueDates.size}<Text style={{color:theme['text-hint-color']}} category='c2'> days</Text></Text>
-
-
+    <Text style={{...bodyStatsStyle}}>{studyStatsData.uniqueDates.size}<Text style={{...labelStatsStyle}}> days</Text></Text>
     </View>
 
 
-    <View style={{marginBottom:32, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon {...iconStyle}  name='trending-up-outline'/>
-    <Text style={{marginLeft:16}} category={'s1'}>Total Sessions</Text>
+    <View style={{justifyContent:'space-between', paddingVertical:22, borderBottomWidth:0.5, borderBottomColor:theme['color-basic-400']}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
+    <Icon {...iconStyleStats}  name='trending-up-outline'/>
+    <Text style={{...headerStatStyle}}>Total Sessions</Text>
     </View>
-    <Text style={{fontSize:14,fontWeight:'bold'}}>{studyStatsData.timesStudied}<Text style={{color:theme['text-hint-color']}} category='c2'> sessions</Text></Text>
+    <Text style={{...bodyStatsStyle}}>{studyStatsData.timesStudied}<Text style={{...labelStatsStyle}}> sessions</Text></Text>
     </View>
 
-    <View style={{marginBottom:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon {...iconStyle}  name='clock-outline'/>
-    <Text style={{marginLeft:16}} category={'s1'}>Total Time</Text>
+
+    <View style={{marginBottom:8, paddingVertical:22}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
+    <Icon {...iconStyleStats}  name='clock-outline'/>
+    <Text style={{...headerStatStyle}}>Total Time Studied</Text>
     </View>
-    <Text>{formatMinutes(timesStudiedStat)}</Text>
+    <Text>{formatMinutes2(400)}</Text>
     </View>
 
     </Card> 
 
 
-    {/* <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/> */}
+    {/* timesStudiedStat -- FOR THE ABOVE CARD (FORMATMINTUES) <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/> */}
     <ListComponent path={'TimerSettings'} iconName={'bell-outline'} title={'Session Timer Settings'}/>
     <ListComponent path={'TermsOfService'} iconName={'file-text-outline'} title={'Terms And Conditions'}/>
     <ListComponent path={'PrivacyPolicy'} iconName={'lock-outline'} title={'Privacy Policy'}/>
@@ -146,3 +174,4 @@ function UserInfo(){
 
 
 export default UserInfo
+

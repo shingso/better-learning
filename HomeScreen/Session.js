@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import {  View, SafeAreaView, StyleSheet, ImageBackground, Vibration, Animated, Image, TouchableOpacity } from 'react-native'
+import {  View, SafeAreaView, StyleSheet, ImageBackground, Vibration, Animated, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { Button, Icon,  Card, Text, Layout, useTheme, Input, Modal } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -16,6 +16,7 @@ import * as Yup from 'yup';
 import FolderSelectionComponent from '../UtilComponents/FolderSelectionComponent'
 import { SubjectsContext } from '../SubjectsContext';
 import { TimerSettingsContext } from '../TimerSettingsContext';
+
 
 
 const TextSchema = Yup.object().shape({
@@ -192,6 +193,7 @@ function Session(){
       
 
     return (
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
     <Layout level='2' style={{flex:1}}>
     <SafeAreaView style={{flex: 1}}>
     <StudyProgressIndicator currentStep={studySessionPosition}/>
@@ -270,18 +272,15 @@ function Session(){
 
     {studySessionPosition == 3 && 
     <View style={{flex:1}}>
-    
     <Formik
     initialValues={{ text:'', textTheme:'', subject:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
         
         if(subjectsContext.lastUsedSubject != null){
-        console.log('ran')
         addNote( authContext.user.uid, subjectsContext.lastUsedSubject.id , values.text, values.textTheme)
         } else {
-         console.log('ran3')
-         addNote( authContext.user.uid, '', values.text, values.textTheme)
+        addNote( authContext.user.uid, '', values.text, values.textTheme)
         }
         setStudySessionPosition(studySessionPosition+1)
        }}
@@ -323,6 +322,7 @@ function Session(){
     </React.Fragment>
     )}
     </Formik>
+   
     </View>
     }
 
@@ -353,15 +353,15 @@ function Session(){
 
     <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginHorizontal:60}}>
     <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24}}>Are you sure you want to leave the current study session?</Text> 
+    <Text style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24}}>Are you sure you want to end the current study session?</Text> 
    
     <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
     <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
-    <TouchableOpacity onPress={()=>closeBackModal()} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'] }}>
-    <Text category='s1' style={{ textAlign:"center", height:50,textAlignVertical:'center', color:theme['color-info-500'] }}>Close</Text>
+    <TouchableOpacity onPress={()=>closeBackModal()} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center' }}>
+    <Text category='s1' style={{ textAlign:"center", color:theme['color-info-500'] }}>Close</Text>
     </TouchableOpacity>
-    <TouchableOpacity  onPress={()=>popToTop()} style={{flex:1, height:50}}>
-    <Text category='s1' style={{ textAlign:"center", height:50, textAlignVertical:'center', color:theme['color-danger-600']}}>End Session</Text>
+    <TouchableOpacity  onPress={()=>popToTop()} style={{flex:1, height:50, justifyContent:'center'}}>
+    <Text category='s1' style={{ textAlign:"center",  color:theme['color-danger-600']}}>End Session</Text>
     </TouchableOpacity>
     </View>
     </View>
@@ -374,6 +374,7 @@ function Session(){
     </View>
     </SafeAreaView>
     </Layout>
+    </TouchableWithoutFeedback>
       
       
     );
