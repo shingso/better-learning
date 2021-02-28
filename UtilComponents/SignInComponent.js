@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { TextInput, View, SafeAreaView, Dimensions, Platform } from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, Platform, Image } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid'
@@ -15,7 +15,7 @@ import { addUser } from '../helperFunctions';
 
 
 const GoogleIcon = (props) => (
-  <Icon {...props} name='google'/>
+  <Icon {...props} name='google' width={22} height={22}/>
 );
 
 
@@ -94,13 +94,31 @@ function SignInComponent(){
   function AppleSignIn() {
     return (
       <AppleButton
-        buttonStyle={AppleButton.Style.WHITE_OUTLINE}
-        buttonType={AppleButton.Type.SIGN_IN}
+        buttonStyle={AppleButton.Style.BLACK}
+        buttonType={AppleButton.Type.CONTINUE}
         style={{
           width:'100%',
-          height: 45,
-          borderRadius:30
+          height: 54,
+          borderRadius:30,
+      
         }}
+
+        cornerRadius={18}
+        
+        textStyle={{fontSize:16, fontWeight:'bold'}}
+        leftView={(
+          <Image
+            style={{
+              alignSelf: 'center',
+              width: 20,
+              height: 20,
+              marginRight: 20,
+              resizeMode: 'contain',
+            }}
+            source={require('../assets/images/apple_logo_white.png')}
+          />
+        )}
+
         onPress={ Platform.OS == 'ios' ? () => onAppleButtonPressApple() : () => onAppleButtonPress()}
       />
     );
@@ -137,8 +155,8 @@ function SignInComponent(){
     
         <View>
 
-        <Button accessoryLeft={GoogleIcon} appearance={'outline'}  onPress={() => onGoogleButtonPress()} style={{marginBottom:20, borderRadius:30}}> 
-        Sign in with Google 
+        <Button accessoryLeft={GoogleIcon} size='large' status='info' onPress={() => onGoogleButtonPress()} style={{marginBottom:24, borderRadius:30}}> 
+        Continue with Google 
         </Button>
 
         <AppleSignIn/>

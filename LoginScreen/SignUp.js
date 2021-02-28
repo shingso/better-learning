@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { TextInput, View, SafeAreaView, Dimensions, TouchableWithoutFeedback } from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { addUser } from '../helperFunctions'
@@ -24,7 +24,6 @@ const SignUpSchema = Yup.object().shape({
 const AlertIcon = (props) => (
   <Icon {...props} name='alert-circle-outline'/>
 );
-
 
 
 
@@ -76,10 +75,22 @@ function SignUp(){
   
     
 
-     return (
+    return (
+    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:1, padding:20}}>
+    <TouchableOpacity  onPress={()=>navigation.navigate('Login')}>
+    <View style={{flexDirection:'row', alignItems:'center', alignSelf:'flex-end'}}>
+    
+    <View style={{marginRight:4, alignItems:'flex-end'}}>
+    <Text category='label' style={{}}>Already have an account?</Text>
+    <Text status='info' category='s2'>Go to Login</Text>
+    </View>
+    <Icon height={30} width={30} name='arrow-ios-forward-outline' fill={'black'}/>
+    </View>
+    </TouchableOpacity>
 
        
-    <View style={{ flex: 1, justifyContent:'center', padding:20}}>
+    <View style={{ flex: 1, marginTop:40}}>
     <Text category='h1' style={{marginBottom:24}}>Sign Up</Text>
     <Formik
     initialValues={{ email:'', password:''}}
@@ -97,12 +108,13 @@ function SignUp(){
 
     <Input
     label={formikProps.touched.email && formikProps.errors.email}
-    placeholder='Enter Email'
+    placeholder='Email'
     value={formikProps.values.email}
     size='large'
     onChangeText={formikProps.handleChange('email')}
     status={formikProps.touched.email && formikProps.errors.email != null ? 'danger':'basic'}
     style={{marginBottom:16}}
+    textStyle={{height:45}}
     />
 
 
@@ -114,29 +126,24 @@ function SignUp(){
     accessoryRight={renderIcon}
     captionIcon={AlertIcon}
     size='large'
+    textStyle={{height:45}}
     secureTextEntry={secureTextEntry}
     onChangeText={formikProps.handleChange('password')}
     status={formikProps.touched.password && formikProps.errors.password != null ? 'danger':'basic'}
     />
 
-
-    <Button style={{marginVertical:16, borderRadius:30, marginBottom:40}} onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
-
-    <SignInComponent/>
-
-
-
-    <Text category='label' style={{alignSelf:'center', marginVertical:0, marginTop:30}}> 
-    Already have an account?
+    <Button style={{marginVertical:16, borderRadius:30, marginBottom:28}} size='large' onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
+    <Text category='s1' style={{alignSelf:'center', marginBottom:24}}> 
+    OR
     </Text>
-    <Button appearance={'ghost'} onPress={() =>  navigation.navigate('Login')}>
-    Go to Login
-    </Button>
+    <SignInComponent/>
     </React.Fragment>
 
     )}
     </Formik>
     </View>
+    </View>
+    </SafeAreaView>
          
     )
      

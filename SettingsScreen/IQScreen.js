@@ -8,7 +8,7 @@ import { StudyStatsContext } from '../StudyStats'
 
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
+import { Calendar } from 'react-native-calendars'
 import { formatMinutes2 } from '../helperFunctions';
 
 
@@ -17,6 +17,7 @@ import { formatMinutes2 } from '../helperFunctions';
 
 function IQScreen(){
 
+ 
 
   const todaysDate = new Date()
   const startOfToday = startOfDay(todaysDate)
@@ -212,171 +213,15 @@ function IQScreen(){
 
   const returnMarkedDates = () => {
     const newDict = {}
-
-    for (const [key, value] of Object.entries(allDatesDict)) {
-
-      switch(value) {
-        case 1:
-          newDict[key] = {
-            customStyles: {
-              container: {
-                backgroundColor: theme['color-primary-300'],
-                
-              },
-              text: {
-                color:theme['color-basic-100'],
-                fontWeight:'bold',
-                
-              }
-            }
-          }
-          break;
-        case 2:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-300'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-          break;
-
-        case 3:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-500'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-          break;
-        
-        case 4:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-500'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        break;
-
-        case 5:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-700'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        break;
-       
-        case 6:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-700'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        break;
-
-        case 7:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-800'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        break;
-
+    console.log(uniqueDates)
+    uniqueDates.forEach(item => 
+      newDict[item] = {selected:true, selectedColor:theme['color-primary-400']}
       
-        case 8:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-800'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        break;
+    )
 
-        case 9:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-900'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        break;
+    console.log(newDict)
 
-        default:
-            newDict[key] = {
-              customStyles: {
-                container: {
-                  backgroundColor: theme['color-primary-900'],
-                  
-                },
-                text: {
-                  color:theme['color-basic-100'],
-                  fontWeight:'bold',
-                  
-                }
-              }
-            }
-        }     
-    }
-    
+   
     return newDict
   }
 
@@ -573,7 +418,6 @@ function IQScreen(){
     source={require('../assets/images/firstweekv5.png')}
   />
 
-
    <View style={{ justifyContent:'center', alignItems:'center'}}>
    <Text category={'h6'}>The process of learning</Text>
    <Text 
@@ -589,20 +433,13 @@ function IQScreen(){
     <Text style={{fontSize:40, fontWeight:'500',fontFamily:'OpenSans-SemiBold'}}>{datesStudiedPastSeven.size}</Text>
     <Text style={{fontSize:13, color:theme['color-basic-700'], letterSpacing:0.2}}>Days Studied</Text>
     </View>
-
-    {/* <View style={{alignItems:'center'}}>
-    <Text category='h4'>{sevenDaysCount}</Text> 
-    <Text style={{fontSize:11, color:theme['color-basic-600']}}>total sessions</Text>
-    </View>
-    
-    calculateCurrentPosition()*/}
     </View>
 
     <View style={{marginHorizontal:32, marginBottom:32}}>
       
     <StepIndicator
          customStyles={customStyles}
-         currentPosition={6}
+         currentPosition={calculateCurrentPosition()}
          stepCount={7}
          renderStepIndicator={renderStepIndicator}
          labels={returnLabels(0)}
@@ -668,7 +505,7 @@ function IQScreen(){
   <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0, borderRadius:12}}>
   <Calendar
 
-  markingType={'custom'}
+  //markingType={'custom'}
   markedDates={returnMarkedDates()}
   current={convertDateToString(new Date())}
   minDate={convertDateToString(startOfMonth(userStartDate.toDate()))}
@@ -685,30 +522,34 @@ function IQScreen(){
   // Replace default month and year title with custom one. the function receive a date as parameter.
   // Enable the option to swipe between months. Default = false
   futureScrollRange={0}
+  enableSwipeMonths={true}
+
+
   theme={{
+    //WeekDay Label - Sun/Mon/Tues
     textSectionTitleColor: theme['color-basic-900'],
+
     todayTextColor: theme['color-primary-800'],
-   
     textDayFontSize: 13,
     calendarBackground: null,
-    calendarHeaderStyle:{
-      color:'green'
-    },
-
+    
     //Month Styling - January/Feburary
     textMonthFontSize: 18,
     monthTextColor:theme['color-basic-800'],
-    //textMonthFontWeight: 'bold',
+    textMonthFontWeight: 'bold',
 
+    
 
     textDayHeaderFontSize: 13,
-    //textDayHeaderFontFamily:'OpenSans-Bold',
+    textDayHeaderFontFamily:'OpenSans-SemiBold',
     //textDayFontFamily:'OpenSans-Regular',
-    //textDisabledColor:theme['color-basic-600'],
+    textDisabledColor:theme['color-basic-400'],
+
+
     textDayStyle:{
       marginTop:Platform.OS ==='ios' ? 8 : 7,
-      color: theme['text-basic-color']//'purple'//theme['text-basic-color']
-      
+      color: theme['text-basic-color'],//'purple'//theme['text-basic-color']
+      fontFamily:'OpenSans-SemiBold'
     }
   }}
     />
