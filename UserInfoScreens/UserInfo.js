@@ -41,28 +41,29 @@ function UserInfo(){
     }
 
     const iconStyleStats={
-      fill:theme['color-primary-600'],
-      width:22,
-      height:22
+      fill:theme['color-basic-600'],
+      width:14,
+      height:14,
+      marginRight:12
     }
 
 
     const headerStatStyle={
        color:theme['color-basic-700'],
        fontFamily:'OpenSans-Bold',
-       fontWeight:'400'
+       fontWeight:'800'
     }
 
 
     const bodyStatsStyle={
-      fontSize:20, 
+      fontSize:16, 
       fontFamily:'OpenSans-Bold',
       fontWeight:'800',
-      marginLeft:12
+
     }
 
     const labelStatsStyle={
-      color:theme['text-hint-color'], 
+   
       fontFamily:'OpenSans-Regular', 
       fontSize:13,
       fontWeight:'600'
@@ -85,12 +86,13 @@ function UserInfo(){
     <SafeAreaView style={{flex: 1}}>
     <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
     
-    <Card style={{marginBottom:2, borderWidth:0, borderRadius:12}}>
+    <View style={{flexDirection:'row'}}>
+    <Card style={{marginBottom:2, borderWidth:0, borderRadius:12, marginRight:4}}>
     {/* <Image
           style={{
-            height:80,
+            height:120,
             width:500,
-            marginBottom:28,
+            marginBottom:16,
             marginTop:-16,
             marginLeft:-24,
             alignItems:'center',
@@ -100,28 +102,30 @@ function UserInfo(){
           source={require('../assets/images/settingsv1.png')}
         >
      
-    </Image>
- */}
-    <View style={{justifyContent:'space-between', paddingBottom:22, paddingTop:16, borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.5}}>
+    </Image> */}
+
+    <View style={{justifyContent:'space-between', paddingBottom:22, paddingTop:16, flex:1}}>
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
-    
+    <Icon {...iconStyleStats}  name='flag-outline'/>
     <Text style={{...headerStatStyle}}>Started</Text>
+   
     </View>
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Icon {...iconStyleStats}  name='flag'/>
+    {/* <Icon {...iconStyleStats}  name='flag'/> */}
     <Text style={{...bodyStatsStyle}}>{format(new Date(userStartDate.toDate()), 'MMMM d, yyyy')}</Text>
     </View>
+    <Text style={{marginTop:8, color:theme['color-info-400'], fontSize:12}}>You started 25 days ago.</Text>
+    </View>
+
+
+{/*     <View style={{ justifyContent:'space-between', paddingVertical:22, borderBottomWidth:0.5, borderBottomColor:theme['color-basic-400']}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
+    <Icon {...iconStyleStats} name='calendar-outline'/>  
+    <Text style={{...headerStatStyle}}>Days Studied</Text>
     
     </View>
-
-
-    <View style={{ justifyContent:'space-between', paddingVertical:22, borderBottomWidth:0.5, borderBottomColor:theme['color-basic-400']}}>
-    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
-    <Icon {...iconStyleStats} name='calendar-outline'/>
-    <Text style={{...headerStatStyle}}>Days Studied</Text>
-    </View>
-   
     <Text style={{...bodyStatsStyle}}>{studyStatsData.uniqueDates.size}<Text style={{...labelStatsStyle}}> days</Text></Text>
+    <Text style={{marginTop:8, color:theme['color-info-400'], fontSize:12}}>Lorem ipsum dolor sit amet, consectetur adipiscing.</Text>
     </View>
 
 
@@ -129,8 +133,10 @@ function UserInfo(){
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
     <Icon {...iconStyleStats}  name='trending-up-outline'/>
     <Text style={{...headerStatStyle}}>Total Sessions</Text>
+
     </View>
     <Text style={{...bodyStatsStyle}}>{studyStatsData.timesStudied}<Text style={{...labelStatsStyle}}> sessions</Text></Text>
+    <Text style={{marginTop:8, color:theme['color-info-400'], fontSize:12}}>You study on average once.</Text>
     </View>
 
 
@@ -138,11 +144,36 @@ function UserInfo(){
     <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
     <Icon {...iconStyleStats}  name='clock-outline'/>
     <Text style={{...headerStatStyle}}>Total Time Studied</Text>
+
     </View>
     <Text>{formatMinutes2(400)}</Text>
-    </View>
+    <Text style={{marginTop:8, color:theme['color-info-400'], fontSize:12}}>On average you study for 25 minutes a day.</Text>
+    </View> */}
 
     </Card> 
+
+
+
+    <Card style={{marginBottom:2, borderWidth:0, borderRadius:12, flex:1, marginLeft:4}}>
+
+    <View style={{ justifyContent:'space-between', paddingVertical:10}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginBottom:12}}>
+    <Icon {...iconStyleStats} name='calendar-outline'/>  
+    <Text style={{...headerStatStyle}}>Days Studied</Text>
+    
+    </View>
+    <Text style={{...bodyStatsStyle}}>{studyStatsData.uniqueDates.size}<Text style={{...labelStatsStyle}}> days</Text></Text>
+    <Text style={{marginTop:8, color:theme['color-info-400'], fontSize:12}}>Lorem ipsum dolor sit amet, consectetur adipiscing.</Text>
+    </View>
+
+    </Card>
+
+    </View> 
+
+
+
+
+
 
 
     {/* timesStudiedStat -- FOR THE ABOVE CARD (FORMATMINTUES) <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/> */}
