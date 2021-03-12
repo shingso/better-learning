@@ -13,8 +13,6 @@ import AddNotes from './HomeScreen/AddNotes';
 import Session from './HomeScreen/Session';
 
 import NotesFocused from './NotesScreen/NotesFocused'
-import RecalledNotes from './NotesScreen/RecalledNotes'
-import DeleteFolder from './NotesScreen/DeleteFolder'
 import GlobalNotes from './NotesScreen/GlobalNotes'
 import NotesHome from './NotesScreen/NotesHome'
 
@@ -25,12 +23,6 @@ import WhatIsLearning from './GuidesScreen/WhatIsLearning'
 import Discouraged from './GuidesScreen/Discouraged'
 import Inspiration from './GuidesScreen/Inspiration'
 import LearningTips from './GuidesScreen/LearningTips'
-
-import AddSubject from './HomeScreen/AddSubject'
-
-import NotesRecall from './HomeScreen/NotesRecall'
-import NotesRecallExplain from './HomeScreen/NotesRecallExplain'
-import NotesRecallComplete from './HomeScreen/NotesRecallComplete'
 
 
 import SignUp from './LoginScreen/SignUp';
@@ -44,6 +36,7 @@ import TermsOfService from './SettingsScreen/TermsOfService';
 import ThemeSettings from './SettingsScreen/ThemeSettings';
 import OpenSource from './SettingsScreen/OpenSource';
 import TimerSettings from './SettingsScreen/TimerSettings';
+import LifetimeStats from './SettingsScreen/LifetimeStats';
 
 import UserInfo from './UserInfoScreens/UserInfo';
 
@@ -97,11 +90,11 @@ const IQScreenWithContext = () => {
 }
 
 
-const UserInfoWithContext = () => {
+const LifetimeStatsWithContext = () => {
   return(
   <UserDataContextWrapper>
   <StudyStatsContextWrapper>
-  <UserInfo/>
+  <LifetimeStats/>
   </StudyStatsContextWrapper>
   </UserDataContextWrapper>
   )
@@ -164,15 +157,9 @@ function HomeStack() {
         <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Home" component={HomeScreenWithContext} />
         <Stack.Screen name="Session" component={SessionScreenWithContext} />
-        <Stack.Screen name="NotesRecall" component={NotesRecall} />
-        <Stack.Screen name="NotesRecallExplain" component={NotesRecallExplain} />
-        <Stack.Screen name="NotesRecallComplete" component={NotesRecallComplete} />
         <Stack.Screen name="AddNotes" component={AddNotesWithContext} />
-        <Stack.Screen name="AddSubject" component={AddSubject} />
         <Stack.Screen name="NotesHome" component={NotesHomeWithContext} />
         <Stack.Screen name="NotesFocused" component={NotesFocused} />
-        <Stack.Screen name="DeleteFolder" component={DeleteFolder} />
-        <Stack.Screen name="RecalledNotes" component={RecalledNotes} />
         <Stack.Screen name="GlobalNotes" component={GlobalNotes} />
 
     
@@ -225,11 +212,11 @@ function UserStatsStack() {
     return (
 
         <Stack.Navigator headerMode='none'>
-        <Stack.Screen name="UserInfo" component={UserInfoWithContext} />
+        <Stack.Screen name="UserInfo" component={UserInfo} />
         <Stack.Screen name="OpenSource" component={OpenSource} />
         <Stack.Screen name="TermsOfService" component={TermsOfService} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-        <Stack.Screen name="ThemeSettings" component={ThemeSettings} />
+        <Stack.Screen name="LifetimeStats" component={LifetimeStatsWithContext} />
         <Stack.Screen name="TimerSettings" component={TimerSettings} />
         </Stack.Navigator>
     );
@@ -242,6 +229,7 @@ const authContext = useContext(AuthContext)
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
+    
     appearance={'noIndicator'}
     style={{borderTopWidth:1, borderTopColor:theme['color-basic-300'], paddingBottom:Platform.OS == 'ios' ? 48: 0, paddingTop: Platform.OS == 'ios' ? 20: 0}}
     selectedIndex={state.index}

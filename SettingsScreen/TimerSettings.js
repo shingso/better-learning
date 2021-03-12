@@ -38,29 +38,21 @@ function TimerSettings(){
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+   
     <Layout style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
     <TopHeader title={'Session Timer Settings'}/>
-    <View style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:20, paddingTop:12 }}>
-    <Image
-        style={{
-          width:420,
-          height:180,
-          alignSelf:'center',
-          resizeMode:'contain',
-          marginBottom:48,
-          marginTop:48
-        }}
-        source={require('../assets/images/timev2-01.png')}
-      />
+    <View style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:20, paddingTop:40 }}>
+
     <View style={{alignItems:'center'}}>
-    <Text category='h1'>{timerSettings.timeSettings}</Text> 
+    <Text style={{marginBottom:20}}>Current session timer is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings} minutes</Text></Text>
+    <Text style={{fontSize:70, fontFamily:'OpenSans-SemiBold'}}>{timerSettings.timeSettings}</Text> 
     <Text style={{marginBottom:40}} category='s1'>{'minutes'}</Text> 
     </View>
-    <Text style={{marginBottom:8}}>Current study session time is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings}</Text> minutes</Text>
     
-    <View style={{flex:1, justifyContent:'flex-end', marginBottom:64}}>
-    <View style={{}}>
+    
+    <View style={{marginTop:40}}>
+    <Text>Select a new session time</Text>
     <Select
         size={'large'}
         style={{width:300}}
@@ -72,14 +64,18 @@ function TimerSettings(){
     </Select>
     
     </View>
-    <View style={{flexDirection:'row'}}>
-    <Button style={{marginTop:20, borderRadius:30, flex:1}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button>
-    </View>
+
+
+    <View style={{flex:1, marginBottom:64, flexDirection:'row', alignItems:'flex-end'}}>
+
+    <Button size='large' style={{marginTop:20, marginHorizontal:20,borderRadius:30, flex:1}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button>
+
     </View>
 
     </View>
+    </SafeAreaView>
     </Layout>
-  </SafeAreaView>
+  
   );
 };
 

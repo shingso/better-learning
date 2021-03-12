@@ -14,32 +14,36 @@ function HowOften(){
   
     
     <GlobalSwiper>
+
+
+    
     
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Do what is sustainable'}
-    bodyText={'Build consistent studying habits. Aim to study everyday. This means doing what you think you can do over a period of a week.'}
+    bodyText={'Try to figure out a good amount of study sessions that you can sustain to do day over day.'}
+    />
+
+    <GuideComponent 
+    picture={require('../assets/images/growingidea.png')} 
+    headerText={'Spread your study sessions out'}
+    bodyText={'Study evenly throughout the week, rather than a lot in one day.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/burnout.png')} 
     headerText={'Avoid burnout'}
-    bodyText={'Do not push yourself to the point of exhaustion everyday. The more managable to set up your study goals, the more likely you will stick with it for the long term'}
+    bodyText={'Do not push yourself to the point of exhaustion everyday. The more managable and realistic your study goals are, the more likely you will stick with it.'}
     />
 
-   {/*  <GuideComponent 
-    picture={require('../assets/images/growingidea.png')} 
-    headerText={'Once per day is a good starting goal'}
-    bodyText={'Try to study once per day. If you can manage one study session per day, you will make extradionary amounts of progress'}
-    /> */}
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Slowly ramp up your study session'}
-    bodyText={'When you get into the rhythm of studying consistently, you can add more study sessions.'}
+    headerText={'Start with once a day'}
+    bodyText={'If your just getting started with self-learning, do your best to study atleast once everyday.'}
     //Lot in one day is not conductive to building good study habits. The more that you do in a day the more tired and difficult working the other days will bve
-    />
+    />  
 
   
     </GlobalSwiper>

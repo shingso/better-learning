@@ -17,7 +17,7 @@ function HomeScreen(){
 
     const theme = useTheme()
     const studyStatsData = useContext(StudyStatsContext)
-    const timesStuidedToday = studyStatsData.timesStudiedToday
+    const timesStudiedToday = studyStatsData.timesStudiedToday
 
     useEffect(() => {
     
@@ -120,10 +120,10 @@ function HomeScreen(){
           source={require('../assets/images/startstudying.png')}
       />
       
-    <Text category='h6' style={{fontWeight:'bold',color:theme['color-primary-800'], fontSize:18, letterSpacing:0.5}}>Start Study Session</Text>
+    <Text category='h6' style={{fontWeight:'bold',color:theme['color-primary-700'], fontSize:18, letterSpacing:0.5}}>Start Study Session</Text>
     
-    <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-basic-100'], padding:8, paddingHorizontal:16,borderRadius:8}}>
-    <Text style={{color:theme['color-primary-800'], fontSize:16, fontWeight:'bold'}}>{timesStuidedToday}</Text>  
+    <View style={{position:'absolute', right:-12, top:-8, flexDirection:'row', alignItems:'center', backgroundColor:theme['color-primary-500'], padding:8, paddingHorizontal:16,borderRadius:8}}>
+    <Text style={{color:theme['color-basic-100'], fontSize:12, fontWeight:'bold'}}>{timesStudiedToday == 0 ? 'You havent studied today' : timesStudiedToday + ' session / 1hr 20 mins'}</Text>  
     </View> 
     <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-700']}}>Learn more effectively with a guided study session</Text>
     </View>

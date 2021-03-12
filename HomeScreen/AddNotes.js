@@ -32,9 +32,11 @@ function AddNotes(){
   return(
 
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-    <Layout style={{ padding:16, flex:1}}>
     <SafeAreaView style={{ flex: 1}}>
+    <Layout style={{flex:1}}>
     <TopHeader title={'Add Note'}/>
+    <View style={{padding:16}}>
+    
    
     <Formik
     initialValues={{ text:'', textTheme:'' }}
@@ -110,10 +112,10 @@ function AddNotes(){
   </View>
   </Layout>
   </Modal>
-
-
-  </SafeAreaView>
+  </View>
   </Layout>
+  </SafeAreaView>
+  
   </TouchableWithoutFeedback>
 
   )

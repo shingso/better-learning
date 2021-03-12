@@ -22,7 +22,7 @@ function GuideComponent(props){
           source={props.picture}
         />
      
-        <View style={{justifyContent:'flex-start', paddingTop:72, flex:2.5}}>
+        <View style={{justifyContent:'flex-start', paddingTop:52, flex:2.5}}>
         <Text category='h6' style={styles.headerText}>{props.headerText}</Text>
         <Text style={[styles.bodyText, {color:theme['color-basic-700']}]}>{props.bodyText}</Text>
         </View>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
      
       paddingBottom:32,
       paddingHorizontal:20,
-      paddingTop:80,
+      paddingTop:60,
       alignItems:'center',
       flex:1,
       justifyContent:'center',

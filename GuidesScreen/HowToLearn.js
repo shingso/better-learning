@@ -18,26 +18,26 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/studytime.png')} 
     headerText={'Short and sweet'}
-    bodyText={'In order to learn effectively, study sessions need to be short and sweet. Fully engaged short bursts of studying. By studying in short bursts we can stay engaged easier'}
+    bodyText={'Learning comes best when we commit our full attention to it. But long periods of deeply focused attention are difficult to sustain. By studying in short periods, we can learn more effectively.'}
     />
     
     <GuideComponent 
     picture={require('../assets/images/studytime.png')} 
     headerText={'Focused study period'}
-    bodyText={'Using a timer, we can allocate a period for dedicated studying. Remove distractions and stay on the task at hand.'}
+    bodyText={'We can allocate a period for dedicated studying by using a timer. When the timer is running, stay focused on learning and be mindful of when your attention wanders.'} //
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Recall'}
-    bodyText={'To wrap up a study session, think about what you have studied and type it out. Everything that you type should be from memory.'}
+    headerText={"Recall what you've learned"} // By typing
+    bodyText={'When the study period has ended, think about what you have learned and type it out. Everything you type out should be from memory.'} //Everything that you type should be from memory.
     />
 
     <GuideComponent 
     picture={require('../assets/images/takeabreak.png')} 
     headerText={'Take a break'}
-    bodyText={'When your done with a study sessions, take a break. Breaks are important in reseting our though process.'}
+    bodyText={'After a study session, take a break. Breaks helps our minds unwind and process information.'} //Breaks help refresh our minds, which is important to learning. reset our thought process.
     />
 
     </GlobalSwiper>

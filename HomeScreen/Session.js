@@ -182,7 +182,7 @@ function Session(){
         notif.scheduleNotif(initialTimeSet)
         incrementActiveUsers()
         setStudySessionPosition(studySessionPosition + 1)
-        setIsPlaying(true)
+        //setIsPlaying(true)
     }
 
     const toRecall = () =>{ 
@@ -204,8 +204,8 @@ function Session(){
   
     <BodyComponent
     pictureFile={require('../assets/images/timev2-01.png')}
-    title={'A period of focused studying'}
-    bodyText={<Text>Press start and a <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minute timer</Text> will begin. During this time stay engaged in learning by being in continuous thought.</Text>}
+    title={'A period of focused study'}
+    bodyText={<Text>The next <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minutes</Text> will be put towards attentive studying.</Text>}
     bodyTextColor={theme['color-basic-700']}
    />
 
@@ -229,9 +229,14 @@ function Session(){
     {!hasEnded &&
 
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-    <Animated.Text style={{fontSize:60, color:theme['text-basic-color']}}>
+    
+   {/*  <Text category='h6'>Time left</Text> */}
+   <View style={{flex:1, justifyContent:'center'}}>
+    <Animated.Text style={{fontSize:80, color:theme['text-basic-color'], fontFamily:'OpenSans-SemiBold', }}>
     { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : ''}
     </Animated.Text>
+    </View>
+    <Text style={{lineHeight:28, marginBottom:100,textAlign:'center',marginHorizontal:20,letterSpacing:0.2, color:theme['color-basic-700']}}>During this time, stay focused on studying. Be mindful of when your attention wanders.</Text>
     </View>
 
     }
@@ -242,7 +247,7 @@ function Session(){
     <BodyComponent
     pictureFile={require('../assets/images/studyperiodover.png')}
     title={'The study period is over!'}
-    bodyText={'We can furthur internalize what we have learned by thinking about what we have just learned.'}
+    bodyText={'The hardest part is over. Now we need to recall in order to solidify what we have learned.'}
     bodyTextColor={theme['color-basic-700']}
     />
     <View style={styles.buttonContainer}>
@@ -258,8 +263,8 @@ function Session(){
     <View style={{flex:1, justifyContent:'center'}}>
 
     <BodyComponent pictureFile={require('../assets/images/recallexplain.png')} 
-    title={'Think about what you have just learned'}
-    bodyText={'In the next screen, type out from memory what you have just learned about.'}
+    title={"Lets recall what we've learned"}
+    bodyText={"Take a minute and think about what you've just learned and in the next screen. In the next screen, type out the concepts you've learned."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -333,7 +338,7 @@ function Session(){
     <BodyComponent
     pictureFile={require('../assets/images/studyfinishedv1.png')}
     title={'Your done!'}
-    bodyText={"Now that you've completed studying, its best to take a break. Breaks help refresh our mind which helps in knowledge retention and furthur continued focus."}
+    bodyText={"Good job! You've just fully completed a study session."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -353,7 +358,7 @@ function Session(){
 
     <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginHorizontal:60}}>
     <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24}}>Are you sure you want to end the current study session?</Text> 
+    <Text  category='s1' style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24,}}>Are you sure you want to end the current study session?</Text> 
    
     <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
     <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>

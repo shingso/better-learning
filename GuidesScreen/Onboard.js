@@ -11,6 +11,7 @@ function Onboard(){
   const authContext = useContext(AuthContext)
 
   return (
+    
     <View style={{flex:1,paddingVertical:40}}>
     <SafeAreaView style={{flex:1}}>
     <GlobalSwiper>
@@ -18,19 +19,20 @@ function Onboard(){
     <GuideComponent 
     picture={require('../assets/images/reshapev1.png')} 
     headerText={'Reshape the way you learn'}
-    bodyText={'Rediscover learning in a progress oriented approach that is managable and effective.'}
+    bodyText={'Rediscover learning in a process oriented approach that is managable and effective.'}
     />
  
     <GuideComponent 
     picture={require('../assets/images/comfortablelearningv3.png')} 
     headerText={'Become comfortable with learning'}
     bodyText={'End procrastination when needing to study by building confidence in your ability to learn'}
+    bodyText2={'Build confidence in your ability to learn. '}
     />
 
     <GuideComponent 
     picture={require('../assets/images/learnefficiently.png')} 
     headerText={'Learn more efficiently'}
-    bodyText={'Use simple guided study sessions which result better retention of information and a leads to a better understanding.'}
+    bodyText={'Using simple guided study sessions for better retention of information and a overall intuition.'}
     />
 
 
@@ -38,7 +40,7 @@ function Onboard(){
     <GuideComponent 
     picture={require('../assets/images/becomesmarterv2.png')} 
     headerText={'Work towards being a smarter you'}
-    bodyText={'Develop your intelligence by spending time learning. The more you learn and study the smarter you will become!'}
+    bodyText={'Start developing intelligence by spending time learning. The more time you learn, the smarter you will become!'}
     />
 
     <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start learning</Button>

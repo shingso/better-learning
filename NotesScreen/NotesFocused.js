@@ -72,7 +72,7 @@ function NotesFocused({ route, navigation }){
         <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginBottom:300}}>
         <View>
         <Text category='s1' style={{textAlign:'center', marginBottom:4}}>Remove Folder</Text>
-        <Text category='p2' style={{textAlign:'center', marginBottom:20}}>Enter 'Delete' to remove folder</Text>
+        <Text category='p2' style={{textAlign:'center', marginBottom:20}}>Enter 'Delete' to remove this folder</Text>
         </View>
         <Input value={inputValue} onChangeText={setInputValue} />
       

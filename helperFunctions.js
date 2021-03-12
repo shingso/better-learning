@@ -303,15 +303,16 @@ export function formatMinutes(time){
 export function formatMinutes2(time){
   const theme = useTheme()
   const labelStyle = {
-    //color:theme['text-hint-color'],
+    color:theme['text-hint-color'],
     //color: theme['text-hint-color'],
+    fontFamily:'OpenSans-SemiBold',
     fontWeight:'500',
-    fontSize:13,
+    fontSize:14,
   }
 
   const numberStyle = {
     fontWeight:'800', 
-    fontSize:20, 
+    fontSize:30, 
     fontFamily:'OpenSans-Bold',
     color: theme['color-basic-800'],
   } 

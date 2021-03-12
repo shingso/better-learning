@@ -19,13 +19,19 @@ function Discouraged(){
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Learning new concepts is tough'}
-    bodyText={'Everyone struggles when it comes to learning. It takes a concentrated effort along with time. Know that with time you can learn and grow.'}
+    bodyText={'Everyone struggles when it comes to learning. It takes a concentrated effort along with time.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Just start and do your best'}
-    bodyText={'Try to study once everyday. Do what you can. Some days you might study a lot and some others less. Any progress is good progress. Focus on the process.'}
+    headerText={'Just start'}
+    bodyText={'Try to study once everyday and aim to do what you can. Some days you might study a lot and some less. Any progress is good progress. Focus on the process.'}
+    />
+
+    <GuideComponent 
+    picture={require('../assets/images/puttingintime.png')} 
+    headerText={'Do what you can'}
+    bodyText={'Judge a session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
     />
     
     <GuideComponent 

@@ -19,27 +19,33 @@ function WhatIsLearning(){
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Building an understanding'}
-    bodyText={'Learning starts from simple concepts and slowly building up. Know how concepts connect and impact to each other.'}
+    bodyText={'To build an understanding, start by figuring out the basic concepts. As you gain a good grasp of the basics, you can build upon them.'}
     />
     
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Learning is a constant process'}
-    bodyText={'Learning is all putting in the time and effort in. Everytime you work towards learning you will understand it a bit more. Slowly build up.'}
+    bodyText={"As you put time into learning, you'll slowly clear up misconceptions and make connections. Everytime you study, you'll make progress into figuring out a concept as a whole"}
     />
 
-  {/*   <GuideComponent 
+    <GuideComponent 
     picture={require('../assets/images/buildingpuzzle.png')} 
-    headerText={'Building on the basics'}
-    bodyText={'Learning is putting information you already know and building on top of it.'}
+    headerText={'Learning is more than memorization'}
+    bodyText={"Don't spend a lot of time memorizing. Instead, of knowing names and definitions, figure out how each variable works."}
+    />
+
+    {/* <GuideComponent 
+    picture={require('../assets/images/growingidea.png')} 
+    headerText={'You can get better at learning'}
+    bodyText={'Learning requires constant and engaged thinking with the topic at hand. Be focused and constantly in thought while you are learning. Constantly think about how concepts work and relate to each other'}
     /> */}
+
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Focused, Active, and Engaged'}
-    bodyText={'Learning requires constant and engaged thinking with the topic at hand. Be focused and constantly in thought while you are learning. Constantly think about how concepts work and relate to each other'}
+    headerText={'You can get better at learning'}
+    bodyText={"Learning is a skill that can be developed. The more time you put into learning, the faster you'll get at putting concepts together."}
     />
-
    
 
    
