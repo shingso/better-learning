@@ -9,7 +9,7 @@ import TopHeader from '../UtilComponents/TopHeader'
 import * as Yup from 'yup';
 import { SubjectsContext } from '../SubjectsContext';
 import FolderSelectionComponent from '../UtilComponents/FolderSelectionComponent'
-
+import GlobalStyle from '../constants'
 
 
 const TextSchema = Yup.object().shape({
@@ -32,8 +32,9 @@ function AddNotes(){
   return(
 
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-    <SafeAreaView style={{ flex: 1}}>
     <Layout style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1}}>
+    
     <TopHeader title={'Add Note'}/>
     <View style={{padding:16}}>
     
@@ -86,7 +87,7 @@ function AddNotes(){
     onChangeText={formikProps.handleChange('text')}
     />
   
-   <Button style={{marginVertical:16, marginHorizontal:20, borderRadius:30}} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()}>Done</Button>
+   <Button size='large' style={{marginVertical:16, marginHorizontal:20, borderRadius:30, ...GlobalStyle.ButtonShadow}} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()}>Done</Button>
    </View>
     
 
@@ -113,9 +114,9 @@ function AddNotes(){
   </Layout>
   </Modal>
   </View>
-  </Layout>
-  </SafeAreaView>
   
+  </SafeAreaView>
+  </Layout>
   </TouchableWithoutFeedback>
 
   )

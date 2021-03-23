@@ -11,7 +11,7 @@ import appleAuth, {
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { Button, Text ,Icon, Input, Layout } from '@ui-kitten/components';
 import { addUser } from '../helperFunctions';
-
+import GlobalStyle from '../constants'
 
 
 const GoogleIcon = (props) => (
@@ -100,7 +100,7 @@ function SignInComponent(){
           width:'100%',
           height: 54,
           borderRadius:30,
-      
+          ...GlobalStyle.ButtonShadow
         }}
 
         cornerRadius={18}
@@ -155,7 +155,7 @@ function SignInComponent(){
     
         <View>
 
-        <Button accessoryLeft={GoogleIcon} size='large' status='info' onPress={() => onGoogleButtonPress()} style={{marginBottom:24, borderRadius:30}}> 
+        <Button accessoryLeft={GoogleIcon} size='large' status='info' onPress={() => onGoogleButtonPress()} style={{marginBottom:24, borderRadius:30, ...GlobalStyle.ButtonShadow}}> 
         Continue with Google 
         </Button>
 

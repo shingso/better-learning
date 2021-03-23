@@ -37,9 +37,7 @@ import ThemeSettings from './SettingsScreen/ThemeSettings';
 import OpenSource from './SettingsScreen/OpenSource';
 import TimerSettings from './SettingsScreen/TimerSettings';
 import LifetimeStats from './SettingsScreen/LifetimeStats';
-
 import UserInfo from './UserInfoScreens/UserInfo';
-
 
 
 import { UserDataContextWrapper } from './UserDataContext'
@@ -260,12 +258,12 @@ const BottomTabBar = ({ navigation, state }) => (
    
      <NavigationContainer theme={{ colors: { background:theme['background-basic-color-2']}}}>
   
-      <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name= "UserStatsStack" component={UserStatsStack} />
-      <Tab.Screen name="GuidesStack" component={GuidesStack} />
-      <Tab.Screen name="UserSettingsStack" component={UserSettingsStack} />
-      </Tab.Navigator>
+    <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
+    <Tab.Screen name="Home" component={HomeStack} />
+    <Tab.Screen name="UserStatsStack" component={UserStatsStack} />
+    <Tab.Screen name="GuidesStack" component={GuidesStack} />
+    <Tab.Screen name="UserSettingsStack" component={UserSettingsStack} />
+    </Tab.Navigator>
   
     </NavigationContainer>
     

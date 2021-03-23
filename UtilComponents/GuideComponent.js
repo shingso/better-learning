@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
   
     headerText:{
-      marginBottom:24,
+      marginBottom:20,
       textAlign:'center',
      
     },

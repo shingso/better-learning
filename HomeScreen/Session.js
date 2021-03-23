@@ -16,7 +16,7 @@ import * as Yup from 'yup';
 import FolderSelectionComponent from '../UtilComponents/FolderSelectionComponent'
 import { SubjectsContext } from '../SubjectsContext';
 import { TimerSettingsContext } from '../TimerSettingsContext';
-
+import GlobalStyle from '../constants'
 
 
 const TextSchema = Yup.object().shape({
@@ -45,7 +45,7 @@ const BodyComponent = (props) => (
       />
   
   <View>
-  <Text style={{textAlign:'center'}}><Text category='h6' style={{fontWeight:'bold'}}>{props.title}</Text></Text>
+  <Text style={{textAlign:'center'}}><Text category='h6'>{props.title}</Text></Text>
   <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:14,color:props.bodyTextColor, textAlign:'center', marginHorizontal:12}}>{props.bodyText}</Text>
   </View>
   </View>
@@ -157,7 +157,7 @@ function Session(){
 
       fetchData()
       //timerSettings.timeSettings * 60 * 1000
-      setInitialTimeSet(10000)
+      setInitialTimeSet(4000)
       
     }, []);
 
@@ -205,17 +205,18 @@ function Session(){
     <BodyComponent
     pictureFile={require('../assets/images/timev2-01.png')}
     title={'A period of focused study'}
-    bodyText={<Text>The next <Text category='s1' style={{fontWeight:"bold"}}>{timerSettings.timeSettings} minutes</Text> will be put towards attentive studying.</Text>}
+    bodyText={<Text>Press start and a <Text style={{fontFamily:"Poppins-SemiBold"}}>{timerSettings.timeSettings} minute timer</Text> will begin. During this time stay focused on studying.</Text>}
     bodyTextColor={theme['color-basic-700']}
    />
 
 
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
     <View style={{flexDirection:'row',  marginBottom:16, alignItems:'flex-end'}}>
-    <Text category='c2' style={{color:theme['text-hint-color']}}>Active Studiers: </Text>
-    <Text category='c1' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
+    <Text category='c2' style={{color:theme['text-hint-color']}}>People currently studying: </Text>
+    <Text category='c2' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
     </View>
     <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
+    
     <Button style={styles.button} size={'large'} onPress={startStudySession}>
       Start
     </Button>
@@ -232,11 +233,11 @@ function Session(){
     
    {/*  <Text category='h6'>Time left</Text> */}
    <View style={{flex:1, justifyContent:'center'}}>
-    <Animated.Text style={{fontSize:80, color:theme['text-basic-color'], fontFamily:'OpenSans-SemiBold', }}>
+    <Animated.Text style={{fontSize:70, color:theme['text-basic-color'], fontFamily:'Poppins-SemiBold', }}>
     { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : ''}
     </Animated.Text>
     </View>
-    <Text style={{lineHeight:28, marginBottom:100,textAlign:'center',marginHorizontal:20,letterSpacing:0.2, color:theme['color-basic-700']}}>During this time, stay focused on studying. Be mindful of when your attention wanders.</Text>
+    <Text style={{lineHeight:28, marginBottom:60,textAlign:'center',marginHorizontal:20,letterSpacing:0.2, color:theme['color-basic-700'], fontFamily:'Poppins-Regular'}}>Stay focused on studying. Be mindful of when your attention wanders.</Text>
     </View>
 
     }
@@ -247,7 +248,7 @@ function Session(){
     <BodyComponent
     pictureFile={require('../assets/images/studyperiodover.png')}
     title={'The study period is over!'}
-    bodyText={'The hardest part is over. Now we need to recall in order to solidify what we have learned.'}
+    bodyText={'The study time is over. Now we need to recall in order to solidify what we have learned.'}
     bodyTextColor={theme['color-basic-700']}
     />
     <View style={styles.buttonContainer}>
@@ -263,8 +264,8 @@ function Session(){
     <View style={{flex:1, justifyContent:'center'}}>
 
     <BodyComponent pictureFile={require('../assets/images/recallexplain.png')} 
-    title={"Lets recall what we've learned"}
-    bodyText={"Take a minute and think about what you've just learned and in the next screen. In the next screen, type out the concepts you've learned."}
+    title={"Lets think about what we've learned"}
+    bodyText={"Take a minute and think about what you've just learned. In the next screen, type out what you ."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -337,8 +338,8 @@ function Session(){
 
     <BodyComponent
     pictureFile={require('../assets/images/studyfinishedv1.png')}
-    title={'Your done!'}
-    bodyText={"Good job! You've just fully completed a study session."}
+    title={'Thats it!'}
+    bodyText={"You've just finished a study session."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -405,7 +406,9 @@ const styles = StyleSheet.create({
     button:{
         flex:1,
         borderRadius:30,
-        marginHorizontal:16
+        marginHorizontal:16,
+        ...GlobalStyle.ButtonShadow
+
     }
 
  });

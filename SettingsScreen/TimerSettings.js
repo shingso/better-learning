@@ -4,6 +4,8 @@ import { Card, List, Text, Button, Layout, Select , IndexPath, SelectItem, Icon}
 import { TimerSettingsContext } from '../TimerSettingsContext';
 import TopHeader from '../UtilComponents/TopHeader'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import GlobalStyle from '../constants'
+import { G } from 'react-native-svg';
 
 const ClockIcon = (props) => (
   <Icon {...props} width={14} height={14} name='clock'/>
@@ -68,7 +70,7 @@ function TimerSettings(){
 
     <View style={{flex:1, marginBottom:64, flexDirection:'row', alignItems:'flex-end'}}>
 
-    <Button size='large' style={{marginTop:20, marginHorizontal:20,borderRadius:30, flex:1}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button>
+    <Button size='large' style={{marginTop:20, marginHorizontal:20,borderRadius:30, flex:1, ...GlobalStyle.ButtonShadow}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button>
 
     </View>
 

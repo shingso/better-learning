@@ -25,27 +25,27 @@ function LearningTips(){
     <GuideComponent 
     picture={require('../assets/images/wellrested.png')} 
     headerText={'Get good sleep'}
-    bodyText={'Our brains processes new information when we sleep. Getting adequte sleep is crucial to learning and information retention.'}
+    bodyText={'While we sleep, new information is processed in our brains. Make sure to get an adequte amount of sleep.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Make a habit of studying'}
-    bodyText={'Study at the same time and in the same place. By having a consistent scheduele starting will become easier.'}
+    bodyText={'Build a consistent study schedule. Starting at the same time every day helps us get into studying easier.'}
     />
 
 
-    <GuideComponent 
+    {/* <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Tune your attention'}
+    headerText={'Pick something that you think is valuable'}
     bodyText={'The more attentive you are and in thought, the better you will learn. Do your best to get rid of distractions.'}
-    />
+    /> */}
 
     
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'Practice, Practice, Practice'}
-    bodyText={'The more we practice the more deeply engrained the concepts will be. Practicing shows us where we have gaps in our information.'}
+    headerText={'Apply the knowledge'}
+    bodyText={'Find a way to apply what you have learned. Practice problems or projects will help you get better.'}
     />
 
    

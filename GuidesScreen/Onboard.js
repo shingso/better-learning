@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View , StyleSheet } from 'react-native';
+import { View , StyleSheet, SafeAreaView } from 'react-native';
 import { Button, Text, useTheme} from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import GuideComponent from '../UtilComponents/GuideComponent'
@@ -23,27 +23,27 @@ function Onboard(){
     />
  
     <GuideComponent 
-    picture={require('../assets/images/comfortablelearningv3.png')} 
+    picture={require('../assets/images/comfortablestudyv1.png')} 
     headerText={'Become comfortable with learning'}
-    bodyText={'End procrastination when needing to study by building confidence in your ability to learn'}
+    bodyText={'Guided study sessions to help you be more comfortable with the process of learning.'}
     bodyText2={'Build confidence in your ability to learn. '}
     />
 
-    <GuideComponent 
+   {/*  <GuideComponent 
     picture={require('../assets/images/learnefficiently.png')} 
-    headerText={'Learn more efficiently'}
-    bodyText={'Using simple guided study sessions for better retention of information and a overall intuition.'}
-    />
+    headerText={'Build practical knowledge'}
+    bodyText={'Start learning in a way that builds a deep understanding. Build practical knowledge.'}
+    /> */}
 
 
     <View style={styles.slide1}>
     <GuideComponent 
     picture={require('../assets/images/becomesmarterv2.png')} 
-    headerText={'Work towards being a smarter you'}
-    bodyText={'Start developing intelligence by spending time learning. The more time you learn, the smarter you will become!'}
+    headerText={'Learn better'}
+    bodyText={"Learn in a way where information is better understood and retained."}
     />
 
-    <Button style={{ marginBottom:100, marginHorizontal:32, borderRadius:30}} onPress={()=>{authContext.setNewUser(false)}}>I'm ready to start learning</Button>
+    <Button size='large' style={{ marginBottom:100, marginHorizontal:32, borderRadius:30, elevation:1}} onPress={()=>{authContext.setNewUser(false)}}>Let's start learning</Button>
     </View>
 
 

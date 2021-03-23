@@ -18,6 +18,8 @@ const FolderTitleSchema = Yup.object().shape({
 })
 
 
+
+
 function FolderSelectionComponent(){
 
     const width = Dimensions.get('screen').width
@@ -27,8 +29,12 @@ function FolderSelectionComponent(){
     const [visible, setVisible] = React.useState(false);
     const subjectsContext = useContext(SubjectsContext)
     const navigation = useNavigation();
-    const [number, setNumber] = React.useState(0);
-
+    
+    
+    const openModal = () => {
+      Keyboard.dismiss()
+      setSelectVisible(true)
+    }
 
     const StatefulModalContent = () => {
    
@@ -112,7 +118,7 @@ function FolderSelectionComponent(){
     //subjectsContext.setLastUsedSubject(info.item)
     const renderItem = (info) => (
         
-    <TouchableOpacity onPress={()=>setNumber(number+1)}>
+    <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject(info.item)}>
     <View style={{flexDirection:'row', alignItems:'center', marginVertical:20}}>
 
     <Icon style={{width:20, height:20, marginRight:12}} 
@@ -144,10 +150,7 @@ function FolderSelectionComponent(){
         
     )
     
-    const openModal = () => {
-        Keyboard.dismiss()
-        setSelectVisible(true)
-    }
+    
 
 
    return (

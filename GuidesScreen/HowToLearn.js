@@ -11,33 +11,39 @@ function HowToLearn(){
   return (
     <Layout style={{flex:1}}>
     <SafeAreaView style={{flex:1}}>
-    <TopHeader title={'How should I be learning?'}/>
+    <TopHeader title={'Learn better'}/>
     
     <GlobalSwiper>
 
     <GuideComponent 
-    picture={require('../assets/images/studytime.png')} 
+    picture={require('../assets/images/thinkingv2-01.png')} 
+    headerText={'Tune your attention to learning'}
+    bodyText={'Learning comes best when we are deeply focused and engaged with the material. The longer we can maintain our attention, the better we will learn.'}
+    />
+
+    <GuideComponent 
+    picture={require('../assets/images/thinkingv2-01.png')} 
     headerText={'Short and sweet'}
-    bodyText={'Learning comes best when we commit our full attention to it. But long periods of deeply focused attention are difficult to sustain. By studying in short periods, we can learn more effectively.'}
+    bodyText={'We naturally dont have a very long attention span. We can learn more effectively by studying in short, deeply focused study sessions.'}
     />
     
     <GuideComponent 
-    picture={require('../assets/images/studytime.png')} 
-    headerText={'Focused study period'}
-    bodyText={'We can allocate a period for dedicated studying by using a timer. When the timer is running, stay focused on learning and be mindful of when your attention wanders.'} //
+    picture={require('../assets/images/focusedstudy-01.png')} 
+    headerText={'Dedicated study time'}
+    bodyText={'A timer is helpful in staying focused. By setting a dedicated period for studying, we are more inclined to maintain our attention.'} 
     />
 
     
     <GuideComponent 
-    picture={require('../assets/images/growingidea.png')} 
-    headerText={"Recall what you've learned"} // By typing
-    bodyText={'When the study period has ended, think about what you have learned and type it out. Everything you type out should be from memory.'} //Everything that you type should be from memory.
+    picture={require('../assets/images/recall-01.png')} 
+    headerText={"Think about what you've learned"} // By typing
+    bodyText={"At the end of your study period, think about what you have learned and type it out. Doing so will help reinforce what we've learned."} //Everything that you type should be from memory.
     />
 
     <GuideComponent 
     picture={require('../assets/images/takeabreak.png')} 
     headerText={'Take a break'}
-    bodyText={'After a study session, take a break. Breaks helps our minds unwind and process information.'} //Breaks help refresh our minds, which is important to learning. reset our thought process.
+    bodyText={'After studying, take a break.'} //Breaks help refresh our minds, which is important to learning. reset our thought process.
     />
 
     </GlobalSwiper>

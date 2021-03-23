@@ -4,6 +4,7 @@ import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text, useTheme } from '@ui-kitten/components';
+import { View } from 'react-native'
 
 
 export async function saveThemeValue(value){
@@ -258,7 +259,9 @@ export async function addNote(userID, subject, text, textTheme) {
 export function formatMinutes(time){
   const theme = useTheme()
   const labelStyle = {
-    color:theme['text-hint-color']
+    color:theme['text-hint-color'],
+    marginLeft:20,
+    
   }
 
   const numberStyle = {
@@ -299,22 +302,23 @@ export function formatMinutes(time){
 }
 
 
-
-export function formatMinutes2(time){
+//20 and 10 for label and font size
+export function formatMinutes2(time, numberColor, labelColor, labelSize, numberSize){
   const theme = useTheme()
   const labelStyle = {
-    color:theme['text-hint-color'],
-    //color: theme['text-hint-color'],
+    //color:theme['color-basic-700'],
+    color: labelColor,
     fontFamily:'OpenSans-SemiBold',
     fontWeight:'500',
-    fontSize:14,
+    fontSize:labelSize,
   }
 
   const numberStyle = {
-    fontWeight:'800', 
-    fontSize:30, 
-    fontFamily:'OpenSans-Bold',
-    color: theme['color-basic-800'],
+    fontWeight:'800'  , 
+    fontSize:numberSize, 
+    fontFamily:'Poppins-SemiBold',
+    color: numberColor
+    
   } 
 
   
@@ -333,15 +337,15 @@ export function formatMinutes2(time){
   }
 
   if(remainingMinutes > 0 && hours === 0){
-    return <Text style={numberStyle}>{remainingMinutes} <Text  style={labelStyle}>minutes</Text></Text>
+    return <Text style={numberStyle}>{remainingMinutes} <Text  style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0 && hours === 1){
-    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hour</Text>  {remainingMinutes} <Text  style={labelStyle}>minutes</Text></Text>
+    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hour</Text>  {remainingMinutes} <Text  style={labelStyle}>mins</Text></Text>
   }
 
   if(remainingMinutes > 0){
-    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text>  {remainingMinutes} <Text  style={labelStyle}>minutes</Text></Text>
+    return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text>  {remainingMinutes} <Text  style={labelStyle}>mins</Text></Text>
   }
 
   return <Text style={numberStyle}>{hours} <Text  style={labelStyle}>hours</Text></Text>

@@ -87,40 +87,32 @@ function IQScreen(){
   
   <View style={{flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingVertical:24}}>
   <View>
+  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-800']}}>{props.title}</Text>
+  <Text style={{fontFamily:'OpenSans-Regular', fontWeight:'800', fontSize:13, color:theme['color-basic-500']}}>{props.weekTitle}</Text>
+  <View style={{ flexDirection:'row', alignItems:'flex-end',marginBottom:0, marginTop:8}}>
   
- 
-  <Text style={{fontFamily:'OpenSans-SemiBold', fontWeight:'800', fontSize:13, color:theme['color-basic-800']}}>{props.title}</Text>
-  <Text style={{fontFamily:'OpenSans-SemiBold', fontWeight:'800', fontSize:11, color:theme['color-basic-500']}}>{props.weekTitle}</Text>
-  
-  <View style={{ flexDirection:'row', alignItems:'flex-end',marginBottom:4}}>
-  
-  <Text style={{marginRight:8}}>{formatMinutes2(props.minutesStudied)}</Text>
-
+  <Text style={{marginRight:8}}>{formatMinutes2(props.minutesStudied, props.numberColor, props.labelColor)}</Text>
   </View>
 
-
-  {/* <Text style={{marginRight:8, marginBottom:4}}>{formatMinutes2(props.minutesStudied)}</Text>
-  */}
-  
   <View style={{flexDirection:'row', alignItems:'center'}}>
   <View style={{flexDirection:'row', alignItems:'center'}}>
   <View style={{height:props.barHeight, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8, marginLeft:1, justifyContent:'center'}}>
  
   {barWidth > 149 &&
   <View style={{flexDirection:'row', alignItems:'center'}}>
-  <Text style={{ fontWeight:'800', fontSize:16, fontFamily:'OpenSans-Bold', marginLeft:6, marginRight:4,color:theme['color-basic-100']}}>{props.sessionCount}</Text>  
-  <Text style={{fontSize:12, fontFamily:'OpenSans-SemiBold', color:theme['color-basic-100'], marginTop:3, fontWeight:'500'}}>{props.sessionCount != 1 ? 'sessions' : 'session'}</Text>
+ {/*  <Text style={{ fontWeight:'800', fontSize:16, fontFamily:'OpenSans-Bold', marginLeft:6, marginRight:4,color:theme['color-basic-100']}}>{props.sessionCount}</Text>  
+  <Text style={{fontSize:12, color:theme['color-basic-100'], marginTop:3, fontWeight:'500'}}>{props.sessionCount != 1 ? 'sessions' : 'session'}</Text> */}
   </View>
   }
 
   </View> 
-  <Icon name='clock-outline'  fill={props.clockColor} height={18} width={18}/>
+  <Icon name='clock'  fill={props.clockColor} height={17} width={17}/>
   </View>
 
   {barWidth < 149 &&
   <View style={{flexDirection:'row', alignItems:'center'}}>
-  <Text style={{ fontWeight:'800', fontSize:16, fontFamily:'OpenSans-Bold', marginLeft:8, marginRight:4,color:theme['color-basic-900']}}>{props.sessionCount}</Text>  
-  <Text style={{fontSize:12, fontFamily:'OpenSans-SemiBold', color:theme['text-hint-color'], marginTop:3, fontWeight:'500'}}>{props.sessionCount != 1 ? 'sessions' : 'session'}</Text>
+  <Text style={{ fontWeight:'800', fontSize:16, fontFamily:'OpenSans-Bold', marginLeft:8, marginRight:4,color:theme['color-basic-600']}}>{props.sessionCount}</Text>  
+  <Text style={{fontSize:12, color:theme['color-basic-400'], marginTop:3, fontWeight:'500', fontFamily:'OpenSans-SemiBold'}}>{props.sessionCount != 1 ? 'sessions' : 'session'}</Text>
   </View>
   }
   </View>
@@ -508,7 +500,7 @@ function IQScreen(){
 
   {(false) &&
 
-  <Card  style={{marginBottom:12, alignItems:'center' , borderWidth:0, borderRadius:12}}>
+  <Card  style={{marginBottom:12, alignItems:'center' , borderWidth:0, borderRadius:12, elevation:1}}>
   <Image
     style={{
       height:120,
@@ -552,28 +544,12 @@ function IQScreen(){
     }
 
 
-<Card style={{marginBottom:12, borderWidth:0, paddingBottom:0, borderRadius:12}}>
-{/* <ImageBackground
-       style={{
-         height:120,
-         width:410,
-         marginBottom:0,
-         marginTop:-16,
-         marginLeft:-24,
-         justifyContent:'center',
-         alignItems:'center'
-      
-         
-       }}
-
-       source={require('../assets/images/piggytime.png')}
-     >
-  </ImageBackground> */}
+  <Card style={{marginBottom:12, borderWidth:0, paddingBottom:0, borderRadius:12, elevation:1}}>
   
-  <View style={{ flexDirection:'row', alignItems:'center', marginBottom:0, marginTop:4, paddingBottom:12}}>
+  <View style={{ flexDirection:'row', alignItems:'center', marginBottom:0, marginTop:4,}}>
 
-  <Icon fill={theme['color-primary-700']} height={20} width={20}  name='clock'/>
-  <Text category='h6' style={{marginLeft:8,color:theme['color-primary-800']}}>Time spent studying</Text>
+  <Icon fill={theme['color-primary-700']} height={18} width={18}  name='clock'/>
+  <Text category='h6' style={{marginLeft:8,color:theme['color-primary-800'], marginTop:4}}>Time spent studying</Text>
 
   {/*  <Text 
    style={{marginTop:8, marginBottom:4,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center'}}>
@@ -581,14 +557,103 @@ function IQScreen(){
    </Text> */}
   </View> 
 
-  <View>
-  <TimeComponent barHeight={24} weekTitle={'This week'} title={getCurrentWeekLabel()} minutesStudied={currentWeekMinutesStudied} sessionCount={currentWeekCount} weekLabel={getCurrentWeekLabel()} clockColor={theme['color-primary-600']} barColor={theme['color-primary-400']}/>
+{/*   <View>
+  <TimeComponent 
+  barHeight={14} 
+  weekTitle={'This week'} 
+  title={getCurrentWeekLabel()} 
+  minutesStudied={currentWeekMinutesStudied} 
+  sessionCount={currentWeekCount} 
+  weekLabel={getCurrentWeekLabel()} 
+  clockColor={theme['color-primary-400']} 
+  barColor={theme['color-primary-400']}  
+  numberColor={theme['color-basic-900']}
+  labelColor={theme['color-basic-500']}/>
+  
   </View>
   
   <View>
-  <TimeComponent barHeight={20} weekTitle={'Last week'} title={getLastWeekLabel()} minutesStudied={oneWeekAgoMinutesStudied} sessionCount={oneWeekAgoCount}  weekLabel={getLastWeekLabel()} clockColor={theme['color-basic-400']} barColor={theme['color-basic-400']}/>
+  <TimeComponent 
+  barHeight={14} 
+  weekTitle={'Last week'} 
+  title={getLastWeekLabel()} 
+  minutesStudied={oneWeekAgoMinutesStudied} 
+  sessionCount={oneWeekAgoCount}  
+  weekLabel={getLastWeekLabel()} 
+  clockColor={theme['color-basic-400']} 
+  barColor={theme['color-basic-400']}
+  numberColor={theme['color-basic-600']}
+  labelColor={theme['color-basic-400']}
+  />
+
+  </View> */}
+
+  <View style={{flexDirection:'row', paddingVertical:16}}>
+  <View style={{flex:1}}>
+{/*   <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-800']}}>{getCurrentWeekLabel()}</Text> currentWeekMinutesStudied */}
+  
+    
+<View style={{flexDirection:'row', marginBottom:20}}>
+  
+  <View style={{flex:1}} >
+  <View style={{flexDirection:'row'}}>
+  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-primary-700'], marginBottom:12}}>{'This week'}  </Text>
+  <Text style={{color:theme['color-basic-400']}}>/</Text>
+  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-600'], marginBottom:12}}>  {'Last week'}</Text>
+  </View>
+  
+  <View style={{flexDirection:'row', alignItems:'center', marginTop:-8}}>
+  <Text style={{marginRight:8, fontSize:26, fontFamily:'Poppins-SemiBold', color:theme['color-basic-900']}}>{currentWeekStudiedCount} <Text style={{fontSize:12, fontFamily:'OpenSans-SemiBold', color:theme['color-basic-800']}}>sessions</Text></Text>
+  <Text style={{color:theme['color-basic-400']}}>/</Text>
+  <Text style={{marginTop:4 ,fontSize:20, fontFamily:'Poppins-SemiBold', color:theme['color-basic-500']}}>  {oneWeekAgoCount} <Text style={{fontSize:10, fontFamily:'OpenSans-SemiBold', color:theme['color-basic-500']}}>sessions</Text></Text>
+  </View>
+  
+  <View style={{ flexDirection:'row',marginBottom:0, marginTop:8, alignItems:'center'}}>
+  <Text style={{marginRight:8}}>{formatMinutes2(1000, theme['color-basic-800'], theme['color-basic-800'], 12, 26)}</Text>
+  <Text style={{color:theme['color-basic-400']}}>/</Text>
+  <Text style={{marginTop:4}}>  {formatMinutes2(2200, theme['color-basic-500'], theme['color-basic-500'], 10, 20)}</Text>
+  </View>
+  
   </View>
 
+  <View style={{flex:1, alignItems:'flex-end'}}>
+  <View style={{ flexDirection:'row',marginBottom:0, marginTop:8}}>
+
+  </View>
+  </View>
+ 
+
+  </View>
+
+
+ {/*  <View style={{flexDirection:'row', alignItems:'center'}}>
+  <View style={{height:18, backgroundColor:theme['color-primary-400'], borderRadius:4, width:100, marginRight:8, marginLeft:1, justifyContent:'center'}}>
+  </View> 
+  <Icon name='clock'  fill={theme['color-primary-400']} height={17} width={17}/>
+  </View>
+
+
+  <View style={{flexDirection:'row', alignItems:'center', marginTop:12}}>
+  <View style={{height:18, backgroundColor:theme['color-basic-400'], borderRadius:4, width:200, marginRight:8, marginLeft:1, justifyContent:'center'}}>
+  </View> 
+  <Icon name='clock'  fill={theme['color-basic-400']} height={17} width={17}/>
+  </View> */}
+  
+  {/* <View style={{marginTop:8}}>
+  <Text style={{marginRight:8}}>{formatMinutes2(oneWeekAgoMinutesStudied, theme['color-basic-600'], theme['color-basic-500'])}</Text>
+  </View> */}
+
+{/*   <Text style={{fontFamily:'OpenSans-Regular', fontWeight:'800', fontSize:13, color:theme['color-basic-500']}}>{'Last week'}</Text>
+  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-800']}}>{getLastWeekLabel()}</Text> */}
+  
+
+
+  </View>
+  </View>
+
+  
+
+  
   
   </Card>
 
@@ -597,7 +662,7 @@ function IQScreen(){
 
   
 
-  <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0, borderRadius:12}}>
+  <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0, borderRadius:12, elevation:1}}>
   <Calendar
 
   //markingType={'custom'}

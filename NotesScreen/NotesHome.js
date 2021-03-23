@@ -11,12 +11,12 @@ import { addSubject } from '../helperFunctions';
 
 
 const EditIcon = (props) => (
-  <Icon {...props} height={22} width={22}  name='edit-2-outline'/>
+  <Icon {...props} height={27} width={27}  name='edit-2-outline'/>
 );
 
 
 const FolderIcon = (props) => (
-  <Icon {...props} height={22} width={22}  name='folder-add-outline'/>
+  <Icon {...props} height={27} width={27}  name='folder-add-outline'/>
 );
 
 const FolderTitleSchema = Yup.object().shape({
@@ -65,7 +65,7 @@ function NotesHome({ navigation }){
         <Input
         placeholder={'Folder Title'}
         value={formikProps.values.folderTitle}
-       
+        multiline={true}
         onChangeText={formikProps.handleChange('folderTitle')}
         status={formikProps.errors.folderTitle != null ? 'danger' : 'basic'}
         autoFocus={true}
@@ -143,7 +143,7 @@ function NotesHome({ navigation }){
   const renderRightAcessory = () => (
     <View style={{flexDirection:'row', marginRight:8}}>
     <TopNavigationAction style={{marginRight:16}} onPress={()=>navigation.navigate('AddNotes')} icon={EditIcon}/>
-    <TopNavigationAction onPress={()=>setVisible(true)} icon={FolderIcon}/>
+    <TopNavigationAction  onPress={()=>setVisible(true)} icon={FolderIcon}/>
     </View>
   )
 

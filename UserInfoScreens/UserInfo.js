@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, Text, Button, Icon, Layout, useTheme } from '@ui-kitten/components';
 import { ScrollView } from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
+import IOSShadowView from '../UtilComponents/IOSShadowView'
 
 
 
@@ -32,7 +33,7 @@ function UserInfo(){
 
 
     const ListComponent = (props)=>(
-      <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12}}>
+      <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12, elevation:1}}>
       <View style={{flexDirection:'row', alignItems:'center'}}>
       <Icon {...iconStyle} fill={props.iconColor} name={props.iconName}/>
       <Text style={{marginLeft:16, color:props.iconColor}} category='s1'>{props.title}</Text>
@@ -48,24 +49,24 @@ function UserInfo(){
     <ScrollView showsVerticalScrollIndicator={false}>
     <SafeAreaView style={{flex: 1}}>
     <Layout level='2' style={{ flex:1, padding:16, paddingTop:20 }}>
-    
+    <IOSShadowView>
 
     {/* timesStudiedStat -- FOR THE ABOVE CARD (FORMATMINTUES) <ListComponent path={'ThemeSettings'} iconName={'droplet-outline'} title={'Theme Settings'}/> */}
-    <ListComponent path={'LifetimeStats'} iconColor={theme['color-primary-600']} iconName={'person-outline'} title={'Lifetime Stats'}/>
-    <ListComponent path={'TimerSettings'} iconColor={theme['color-basic-800']} iconName={'bell-outline'} title={'Session Timer Settings'}/>
+    <ListComponent path={'LifetimeStats'} iconColor={theme['color-basic-800']} iconName={'person-outline'} title={'Your Stats'}/>
+    <ListComponent path={'TimerSettings'} iconColor={theme['color-basic-800']} iconName={'bell-outline'} title={'Session Time'}/>
     <ListComponent path={'TermsOfService'} iconColor={theme['color-basic-800']} iconName={'file-text-outline'} title={'Terms And Conditions'}/>
     <ListComponent path={'PrivacyPolicy'} iconColor={theme['color-basic-800']} iconName={'lock-outline'} title={'Privacy Policy'}/>
     <ListComponent path={'OpenSource'} iconColor={theme['color-basic-800']} iconName={'book-open-outline'} title={'Open Source Libraries'}/>
 
 
-    <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12}}>
+    <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12, elevation:1}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
     <Icon fill={theme['color-danger-600']} width={18} height={18} name='log-out-outline'/>
     <Text style={{marginLeft:16, color:theme['color-danger-600']}} category='s1'>Sign Out</Text>
     </View>
     </Card>
 
-    
+    </IOSShadowView>
     </Layout>
     </SafeAreaView>
     </ScrollView>

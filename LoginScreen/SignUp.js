@@ -8,6 +8,7 @@ import { Button, Text ,Icon , Input} from '@ui-kitten/components';
 import * as Yup from 'yup';
 import SignInComponent from '../UtilComponents/SignInComponent'
 import { AuthContext } from '../AuthContext'
+import GlobalStyle from '../constants'
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email()
@@ -132,7 +133,7 @@ function SignUp(){
     status={formikProps.touched.password && formikProps.errors.password != null ? 'danger':'basic'}
     />
 
-    <Button style={{marginVertical:16, borderRadius:30, marginBottom:28}} size='large' onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
+    <Button style={{marginVertical:16, borderRadius:30, marginBottom:28, ...GlobalStyle.ButtonShadow}} size='large' onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
     <Text category='s1' style={{alignSelf:'center', marginBottom:24}}> 
     OR
     </Text>

@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
-import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/firestore';
 import { Formik } from 'formik';
 import { Button, Text ,Icon, Input, Layout } from '@ui-kitten/components';
 import * as Yup from 'yup';
-
+import GlobalStyle from '../constants'
 
 import SignInComponent from '../UtilComponents/SignInComponent'
 
@@ -120,7 +119,7 @@ function Login(){
     onChangeText={formikProps.handleChange('password')}
     />
 
-    <Button size='large' style={{marginTop:16, borderRadius:30}} onPress={()=>formikProps.handleSubmit()}>
+    <Button size='large' style={{marginTop:16, borderRadius:30, ...GlobalStyle.ButtonShadow}} onPress={()=>formikProps.handleSubmit()}>
     Login
     </Button>
     <Button appearance='ghost' status='basic' onPress={()=>{navigation.navigate('ForgotPassword')}}>Forgot your password?</Button>

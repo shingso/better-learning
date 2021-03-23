@@ -19,25 +19,31 @@ function Discouraged(){
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Learning new concepts is tough'}
-    bodyText={'Everyone struggles when it comes to learning. It takes a concentrated effort along with time.'}
+    bodyText={'Learning new things is tough, yet rewarding.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Just start'}
-    bodyText={'Try to study once everyday and aim to do what you can. Some days you might study a lot and some less. Any progress is good progress. Focus on the process.'}
+    bodyText={"If you haven't put a lot of time into studying, starting will be one of the hardest parts. Do your best to jump into studying. You'll often find "}
     />
 
     <GuideComponent 
     picture={require('../assets/images/puttingintime.png')} 
     headerText={'Do what you can'}
-    bodyText={'Judge a session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
+    bodyText={'Some days you will be more motivated to study, and some days less. Do what you can, as any progress is good.'}
     />
     
     <GuideComponent 
-    picture={require('../assets/images/puttingintime.png')} 
+    picture={require('../assets/images/spreadout-01.png')} 
     headerText={'Focus on the process'}
-    bodyText={'Judge a session based on whether or not you solved a problem or understood a concept. Whether or not you solved the problem or fully understood the concept is unimportant'}
+    bodyText={'Learning takes time. Our minds will process information.'}
+    />
+
+    <GuideComponent 
+    picture={require('../assets/images/growingidea.png')} 
+    headerText={'You can understand complex concepts.'}
+    bodyText={'With enough time and effort, you can build an understanding of difficult subjects.'}
     />
 
    

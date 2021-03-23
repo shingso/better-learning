@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View , StyleSheet, SafeAreaView,ImageBackground, TouchableOpacity } from 'react-native';
 import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
-
+import GlobalStyle from '../constants'
 
 
 
@@ -35,7 +35,7 @@ function Welcome(){
     <View style={{flex: 1, justifyContent:'center', marginBottom:36, padding:16}}>
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     </Text>
-    <Button style={{borderRadius:30}} size='large' onPress={() => navigation.navigate('SignUp')}>
+    <Button style={{borderRadius:30, ...GlobalStyle.ButtonShadow}} size='large' onPress={() => navigation.navigate('SignUp')}>
     Sign Up
     </Button>
     

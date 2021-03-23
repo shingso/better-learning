@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet } from 'react-native'
-import { Card, List, Text, useTheme } from '@ui-kitten/components';
-
+import { Text, useTheme } from '@ui-kitten/components';
+import GlobalStyle from '../constants'
 
 
 function SwiperButtons(){
@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
         padding:14, 
         borderRadius:24, 
         overflow:'hidden',
-        paddingHorizontal:26
+        paddingHorizontal:26,
+        ...GlobalStyle.ButtonShadow
         
       },
 

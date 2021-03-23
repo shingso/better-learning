@@ -15,6 +15,7 @@ const SearchIcon = (props) => (
   <Icon {...props} width={16} height={16} name='search-outline' />
 );
 
+
 const SearchIconLarge = (props) => (
   <Icon {...props} width={22} height={22} name='search-outline' />
 );
@@ -184,8 +185,16 @@ function NotesFocused({ route, navigation }){
         source={require('../assets/images/notesempty.png')}
       
       />
-      <Text style={{textAlign:'center', marginTop:32,  fontSize:20, fontFamily:'OpenSans-Bold',letterSpacing:0.1}}>You dont have any notes yet</Text>
-      <Text style={{textAlign:'center', marginTop:32, fontFamily:'OpenSans-SemiBold'}}>Notes for <Text style={{fontWeight:'bold'}}>{title}</Text> will be stored here</Text>
+      <Text category='h6' style={{textAlign:'center', marginTop:32}}>Nothing here yet</Text>
+      <Text style={{textAlign:'center', marginTop:32, lineHeight: 28, marginHorizontal:12, fontSize:15,
+      letterSpacing:0.1}}>Select the  
+      <View style={{alignItems:'flex-end', flexDirection:'row'}}>
+      <View style={{flex:1}}>
+      <Text style={{fontWeight:'bold', flexShrink:1,fontSize:18, color:theme['color-primary-700']}}>{title}</Text>  
+      </View>
+      <Icon fill={theme['color-primary-700']} width={25} height={25} name='folder' /> 
+      </View>
+      when writing a note and the note will be placed here.</Text>
       </View>
       </View>
       <Modal

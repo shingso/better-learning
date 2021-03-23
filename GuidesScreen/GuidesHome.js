@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {  View, SafeAreaView, StyleSheet, TouchableOpacity, Image, ImageBackground, Dimensions }  from 'react-native'
-
-import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, useTheme } from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, useTheme, Layout } from '@ui-kitten/components';
+import IOSShadowView from '../UtilComponents/IOSShadowView'
 
 
 
@@ -16,16 +15,16 @@ function GuidesHome(){
 
   
 
-    const topics = [{title:'How should I be learning?', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
-     {title:'What Is Learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
+    const topics = [{title:'Learn better', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
+     {title:'How should I be learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendarmark.png')},
-     {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouragedbackground.png')},
      {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning better outside of studying', imagePath:require('../assets/images/makingprogressbackground.png')},
-     {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/inspirationgroup.png')}
+     {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouragedbackground.png')},
+    /*  {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/inspirationgroup.png')} */
     ]
 
     const renderItem = (info) => (
-    
+      <IOSShadowView>
       <Card style={styles.item} onPress={()=>navigation.navigate(info.item.path)}>
 
       <Image
@@ -44,7 +43,7 @@ function GuidesHome(){
       <Text category='p1' style={{marginBottom:20, textAlign:'center', letterSpacing:0.2, color:theme['color-basic-700']}}>{info.item.bodyText}</Text>
     
       </Card>
-
+        </IOSShadowView>
     );
 
 
@@ -54,15 +53,15 @@ function GuidesHome(){
     return (
        
 
-        <SafeAreaView style={{flex: 1}}>
-     
-        <List
+      <SafeAreaView style={{flex: 1}}>
+
+      <List
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.contentContainer}
         data={topics}
         renderItem={renderItem}
 
-        />
+      />
 
       </SafeAreaView>
       
@@ -99,7 +98,8 @@ const styles = StyleSheet.create({
       marginVertical:6,
       alignItems:'center',
       borderWidth:0,
-      borderRadius:10
+      borderRadius:10,
+      elevation:1
 
       
     
