@@ -19,37 +19,35 @@ function WhatIsLearning(){
     <GuideComponent 
     picture={require('../assets/images/buildingidea-01.png')} 
     headerText={'Look to build an understanding'}
-    bodyText={'Start by figuring out the basics. Slowly build on the basics'}
+    bodyText={'Learning is a process. An ever lasting journey of building on knowledge.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/buildingpuzzle.png')} 
     headerText={'How each piece fits'}
-    bodyText={"Think about how individual concepts are related and connected to each other. Figuring out how concepts work together greatly internalizes the concept."}
+    bodyText={"Figure out how each piece of new information fits in with what you already know. Think about how individual concepts are connected."}
     />
+
+  
     
     <GuideComponent 
     picture={require('../assets/images/puttingtimev2-01.png')} 
     headerText={'Learning is a constant process'}
-    bodyText={"As you put time into learning, you'll clear up misconceptions and make connections."}
+    bodyText={"As you put time into learning, you'll clear up misconceptions and make connections. The more time you put into learning the better your understanding will be."}
     />
 
     <GuideComponent 
     picture={require('../assets/images/buildingpuzzle.png')} 
     headerText={'Learning is more than memorization'}
-    bodyText={"Don't spend a lot of time memorizing. You can retain information better by putting time into understanding."}
+    bodyText={"Don't spend a lot of time memorizing. You can retain information better by putting time into building an understanding."}
     />
 
-    {/* <GuideComponent 
-    picture={require('../assets/images/growingidea.png')} 
-    headerText={'You can get better at learning'}
-    bodyText={'Learning requires constant and engaged thinking with the topic at hand. Be focused and constantly in thought while you are learning. Constantly think about how concepts work and relate to each other'}
-    /> */}
+    {/*Figuring out the context of a piece of information, greatly helps the retention  */}
 
 
     {/* <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'You can get better at learning'}
+    headerText={'You can get better at learning' Figuring out how concepts work together greatly internalizes the concept}
     bodyText={"Learning is a skill that can be developed. The more time you put into learning, the faster you'll get at putting concepts together."}
     /> */}
    

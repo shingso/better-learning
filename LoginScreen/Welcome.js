@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View , StyleSheet, SafeAreaView,ImageBackground, TouchableOpacity } from 'react-native';
-import { Button, Text ,Icon , Input, Modal, Card } from '@ui-kitten/components';
+import { Button, Text ,Icon , Input, Modal, Card, useTheme } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import GlobalStyle from '../constants'
 
@@ -11,25 +11,15 @@ import GlobalStyle from '../constants'
 function Welcome(){
 
   const navigation = useNavigation();
-
+  const theme = useTheme()
   return(
 
     <SafeAreaView style={{flex:1}}>
     <View style={{ flex: 1, padding:20 }}>
-    <TouchableOpacity  onPress={()=>navigation.navigate('Login')}>
-    <View style={{flexDirection:'row', alignItems:'center', alignSelf:'flex-end'}}>
-    <View style={{marginRight:4, alignItems:'flex-end'}}>
-    <Text category='label' style={{}}>Been here before?</Text>
-    <Text status='info' category='s2'>Go to Login</Text>
-    </View>
-    <Icon height={30} width={30} name='arrow-ios-forward-outline' fill={'black'}/>
-    </View>
-    </TouchableOpacity>
     
-  
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-    <Text style={{marginTop:20, marginLeft:8}} category='h1'>Learn</Text>
-    <Text style={{marginTop:8, marginLeft:8, fontSize:46}} category='h1'>Smarter</Text>
+    <Text style={{marginTop:20, marginLeft:8,  fontFamily:'Poppins-Bold', fontSize:46}}>Learn</Text>
+    <Text style={{marginTop:8, marginLeft:8, fontSize:46, fontFamily:'Poppins-Bold'}} >Better</Text>
     </View>
 
     <View style={{flex: 1, justifyContent:'center', marginBottom:36, padding:16}}>
@@ -38,6 +28,11 @@ function Welcome(){
     <Button style={{borderRadius:30, ...GlobalStyle.ButtonShadow}} size='large' onPress={() => navigation.navigate('SignUp')}>
     Sign Up
     </Button>
+
+    <Button style={{borderRadius:30, ...GlobalStyle.ButtonShadow, marginTop:32}} status='info' size='large' onPress={() => navigation.navigate('Login')}>
+    Go To Login
+    </Button>
+    
     
     </View>
     </View>

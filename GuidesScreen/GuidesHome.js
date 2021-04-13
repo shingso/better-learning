@@ -15,11 +15,11 @@ function GuidesHome(){
 
   
 
-    const topics = [{title:'Learn better', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/howdoilearnbackground.png')},
+    const topics = [{title:'Learn better', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/betterlearningv1-01.png')},
      {title:'How should I be learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
-     {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/calendarmark.png')},
-     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning better outside of studying', imagePath:require('../assets/images/makingprogressbackground.png')},
-     {title:'Im just not getting it...', path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouragedbackground.png')},
+     {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/howoftenv1-01.png')},
+     {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning better outside of studying', imagePath:require('../assets/images/learnquickerv3-01.png')},
+     {title: "Can't get into studying?", path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged-01.png')},
     /*  {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/inspirationgroup.png')} */
     ]
 
@@ -29,11 +29,12 @@ function GuidesHome(){
 
       <Image
           style={{
-            height:100,
+            height:120,
             width:screenWidth,
             marginBottom:28,
             marginTop:-16,
-           
+            resizeMode:'cover',
+            
           }}
   
           source={info.item.imagePath}

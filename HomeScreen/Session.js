@@ -8,9 +8,8 @@ import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
 import NotifService from '../UtilComponents/NotifService';
 import { AuthContext } from '../AuthContext'
 import { Formik } from 'formik';
-import { UserDataContext } from '../UserDataContext'
-import { differenceInDays} from 'date-fns'
-import { decrementActiveUsers, updateUserLastStudied, addNote, msToTime } from '../helperFunctions';
+import { differenceInMilliseconds, addMilliseconds } from 'date-fns'
+import { decrementActiveUsers, addCompletedSession, addNote, msToTime } from '../helperFunctions';
 import BackgroundTimer from 'react-native-background-timer';
 import * as Yup from 'yup';
 import FolderSelectionComponent from '../UtilComponents/FolderSelectionComponent'
@@ -39,14 +38,14 @@ const BodyComponent = (props) => (
           height:180,
           alignSelf:'center',
           resizeMode:'contain',
-          marginBottom:48
+          marginBottom:60
         }}
         source={props.pictureFile}
       />
   
   <View>
   <Text style={{textAlign:'center'}}><Text category='h6'>{props.title}</Text></Text>
-  <Text style={{marginTop:20,letterSpacing:0.2, lineHeight:30, fontSize:14,color:props.bodyTextColor, textAlign:'center', marginHorizontal:12}}>{props.bodyText}</Text>
+  <Text style={{marginTop:20,letterSpacing:0.1, lineHeight:30, fontSize:14,color:props.bodyTextColor, textAlign:'center', marginHorizontal:12, fontFamily:'Poppins-Regular'}}>{props.bodyText}</Text>
   </View>
   </View>
 )
@@ -55,14 +54,11 @@ function Session(){
     
     const [ activeUsers, setActiveUsers] = useState(0)
     const theme = useTheme()
-    const userData = useContext(UserDataContext)
-    const lastStudied = userData.lastStudied
-    const startedStudying = userData.startedStudying
     const [visible, setVisible] = useState(false)
     const [confirmBackVisible, setConfirmBackVisible] = useState(false)
-    const [isPlaying, setIsPlaying] = useState(null)
-    const [initialTimeSet, setInitialTimeSet] = useState(null)
-    const [timeElaspased, setTimeElaspased] = useState(0)
+    const [initialTimeDateSet, setInitialTimeDateSet] = useState(null)
+    const [timeDifference, setTimeDifference] = useState(1)
+    const [isPlaying, setIsPlaying] = useState(false)
     const [studySessionPosition, setStudySessionPosition] = useState(0)
     const [hasEnded, setHasEnded] = useState(false)
     const subjectsContext = useContext(SubjectsContext)
@@ -99,9 +95,9 @@ function Session(){
 
     const closeBackModal = () => {
       if(studySessionPosition == 1){
+        setInitialTimeDateSet(addMilliseconds(new Date(), timeDifference))
+        notif.scheduleNotif(timeDifference)
         setIsPlaying(true)
-        notif.scheduleNotif(initialTimeSet-timeElaspased)
-        
       }
       setConfirmBackVisible(false)
 
@@ -121,17 +117,17 @@ function Session(){
         if (isPlaying) {
       
           BackgroundTimer.runBackgroundTimer(() => { 
-            setTimeElaspased(timeElaspased => timeElaspased + 1000)
-       
+          
+            setTimeDifference(differenceInMilliseconds(initialTimeDateSet, new Date()))
             }, 
-            1000);
+            100);
       
         } else {
           BackgroundTimer.stopBackgroundTimer()
         }
       
         return function cleanup(){
-          // notif.cancelAll()
+          notif.cancelAll()
           BackgroundTimer.stopBackgroundTimer()
         }
       
@@ -139,11 +135,13 @@ function Session(){
 
     useEffect(() => {
 
-        if(timeElaspased == initialTimeSet){
+      //if we are in the future than end
+
+        if(timeDifference <= 0){
           backgroundTimerEnded()
         }
-      
-    }, [timeElaspased]);
+       
+    }, [timeDifference]);
       
       
 
@@ -156,20 +154,15 @@ function Session(){
       }
 
       fetchData()
-      //timerSettings.timeSettings * 60 * 1000
-      setInitialTimeSet(4000)
-      
+
     }, []);
 
     const backgroundTimerEnded = () => {
-        //check this
-        let userLastStudied = new Date(lastStudied.toDate())
-        let currentDate = new Date()
-        let differenceInLastStudied = differenceInDays(currentDate, userLastStudied)
+
         setIsPlaying(false)
         setHasEnded(true)
         //Vibration.vibrate()
-        updateUserLastStudied(authContext.user.uid, differenceInLastStudied, startedStudying, timerSettings.timeSettings)
+        addCompletedSession(authContext.user.uid, timerSettings.timeSettings)
         BackgroundTimer.stopBackgroundTimer()
         setTimeout(() => {
           setVisible(true)
@@ -179,10 +172,11 @@ function Session(){
 
 
     const startStudySession = () =>{
-        notif.scheduleNotif(initialTimeSet)
         incrementActiveUsers()
+        notif.scheduleNotif(timerSettings.timeSettings * 60 * 1000 + 1000)
+        setInitialTimeDateSet(addMilliseconds(new Date(), timerSettings.timeSettings * 60 * 1000 + 1000))
         setStudySessionPosition(studySessionPosition + 1)
-        //setIsPlaying(true)
+        setIsPlaying(true)
     }
 
     const toRecall = () =>{ 
@@ -200,25 +194,24 @@ function Session(){
     <View style={{flex:1, padding:16}}>
     {studySessionPosition == 0 &&
     <View style={{flex:1}}>
-
-  
     <BodyComponent
-    pictureFile={require('../assets/images/timev2-01.png')}
+    pictureFile={require('../assets/images/startstudyv1-01.png')}
     title={'A period of focused study'}
-    bodyText={<Text>Press start and a <Text style={{fontFamily:"Poppins-SemiBold"}}>{timerSettings.timeSettings} minute timer</Text> will begin. During this time stay focused on studying.</Text>}
+    bodyText={<Text style={{fontFamily:'Poppins-Regular'}}>Press start and a <Text style={{fontFamily:"Poppins-Bold", fontSize:16}}>
+    {timerSettings.timeSettings} minute timer</Text> will begin. While the timer is running, stay focused on studying.</Text>}
     bodyTextColor={theme['color-basic-700']}
-   />
+    />
 
 
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
     <View style={{flexDirection:'row',  marginBottom:16, alignItems:'flex-end'}}>
-    <Text category='c2' style={{color:theme['text-hint-color']}}>People currently studying: </Text>
-    <Text category='c2' style={{ fontWeight:'bold' }}>{activeUsers}</Text>
+    <Text style={{color:theme['text-hint-color'], fontSize:13}}>People currently studying: </Text>
+    <Text style={{ fontFamily:'Poppins-SemiBold', marginBottom:-5, fontSize:13}}> {activeUsers}</Text>
     </View>
+
     <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
-    
     <Button style={styles.button} size={'large'} onPress={startStudySession}>
-      Start
+     Start
     </Button>
     </View>
     </View>
@@ -231,10 +224,10 @@ function Session(){
 
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
     
-   {/*  <Text category='h6'>Time left</Text> */}
-   <View style={{flex:1, justifyContent:'center'}}>
+    {/*  <Text category='h6'>Time left</Text> */}
+    <View style={{flex:1, justifyContent:'center'}}>
     <Animated.Text style={{fontSize:70, color:theme['text-basic-color'], fontFamily:'Poppins-SemiBold', }}>
-    { initialTimeSet-timeElaspased > 0 ? msToTime(initialTimeSet-timeElaspased) : ''}
+    {timeDifference > 1 ? msToTime(timeDifference) : ''}
     </Animated.Text>
     </View>
     <Text style={{lineHeight:28, marginBottom:60,textAlign:'center',marginHorizontal:20,letterSpacing:0.2, color:theme['color-basic-700'], fontFamily:'Poppins-Regular'}}>Stay focused on studying. Be mindful of when your attention wanders.</Text>
@@ -246,9 +239,9 @@ function Session(){
     
     <View style={{flex:1}}>
     <BodyComponent
-    pictureFile={require('../assets/images/studyperiodover.png')}
-    title={'The study period is over!'}
-    bodyText={'The study time is over. Now we need to recall in order to solidify what we have learned.'}
+    pictureFile={require('../assets/images/studyoverv2-01.png')}
+    title={'The study period is over'}
+    bodyText={"To wrap up, lets think about what we've just learned."}
     bodyTextColor={theme['color-basic-700']}
     />
     <View style={styles.buttonContainer}>
@@ -263,9 +256,9 @@ function Session(){
     {studySessionPosition == 2 &&
     <View style={{flex:1, justifyContent:'center'}}>
 
-    <BodyComponent pictureFile={require('../assets/images/recallexplain.png')} 
+    <BodyComponent pictureFile={require('../assets/images/recallexplainv2-01.png')} 
     title={"Lets think about what we've learned"}
-    bodyText={"Take a minute and think about what you've just learned. In the next screen, type out what you ."}
+    bodyText={"Take a minute and think about what you've just learned. In the next screen, type it out."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -282,7 +275,6 @@ function Session(){
     initialValues={{ text:'', textTheme:'', subject:''}}
     validationSchema={TextSchema}
     onSubmit={(values, actions) => {
-        
         if(subjectsContext.lastUsedSubject != null){
         addNote( authContext.user.uid, subjectsContext.lastUsedSubject.id , values.text, values.textTheme)
         } else {
@@ -308,10 +300,9 @@ function Session(){
     />
           
     <Input
-    placeholder={'Think about what you just learned and type it out. Everything you type out should be from memory. Do not refer to any study materials.'}
+    placeholder={'Think about what you just learned and type it out. Everything should be from memory. Do not refer to any materials.'}
     style={{backgroundColor:theme['background-basic-color-2'], borderColor:theme['background-basic-color-2'], marginTop:12}}
     textAlignVertical={'top'}
-
     textStyle={{fontSize:15, height:120, lineHeight:20}}
     multiline={true}
     autoFocus={true}
@@ -337,7 +328,7 @@ function Session(){
     <View style={{flex:1, justifyContent:'center'}}>
 
     <BodyComponent
-    pictureFile={require('../assets/images/studyfinishedv1.png')}
+    pictureFile={require('../assets/images/sessionover.png')}
     title={'Thats it!'}
     bodyText={"You've just finished a study session."}
     bodyTextColor={theme['color-basic-700']}

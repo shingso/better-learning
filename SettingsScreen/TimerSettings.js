@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, Image } from 'react-native';
-import { Card, List, Text, Button, Layout, Select , IndexPath, SelectItem, Icon} from '@ui-kitten/components';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, Image, Platform } from 'react-native';
+import { Card, List, Text, Button, Layout, Select , IndexPath, SelectItem, Icon, useTheme} from '@ui-kitten/components';
 import { TimerSettingsContext } from '../TimerSettingsContext';
 import TopHeader from '../UtilComponents/TopHeader'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GlobalStyle from '../constants'
-import { G } from 'react-native-svg';
+import IOSShadowView from '../UtilComponents/IOSShadowView'
 
 const ClockIcon = (props) => (
   <Icon {...props} width={14} height={14} name='clock'/>
@@ -13,19 +13,9 @@ const ClockIcon = (props) => (
 
 function TimerSettings(){
 
-  const data = [
-    {title: '25 minutes',time:'25'}, {title:'30 minutes',time:'30'}, {title:'35 minutes',time:'35'}, {title:'40 minutes',time:'40'}, 
-    {title:'45 minutes',time:'45'}, {title:'50 minutes',time:'50'}, {title:'55 minutes',time:'55'}, {title:'60 minutes',time:'60'}
-  ];
-  
   const timerSettings = useContext(TimerSettingsContext);
-  
-  const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
-  
-  const renderOption = (data) => (
-    <SelectItem accessoryLeft={ClockIcon} key={data.title} title={data.title}/>
-  );
-  const displayValue = data[selectedIndex.row].title;
+  const theme = useTheme()
+
   
   const storeData = (value) => {
     try {
@@ -37,41 +27,60 @@ function TimerSettings(){
         }
     };
 
+  
+  const TimeSettingsComponent = (props) => {
+    return(
+    <Card style={{marginTop:8, borderWidth:0, borderRadius:12, elevation:1}} onPress={()=>storeData(props.value)}>
+  
+    <View style={{flexDirection:'row', alignItems:'center'}}>
+    <Icon width={18} height={18} fill={timerSettings.timeSettings == props.value ? theme['color-primary-700']: theme['color-basic-500']} name='clock'/>
+    <Text style={{
+      marginLeft:12,
+      marginTop: Platform.OS == 'ios' ? 2 : 4,
+      fontFamily:timerSettings.timeSettings == props.value ? 'Poppins-Bold': 'Poppins-SemiBold',
+      fontSize: timerSettings.timeSettings == props.value ? 18: 14,
+      color:timerSettings.timeSettings == props.value ? theme['color-primary-700']: theme['color-basic-500']}}
+
+    >
+    {props.value} minutes</Text>
+ 
+    </View>
+
+    </Card>
+    )
+  }
+
 
 
   return (
    
-    <Layout style={{ flex: 1 }}>
+    <Layout level='2' style={{ flex: 1 }}>
     <SafeAreaView style={{ flex: 1 }}>
-    <TopHeader title={'Session Timer Settings'}/>
-    <View style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:20, paddingTop:40 }}>
+    <TopHeader title={'Session Time'}/>
+    <View style={{flex:1, paddingHorizontal:20, }}>
+    <Text style={{marginBottom:4}} category='h6'>Select a time:</Text>
+   {/*  <View style={{alignItems:'center', flex:1, justifyContent:'flex-end'}}>
+    <Text style={{marginBottom:70}} category='h6'>Current session time</Text>
+    <Text style={{fontSize:100, fontFamily:'Poppins-SemiBold',}}>{timerSettings.timeSettings}</Text> 
+    <Text category='h6' style={{marginTop:-40}}>{'minutes'}</Text> 
+    </View> */}
+        <TimeSettingsComponent value={'0.1'}/>
+    <TimeSettingsComponent value={'25'}/>
+    <TimeSettingsComponent value={'30'}/>
+    <TimeSettingsComponent value={'35'}/>
+    <TimeSettingsComponent value={'40'}/>
+    <TimeSettingsComponent value={'45'}/>
+    <TimeSettingsComponent value={'50'}/>
+    <TimeSettingsComponent value={'55'}/>
+    <TimeSettingsComponent value={'60'}/>
 
-    <View style={{alignItems:'center'}}>
-    <Text style={{marginBottom:20}}>Current session timer is set for <Text style={{fontWeight:'bold'}}>{timerSettings.timeSettings} minutes</Text></Text>
-    <Text style={{fontSize:70, fontFamily:'OpenSans-SemiBold'}}>{timerSettings.timeSettings}</Text> 
-    <Text style={{marginBottom:40}} category='s1'>{'minutes'}</Text> 
-    </View>
-    
-    
-    <View style={{marginTop:40}}>
-    <Text>Select a new session time</Text>
-    <Select
-        size={'large'}
-        style={{width:300}}
-        placeholder={timerSettings.timeSettings}
-        value={displayValue}
-        selectedIndex={selectedIndex}
-        onSelect={index => setSelectedIndex(index)}>
-        {data.map(renderOption)}
-    </Select>
-    
-    </View>
+
+ 
+
 
 
     <View style={{flex:1, marginBottom:64, flexDirection:'row', alignItems:'flex-end'}}>
-
-    <Button size='large' style={{marginTop:20, marginHorizontal:20,borderRadius:30, flex:1, ...GlobalStyle.ButtonShadow}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button>
-
+   {/*  <Button size='large' style={{marginTop:20, marginHorizontal:20,borderRadius:30, flex:1, ...GlobalStyle.ButtonShadow}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button> */}
     </View>
 
     </View>

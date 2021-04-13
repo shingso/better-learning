@@ -23,12 +23,13 @@ return (
 
 {`\t  Study Sesh is a free application which is provided by at no cost and is intended for use as is. This privacy policy is to inform you regarding the collection, use, and disclosure of Personal Information.
     
-   By using this app, you hereby agree to the collection and use of information in relation to this policy. The Personal Information that is collected is used for the functionality and improvement of this app. Your information will not be shared with any being except as described in this Privacy Policy.`}
+    By using this app, you hereby agree to the collection and use of information in relation to this policy. The Personal Information that is collected is used for the functionality and improvement of this app. Your information will not be shared with any being except as described in this Privacy Policy.`}
 </Text>
 
 
 <Text style={styles.bodyText}>
-{`\t  For a better experience while using this application, you may be required to provide us with personally identifiable information. This app does use third party services that may collect information used to identify you.
+{`\t 
+   For a better experience while using this application, you may be required to provide us with personally identifiable information. This app does use third party services that may collect information used to identify you.
 
 The third party service providers used by the app include:
 
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   bodyText: {
     marginBottom:16,
     marginHorizontal:4,
-    lineHeight:24
+
   },
 
 });

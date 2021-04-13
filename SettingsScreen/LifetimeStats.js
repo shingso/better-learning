@@ -71,9 +71,7 @@ const returnPercentageStudied = ()=>{
         
       )
 
-      console.log(result)
-
-  return <Text style={{marginTop:8, fontSize:12, color:theme['color-basic-600']}}>{"You've studied " + Math.trunc(studyStatsData.uniqueDates.size/result * 100) + '%' + ' of days since you started.'}</Text>
+  return <Text style={{marginTop:8, fontSize:12, color:theme['color-basic-600']}}>{"You've studied " + Math.trunc(studyStatsData.uniqueDates.size/(result+1) * 100) + '%' + ' of days since you started.'}</Text>
 
  }
 
@@ -88,34 +86,11 @@ const returnPercentageStudied = ()=>{
     <Layout level='2' style={{flex: 1, paddingTop:12, paddingHorizontal:20, paddingBottom:60 }}>
     
 
-{/* 
-    <Card style={{marginBottom:8,borderWidth:0, borderRadius:12, flex:1, paddingTop:8 }}>
-    
-    <View style={{}}>
-    <View style={{ flexDirection:'row', marginBottom:4, alignItems:'center'}}>
-    <Icon   fill={theme['color-basic-700']}
-    width={18}
-    height={18}
-    marginTop={-4}
-    marginRight={8} name={'clock-outline'}/>
-    <Text style={{ 
-    color:theme['color-basic-700'],
-    fontSize:16,
-    fontFamily:'Poppins-SemiBold',
-    fontWeight:'800',
-    }}>{'Total Time Studied'}</Text>
-    </View>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Text style={{...bodyStatsStyle}}>{formatMinutes2(400, theme['color-basic-800'], theme['color-basic-600'], 12, 26)}</Text>
-    </View>
-  
-    </View>
-    </Card>  */}
 
 
     <StatsComponent 
     iconName={'clock-outline'} 
-    bodyText={formatMinutes2(400, theme['color-basic-800'], theme['color-basic-600'], 12, 26)} 
+    bodyText={formatMinutes2(timesStudiedStat, theme['color-basic-800'], theme['color-basic-600'], 12, 26)} 
     headerText={'Total Time Studied'} 
     />
 

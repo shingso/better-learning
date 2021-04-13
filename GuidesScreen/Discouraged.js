@@ -16,28 +16,28 @@ function Discouraged(){
     
     <GlobalSwiper>
     
-    <GuideComponent 
+    {/* <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Learning new concepts is tough'}
     bodyText={'Learning new things is tough, yet rewarding.'}
-    />
+    /> */}
 
     <GuideComponent 
-    picture={require('../assets/images/growingidea.png')} 
-    headerText={'Just start'}
-    bodyText={"If you haven't put a lot of time into studying, starting will be one of the hardest parts. Do your best to jump into studying. You'll often find "}
+    picture={require('../assets/images/juststart-01.png')} 
+    headerText={'Jump into studying'}
+    bodyText={"Getting started is often harder than actually studying. "}
     />
 
     <GuideComponent 
     picture={require('../assets/images/puttingintime.png')} 
     headerText={'Do what you can'}
-    bodyText={'Some days you will be more motivated to study, and some days less. Do what you can, as any progress is good.'}
+    bodyText={'Some days you will be more motivated to study, and some days less. Any amount of progress is good.'}
     />
     
     <GuideComponent 
-    picture={require('../assets/images/spreadout-01.png')} 
+    picture={require('../assets/images/focusprocess-01.png')} 
     headerText={'Focus on the process'}
-    bodyText={'Learning takes time. Our minds will process information.'}
+    bodyText={'Learning is a long term process and takes time. Focus on the progress that you have made.'}
     />
 
     <GuideComponent 

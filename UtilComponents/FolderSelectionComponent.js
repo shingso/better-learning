@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, TouchableOpacity, Keyboard, Dimensions } from 'react-native'
-import { Card, List, Text, Button, Icon, Modal, useTheme, Layout, Input } from '@ui-kitten/components';
+import { View, StyleSheet, TouchableOpacity, Keyboard, Dimensions, Modal } from 'react-native'
+import { Card, List, Text, Button, Icon, useTheme, Layout, Input } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import { SubjectsContext } from '../SubjectsContext';
 import * as Yup from 'yup';
@@ -41,7 +41,7 @@ function FolderSelectionComponent(){
      
     
       return (
-        <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginBottom:300}}>
+        <Layout style={{ paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
            <Formik
             initialValues={{ folderTitle:''}}
             validationSchema={FolderTitleSchema}
@@ -93,7 +93,7 @@ function FolderSelectionComponent(){
         <View>
         {subjectsContext.lastUsedSubject &&
         <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject({id:'', title:'All Notes'})}>
-        <View style={{flexDirection:'row', alignItems:'center', marginVertical:16}}>
+        <View style={{flexDirection:'row', alignItems:'center', marginVertical:16, paddingHorizontal:20}}>
         
         <Icon style={{width:20, height:20, marginRight:12}} 
         name={subjectsContext.lastUsedSubject.id == '' ? 'folder': 'folder'}
@@ -119,7 +119,7 @@ function FolderSelectionComponent(){
     const renderItem = (info) => (
         
     <TouchableOpacity onPress={()=>subjectsContext.setLastUsedSubject(info.item)}>
-    <View style={{flexDirection:'row', alignItems:'center', marginVertical:20}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginVertical:16, paddingHorizontal:20}}>
 
     <Icon style={{width:20, height:20, marginRight:12}} 
     name={subjectsContext.lastUsedSubject.id == info.item.id ? 'folder': 'folder'}
@@ -161,15 +161,15 @@ function FolderSelectionComponent(){
     
    {subjectsContext.lastUsedSubject != null &&
    <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
-   <Icon style={{marginRight:12}} fill={theme["color-primary-500"]} width='20' height='20' name={'folder'} />
-   <Text style={{fontSize:16,color:theme["color-primary-600"], fontWeight:'bold'}}>{subjectsContext.lastUsedSubject.title}</Text>
+   <Icon style={{marginRight:8}} fill={theme["color-primary-500"]} width='22' height='22' name={'folder'} />
+   <Text style={{fontSize:16,color:theme["color-primary-600"], fontFamily:'Poppins-Bold', marginTop:4}}>{subjectsContext.lastUsedSubject.title}</Text>
    </View>
    }
 
    {subjectsContext.lastUsedSubject == null &&
    <View style={{ marginTop:20, flexDirection:'row', alignItems:'center'}}>
-   <Icon style={{marginRight:8}} fill={theme["color-info-500"]} width='20' height='20' name={'folder-add-outline'} />
-   <Text style={{fontSize:13,color:theme["color-info-500"], fontWeight:'bold'}}>{'Create a folder'}</Text>
+   <Icon style={{marginRight:8}} fill={theme["color-info-400"]} width='20' height='20' name={'folder-add'} />
+   <Text style={{fontSize:14,color:theme["color-info-400"], fontFamily:'Poppins-Bold', marginTop:4}}>{'Create a folder'}</Text>
    </View>
    }
 
@@ -180,8 +180,10 @@ function FolderSelectionComponent(){
    </View>
     <Modal
     visible={selectVisible}
-    backdropStyle={styles.backdrop}>
-    <Layout style={{paddingHorizontal:20, paddingTop:20, borderWidth:0.5, width:width-60, borderRadius:12}} disabled={true}>
+
+    transparent={true}>
+    <Layout style={{justifyContent:'center', alignItems:'center', flex:1, backgroundColor:'rgba(0,0,0,0.5)'}}>
+    <View style={[styles.modalView,{width:width-36}]}>
     <List
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.contentContainer}
@@ -191,11 +193,12 @@ function FolderSelectionComponent(){
       ListFooterComponent={renderFooter}
     />
   
-   <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:width-61, justifyContent:'center', marginTop:16}}>
+   <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50,  width:width-36, justifyContent:'center', marginTop:16}}>
    <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
    <TouchableOpacity onPress={()=>setSelectVisible(false)} style={{flex:1, height:50, justifyContent:'center' }}>
    <Text category='s1' style={{ textAlign:"center", color:theme['color-info-500'] }}>Close</Text>
    </TouchableOpacity>
+   </View>
    </View>
    </View>
    </Layout>
@@ -203,8 +206,10 @@ function FolderSelectionComponent(){
 
    <Modal
     visible={visible}
-    backdropStyle={styles.backdrop}>
+    transparent={true}>
+       <Layout style={{justifyContent:'center', alignItems:'center', flex:1, backgroundColor:'rgba(0,0,0,0.5)'}}>
     <StatefulModalContent/>
+    </Layout>
     </Modal>
 
    
@@ -225,19 +230,28 @@ const styles = StyleSheet.create({
       },
     
       contentContainer: {
-        paddingHorizontal:12,
-        backgroundColor:"white"
+        backgroundColor:"white",
+
       },
     
-      image: {
-    
-        height:120,
-        margin:-24,
-        padding:18
+      item: {
+        marginVertical:4,
       },
-  
-  item: {
-    marginVertical:4
-  },
+
+      modalView: {
+        paddingTop:12,
+        backgroundColor: "white",
+        borderRadius: 12,
+
+   
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
 
 });

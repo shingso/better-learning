@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { TextInput, View, StyleSheet, ImageBackground } from 'react-native'
+import { TextInput, View, StyleSheet, ImageBackground, SafeAreaView } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
-
+import GlobalStyle from '../constants'
 import { Formik } from 'formik';
 import { Button, Text ,Icon, Input, Layout, Modal, Card } from '@ui-kitten/components';
 import * as Yup from 'yup';
-import { AuthContext } from '../AuthContext'
 import TopHeader from '../UtilComponents/TopHeader'
+
 
 
 const RecoverSchema = Yup.object().shape({
@@ -23,7 +23,6 @@ const RecoverSchema = Yup.object().shape({
 
 function ForgotPassword(){
  
-    const authContext = useContext(AuthContext)
     const navigation = useNavigation();
     const [ errorMessage, setErrorMessage] = useState('')
     const [ visible, setVisible ] = useState(false)
@@ -31,9 +30,10 @@ function ForgotPassword(){
 
      return (
 
-    
-      <View style={{ flex: 1, justifyContent:'center', padding:16, paddingBottom:40}}>
-      
+      <SafeAreaView style={{flex:1}}>
+      <TopHeader/>
+      <View style={{ flex: 1, padding:16, paddingBottom:40}}>
+ 
       <View>
       <Text category='h6' style={{marginBottom:20}}>Let's work on getting you back into your account</Text>
       </View>
@@ -75,7 +75,7 @@ function ForgotPassword(){
 
    
 
-    <Button style={{marginVertical:16}} onPress={()=>formikProps.handleSubmit()}>
+    <Button size='large' style={{marginVertical:16, ...GlobalStyle.ButtonShadow, borderRadius:30}} onPress={()=>formikProps.handleSubmit()}>
     Reset Password
     </Button>
    
@@ -107,6 +107,7 @@ function ForgotPassword(){
 
 
     </View>
+    </SafeAreaView>
          
     )
      

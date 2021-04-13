@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { View , SafeAreaView, Keyboard, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native';
+import { View , SafeAreaView, Keyboard, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { Formik } from 'formik';
 import { addNote } from '../helperFunctions';
-import { Button, Text ,Icon , Input, Layout, useTheme, Modal} from '@ui-kitten/components';
+import { Button, Text ,Icon , Input, Layout, useTheme } from '@ui-kitten/components';
 import { AuthContext } from '../AuthContext'
 import { useNavigation } from '@react-navigation/native';
 import TopHeader from '../UtilComponents/TopHeader'
@@ -14,8 +14,8 @@ import GlobalStyle from '../constants'
 
 const TextSchema = Yup.object().shape({
   text: Yup.string()
-    .min(1, 'Its crucial to recall inorder to learn')
-    .max(200, 'Too Long!')
+    .min(1, 'Too short')
+    .max(200, 'Too Long')
     .required('Required'),
 });
 
@@ -99,22 +99,30 @@ function AddNotes(){
 
   <Modal
    visible={visible}
-   backdropStyle={styles.backdrop}>
-  <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12}}>
-  <View>
-  <Text category='s1' style={{textAlign:'center', marginBottom:4, paddingVertical:20}}>Note Added</Text>
+   transparent={true}
+
+   >
+  
+  <Layout style={{justifyContent:'center', alignItems:'center', flex:1, backgroundColor:'rgba(0,0,0,0.5)'}}>
+  
+  <View style={styles.modalView}>
+  <View style={{marginVertical:30}}>
+  <Text category='s1' style={{textAlign:'center'}}>Note Added</Text>
   </View>
-  <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+  <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, width:300, justifyContent:'center'}}>
   <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
   <TouchableOpacity  onPress={()=>navigation.goBack()} style={{flex:1, height:50, justifyContent:'center', alignItems:'center'}}>
   <Text category='s1' style={{color:theme['color-info-500']}}>Back</Text>
   </TouchableOpacity>
   </View>
   </View>
+  </View>
   </Layout>
   </Modal>
   </View>
-  
+
+
+
   </SafeAreaView>
   </Layout>
   </TouchableWithoutFeedback>
@@ -130,6 +138,22 @@ const styles = StyleSheet.create({
   
   backdrop:{
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+
+  modalView: {
+
+    backgroundColor: "white",
+    borderRadius: 12,
+    width:300,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   },
 
 });

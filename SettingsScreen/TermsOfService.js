@@ -16,12 +16,14 @@ return (
 <Layout level='2' style={{flex: 1, paddingTop:20, paddingHorizontal:20, paddingBottom:60}}>
 
 
-<Text style={styles.bodyText}>
-{`\t   By downloading or using this application, these terms and conditions automatically apply to you. You are obligated to read and understand these terms carefully before using this application. 
-
-\t  You are not allowed to copy or modify this application, any parts of this application, or any of its trademarks in any way. You are not allowed to attempt to extract the source code of this application, nor attempt to make derivative versions of this app. This application, all trademarks, copyrights, database rights and other intellectual property rights related to it belong to the developer of this application.`}
+<Text style={[styles.bodyText, {fontFamily:'Poppins-SemiBold'}]}>
+{`\t   By downloading or using this application, these terms and conditions automatically apply to you. You are obligated to read and understand these terms carefully before using this application. `}
 </Text>
 
+
+<Text style={styles.bodyText}>
+{`\t  You are not allowed to copy or modify this application, any parts of this application, or any of its trademarks in any way. You are not allowed to attempt to extract the source code of this application, nor attempt to make derivative versions of this app. This application, all trademarks, copyrights, database rights and other intellectual property rights related to it belong to the developer of this application.`}
+</Text>
 
 <Text style={styles.bodyText}>
 {`\t   We are committed to ensuring that this app is up to date and has growing functionality. For that reason, we reserve the right, at any time and for any reason, to make changes to the app or to charge for its services. You will be notified about changes to charges for this app or for its services. Charges that you incur through this app will be made clear to you.`}
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
   bodyText: {
     marginBottom:12,
     marginHorizontal:4,
-    lineHeight:24
+   
   },
 
 });

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Layout, useTheme , withStyles} from '@ui-kitten/components';
 import CalendarStrip from 'react-native-calendar-strip'
 import { ScrollView } from 'react-native-gesture-handler';
-import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays } from 'date-fns'
+import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays, subDays, getDate } from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import IOSShadowView from '../UtilComponents/IOSShadowView'
@@ -18,8 +18,6 @@ function HomeScreen(){
     const studyStatsData = useContext(StudyStatsContext)
     const timesStudiedToday = studyStatsData.timesStudiedToday
   
-
- 
 
     const markedDatesFunc = date => {
 
@@ -43,15 +41,13 @@ function HomeScreen(){
     }
 
     const screenWidth = Dimensions.get('window').width - 16
-
     const navigation = useNavigation();
     const userData = useContext(UserDataContext)
-
     const currentDate = new Date()
     const startOfCurrentWeek = startOfWeek(currentDate)
     const endOfCurrentWeek =  endOfWeek(currentDate)
-    const startOfCurrentMonth = startOfMonth(currentDate)
-    //const startDate = userData.timeStamp.toDate()
+    const startDate = userData.timeStamp.toDate()
+    const minDateForStrip = subDays(startDate , getDay(startDate))
 
 
     const datesBlacklistFunc = date => {
@@ -93,9 +89,11 @@ function HomeScreen(){
       dateNameStyle={{backgroundColor:theme['color-basic-100']}}
       iconContainer={{flex: .1, height:80, backgroundColor:theme["background-basic-color-1"]}}  
       maxDate={endOfCurrentWeek}
-      minDate={startOfCurrentMonth}
+      minDate={minDateForStrip}
       datesBlacklist={datesBlacklistFunc}
       startingDate={startOfCurrentWeek}
+      
+      
       leftSelector={<View><Icon fill={theme['text-basic-color']} height={20} width={20}  name='arrow-ios-back-outline'/></View>}
       rightSelector={<View><Icon fill={theme['text-basic-color']} height={20} width={20}  name='arrow-ios-forward-outline'/></View>}
       markedDates={markedDatesFunc}
@@ -106,7 +104,7 @@ function HomeScreen(){
     </Card>
                                                                                                                                                                                              
   
-    <Card style={{marginTop:12,borderWidth:0, borderRadius:12, elevation:1, }}  onPress={()=>navigation.navigate('Session')}>
+    <Card style={{marginTop:12,borderWidth:0, borderRadius:12, elevation:1}}  onPress={()=>navigation.navigate('Session')}>
     <View style={{alignItems:'center', justifyContent:'center'}}>
     <Image
           style={{
@@ -120,8 +118,8 @@ function HomeScreen(){
       
     <Text category='h6' style={{color:theme['color-primary-700'], fontSize:18, letterSpacing:0.5}}>Start Study Session</Text>
     <View style={{position:'absolute', right:-12, top:-8, alignItems:'flex-end', backgroundColor:null, paddingBottom:4, paddingHorizontal:8,borderRadius:8}}>
-    <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold'}}><Text style={{color:theme['color-basic-100'], fontSize:24, fontFamily:'Poppins-Bold'}}>{timesStudiedToday}</Text>{timesStudiedToday != 1 ? ' sessions' : ' session'}</Text>  
-    <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold', marginTop:-12}}>{ 'today'}</Text>  
+    <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold', fontWeight:'500'}}><Text style={{color:theme['color-basic-100'], fontSize:24, fontFamily:'Poppins-Bold', fontWeight:'700'}}>{timesStudiedToday}</Text>{timesStudiedToday != 1 ? ' sessions' : ' session'}</Text>  
+    <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold', marginTop:-12, fontWeight:'500'}}>{ 'today'}</Text>  
     </View> 
     <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-700']}}>Learn more effectively with a guided study session</Text>
     </View>

@@ -32,111 +32,52 @@ function IQScreen(){
   const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
   const endOfWeekOneWeek = endOfWeek(oneWeekAgo)
 
-  const twoWeekAgo = subWeeks(startOfToday, 2)
-  const startOfWeekTwoWeek = startOfWeek(twoWeekAgo)
-  const endOfWeekTwoWeek = endOfWeek(twoWeekAgo)
 
   const [currentWeekCount, setCurrentWeekCount] = useState(0)
   const [oneWeekAgoCount, setOneWeekAgoCount] = useState(0)
-  const [twoWeekAgoCount, setTwoWeekAgoCount] = useState(0)
-
-
   const [currentWeekMinutesStudied, setCurrentWeekMinutesStudied] = useState(0)
   const [oneWeekAgoMinutesStudied, setOneWeekAgoMinutesStudied] = useState(0)
-  const [twoWeekAgoMinutesStudied , setTwoWeekAgoMinutesStudied ] = useState(0)
-
   const theme = useTheme()
   const userData = useContext(UserDataContext)
   const studyStatsData = useContext(StudyStatsContext)
-
   const uniqueDates = studyStatsData.uniqueDates
-
   const datesStudiedPastSeven = studyStatsData.datesStudiedPastSeven
-  const sevenDaysCount = studyStatsData.pastSevenDaysCount
-  const dateStats = studyStatsData.dates
   const userStartDate = userData.timeStamp
-  const userStartStudyingDate = userData.startedStudying
+
 
   const allDateStats = studyStatsData.allDates
-  const allDatesDict = studyStatsData.allDatesDict
-  const lastStudied = userData.lastStudied
-  
-  const currentWeekStudiedCount = studyStatsData.timesStudiedWeek
-  const currentWeekStudiedSet = studyStatsData.currentWeekStudiedSet
+
 
   const screenWidth = Dimensions.get('window').width
-  //need to refactor this 
-  //const daysSinceLastStudy = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
-
- 
 
 
- const TimeComponent = (props) => {
-  //borderBottomWidth:0.2, borderColor:theme['color-basic-300']
-  // 150
-  const maxBarWidth = screenWidth - 104
 
-  const maxTimeStudied = Math.max(currentWeekMinutesStudied, oneWeekAgoMinutesStudied)
-  const amountOfBar = props.minutesStudied/maxTimeStudied
-  let barWidth = maxBarWidth * amountOfBar
-  if(!(isFinite(barWidth)) || barWidth < 10){
-    barWidth = 4
-  }
-  
-  return(
-  
-  <View style={{flexDirection:'row',justifyContent:'space-between', paddingVertical:4, paddingVertical:24}}>
-  <View>
-  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-800']}}>{props.title}</Text>
-  <Text style={{fontFamily:'OpenSans-Regular', fontWeight:'800', fontSize:13, color:theme['color-basic-500']}}>{props.weekTitle}</Text>
-  <View style={{ flexDirection:'row', alignItems:'flex-end',marginBottom:0, marginTop:8}}>
-  
-  <Text style={{marginRight:8}}>{formatMinutes2(props.minutesStudied, props.numberColor, props.labelColor)}</Text>
-  </View>
+  const timeStudiedMessage = () =>{
 
-  <View style={{flexDirection:'row', alignItems:'center'}}>
-  <View style={{flexDirection:'row', alignItems:'center'}}>
-  <View style={{height:props.barHeight, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8, marginLeft:1, justifyContent:'center'}}>
- 
-  {barWidth > 149 &&
-  <View style={{flexDirection:'row', alignItems:'center'}}>
- {/*  <Text style={{ fontWeight:'800', fontSize:16, fontFamily:'OpenSans-Bold', marginLeft:6, marginRight:4,color:theme['color-basic-100']}}>{props.sessionCount}</Text>  
-  <Text style={{fontSize:12, color:theme['color-basic-100'], marginTop:3, fontWeight:'500'}}>{props.sessionCount != 1 ? 'sessions' : 'session'}</Text> */}
-  </View>
-  }
+    const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
+    const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
 
-  </View> 
-  <Icon name='clock'  fill={props.clockColor} height={17} width={17}/>
-  </View>
+    console.log(lastWeekMinutesAverage, currentWeekMinutesAverage)
 
-  {barWidth < 149 &&
-  <View style={{flexDirection:'row', alignItems:'center'}}>
-  <Text style={{ fontWeight:'800', fontSize:16, fontFamily:'OpenSans-Bold', marginLeft:8, marginRight:4,color:theme['color-basic-600']}}>{props.sessionCount}</Text>  
-  <Text style={{fontSize:12, color:theme['color-basic-400'], marginTop:3, fontWeight:'500', fontFamily:'OpenSans-SemiBold'}}>{props.sessionCount != 1 ? 'sessions' : 'session'}</Text>
-  </View>
-  }
-  </View>
-  </View>
-  </View>
+    if(currentWeekMinutesStudied == 0){
+      return "You haven't studied yet this week"
+    }
 
-  )
-}
-   
+    if(currentWeekMinutesAverage > lastWeekMinutesAverage){
+      return "Your studying at a good pace to match last week"
+    }
 
-  const calculateDaysSinceStartedStudy = () =>{
-
-    if(userStartStudyingDate != null){
-      return differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
-    } else {
-      return 0
+    if(currentWeekMinutesAverage < lastWeekMinutesAverage){
+      return "You studied more last week than "
     }
 
   }
 
+
   const calculateCurrentPosition = () =>{
 
-    if(userStartStudyingDate != null){
-      let difference = differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate()))
+    if(userStartDate != null){
+      let difference = differenceInDays(new Date(), startOfDay(userStartDate.toDate()))
       if(difference > 7){
         return 0
       } else {
@@ -148,26 +89,18 @@ function IQScreen(){
 
   }
 
-  const calculateDaysSinceLastStudy = () =>{
 
-    if(lastStudied != null){
-      return differenceInDays(new Date(), startOfDay(lastStudied.toDate()))
-    } else {
-      return 99
-    }
 
-  }
 
   
   useEffect(()=>{
 
     let currentWeekCount = 0
     let oneWeekAgoCount = 0
-    let twoWeekAgoCount = 0
 
     let currentWeekMinutesStudied = 0
     let oneWeekAgoMinutesStudied = 0
-    let twoWeekAgoMinutesStudied = 0
+
 
     allDateStats.forEach(element => {
 
@@ -183,20 +116,15 @@ function IQScreen(){
         oneWeekAgoMinutesStudied += element.minutesStudied
       } 
 
-      if(isWithinInterval(newDate, {start:startOfWeekTwoWeek, end:endOfWeekTwoWeek})){
-        twoWeekAgoCount += 1
-        twoWeekAgoMinutesStudied  += element.minutesStudied
-      }
+
       
     });
 
     setCurrentWeekCount(currentWeekCount)
     setOneWeekAgoCount(oneWeekAgoCount)
-    setTwoWeekAgoCount(twoWeekAgoCount)
-
     setCurrentWeekMinutesStudied(currentWeekMinutesStudied)
     setOneWeekAgoMinutesStudied(oneWeekAgoMinutesStudied)
-    setTwoWeekAgoMinutesStudied(twoWeekAgoMinutesStudied)
+
 
 
   
@@ -208,53 +136,59 @@ function IQScreen(){
   }
 
 
+  const TimeComponent = (props) => {
 
+    const maxBarWidth = screenWidth - 112
+    const maxTimeStudied = Math.max(currentWeekMinutesStudied, oneWeekAgoMinutesStudied)
+    const amountOfBar = props.minutesStudied/maxTimeStudied
+    let barWidth = maxBarWidth * amountOfBar
+    if(!(isFinite(barWidth)) || barWidth < 10){
+      barWidth = 6
+    }
 
-  const getCurrentWeekLabel = () => {
-      return format(startOfCurrentWeek,'MMMM do') + '  -  ' + format(endOfCurrentWeek,'MMMM do') 
+    return(
+    
+    <View style={{marginTop:32}}>
+    <Text style={{color:props.titleColor, fontSize:12}} category='h6'>{props.title}</Text>
+
+    <View style={{marginTop:0}}>
+    <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between' }}>
+    <Text style={{marginBottom:-7}}>{formatMinutes2(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
+    {/*     <Text style={{marginBottom:8, color:theme['color-basic-400']}}>  /  </Text> */}
+    <Text style={{ fontSize:20, fontFamily:'Poppins-SemiBold',color:theme['color-basic-900'], fontWeight:'500'}}>{props.sessionCount} <Text style={{fontSize:10, fontFamily:'Poppins-Regular', color:theme['color-basic-700']}}>sessions</Text></Text>
+    </View>
+    
+    <View style={{flexDirection:'row', alignItems:'center', marginTop:Platform.OS === 'ios' ? 8 : -4}}>
+    <View style={{height:20, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8,  justifyContent:'center'}}>
+    </View> 
+    <Icon name='clock'  fill={props.barColor} height={22} width={22}/>
+    </View>
+    </View>
+
+    </View>
+  
+    )
   }
 
-
-  const getLastWeekLabel = () => {
-    return format(startOfWeekOneWeek,'MMMM do') + '  -  ' + format(endOfWeekOneWeek,'MMMM do')
-  }
-
-
-  const getTwoWeeksAgoLabel = () => {
-    return format(startOfWeekTwoWeek,'MMMM do') + '  -  ' + format(endOfWeekTwoWeek,'MMMM do')
-  }
 
 
 
   const returnMarkedDates = () => {
     const newDict = {}
-    console.log(uniqueDates)
     uniqueDates.forEach(item => 
       newDict[item] = {selected:true, selectedColor:theme['color-primary-400']}
       
     )
-
-    console.log(newDict)
-
-   
     return newDict
   }
 
 
-  const returnLabels = (number) => {
+  const returnLabels = () => {
 
-    const addedDates = 0 + number
-    let startDate = todaysDate
 
-    if(userStartStudyingDate != null){
-      if(differenceInDays(new Date(), startOfDay(userStartStudyingDate.toDate())) < 8){
-        startDate = startOfDay(userStartStudyingDate.toDate())
-      }
-    }
-
-    const startDateAdded = addDays(startDate, addedDates)
-    const endDate = addDays(startDate, 6 + addedDates)
-    const daysInWeek = eachDayOfInterval({start:startDateAdded, end:endDate})
+    let startDate = userStartDate.toDate()
+    const endDate = addDays(startDate, 6)
+    const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
     const stringConvertedDates = []
     daysInWeek.forEach(item => stringConvertedDates.push(format(item,'M-dd')))
     return stringConvertedDates
@@ -285,72 +219,18 @@ function IQScreen(){
     stepIndicatorLabelUnFinishedColor: 'red',
     labelColor: theme['color-basic-600'],
     labelSize: 11,
-    currentStepLabelColor: theme['color-primary-700']
-
+    currentStepLabelColor: theme['color-primary-700'],
+    labelFontFamily:"Poppins-SemiBold"
   }
 
 
-  const StatsComponent = (props)=>(
-    <Card style={{marginBottom:8,borderWidth:0, borderRadius:12, flex:1, borderBottomRightRadius:0, borderTopRightRadius:0, paddingVertical:16}}>
-    
-    <View style={{justifyContent:'space-between'}}>
-    <View style={{flexDirection:'row', alignItems:'center', marginBottom:4}}>
-    <Icon {...iconStyleStats}  name={props.iconName}/>
-    <Text style={{...headerStatStyle}}>{props.headerText}</Text>
-    </View>
-    <View style={{flexDirection:'row', alignItems:'center'}}>
-    <Text style={{...bodyStatsStyle}}>{props.bodyText}</Text>
-    </View>
-    
-    </View>
 
-    </Card> 
-    )
-
-
-    const StartedStatsComponent = (props)=>(
-      <Card style={{marginBottom:8,borderWidth:0, borderRadius:12, flex:1, borderBottomRightRadius:0, borderTopRightRadius:0, paddingVertical:16}}>
-      
-      <View style={{justifyContent:'space-between'}}>
-      <View style={{flexDirection:'row', alignItems:'center', marginBottom:4}}>
-      <Icon {...iconStyleStats}  name={props.iconName}/>
-      <Text style={{...headerStatStyle}}>{props.headerText}</Text>
-      </View>
-      <View style={{}}>
-      <Text style={{fontSize:16, fontFamily:'OpenSans-Bold'}}>{props.bodyText}</Text>
-      <Text >{props.subText}</Text>
-      </View>
-      
-      </View>
-  
-      </Card> 
-      )
-
-    const RightStatsComponent = (props)=>(
-      <Card style={{marginBottom:8,borderWidth:0, paddingVertical:16, borderRadius:12, marginLeft:0, borderBottomLeftRadius:0, borderTopLeftRadius:0, width:140}}>
-      
-      <View style={{justifyContent:'space-between'}}>
-      <View style={{flexDirection:'row', alignItems:'center',  marginBottom:4}}>
-      <Icon {...iconStyleStats}  name={props.iconName}/>
-      <Text style={{...headerStatStyle}}>{props.headerText}</Text>
-      </View>
-      <View style={{flexDirection:'row', alignItems:'center'}}>
-      <Text style={{...bodyStatsStyle}}>{props.bodyText}</Text>
-      </View>
-      
-      </View>
-  
-      </Card> 
-      )
 
 
 
   const getStepIndicatorIconConfig = ({ position, stepStatus }) => {
 
-    let startDate = todaysDate
-    if(userStartStudyingDate != null){
-      startDate = startOfDay(userStartStudyingDate.toDate())
-    }
+    let startDate = userStartDate.toDate()
     const endDate = addDays(startDate, 6)
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
     const iconConfig = {
@@ -458,36 +338,12 @@ function IQScreen(){
   };
 
 
-    const iconStyleStats={
-      fill:theme['color-primary-500'],
-      width:18,
-      height:18,
-    
-
-    }
-
-
-    const headerStatStyle={
-       color:theme['color-primary-600'],
-       fontSize:15,
-       fontFamily:'OpenSans-SemiBold',
-       fontWeight:'800',
-       marginLeft:4
-    }
-
-
-    const bodyStatsStyle={
-      fontSize:26, 
-      fontFamily:'OpenSans-Bold',
-      fontWeight:'800',
-    }
-
 
   const renderStepIndicator = (params) => (
     <Icon {...getStepIndicatorIconConfig(params)}/>
   );
-//(calculateDaysSinceLastStudy() >= 28 || calculateDaysSinceStartedStudy() < 7) - check these condtiona what id its exact 14 days? - if days since last studied
-//(calculateDaysSinceLastStudy() < 28 && calculateDaysSinceStartedStudy() > 7) - Condition for showing strength score
+    //If we are past 7 days since we started.
+
   return (
 
 
@@ -498,9 +354,9 @@ function IQScreen(){
 
 
 
-  {(false) &&
+  {(differenceInDays(new Date(), startOfDay(userStartDate.toDate())) < 7) &&
 
-  <Card  style={{marginBottom:12, alignItems:'center' , borderWidth:0, borderRadius:12, elevation:1}}>
+  <Card disabled={true} style={{marginBottom:12, alignItems:'center' , borderWidth:0, borderRadius:12, elevation:1}}>
   <Image
     style={{
       height:120,
@@ -514,28 +370,28 @@ function IQScreen(){
    <View style={{ justifyContent:'center', alignItems:'center'}}>
    <Text category={'h6'}>The process of learning</Text>
    <Text 
-   style={{marginTop:12, marginBottom:20,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center', marginHorizontal:32}}>
-   It's your first week! Take it day by day and try to start studying once a day.
+   style={{marginTop:12, marginBottom:16,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center', marginHorizontal:32}}>
+   It's your first week. Try to study at least once every day
    </Text>
    </View> 
 
    {/* //datesStudiedPastSeven.size  <Text category='c2' style={{alignSelf:'center', fontSize:11, color:theme['color-basic-600']}}> {daysSinceStartStudying >= 6 ? 'Last day' : 6-daysSinceStartStudying + "days left"}</Text> */}
 
-    <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-around', marginBottom:40}}>
+    <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-around', marginBottom:24 }}>
     <View style={{alignItems:'center'}}>
-    <Text style={{fontSize:40, fontWeight:'500',fontFamily:'OpenSans-SemiBold'}}>{datesStudiedPastSeven.size}</Text>
-    <Text style={{fontSize:13, color:theme['color-basic-700'], letterSpacing:0.2}}>Days Studied</Text>
+    <Text style={{fontSize:60, fontWeight:'500',fontFamily:'Poppins-SemiBold'}}>{datesStudiedPastSeven.size}</Text>
+    <Text style={{fontSize:13, color:theme['color-basic-700'], letterSpacing:0.2, fontFamily:'Poppins-Regular', marginTop:-16}}>Days Studied</Text>
     </View>
     </View>
 
-    <View style={{marginHorizontal:32, marginBottom:32}}>
+    <View style={{marginHorizontal:40, marginBottom:32}}>
       
     <StepIndicator
          customStyles={customStyles}
          currentPosition={calculateCurrentPosition()}
          stepCount={7}
          renderStepIndicator={renderStepIndicator}
-         labels={returnLabels(0)}
+         labels={returnLabels()}
         
     />
     </View>
@@ -544,117 +400,33 @@ function IQScreen(){
     }
 
 
-  <Card style={{marginBottom:12, borderWidth:0, paddingBottom:0, borderRadius:12, elevation:1}}>
-  
-  <View style={{ flexDirection:'row', alignItems:'center', marginBottom:0, marginTop:4,}}>
-
-  <Icon fill={theme['color-primary-700']} height={18} width={18}  name='clock'/>
-  <Text category='h6' style={{marginLeft:8,color:theme['color-primary-800'], marginTop:4}}>Time spent studying</Text>
-
-  {/*  <Text 
-   style={{marginTop:8, marginBottom:4,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center'}}>
-   Your are on track to reaching last weeks time studied!
-   </Text> */}
-  </View> 
-
-{/*   <View>
-  <TimeComponent 
-  barHeight={14} 
-  weekTitle={'This week'} 
-  title={getCurrentWeekLabel()} 
-  minutesStudied={currentWeekMinutesStudied} 
-  sessionCount={currentWeekCount} 
-  weekLabel={getCurrentWeekLabel()} 
-  clockColor={theme['color-primary-400']} 
-  barColor={theme['color-primary-400']}  
-  numberColor={theme['color-basic-900']}
-  labelColor={theme['color-basic-500']}/>
-  
-  </View>
-  
-  <View>
-  <TimeComponent 
-  barHeight={14} 
-  weekTitle={'Last week'} 
-  title={getLastWeekLabel()} 
-  minutesStudied={oneWeekAgoMinutesStudied} 
-  sessionCount={oneWeekAgoCount}  
-  weekLabel={getLastWeekLabel()} 
-  clockColor={theme['color-basic-400']} 
-  barColor={theme['color-basic-400']}
-  numberColor={theme['color-basic-600']}
-  labelColor={theme['color-basic-400']}
-  />
-
-  </View> */}
-
-  <View style={{flexDirection:'row', paddingVertical:16}}>
-  <View style={{flex:1}}>
-{/*   <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-800']}}>{getCurrentWeekLabel()}</Text> currentWeekMinutesStudied */}
-  
-    
-<View style={{flexDirection:'row', marginBottom:20}}>
-  
-  <View style={{flex:1}} >
-  <View style={{flexDirection:'row'}}>
-  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-primary-700'], marginBottom:12}}>{'This week'}  </Text>
-  <Text style={{color:theme['color-basic-400']}}>/</Text>
-  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-600'], marginBottom:12}}>  {'Last week'}</Text>
-  </View>
-  
-  <View style={{flexDirection:'row', alignItems:'center', marginTop:-8}}>
-  <Text style={{marginRight:8, fontSize:26, fontFamily:'Poppins-SemiBold', color:theme['color-basic-900']}}>{currentWeekStudiedCount} <Text style={{fontSize:12, fontFamily:'OpenSans-SemiBold', color:theme['color-basic-800']}}>sessions</Text></Text>
-  <Text style={{color:theme['color-basic-400']}}>/</Text>
-  <Text style={{marginTop:4 ,fontSize:20, fontFamily:'Poppins-SemiBold', color:theme['color-basic-500']}}>  {oneWeekAgoCount} <Text style={{fontSize:10, fontFamily:'OpenSans-SemiBold', color:theme['color-basic-500']}}>sessions</Text></Text>
-  </View>
-  
-  <View style={{ flexDirection:'row',marginBottom:0, marginTop:8, alignItems:'center'}}>
-  <Text style={{marginRight:8}}>{formatMinutes2(1000, theme['color-basic-800'], theme['color-basic-800'], 12, 26)}</Text>
-  <Text style={{color:theme['color-basic-400']}}>/</Text>
-  <Text style={{marginTop:4}}>  {formatMinutes2(2200, theme['color-basic-500'], theme['color-basic-500'], 10, 20)}</Text>
-  </View>
-  
-  </View>
-
-  <View style={{flex:1, alignItems:'flex-end'}}>
-  <View style={{ flexDirection:'row',marginBottom:0, marginTop:8}}>
-
-  </View>
-  </View>
+  <Card style={{marginBottom:12, borderWidth:0, borderRadius:12, elevation:1, paddingVertical:12}}>
  
 
-  </View>
+  <Text style={{alignSelf:'center'}} category='h6'>Time Studied</Text>
+
+  <Text style={{marginVertical:16, alignSelf:'center', textAlign:'center'}}>{timeStudiedMessage()}</Text>
+
+  {/* <View style={{borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.9, marginVertical:12}}></View> */}
+
+  <TimeComponent
+  title={'This week'}
+  minutesStudied={currentWeekMinutesStudied}
+  barColor={theme['color-primary-400']}
+  titleColor={theme['color-basic-800']}
+  sessionCount={currentWeekCount}
+  />
 
 
- {/*  <View style={{flexDirection:'row', alignItems:'center'}}>
-  <View style={{height:18, backgroundColor:theme['color-primary-400'], borderRadius:4, width:100, marginRight:8, marginLeft:1, justifyContent:'center'}}>
-  </View> 
-  <Icon name='clock'  fill={theme['color-primary-400']} height={17} width={17}/>
-  </View>
+  <TimeComponent
+  title={'Last week'}
+  minutesStudied={oneWeekAgoMinutesStudied}
+  barColor={theme['color-basic-400']}
+  titleColor={theme['color-basic-600']}
+  sessionCount={oneWeekAgoCount}
+  />
 
 
-  <View style={{flexDirection:'row', alignItems:'center', marginTop:12}}>
-  <View style={{height:18, backgroundColor:theme['color-basic-400'], borderRadius:4, width:200, marginRight:8, marginLeft:1, justifyContent:'center'}}>
-  </View> 
-  <Icon name='clock'  fill={theme['color-basic-400']} height={17} width={17}/>
-  </View> */}
-  
-  {/* <View style={{marginTop:8}}>
-  <Text style={{marginRight:8}}>{formatMinutes2(oneWeekAgoMinutesStudied, theme['color-basic-600'], theme['color-basic-500'])}</Text>
-  </View> */}
-
-{/*   <Text style={{fontFamily:'OpenSans-Regular', fontWeight:'800', fontSize:13, color:theme['color-basic-500']}}>{'Last week'}</Text>
-  <Text style={{fontFamily:'Poppins-Bold', fontWeight:'800', fontSize:14, color:theme['color-basic-800']}}>{getLastWeekLabel()}</Text> */}
-  
-
-
-  </View>
-  </View>
-
-  
-
-  
-  
   </Card>
 
 
@@ -663,6 +435,11 @@ function IQScreen(){
   
 
   <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0, borderRadius:12, elevation:1}}>
+  {/* <View style={{ flexDirection:'row', alignItems:'center', marginBottom:4}}>
+  <Icon fill={theme['color-primary-700']} height={20} width={20}  name='calendar'/>
+  <Text category='h6' style={{marginLeft:8,color:theme['color-primary-800'], marginTop:4}}>Calendar</Text>
+  </View>  */}
+    
   <Calendar
 
   //markingType={'custom'}
@@ -672,7 +449,7 @@ function IQScreen(){
   maxDate={convertDateToString(endOfMonth(new Date()))}
 
   monthFormat={'MMMM yyyy'}
-  renderArrow={(direction) => (direction == 'left' ? <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-back-outline'/></View> 
+  renderArrow={(direction) => (direction == 'left' ? <View><Icon fill={theme['text-basic-color']} height={ 15} width={15}  name='arrow-ios-back-outline'/></View> 
   : <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-forward-outline'/></View>)}
   hideExtraDays={false}
   disableMonthChange={true}

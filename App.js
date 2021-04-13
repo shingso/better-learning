@@ -9,9 +9,7 @@ import { default as themeJson } from './custom-theme.json'; // <-- Import app th
 import { default as mapping } from './mapping.json';
 import { ThemeContext } from './themeContext';
 import { AuthContextWrapper } from './AuthContext'
-import { saveThemeValue } from './helperFunctions'
 import { TimerSettingsContextWrapper } from './TimerSettingsContext'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default  () => {
@@ -19,34 +17,11 @@ export default  () => {
     
     const [theme, setTheme] = React.useState('light');
 
-    const toggleTheme = () => {
-      const nextTheme = theme === 'light' ? 'dark' : 'light';
-      setTheme(nextTheme);
-      saveThemeValue(nextTheme)
-    };
-    
-    useEffect(() => {
-
-        async function getThemeValue(){
-            try {
-                const value = await AsyncStorage.getItem('@theme')
-                if(value !== null) {
-                  setTheme(value)
-                }
-              } catch(e) {
-                console.log(e)
-              }
-        }
-
-        getThemeValue()
-      }, [])
-    
-
     //customMapping={mapping}  goes in application provider
         return (
             <>
             <IconRegistry icons={EvaIconsPack} />
-            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <ThemeContext.Provider value={{ theme }}>
             <ApplicationProvider customMapping={mapping} {...eva} theme={{...eva[theme], ...themeJson}}>
             <AuthContextWrapper>
             <TimerSettingsContextWrapper>

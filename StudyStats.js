@@ -12,30 +12,13 @@ export function StudyStatsContextWrapper(props) {
   const [initializing, setInitializing] = useState(true)
   const [dates, setDates] = React.useState([]);
   const [timesStudied, setTimesStudied] = React.useState(0);
-
   const [datesStudiedPastSeven, setDatesStudiedPastSeven] = React.useState(0);
-  const [pastSevenDaysCount, setPastSevenDaysCount] = React.useState(0);
- 
-  const [timesStudiedToday, setTimesStudiedToday] = React.useState(0);
-  const [timesStudiedWeek, setTimesStudiedWeek] = React.useState(0);
 
+  const [timesStudiedToday, setTimesStudiedToday] = React.useState(0);
   const [totalMinutesStudied, setTotalMinutesStudied] = React.useState(0);
 
-
-  const [currentWeekStudiedSet, setCurrentWeekStudiedSet] = React.useState(0);
   const [allDates, setAllDates] = React.useState(0);
   const [uniqueDates, setUniqueDates] = React.useState(0);
-
-
-  const [allDatesDict, setAllDatesDict] = React.useState(0);
-
-
-
-  //stats by week over week
-
-
-
-  //stats by days
 
 
   
@@ -46,22 +29,10 @@ export function StudyStatsContextWrapper(props) {
     const currentDate = new Date()
     const endOfCurrentDate = endOfDay(currentDate) 
     const startOfCurrentDate = startOfDay(currentDate)
-
     const startOfCurrentWeek = startOfDay(startOfWeek(currentDate))
     const endOfCurrentWeek = endOfDay(endOfWeek(currentDate))
-    
-    const twoWeeksAgo = startOfDay(subDays(currentDate, 14))
     const sixDaysAgo = startOfDay(subDays(currentDate, 6))
-
-    const sevenDaysAgo = subDays(sixDaysAgo, 1)
-    const startOfLastWeek = startOfDay(startOfWeek(sevenDaysAgo))
-    const endOfLastWeek = endOfDay(endOfWeek(sevenDaysAgo))
-
-
-
-
-    // if we want to count today then we should subtract 6 days
-    // if we dont want to count today then we should subtract 7 days
+ 
 
     return ref.orderBy("timeStamp", "asc").onSnapshot(querySnapshot => {
     
@@ -73,12 +44,9 @@ export function StudyStatsContextWrapper(props) {
       const allList = [];
       const datesDict = {}
 
-      const currentWeekStudySet = new Set()
-      const pastSevenDaysSet = new Set()
-      let sevenDaysCount = 0
-      let weekCount = 0
-      let todayCount = 0
 
+      const pastSevenDaysSet = new Set()
+      let todayCount = 0
       let totalMinutesStudied = 0
 
  
@@ -105,13 +73,10 @@ export function StudyStatsContextWrapper(props) {
               todayCount += 1
             }
 
-            weekCount += 1
-            currentWeekStudySet.add(newDateConverted)
           }
 
           if(isWithinInterval(newDate, {start:sixDaysAgo, end:endOfCurrentDate})){
             pastSevenDaysSet.add(newDateConverted)
-            sevenDaysCount += 1
           }
 
           if(newDateConverted in datesDict){
@@ -134,22 +99,15 @@ export function StudyStatsContextWrapper(props) {
      }
     
       setDatesStudiedPastSeven(pastSevenDaysSet)
-      setPastSevenDaysCount(sevenDaysCount)
-
       setTimesStudiedToday(todayCount)
-
-      setAllDates(allList)
       setTimesStudied(querySnapshot.size)
-      setTimesStudiedWeek(weekCount)
-      setDates(list);
-      setCurrentWeekStudiedSet(currentWeekStudySet)
-  
       setUniqueDates(uniqueDates)
 
-
+      setAllDates(allList)
+      setDates(list);
+     
+    
       setTotalMinutesStudied(totalMinutesStudied)
-
-      setAllDatesDict(datesDict)
       setInitializing(false)
 
       
@@ -163,7 +121,7 @@ export function StudyStatsContextWrapper(props) {
     return null
   }
 
-  return (<StudyStatsContext.Provider value={{allDatesDict ,totalMinutesStudied,timesStudiedToday,currentWeekStudiedSet,pastSevenDaysCount,datesStudiedPastSeven ,dates, uniqueDates, timesStudied, timesStudiedWeek, allDates}}>
+  return (<StudyStatsContext.Provider value={{ totalMinutesStudied, timesStudiedToday, datesStudiedPastSeven ,dates, uniqueDates, timesStudied, allDates}}>
     {props.children}
     </StudyStatsContext.Provider>
     );

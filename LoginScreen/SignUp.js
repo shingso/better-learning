@@ -32,7 +32,7 @@ const AlertIcon = (props) => (
 function SignUp(){
   const authContext = useContext(AuthContext)
   const navigation = useNavigation();
-  const [secureTextEntry, setSecureTextEntry] = useState(false)
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const handleSignUp = (email, password) => {
     auth()
@@ -83,8 +83,8 @@ function SignUp(){
     <View style={{flexDirection:'row', alignItems:'center', alignSelf:'flex-end'}}>
     
     <View style={{marginRight:4, alignItems:'flex-end'}}>
-    <Text category='label' style={{}}>Already have an account?</Text>
-    <Text status='info' category='s2'>Go to Login</Text>
+    <Text category='label' style={{fontFamily:'Poppins-SemiBold'}}>Already have an account?</Text>
+    <Text status='info' category='s2' style={{marginTop:-6}}>Go to Login</Text>
     </View>
     <Icon height={30} width={30} name='arrow-ios-forward-outline' fill={'black'}/>
     </View>
@@ -92,7 +92,7 @@ function SignUp(){
 
        
     <View style={{ flex: 1, marginTop:40}}>
-    <Text category='h1' style={{marginBottom:24}}>Sign Up</Text>
+    <Text category='h1' style={{marginBottom:24, fontFamily:'Poppins-Bold'}}>Sign Up</Text>
     <Formik
     initialValues={{ email:'', password:''}}
     validationSchema={SignUpSchema}
@@ -123,7 +123,7 @@ function SignUp(){
     value={formikProps.values.password}
     label={formikProps.touched.password && formikProps.errors.password}
     placeholder='Password'
-    caption='Should contain at least 9 symbols'
+    caption='Should contain at least 9 characters'
     accessoryRight={renderIcon}
     captionIcon={AlertIcon}
     size='large'
@@ -134,8 +134,8 @@ function SignUp(){
     />
 
     <Button style={{marginVertical:16, borderRadius:30, marginBottom:28, ...GlobalStyle.ButtonShadow}} size='large' onPress={()=>formikProps.handleSubmit()}>Sign Up</Button>
-    <Text category='s1' style={{alignSelf:'center', marginBottom:24}}> 
-    OR
+    <Text category='s1' style={{alignSelf:'center', marginBottom:24, fontFamily:'Poppins-Bold'}}> 
+    or sign up with
     </Text>
     <SignInComponent/>
     </React.Fragment>

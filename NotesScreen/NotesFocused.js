@@ -181,20 +181,14 @@ function NotesFocused({ route, navigation }){
       <View style={{paddingHorizontal:20, paddingTop:12, flex:1}}>
       <View style={{flex: 1,alignItems:'center',justifyContent:'center', marginBottom:100}}>
       <Image
-        style={{width: screenWidth-64, height: 200, resizeMode:'contain'}}
+        style={{width: screenWidth-64, height: 200,}}
         source={require('../assets/images/notesempty.png')}
       
       />
-      <Text category='h6' style={{textAlign:'center', marginTop:32}}>Nothing here yet</Text>
-      <Text style={{textAlign:'center', marginTop:32, lineHeight: 28, marginHorizontal:12, fontSize:15,
-      letterSpacing:0.1}}>Select the  
-      <View style={{alignItems:'flex-end', flexDirection:'row'}}>
-      <View style={{flex:1}}>
-      <Text style={{fontWeight:'bold', flexShrink:1,fontSize:18, color:theme['color-primary-700']}}>{title}</Text>  
-      </View>
-      <Icon fill={theme['color-primary-700']} width={25} height={25} name='folder' /> 
-      </View>
-      when writing a note and the note will be placed here.</Text>
+      <Text category='h6' style={{textAlign:'center', marginTop:32}}>Nothing here yet...</Text>
+      <Text style={{textAlign:'center', marginTop:32, lineHeight: 28, marginHorizontal:12, fontSize:15, fontFamily:'Poppins-Regular'}}>Press the
+      <Icon fill={theme['color-primary-700']} style={{marginHorizontal:4, paddingTop:20, marginBottom:-5}} width={24} height={24} name='folder' /> 
+      icon when writing a note to select a folder.</Text>
       </View>
       </View>
       <Modal

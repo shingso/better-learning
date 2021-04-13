@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, Image } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
-import { List, Text, TopNavigationAction, Icon, Input } from '@ui-kitten/components';
+import { List, Text, TopNavigationAction, Icon, Input, useTheme } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 
 const SearchIconLarge = (props) => (
@@ -17,7 +17,7 @@ const SearchIcon = (props) => (
 
 function GlobalNotes(){
     
- 
+    const theme = useTheme()
     const authContext = useContext(AuthContext)
     const userID = authContext.user.uid
     const [ loading, setLoading ] = useState(true);
@@ -55,22 +55,23 @@ function GlobalNotes(){
 
     const renderEmpty = () => (
 
-    <View style={{flex: 1,alignItems:'center', justifyContent:'space-between', padding:16}}>
+
    
-    <Image
-        style={{
-          height:120,
-          width:400,
-          marginBottom:28,
-          marginTop:-16,
-        }}
-          source={require('../assets/images/yournotesv1orange.png')}
-        />
-    <View style={{alignItems:'center'}}>
-    <Text category='h6'>Your Notes</Text>
-    <Text style={{marginTop:12, marginBottom:24,letterSpacing:0.2}}>A collection of your thoughts</Text>
+   <SafeAreaView style={{flex: 1}}>
+   <View style={{paddingHorizontal:20, paddingTop:100, flex:1}}>
+   <View style={{flex: 1,alignItems:'center',justifyContent:'center'}}>
+   <Image
+        style={{width: 300, height: 200,}}
+        source={require('../assets/images/notesempty.png')}
+      
+    />
+    <Text category='h6' style={{textAlign:'center', marginTop:32}}>Nothing here yet...</Text>
+    <Text style={{textAlign:'center', marginTop:32, lineHeight: 28, marginHorizontal:12, fontSize:15, fontFamily:'Poppins-Regular'}}>You can search notes you write by adding tags</Text>
     </View>
     </View>
+  
+    </SafeAreaView> 
+   
       
     )
 
@@ -86,7 +87,7 @@ function GlobalNotes(){
 
     
     useEffect(() => {
-        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').where('recalled', '==', false).orderBy("timeStamp", 'desc')
+        const ref = firestore().collection('Users').doc(userID).collection('GlobalNotes').orderBy("timeStamp", 'desc')
         return ref.onSnapshot(querySnapshot => {
           if(!querySnapshot.metadata.hasPendingWrites){
           const list = [];

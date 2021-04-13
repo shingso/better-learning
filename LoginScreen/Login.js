@@ -29,7 +29,7 @@ function Login(){
  
 
  const navigation = useNavigation();
- const [secureTextEntry, setSecureTextEntry] = useState(false)
+ const [secureTextEntry, setSecureTextEntry] = useState(true)
 
 
  const handleLogin = (email, password) => {
@@ -67,8 +67,8 @@ function Login(){
       <View style={{flexDirection:'row', alignItems:'center', alignSelf:'flex-end'}}>
       
       <View style={{marginRight:4, alignItems:'flex-end'}}>
-      <Text category='label' style={{}}>Dont have an account?</Text>
-      <Text status='info' category='s2'>Go to Sign Up</Text>
+      <Text category='label' style={{fontFamily:'Poppins-SemiBold'}}>Dont have an account?</Text>
+      <Text status='info' category='s2' style={{marginTop:-6}}>Go to Sign Up</Text>
       </View>
       
       <Icon height={30} width={30} name='arrow-ios-forward-outline' fill={'black'}/>
@@ -78,7 +78,7 @@ function Login(){
       <View style={{ flex: 1, marginTop:40}}>
       
       <View>
-      <Text category='h1' style={{marginBottom:12}}>Login</Text>
+      <Text category='h1' style={{marginBottom:12, fontFamily:'Poppins-Bold'}}>Login</Text>
       </View>
 
       <Formik
@@ -119,7 +119,7 @@ function Login(){
     onChangeText={formikProps.handleChange('password')}
     />
 
-    <Button size='large' style={{marginTop:16, borderRadius:30, ...GlobalStyle.ButtonShadow}} onPress={()=>formikProps.handleSubmit()}>
+    <Button size='large' style={{marginTop:16, marginBottom:12,borderRadius:30, ...GlobalStyle.ButtonShadow}} onPress={()=>formikProps.handleSubmit()}>
     Login
     </Button>
     <Button appearance='ghost' status='basic' onPress={()=>{navigation.navigate('ForgotPassword')}}>Forgot your password?</Button>
@@ -130,8 +130,8 @@ function Login(){
     </Formik>
     
     <View style={{  justifyContent:'center'}}>
-    <Text category='s1' style={{alignSelf:'center', marginTop:8, marginBottom:24}}> 
-    OR
+    <Text category='s1' style={{alignSelf:'center', marginTop:12, marginBottom:24, fontFamily:'Poppins-Bold'}}> 
+    or login with
     </Text>
     <SignInComponent/>
     </View>

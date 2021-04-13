@@ -119,9 +119,7 @@ const SessionScreenWithContext = (props) => {
   return(
 
   <SubjectsContextWrapper>
-  <UserDataContextWrapper>
   <Session {...props}/>
-  </UserDataContextWrapper>
   </SubjectsContextWrapper>
 
   )

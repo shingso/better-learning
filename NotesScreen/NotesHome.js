@@ -8,6 +8,7 @@ import TopHeader from '../UtilComponents/TopHeader'
 import { UserDataContext } from '../UserDataContext'
 import * as Yup from 'yup';
 import { addSubject } from '../helperFunctions';
+import IOSShadowView from '../UtilComponents/IOSShadowView'
 
 
 const EditIcon = (props) => (
@@ -113,15 +114,15 @@ function NotesHome({ navigation }){
     )
 
     const renderItem = (info) => (
-
+      <IOSShadowView>
       <FolderComponent navigate={()=>navigation.navigate('NotesFocused',{ title: info.item.title, subjectID: info.item.id})} title={info.item.title} noteCount={info.item.noteCount} color={theme['color-primary-300']}/>
-      
+      </IOSShadowView>
     );
 
 
     const renderEmpty = () => (
-
-      <Card onPress={()=>setVisible(true)} style={{marginTop:12, paddingBottom:40,borderWidth:0, borderRadius:12}}>
+      <IOSShadowView>
+      <Card onPress={()=>setVisible(true)} style={{marginTop:12, paddingBottom:40,borderWidth:0, borderRadius:12, elevation:1}}>
       <View style={{alignItems:'center'}}>
       <Image
           style={{
@@ -133,10 +134,11 @@ function NotesHome({ navigation }){
           source={require('../assets/images/addafolder.png')}
       />
       
-      <Text style={{textAlign:'center', color:theme['color-primary-800'], fontSize:18, fontWeight:'bold', letterSpacing:0.5}} >Add Your Own Folder</Text>
-      <Text style={{marginTop:12,letterSpacing:0.2,color:theme['color-basic-700'], textAlign:'center', fontSize:14}}>Add a folder to better organize your notes</Text>
+      <Text style={{ color:theme['color-primary-800']}} category='h6'>Add Your Own Folder</Text>
+      <Text style={{marginTop:12,color:theme['color-basic-700'], textAlign:'center', fontSize:14}}>Add a folder to better organize your notes</Text>
       </View>
       </Card>
+      </IOSShadowView>
     )
 
 
@@ -151,13 +153,13 @@ function NotesHome({ navigation }){
    
     const renderHeader = () => (
         
-    <View>
+    <IOSShadowView>
     <FolderComponent 
     navigate={()=>navigation.navigate('GlobalNotes')} 
     title={"All Notes"} 
     noteCount={userData.totalNotes} 
     color={theme['color-info-200']}/>
-    </View>
+    </IOSShadowView>
 
     );
  
@@ -202,6 +204,8 @@ function NotesHome({ navigation }){
        
       <SafeAreaView style={{flex: 1}}>
       <TopHeader title={'Notes'} rightAccessory={renderRightAcessory}/>
+      <Layout style={{flex:1}}>
+
       <List
          showsVerticalScrollIndicator={false}
          contentContainerStyle={styles.contentContainer}
@@ -217,7 +221,7 @@ function NotesHome({ navigation }){
           >
        <StatefulModalContent/>
        </Modal>
-    
+      </Layout>
        </SafeAreaView>
       
       
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
     marginVertical:8,
     marginHorizontal:20,
     paddingBottom:100,
-    borderColor:'red',
+  
     
   },
   
@@ -252,7 +256,8 @@ const styles = StyleSheet.create({
     paddingHorizontal:4,
     paddingVertical:4,
     borderWidth:0,
-    borderRadius:12
+    borderRadius:12,
+    elevation:1
   
    
   },
