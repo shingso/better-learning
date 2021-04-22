@@ -53,22 +53,31 @@ function IQScreen(){
 
 
   const timeStudiedMessage = () =>{
-
+    const textStyle={
+      alignSelf:'center', 
+      fontFamily:'Poppins-SemiBold', 
+      fontSize:14,
+      lineHeight:26
+    }
     const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
     const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
 
-    console.log(lastWeekMinutesAverage, currentWeekMinutesAverage)
-
+  
     if(currentWeekMinutesStudied == 0){
-      return "You haven't studied yet this week"
+      return <Text style={{...textStyle}}>You haven't studied yet this week <Icon name={'alert-circle-outline'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
     }
 
-    if(currentWeekMinutesAverage > lastWeekMinutesAverage){
-      return "Your studying at a good pace to match last week"
+    if(currentWeekMinutesAverage > lastWeekMinutesAverage + (lastWeekMinutesAverage * .1)){
+      return <Text style={{...textStyle}}>You're studying alot more this week than last week. <Icon name={'trending-up'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
     }
+
+    if(currentWeekMinutesAverage > lastWeekMinutesAverage - (lastWeekMinutesAverage * .2)){
+      return <Text style={{...textStyle}}>Your studying at a good pace to match last week. <Icon name={'trending-up'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+    }
+
 
     if(currentWeekMinutesAverage < lastWeekMinutesAverage){
-      return "You studied more last week than "
+      return <Text style={{...textStyle}}>Find a pace that is sustainable. <Icon name={'trending-down'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
     }
 
   }
@@ -404,10 +413,11 @@ function IQScreen(){
  
 
   <Text style={{alignSelf:'center'}} category='h6'>Time Studied</Text>
-
-  <Text style={{marginVertical:16, alignSelf:'center', textAlign:'center'}}>{timeStudiedMessage()}</Text>
-
-  {/* <View style={{borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.9, marginVertical:12}}></View> */}
+  
+  <View style={{marginTop:12, marginBottom:4}}>
+  <Text>{timeStudiedMessage()}</Text>
+  </View>
+  <View style={{borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.9, marginTop:12}}></View> 
 
   <TimeComponent
   title={'This week'}

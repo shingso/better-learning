@@ -3,7 +3,7 @@ import { TextInput, View, SafeAreaView, Dimensions, Platform, TouchableWithoutFe
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/firestore';
 import { Formik } from 'formik';
-import { Button, Text ,Icon, Input, Layout } from '@ui-kitten/components';
+import { Button, Text ,Icon, Input, Layout, useTheme } from '@ui-kitten/components';
 import * as Yup from 'yup';
 import GlobalStyle from '../constants'
 
@@ -27,17 +27,16 @@ const LoginSchema = Yup.object().shape({
 
 function Login(){
  
-
+ const theme = useTheme()
  const navigation = useNavigation();
  const [secureTextEntry, setSecureTextEntry] = useState(true)
-
+ const [error, setError] = useState(false)
 
  const handleLogin = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
-    
+      setError(true)
     });
   }
 
@@ -61,7 +60,7 @@ function Login(){
 
      return (
       <SafeAreaView style={{flex:1}}>
-      <View  style={{ flex: 1,  padding:20, }}>
+      <View  style={{ flex: 1,  padding:20 }}>
 
       <TouchableOpacity  onPress={()=>navigation.navigate('SignUp')}>
       <View style={{flexDirection:'row', alignItems:'center', alignSelf:'flex-end'}}>
@@ -80,7 +79,11 @@ function Login(){
       <View>
       <Text category='h1' style={{marginBottom:12, fontFamily:'Poppins-Bold'}}>Login</Text>
       </View>
-
+      {error &&
+      <View style={{marginBottom:-4}}>
+      <Text style={{ fontFamily:'Poppins-Bold', fontSize:12, color:theme['color-danger-500']}}>Account does not exist or invalid login</Text>
+      </View>
+      }
       <Formik
       initialValues={{ email:'', password:''}}
       validationSchema={LoginSchema}

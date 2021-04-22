@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext} from 'react';
 import {  View, SafeAreaView, StyleSheet, ImageBackground, Vibration, Animated, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
-import { Button, Icon,  Card, Text, Layout, useTheme, Input, Modal } from '@ui-kitten/components';
+import { Button, Icon,  CheckBox, Text, Layout, useTheme, Input, Modal } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
-import { incrementActiveUsers } from '../helperFunctions';
+import { incrementActiveUsers, storeSession } from '../helperFunctions';
 import StudyProgressIndicator from '../UtilComponents/StudyProgressIndicator'
+import StudyProgressIndicatorSkip from '../UtilComponents/StudyProgressIndicatorSkip'
 import NotifService from '../UtilComponents/NotifService';
 import { AuthContext } from '../AuthContext'
-import { Formik } from 'formik';
-import { differenceInMilliseconds, addMilliseconds } from 'date-fns'
+import { Formik, setIn } from 'formik';
+import { differenceInMilliseconds, addMilliseconds, set } from 'date-fns'
 import { decrementActiveUsers, addCompletedSession, addNote, msToTime } from '../helperFunctions';
 import BackgroundTimer from 'react-native-background-timer';
 import * as Yup from 'yup';
@@ -16,7 +17,7 @@ import FolderSelectionComponent from '../UtilComponents/FolderSelectionComponent
 import { SubjectsContext } from '../SubjectsContext';
 import { TimerSettingsContext } from '../TimerSettingsContext';
 import GlobalStyle from '../constants'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TextSchema = Yup.object().shape({
     text: Yup.string()
@@ -65,10 +66,19 @@ function Session(){
     const navigation = useNavigation();
     const authContext = useContext(AuthContext)
     const timerSettings = useContext(TimerSettingsContext)
-
-
+    const [checked, setChecked] = React.useState(false);
+    const [initialChecked, setInitialChecked] = React.useState(false);
   
-      
+    const skipRecallExplain = (value) => {
+      try {
+          AsyncStorage.setItem('@skipscreen3', JSON.stringify(value));
+          setInitialChecked(value)
+      } catch (error) {
+          console.log(error)
+          }
+      };
+
+
 
     useEffect(() => {
 
@@ -104,8 +114,9 @@ function Session(){
     };
 
     const popToTop = () => {
-        if(studySessionPosition == 1){
+        if(studySessionPosition == 1 && !hasEnded){
             decrementActiveUsers()
+            storeSession(false, null)
             notif.cancelAll()
         }
         navigation.dispatch(StackActions.popToTop());
@@ -119,6 +130,7 @@ function Session(){
           BackgroundTimer.runBackgroundTimer(() => { 
           
             setTimeDifference(differenceInMilliseconds(initialTimeDateSet, new Date()))
+           
             }, 
             100);
       
@@ -126,16 +138,9 @@ function Session(){
           BackgroundTimer.stopBackgroundTimer()
         }
       
-        return function cleanup(){
-          notif.cancelAll()
-          BackgroundTimer.stopBackgroundTimer()
-        }
-      
     }, [isPlaying]);
 
     useEffect(() => {
-
-      //if we are in the future than end
 
         if(timeDifference <= 0){
           backgroundTimerEnded()
@@ -153,15 +158,62 @@ function Session(){
         setActiveUsers(response.data().NumberOfActiveUsers)
       }
 
+      async function getSkipScreen(){
+        try {
+            const value = await AsyncStorage.getItem('@skipscreen3')
+            if(value !== null) {
+              setChecked(JSON.parse(value))
+    
+            } else {
+                AsyncStorage.setItem('@skipscreen3', JSON.stringify(false))
+                setChecked(false)
+              
+            }
+          } catch(e) {
+            console.log(e)
+          }
+    }
+
+
+    async function getCurrentSession(){
+      const emptySession = [false, null]
+      try {
+          const value = await AsyncStorage.getItem('@sessionStatus')
+          if(value !== null) {
+            let parsedValue = JSON.parse(value)
+   
+            if(parsedValue[0] == true && parsedValue[1] != null){
+             
+              setInitialTimeDateSet(new Date(parsedValue[1]))
+              setStudySessionPosition(1)
+              setIsPlaying(true)
+            
+            }
+
+          } else {
+              AsyncStorage.setItem('@sessionsStatus', JSON.stringify(emptySession))
+            
+          }
+        } catch(e) {
+          console.log(e)
+        }
+  }
+
       fetchData()
+      getSkipScreen()
+      getCurrentSession()
+
+    
+   
 
     }, []);
 
     const backgroundTimerEnded = () => {
-
+        decrementActiveUsers()
         setIsPlaying(false)
         setHasEnded(true)
         //Vibration.vibrate()
+        storeSession(false, null)
         addCompletedSession(authContext.user.uid, timerSettings.timeSettings)
         BackgroundTimer.stopBackgroundTimer()
         setTimeout(() => {
@@ -172,17 +224,23 @@ function Session(){
 
 
     const startStudySession = () =>{
-        incrementActiveUsers()
+        let milliSecondTimeEnd = addMilliseconds(new Date(), timerSettings.timeSettings * 60 * 1000 + 1000) 
+        incrementActiveUsers()  
         notif.scheduleNotif(timerSettings.timeSettings * 60 * 1000 + 1000)
-        setInitialTimeDateSet(addMilliseconds(new Date(), timerSettings.timeSettings * 60 * 1000 + 1000))
+        setInitialTimeDateSet(milliSecondTimeEnd)
+        storeSession(true, milliSecondTimeEnd)
         setStudySessionPosition(studySessionPosition + 1)
         setIsPlaying(true)
     }
 
     const toRecall = () =>{ 
-        decrementActiveUsers()
+        
         notif.cancelAll()
-        setStudySessionPosition(studySessionPosition + 1) 
+        if(checked == true){
+          setStudySessionPosition(studySessionPosition + 2)
+        } else {
+          setStudySessionPosition(studySessionPosition + 1) 
+        }
     }
       
 
@@ -190,7 +248,10 @@ function Session(){
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
     <Layout level='2' style={{flex:1}}>
     <SafeAreaView style={{flex: 1}}>
+    {checked ? 
+    <StudyProgressIndicatorSkip currentStep={studySessionPosition}/>:
     <StudyProgressIndicator currentStep={studySessionPosition}/>
+    }
     <View style={{flex:1, padding:16}}>
     {studySessionPosition == 0 &&
     <View style={{flex:1}}>
@@ -255,7 +316,13 @@ function Session(){
 
     {studySessionPosition == 2 &&
     <View style={{flex:1, justifyContent:'center'}}>
-
+    <CheckBox
+    style={{marginLeft:4}}
+    status='basic'
+      checked={initialChecked}
+      onChange={nextChecked => skipRecallExplain(nextChecked)}>
+      {`Dont show this screen again`}
+    </CheckBox>
     <BodyComponent pictureFile={require('../assets/images/recallexplainv2-01.png')} 
     title={"Lets think about what we've learned"}
     bodyText={"Take a minute and think about what you've just learned. In the next screen, type it out."}

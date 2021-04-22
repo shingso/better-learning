@@ -225,14 +225,14 @@ const authContext = useContext(AuthContext)
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
-    
+  
     appearance={'noIndicator'}
     style={{borderTopWidth:1, borderTopColor:theme['color-basic-300'], paddingBottom:Platform.OS == 'ios' ? 48: 0, paddingTop: Platform.OS == 'ios' ? 20: 0}}
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
 
 
-    <BottomNavigationTab icon={HomeIcon}/>
+    <BottomNavigationTab  icon={HomeIcon}/>
     <BottomNavigationTab icon={ChartIcon}/>
     <BottomNavigationTab icon={BookIcon}/>
     <BottomNavigationTab icon={UserIcon}/>
@@ -259,8 +259,8 @@ const BottomTabBar = ({ navigation, state }) => (
     <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
     <Tab.Screen name="Home" component={HomeStack} />
     <Tab.Screen name="UserStatsStack" component={UserStatsStack} />
-    <Tab.Screen name="GuidesStack" component={GuidesStack} />
-    <Tab.Screen name="UserSettingsStack" component={UserSettingsStack} />
+    <Tab.Screen options={{unmountOnBlur:true}} name="GuidesStack" component={GuidesStack} />
+    <Tab.Screen options={{unmountOnBlur:true}} name="UserSettingsStack" component={UserSettingsStack} />
     </Tab.Navigator>
   
     </NavigationContainer>

@@ -18,32 +18,32 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/thinkingv2-01.png')} 
     headerText={'Tune your attention to learning'}
-    bodyText={'Learning comes best when we are deeply focused and engaged with the material. The more focused our attention, the better we will learn.'}
+    bodyText={'Learning comes best when we are deeply focused and engaged with the material. Do your best to maintain your focus, commiting time to studying.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/thinkingv2-01.png')} 
     headerText={'Short and sweet'}
-    bodyText={'We dont naturally have a very long attention span. An effective way to study and learn is in short and focused periods.'}
+    bodyText={'Staying deeply focused for long periods is difficult. A managable and effective way to learn is with short and focused study periods.'}
     />
     
     <GuideComponent 
     picture={require('../assets/images/focusedstudy-01.png')} 
-    headerText={'Dedicated study time'}
-    bodyText={'A timer is helpful with staying focused. Setting a dedicated time period for studying helps us maintain our focus.'} 
+    headerText={'Timed study session'}
+    bodyText={'We can   A timer is helpful with staying engaged in learning. Use a timer to set a dedicated time period for study.'} 
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/recall-01.png')} 
     headerText={"Think about what you've learned"} // By typing
-    bodyText={"At the end of your study period, think about what you have learned and type it out. Doing so will encourage connections to be made in our brains."} //Everything that you type should be from memory.
+    bodyText={"Actively thinking about what we've learned helps us process the information. At the end of a study session, think about what you've learned about and type it out."} //Everything that you type should be from memory.
     />
 
     <GuideComponent 
     picture={require('../assets/images/takeabreak.png')} 
     headerText={'Take a break'}
-    bodyText={'After studying, take a break. Breaks help relax   '} //Breaks help refresh our minds, which is important to learning. reset our thought process.
+    bodyText={'After studying, take a break. Breaks help relax our brains and reset our attention'} //Breaks help refresh our minds, which is important to learning. reset our thought process.
     />
 
     </GlobalSwiper>

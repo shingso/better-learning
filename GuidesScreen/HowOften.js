@@ -20,9 +20,14 @@ function HowOften(){
     <GuideComponent 
     picture={require('../assets/images/figureout-01.png')} 
     headerText={'Figure out what you can do'}
-    bodyText={'Find out how much time you can put into studying every day comfortably. Its easier to build sustainable habits through managable workloads.'}
+    bodyText={'Find out how much time you can put into studying every day comfortably. Set realistic and managable workloads.'}
     />
 
+    <GuideComponent 
+    picture={require('../assets/images/burnout.png')} 
+    headerText={'Start small and work your way up'}
+    bodyText={"If you're unsure how much you can study, aim for one study session per day. Scale your study sessions"}
+    />
 
     <GuideComponent 
     picture={require('../assets/images/spreadout-01.png')} 

@@ -3,7 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid'
 import { Text, useTheme } from '@ui-kitten/components';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export async function addUser(userID) {
@@ -49,6 +49,22 @@ export async function deleteSubject(userID, subjectID) {
 
   const ref = firestore().collection('Users').doc(userID).collection('Subjects').doc(subjectID)
   await ref.delete();
+ 
+}
+
+
+export async function storeSession(value, endTime) {
+
+
+    const session = [value, endTime]
+    try {
+        AsyncStorage.setItem('@sessionStatus', JSON.stringify(session));
+        console.log('value',session)
+    } catch (error) {
+        console.log(error)
+    }
+  
+
  
 }
 

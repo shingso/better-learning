@@ -4,7 +4,7 @@ import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import GlobalStyle from '../constants'
 import { Formik } from 'formik';
-import { Button, Text ,Icon, Input, Layout, Modal, Card } from '@ui-kitten/components';
+import { Button, Text ,Icon, Input, Layout, Modal, Card, useTheme} from '@ui-kitten/components';
 import * as Yup from 'yup';
 import TopHeader from '../UtilComponents/TopHeader'
 
@@ -22,7 +22,7 @@ const RecoverSchema = Yup.object().shape({
 
 
 function ForgotPassword(){
- 
+    const theme = useTheme()
     const navigation = useNavigation();
     const [ errorMessage, setErrorMessage] = useState('')
     const [ visible, setVisible ] = useState(false)
@@ -31,13 +31,15 @@ function ForgotPassword(){
      return (
 
       <SafeAreaView style={{flex:1}}>
-      <TopHeader/>
-      <View style={{ flex: 1, padding:16, paddingBottom:40}}>
+      <TopHeader title={'Reset Password'}/>
+      <View style={{ flex: 1, padding:20, paddingBottom:40}}>
  
       <View>
-      <Text category='h6' style={{marginBottom:20}}>Let's work on getting you back into your account</Text>
+      <Text category='h6' style={{marginBottom:12}}>Let's work on getting you back into your account.</Text>
       </View>
-
+      <View>
+      <Text style={{marginBottom:20}}>Enter the email address that you used to sign up with.</Text>
+      </View>
       <Formik
       initialValues={{ email:'' }}
       validationSchema={RecoverSchema}
@@ -60,8 +62,8 @@ function ForgotPassword(){
     {formikProps => (
     <React.Fragment>
     
-    {errorMessage != '' && <Text>{errorMessage}</Text>}
-
+    {errorMessage != '' && <Text style={{fontFamily:'Poppins-Bold', marginBottom:-4, fontSize:12, color:theme['color-danger-500'] }}>{errorMessage}</Text>}
+    
     <Input
     placeholder='Email address'
     value={formikProps.values.email}

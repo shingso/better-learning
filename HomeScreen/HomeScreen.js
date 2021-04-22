@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground, Image } from 'react-native'
+import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Layout, useTheme , withStyles} from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Layout, useTheme , withStyles, Modal} from '@ui-kitten/components';
 import CalendarStrip from 'react-native-calendar-strip'
 import { ScrollView } from 'react-native-gesture-handler';
 import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays, subDays, getDate } from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import IOSShadowView from '../UtilComponents/IOSShadowView'
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { storeSession } from '../helperFunctions';
 
 function HomeScreen(){
 
@@ -17,7 +17,7 @@ function HomeScreen(){
     const theme = useTheme()
     const studyStatsData = useContext(StudyStatsContext)
     const timesStudiedToday = studyStatsData.timesStudiedToday
-  
+    const [visible, setVisible] = useState(false)
 
     const markedDatesFunc = date => {
 
@@ -39,7 +39,46 @@ function HomeScreen(){
       return {};
       
     }
+  
+  
+  const resumeSession =() => {
+    setVisible(false)
+    navigation.navigate('Session')
+  }
 
+  const cancelPreviousSession =() => {
+    storeSession(false, null)
+    setVisible(false)
+  }
+ 
+
+  useEffect(() => {
+      
+    async function getCurrentSession(){
+      const emptySession = [false, null]
+      try {
+          const value = await AsyncStorage.getItem('@sessionStatus')
+          if(value !== null) {
+            let parsedValue = JSON.parse(value)
+            if(parsedValue[0] == true){
+              setVisible(true)
+            }
+        
+          } else {
+              AsyncStorage.setItem('@sessionsStatus', JSON.stringify(emptySession))
+            
+          }
+        } catch(e) {
+          console.log(e)
+        }
+  }
+
+
+    getCurrentSession()
+
+  }, []);
+
+  
     const screenWidth = Dimensions.get('window').width - 16
     const navigation = useNavigation();
     const userData = useContext(UserDataContext)
@@ -140,6 +179,33 @@ function HomeScreen(){
     <Text category='p1' style={{marginTop:12, marginBottom:24,letterSpacing:0.2,color:theme['color-basic-700'], marginHorizontal:30, lineHeight:24, textAlign:'center'}}>A collection of your thoughts</Text>
     </View>
     </Card>
+
+    <Modal
+    visible={visible}
+    backdropStyle={styles.backdrop}
+    >
+
+    <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginHorizontal:60}}>
+    <View style={{justifyContent:'center', alignItems:'center'}}>
+    <Text  category='s1' style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24,}}>You closed the app while a session was running. Would you like to resume?</Text> 
+   
+    <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+    <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+    <TouchableOpacity onPress={()=>cancelPreviousSession()} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center' }}>
+    <Text category='s1' style={{ textAlign:"center", color:theme['color-danger-600'] }}>End Session</Text>
+    </TouchableOpacity>
+    <TouchableOpacity  onPress={()=>resumeSession()} style={{flex:1, height:50, justifyContent:'center'}}>
+    <Text category='s1' style={{ textAlign:"center",  color:theme['color-primary-600']}}>Resume Session</Text>
+    </TouchableOpacity>
+    </View>
+    </View>
+
+
+    </View>
+    </Layout>
+    </Modal>
+
+
     </IOSShadowView>
   
     
@@ -156,5 +222,28 @@ function HomeScreen(){
 
 export default HomeScreen
 
+const styles = StyleSheet.create({
+  
+  backdrop:{
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+
+  modalView: {
+
+    backgroundColor: "white",
+    borderRadius: 12,
+    width:300,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+
+});
 
 //timesStudiedToday == 0 ? 'You havent studied today' : timesStudiedToday + ' session / 1hr 20 mins'

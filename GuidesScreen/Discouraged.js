@@ -25,25 +25,25 @@ function Discouraged(){
     <GuideComponent 
     picture={require('../assets/images/juststart-01.png')} 
     headerText={'Jump into studying'}
-    bodyText={"Getting started is often harder than actually studying. "}
+    bodyText={"Getting started is one of the hardest parts. Do your best to start and you'll often get into the flow of studying."}
     />
 
     <GuideComponent 
     picture={require('../assets/images/puttingintime.png')} 
     headerText={'Do what you can'}
-    bodyText={'Some days you will be more motivated to study, and some days less. Any amount of progress is good.'}
+    bodyText={'Some days you will be more motivated to study and other days less. Remember that any amount of progress is good.'}
     />
     
     <GuideComponent 
     picture={require('../assets/images/focusprocess-01.png')} 
     headerText={'Focus on the process'}
-    bodyText={'Learning is a long term process and takes time. Focus on the progress that you have made.'}
+    bodyText={'Learning is a long term process and takes time.  Look at the progress you have made.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'You can understand complex concepts.'}
-    bodyText={'With enough time and effort, you can build an understanding of difficult subjects.'}
+    bodyText={'With enough time and effort, you can build an understanding of difficult subjects. '}
     />
 
    
