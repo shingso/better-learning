@@ -24,7 +24,7 @@ export function TimerSettingsContextWrapper(props) {
             const value = await AsyncStorage.getItem('@timeSettings')
             if(value !== null) {
               TimeSettingsSet(value)
-              console.log('value',value)
+        
             } else {
                 AsyncStorage.setItem('@timeSettings', '25')
                 setTimeSettings('25')

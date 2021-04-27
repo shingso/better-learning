@@ -12,24 +12,23 @@ function PrivacyPolicy(){
 
 return (
    
-<Layout level='2' style={{ flex: 1 }}>
+
 <SafeAreaView style={{ flex: 1}}>
 <TopHeader title={'Privacy Policy'}/>
 
-<ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:20, paddingHorizontal:20}}>
+<ScrollView showsVerticalScrollIndicator={false}>
     
+<Layout level='2' style={{ flex: 1, paddingTop:20, paddingHorizontal:20, paddingBottom:60 }}>
+<Text style={[styles.bodyText, {fontFamily:'Poppins-Bold'}]}>
 
-<Text>
-
-{`\t  Study Sesh is a free application which is provided by at no cost and is intended for use as is. This privacy policy is to inform you regarding the collection, use, and disclosure of Personal Information.
+{`Study Sesh is a free application which is provided by at no cost and is intended for use as is. This privacy policy is to inform you regarding the collection, use, and disclosure of Personal Information.
     
-    By using this app, you hereby agree to the collection and use of information in relation to this policy. The Personal Information that is collected is used for the functionality and improvement of this app. Your information will not be shared with any being except as described in this Privacy Policy.`}
+By using this app, you hereby agree to the collection and use of information in relation to this policy. The Personal Information that is collected is used for the functionality and improvement of this app. Your information will not be shared with any being except as described in this Privacy Policy.`}
 </Text>
 
 
 <Text style={styles.bodyText}>
-{`\t 
-   For a better experience while using this application, you may be required to provide us with personally identifiable information. This app does use third party services that may collect information used to identify you.
+{`For a better experience while using this application, you may be required to provide us with personally identifiable information. This app does use third party services that may collect information used to identify you.
 
 The third party service providers used by the app include:
 
@@ -42,7 +41,8 @@ Log Data is information that is collection when errors occur in the application.
 
 
 <Text style={styles.bodyText}>
-{`\t  Third-party companies and individuals may be employed to work on this application due to the following reasons:
+{`\t
+Third-party companies and individuals may be employed to work on this application due to the following reasons:
 
 To facilitate our Service;
 To perform Service-related services; or
@@ -53,11 +53,13 @@ However, third parties are obligated not to disclose or misuse the your personal
 </Text>
 
 <Text style={styles.bodyText}>
-{`\t  Keeping your information safe and secure is important, and we will strive to follow the best security practices in order to protect any information provided to us. However, due to the nature that information security can never be fully guaranteed,  we also cannot fully guarantee the absolute security of your information.`}
+{`
+Keeping your information safe and secure is important, and we will strive to follow the best security practices in order to protect any information provided to us. However, due to the nature that information security can never be fully guaranteed,  we also cannot fully guarantee the absolute security of your information.`}
 </Text>
 
 <Text style={styles.bodyText}>
-{`\t  These Services do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13. In the case that I discover that a child under 13 has provided me with personal information, their information will be promptly removed from our servers and databases. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me.`}
+{`\t
+These Services do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13. In the case that I discover that a child under 13 has provided me with personal information, their information will be promptly removed from our servers and databases. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me.`}
 </Text>
 
 
@@ -76,10 +78,10 @@ If you have any questions concerning this Privacy Policy, contact us at studyses
 
 
     
-
+</Layout>
 </ScrollView>   
 </SafeAreaView>
-</Layout>
+
   );
 };
 

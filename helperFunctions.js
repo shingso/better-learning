@@ -13,11 +13,7 @@ export async function addUser(userID) {
 
   const refResponse = await ref.get()
 
-  if(refResponse.exists){
-
-    console.log('exists', refResponse.exists)
-  
-  } else {
+  if(!refResponse.exists){
     
     await ref.set({
       timeStamp: firestore.FieldValue.serverTimestamp(),
@@ -55,17 +51,13 @@ export async function deleteSubject(userID, subjectID) {
 
 export async function storeSession(value, endTime) {
 
-
     const session = [value, endTime]
     try {
         AsyncStorage.setItem('@sessionStatus', JSON.stringify(session));
-        console.log('value',session)
     } catch (error) {
         console.log(error)
     }
   
-
- 
 }
 
 

@@ -31,16 +31,16 @@ function LearningTips(){
     <GuideComponent 
     picture={require('../assets/images/makehabitv2-01.png')} 
     headerText={'Make a habit of studying'}
-    bodyText={'Try and study at the same time everyday. Doing so will make it easier to start studying.'}
+    bodyText={'Try and study at the same time everyday. Doing so will make it easier to start studying, long term progress.'}
     />
 
 
-    <GuideComponent 
+    {/* <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
     headerText={'Revisit past information'}
     bodyText={'Reviewing explained in a different way We often. When we go over something we often catch something we didnt before. '}
     />
-
+    */}
     
     <GuideComponent 
     picture={require('../assets/images/project-01.png')} 

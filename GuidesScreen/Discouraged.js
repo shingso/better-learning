@@ -29,9 +29,9 @@ function Discouraged(){
     />
 
     <GuideComponent 
-    picture={require('../assets/images/puttingintime.png')} 
+    picture={require('../assets/images/dowhatyoucan-01.png')} 
     headerText={'Do what you can'}
-    bodyText={'Some days you will be more motivated to study and other days less. Remember that any amount of progress is good.'}
+    bodyText={'Some days you will be more motivated to study and other days less. Making progress is the goal, and any amount of progress is good.'}
     />
     
     <GuideComponent 

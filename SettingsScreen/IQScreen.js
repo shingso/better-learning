@@ -55,29 +55,31 @@ function IQScreen(){
   const timeStudiedMessage = () =>{
     const textStyle={
       alignSelf:'center', 
-      fontFamily:'Poppins-SemiBold', 
+      fontFamily:'Poppins-Regular', 
       fontSize:14,
-      lineHeight:26
+      lineHeight:26,
+      textAlign:'center'
+   
     }
     const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
     const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
 
   
     if(currentWeekMinutesStudied == 0){
-      return <Text style={{...textStyle}}>You haven't studied yet this week <Icon name={'alert-circle-outline'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>You haven't studied yet this week. <Icon name={'alert-circle'} style={{marginBottom:-3}} fill={theme['color-info-300']} width={18} height={18}/></Text>
     }
 
-    if(currentWeekMinutesAverage > lastWeekMinutesAverage + (lastWeekMinutesAverage * .1)){
-      return <Text style={{...textStyle}}>You're studying alot more this week than last week. <Icon name={'trending-up'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+    if(currentWeekMinutesAverage > lastWeekMinutesAverage + (lastWeekMinutesAverage * .2)){
+      return <Text style={{...textStyle}}>You're studying at a good pace. <Icon name={'trending-up-circle'} style={{marginBottom:-3}} fill={theme['color-primary-600']} width={18} height={18}/></Text>
     }
 
     if(currentWeekMinutesAverage > lastWeekMinutesAverage - (lastWeekMinutesAverage * .2)){
-      return <Text style={{...textStyle}}>Your studying at a good pace to match last week. <Icon name={'trending-up'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>Your studying at a good pace to match last week. <Icon name={'checkmark-circle-2'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
     }
 
 
     if(currentWeekMinutesAverage < lastWeekMinutesAverage){
-      return <Text style={{...textStyle}}>Find a pace that is sustainable. <Icon name={'trending-down'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>Your studying a lot less than last week. Find a pace that is managable. <Icon name={'trending-down'} style={{marginBottom:-3}} fill={theme['color-danger-600']} width={18} height={18}/></Text>
     }
 
   }
@@ -414,8 +416,8 @@ function IQScreen(){
 
   <Text style={{alignSelf:'center'}} category='h6'>Time Studied</Text>
   
-  <View style={{marginTop:12, marginBottom:4}}>
-  <Text>{timeStudiedMessage()}</Text>
+  <View style={{marginTop:12, marginBottom:4, alignItems:'center'}}>
+  <Text style={{textAlign:'center'}}>{timeStudiedMessage()}</Text>
   </View>
   <View style={{borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.9, marginTop:12}}></View> 
 

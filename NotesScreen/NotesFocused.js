@@ -100,7 +100,6 @@ function NotesFocused({ route, navigation }){
       if(input != ''){
       const regexp = new RegExp(input, 'i')
       const result = notes.filter(x => regexp.test(x.textTheme) && x.textTheme != null)
-      console.log(input, result)
       setFilteredNotes(result)
       setValue(input)
       } else {

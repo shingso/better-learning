@@ -16,42 +16,42 @@ return (
 <Layout level='2' style={{flex: 1, paddingTop:20, paddingHorizontal:20, paddingBottom:60}}>
 
 
-<Text style={[styles.bodyText, {fontFamily:'Poppins-SemiBold'}]}>
-{`\t   By downloading or using this application, these terms and conditions automatically apply to you. You are obligated to read and understand these terms carefully before using this application. `}
+<Text style={[styles.bodyText, {fontFamily:'Poppins-Bold'}]}>
+{`By downloading or using this application, these terms and conditions automatically apply to you. You are obligated to read and understand these terms carefully before using this application. `}
 </Text>
 
 
 <Text style={styles.bodyText}>
-{`\t  You are not allowed to copy or modify this application, any parts of this application, or any of its trademarks in any way. You are not allowed to attempt to extract the source code of this application, nor attempt to make derivative versions of this app. This application, all trademarks, copyrights, database rights and other intellectual property rights related to it belong to the developer of this application.`}
+{`You are not allowed to copy or modify this application, any parts of this application, or any of its trademarks in any way. You are not allowed to attempt to extract the source code of this application, nor attempt to make derivative versions of this app. This application, all trademarks, copyrights, database rights and other intellectual property rights related to it belong to the developer of this application.`}
 </Text>
 
 <Text style={styles.bodyText}>
-{`\t   We are committed to ensuring that this app is up to date and has growing functionality. For that reason, we reserve the right, at any time and for any reason, to make changes to the app or to charge for its services. You will be notified about changes to charges for this app or for its services. Charges that you incur through this app will be made clear to you.`}
-</Text>
-
-
-<Text style={styles.bodyText}>
-{`\t   The Study Sesh app processes and stores personal information that you have provided. Review our privacy policy for more information on how this app handles personal information.`}
+{`We are committed to ensuring that this app is up to date and has growing functionality. For that reason, we reserve the right, at any time and for any reason, to make changes to the app or to charge for its services. You will be notified about changes to charges for this app or for its services. Charges that you incur through this app will be made clear to you.`}
 </Text>
 
 
 <Text style={styles.bodyText}>
-{`\t   This app uses third party services that declare their own Terms and Conditions. Please refer to the Terms and Conditions of third party service providers used by this app for more information:
+{`The Study Sesh app processes and stores personal information that you have provided. Review our privacy policy for more information on how this app handles personal information.`}
+</Text>
+
+
+<Text style={styles.bodyText}>
+{`This app uses third party services that declare their own Terms and Conditions. Please refer to the Terms and Conditions of third party service providers used by this app for more information:
 
 Google Play Services,
 Google Analytics for Firebase`}
 </Text>
 
 <Text style={styles.bodyText}>
-{`\t   An internet connection is required for this application to function. If you are using this app while not on a Wi-Fi connection, be aware that of charges from your mobile provider for the cost of data. You are responsible for any such data charges, including roaming data charges, that you incur from using this app.`}
+{`An internet connection is required for this application to function. If you are using this app while not on a Wi-Fi connection, be aware that of charges from your mobile provider for the cost of data. You are responsible for any such data charges, including roaming data charges, that you incur from using this app.`}
 </Text>
 
 <Text style={styles.bodyText}>
-{`\t   We accept no liability for any loss, direct or indirect,  that you experience as a result of relying wholly on the functionality of this app.`}
+{`We accept no liability for any loss, direct or indirect,  that you experience as a result of relying wholly on the functionality of this app.`}
 </Text>
 
 <Text style={styles.bodyText}>
-{`\t   This application will be updated from time to time. This app is currently available on Android and iOS – the requirements for both systems(and for any additional systems we decide to extend the availability of the app to) may change, and you may need to download an update for this application to continue to function. We cannot guarantee that this app will always work with the Android and iOS version that you have installed on your device. 
+{`This application will be updated from time to time. This app is currently available on Android and iOS – the requirements for both systems(and for any additional systems we decide to extend the availability of the app to) may change, and you may need to download an update for this application to continue to function. We cannot guarantee that this app will always work with the Android and iOS version that you have installed on your device. 
 
 You are obligated to review and accept updates to the application when offered to you. We reserve the right to stop providing this app and service at any time, and may terminate use of it without any advanced notice of termination. Unless stated, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.`}
 </Text>

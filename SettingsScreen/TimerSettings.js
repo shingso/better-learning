@@ -21,7 +21,7 @@ function TimerSettings(){
     try {
         AsyncStorage.setItem('@timeSettings', value);
         timerSettings.setTimeSettings(value)
-        console.log(value)
+      
     } catch (error) {
         console.log(error)
         }

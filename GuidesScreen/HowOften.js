@@ -19,14 +19,14 @@ function HowOften(){
 
     <GuideComponent 
     picture={require('../assets/images/figureout-01.png')} 
-    headerText={'Figure out what you can do'}
-    bodyText={'Find out how much time you can put into studying every day comfortably. Set realistic and managable workloads.'}
+    headerText={'Start small and figure out what you can do'}
+    bodyText={'Find out how much time you can put into studying every day comfortably. Set realistic and managable workloads based on what you know you can handle.'}
     />
 
     <GuideComponent 
-    picture={require('../assets/images/burnout.png')} 
+    picture={require('../assets/images/startsmall-01.png')} 
     headerText={'Start small and work your way up'}
-    bodyText={"If you're unsure how much you can study, aim for one study session per day. Scale your study sessions"}
+    bodyText={"If your just starting on learning, start small and aim for one study session per day."}
     />
 
     <GuideComponent 
@@ -38,7 +38,7 @@ function HowOften(){
     <GuideComponent 
     picture={require('../assets/images/burnout.png')} 
     headerText={'Avoid burnout'}
-    bodyText={"Trying to do a lot quickly isn't sustainable. Pace yourself and focus on the process of learning."}
+    bodyText={"Trying to studying a lot in one day isn't sustainable. Burning out and breaking the habit and rythum of learning is very bvad."}
     />
 
     </GlobalSwiper>

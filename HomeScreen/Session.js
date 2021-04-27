@@ -128,11 +128,11 @@ function Session(){
         if (isPlaying) {
       
           BackgroundTimer.runBackgroundTimer(() => { 
-          
+            //console.log(new Date())
             setTimeDifference(differenceInMilliseconds(initialTimeDateSet, new Date()))
            
             }, 
-            100);
+            200);
       
         } else {
           BackgroundTimer.stopBackgroundTimer()
@@ -317,11 +317,12 @@ function Session(){
     {studySessionPosition == 2 &&
     <View style={{flex:1, justifyContent:'center'}}>
     <CheckBox
-    style={{marginLeft:4}}
+    style={{marginLeft:6, height:10, marginTop:8}}
     status='basic'
+
       checked={initialChecked}
       onChange={nextChecked => skipRecallExplain(nextChecked)}>
-      {`Dont show this screen again`}
+      <Text style={{fontSize:12, fontFamily:'Poppins-SemiBold'}}>Don't show this screen again</Text>
     </CheckBox>
     <BodyComponent pictureFile={require('../assets/images/recallexplainv2-01.png')} 
     title={"Lets think about what we've learned"}
