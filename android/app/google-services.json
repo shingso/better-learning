@@ -15,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "658778667051-78dsco79nas1tq7hnd2qs10i43f8fvoq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.betterlearning",
+            "certificate_hash": "b24f5b1537a02b2104e9cebaad514b17122c7f5a"
+          }
+        },
+        {
           "client_id": "658778667051-95bgorir5m0mf3096hoq00sl7atcmjmq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.betterlearning",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "658778667051-aj4g6973g8g1r70uje1efruj56e01gil.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.betterlearning",
+            "certificate_hash": "de51818da2c5adef5ce791863f7726a3adc6bbb1"
           }
         },
         {
@@ -46,6 +62,13 @@
             {
               "client_id": "658778667051-mv2fj89vqeu7mp6fj8jjvd26h5s0pjpd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "658778667051-vi7rh6epn4r6qifr23jgcm08vh24eav5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.betterlearning"
+              }
             }
           ]
         }

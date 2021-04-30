@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { TextInput, View, StyleSheet, ImageBackground, SafeAreaView } from 'react-native'
+import { TextInput, View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import GlobalStyle from '../constants'
@@ -75,8 +75,6 @@ function ForgotPassword(){
     style={{marginVertical:8}}
     />
 
-   
-
     <Button size='large' style={{marginVertical:16, ...GlobalStyle.ButtonShadow, borderRadius:30}} onPress={()=>formikProps.handleSubmit()}>
     Reset Password
     </Button>
@@ -89,22 +87,18 @@ function ForgotPassword(){
     <Modal
     visible={visible}
     backdropStyle={styles.backdrop}>
-    <Card style={{width:180, height:120}} disabled={true}>
-    <ImageBackground opacity={0.10} resizeMode='contain'source={require('../assets/images/progress.png')} style={styles.image}>
-    <View style={{ height:100}}>
-    <View style={{flex:1}}>
-    <Text category='s1' style={{textAlign:'center', marginTop:12}}>Check your email for a password reset link</Text>
+    <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginBottom:300}}>
+    <View style={{width:260}}>
+    <Text  style={{textAlign:'center', marginVertical:12}}>A password reset has been sent to the requested email.</Text>
     </View>
-    
-    <View>
-    <Button style={{marginBottom:20}} onPress={()=>{navigation.navigate('Login')}}>
-    Confirm
-    </Button>
+    <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
+    <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
+    <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center' }}>
+    <Text category='s1' status='info' style={{textAlign:"center",}}>Close</Text>
+    </TouchableOpacity>
     </View>
-    
     </View>
-    </ImageBackground>
-    </Card>
+    </Layout>
     </Modal>
 
 
@@ -124,7 +118,6 @@ const styles = StyleSheet.create({
     },
   
     image: {
-  
       height:120,
       margin:-24,
       padding:18

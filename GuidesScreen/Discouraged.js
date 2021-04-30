@@ -11,16 +11,11 @@ function Discouraged(){
     <Layout style={{flex:1}}>
     <SafeAreaView style={{flex:1}}>
     
-    <TopHeader title="Discouraged"/>
+    <TopHeader title="Can't get into learning"/>
 
     
     <GlobalSwiper>
-    
-    {/* <GuideComponent 
-    picture={require('../assets/images/growingidea.png')} 
-    headerText={'Learning new concepts is tough'}
-    bodyText={'Learning new things is tough, yet rewarding.'}
-    /> */}
+
 
     <GuideComponent 
     picture={require('../assets/images/juststart-01.png')} 
@@ -31,19 +26,19 @@ function Discouraged(){
     <GuideComponent 
     picture={require('../assets/images/dowhatyoucan-01.png')} 
     headerText={'Do what you can'}
-    bodyText={'Some days you will be more motivated to study and other days less. Making progress is the goal, and any amount of progress is good.'}
+    bodyText={"Some days you will be more motivated to study and other days less. Making progress is the goal, and any amount of progress is good."}
     />
     
     <GuideComponent 
     picture={require('../assets/images/focusprocess-01.png')} 
-    headerText={'Focus on the process'}
-    bodyText={'Learning is a long term process and takes time.  Look at the progress you have made.'}
+    headerText={'Process and progress'}
+    bodyText={"Focus on the process. Every day put time into taking the next step and making progress."}
     />
 
     <GuideComponent 
     picture={require('../assets/images/growingidea.png')} 
-    headerText={'You can understand complex concepts.'}
-    bodyText={'With enough time and effort, you can build an understanding of difficult subjects. '}
+    headerText={'You can understand complex concepts'}
+    bodyText={"With enough time and effort you can build an understanding of difficult subjects. Know that you can solve most problems with enough persistence."}
     />
 
    

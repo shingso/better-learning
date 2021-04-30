@@ -19,27 +19,27 @@ function HowOften(){
 
     <GuideComponent 
     picture={require('../assets/images/figureout-01.png')} 
-    headerText={'Start small and figure out what you can do'}
-    bodyText={'Find out how much time you can put into studying every day comfortably. Set realistic and managable workloads based on what you know you can handle.'}
+    headerText={'Figure out what you can do'}
+    bodyText={'Find out how much time you can put into studying comfortably. Studying at a sustainable pace is best for the overall learning process.'}
     />
 
     <GuideComponent 
     picture={require('../assets/images/startsmall-01.png')} 
     headerText={'Start small and work your way up'}
-    bodyText={"If your just starting on learning, start small and aim for one study session per day."}
+    bodyText={"If you're just getting started, start small. One study session per day is a good starting pace which can result in noticeable progress."}
     />
 
     <GuideComponent 
     picture={require('../assets/images/spreadout-01.png')} 
     headerText={'Spread your study sessions out'}
-    bodyText={'The more consecutive days you study, the better you will learn. Put your effort into studying consistently over the span of a week, rather than a lot in one day.'}
+    bodyText={'The more consecutive days you study, the better you will learn. Put your effort into studying consistently over the span of a week rather than a lot in a day.'}
     />
     
-    <GuideComponent 
+   {/*  <GuideComponent 
     picture={require('../assets/images/burnout.png')} 
     headerText={'Avoid burnout'}
-    bodyText={"Trying to studying a lot in one day isn't sustainable. Burning out and breaking the habit and rythum of learning is very bvad."}
-    />
+    bodyText={"Burning out and breaking out habit of studying will greatly impede your learning. "}
+    /> */}
 
     </GlobalSwiper>
     </SafeAreaView>

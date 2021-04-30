@@ -34,11 +34,11 @@ function Inspiration(){
     bodyText={'With enough time and effort, you can solve difficult problems. Our minds have the tendency to come up with solutions when are .'}
     />
 
-    <GuideComponent 
+  {/*   <GuideComponent 
     picture={require('../assets/images/success.png')} 
     headerText={'You can go further than you think'}
     bodyText={"Learning is all about putting the time in. You'll solve problems and understand concepts you never thought you could."}
-    />
+    /> */}
 
   
     </GlobalSwiper>

@@ -18,7 +18,7 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/thinkingv2-01.png')} 
     headerText={'Tune your attention to learning'}
-    bodyText={'Learning comes best when we are deeply focused and engaged with the material. When studying, commit to giving your full attention to learning.'}
+    bodyText={'Learning comes best when we are deeply focused and engaged. When studying, give your full attention to learning.'}
     />
 
     <GuideComponent 
@@ -30,20 +30,20 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/focusedstudy-01.png')} 
     headerText={'Timed study session'}
-    bodyText={'A timer is useful tool to stay engaged in learning. By setting a dedicated time period for studying, we are more prepared to maintain our undivided attention.'} 
+    bodyText={'A timer is a useful tool to stay engaged in learning. By setting a dedicated time period for studying, we are more prepared to maintain our undivided attention.'} 
     />
 
     
     <GuideComponent 
     picture={require('../assets/images/recall-01.png')} 
     headerText={"Think about what you've learned"} // By typing
-    bodyText={"Thinking about what we've learned helps our brains process the information. At the end of a study session, think about what you've learned about and type it out."} //Everything that you type should be from memory.
+    bodyText={"At the end of a study session, think about what you've learned and type it out. Doing so will help your brain process the new information."} //Everything that you type should be from memory.
     />
 
     <GuideComponent 
     picture={require('../assets/images/takeabreak.png')} 
     headerText={'Take a break'}
-    bodyText={'After studying, take a break. Breaks refresh our attention span.'} //Breaks help refresh our minds, which is important to learning. reset our thought process.
+    bodyText={'After studying, take a break. Breaks refresh our attention span and allows us to be more productive in future study sessions.'} //Breaks help refresh our minds, which is important to learning. reset our thought process.
     />
 
     </GlobalSwiper>

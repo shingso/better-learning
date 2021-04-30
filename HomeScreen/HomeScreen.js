@@ -61,7 +61,7 @@ function HomeScreen(){
           if(value !== null) {
             let parsedValue = JSON.parse(value)
             if(parsedValue[0] == true){
-              setVisible(true)
+              navigation.navigate('Session')
             }
         
           } else {

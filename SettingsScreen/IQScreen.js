@@ -63,14 +63,13 @@ function IQScreen(){
     }
     const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
     const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
-
-  
+    
     if(currentWeekMinutesStudied == 0){
       return <Text style={{...textStyle}}>You haven't studied yet this week. <Icon name={'alert-circle'} style={{marginBottom:-3}} fill={theme['color-info-300']} width={18} height={18}/></Text>
     }
 
     if(currentWeekMinutesAverage > lastWeekMinutesAverage + (lastWeekMinutesAverage * .2)){
-      return <Text style={{...textStyle}}>You're studying at a good pace. <Icon name={'trending-up-circle'} style={{marginBottom:-3}} fill={theme['color-primary-600']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>You're studying at a good pace. <Icon name={'trending-up'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
     }
 
     if(currentWeekMinutesAverage > lastWeekMinutesAverage - (lastWeekMinutesAverage * .2)){
@@ -81,6 +80,8 @@ function IQScreen(){
     if(currentWeekMinutesAverage < lastWeekMinutesAverage){
       return <Text style={{...textStyle}}>Your studying a lot less than last week. Find a pace that is managable. <Icon name={'trending-down'} style={{marginBottom:-3}} fill={theme['color-danger-600']} width={18} height={18}/></Text>
     }
+  
+    
 
   }
 
@@ -244,16 +245,13 @@ function IQScreen(){
     let startDate = userStartDate.toDate()
     const endDate = addDays(startDate, 6)
     const daysInWeek = eachDayOfInterval({start:startDate, end:endDate})
+    
     const iconConfig = {
       name: 'close-outline',
       fill: stepStatus == 'finished' ? null : null, //theme['color-danger-400']
       width:18,
       height:18
     };
-
-
-
-
 
     switch (position) {
       case 0: {

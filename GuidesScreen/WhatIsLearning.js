@@ -19,36 +19,42 @@ function WhatIsLearning(){
     <GuideComponent 
     picture={require('../assets/images/buildingidea-01.png')} 
     headerText={'Build an understanding'}
-    bodyText={"Learn better through building an understanding. Having an understanding of a subject allows us to learn faster, retain knowledge better, and you will be able to apply the knowledge."}
+    bodyText={"Look to build an understanding of what you are learning. With an understanding you'll be able to retain infomation better and have applicable knowledge."}
     />
+    
 
     <GuideComponent 
     picture={require('../assets/images/buildingpuzzle.png')} 
     headerText={'How each piece fits'}
-    bodyText={"Build an understanding by thinking about how new information connects with what you already know. Figure how new concepts connect into the bigger picture."}
+    bodyText={"To build an understanding think about how new information connects with what you already know. Figure out how new concepts are related to the bigger picture."}
     />
     
     <GuideComponent 
     picture={require('../assets/images/puttingtimev2-01.png')} 
     headerText={'Learning is a constant process'}
-    bodyText={"When we look at a concept for the first time, it'll often be confusing and you will be missing alot of knowledge.  As you put time into learning, you'll naturally clear up misconceptions and make new connections."}
+    bodyText={"Expect to not understand everything at a first glance. As you put time into learning, you'll naturally clear up misconceptions and make new connections."}
     />
 
     <GuideComponent 
     picture={require('../assets/images/reviewnotesv2-01.png')} 
     headerText={'Review and revisit'}
-    bodyText={"Going over or having something explained a different way will often . Reviewing information for building a better understanding. Will strengthen our overall understanding. Having a good understanding of the basics is important."}
+    bodyText={"Reviewing past information will often fill up gaps in knowledge and strengthen our overall understanding."}
     />
 
 
-    {/* <GuideComponent 
+    {/*
+    
+    First tip shorter 
+
+    
+    <GuideComponent 
     picture={require('../assets/images/buildingpuzzle.png')} 
     headerText={'Step by step'}
     bodyText={"We often wont understand something the first time we look at it. Learning is about making progress."}
     /> */}
 
 
-    {/*    <GuideComponent 
+    {/* <GuideComponent 
     picture={require('../assets/images/buildingpuzzle.png')} 
     headerText={'As you put time into '}
     bodyText={"Learning requires active thought. Thinking about a concept, will help reinforce and come up with new ideas"}
