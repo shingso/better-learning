@@ -67,7 +67,7 @@ function Login(){
       
       <View style={{marginRight:4, alignItems:'flex-end'}}>
       <Text category='label' style={{fontFamily:'Poppins-SemiBold'}}>Dont have an account?</Text>
-      <Text status='info' category='s2' style={{marginTop:-6}}>Go to Sign Up</Text>
+      <Text status='info' category='s2' style={{marginTop: Platform.OS =='ios' ? 0 : -6}}>Go to Sign Up</Text>
       </View>
       
       <Icon height={30} width={30} name='arrow-ios-forward-outline' fill={'black'}/>

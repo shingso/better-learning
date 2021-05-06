@@ -15,8 +15,8 @@ function GuidesHome(){
 
   
 
-    const topics = [{title:'Learn better', path:'HowToLearn', bodyText:'Learn how to learn effectively!', imagePath:require('../assets/images/betterlearningv1-01.png')},
-     {title:'How should I be learning?', path:'WhatIsLearning', bodyText:'Reshape the way you think about learning', imagePath:require('../assets/images/womenthinking.png')},
+    const topics = [{title:'Learning better', path:'HowToLearn', bodyText:'A simple yet effective way to learn.', imagePath:require('../assets/images/betterlearningv1-01.png')},
+     {title:'How should I be learning?', path:'WhatIsLearning', bodyText:'Start building an understanding.', imagePath:require('../assets/images/womenthinking.png')},
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/howoftenv1-01.png')},
      {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning better outside of studying', imagePath:require('../assets/images/learnquickerv3-01.png')},
      {title: "Can't get into studying?", path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged-01.png')},
@@ -44,7 +44,7 @@ function GuidesHome(){
       <Text category='p1' style={{marginBottom:20, textAlign:'center', letterSpacing:0.2, color:theme['color-basic-700']}}>{info.item.bodyText}</Text>
     
       </Card>
-        </IOSShadowView>
+      </IOSShadowView>
     );
 
 
@@ -55,22 +55,16 @@ function GuidesHome(){
        
 
       <SafeAreaView style={{flex: 1}}>
-
       <List
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.contentContainer}
         data={topics}
         renderItem={renderItem}
-
       />
-
       </SafeAreaView>
-      
-      
       );
 
-      //we need to update state when we add an item
-    
+
     }
 
 export default GuidesHome

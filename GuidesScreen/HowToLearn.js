@@ -30,7 +30,7 @@ function HowToLearn(){
     <GuideComponent 
     picture={require('../assets/images/focusedstudy-01.png')} 
     headerText={'Timed study session'}
-    bodyText={'A timer is a useful tool to stay engaged in learning. By setting a dedicated time period for studying, we are more prepared to maintain our undivided attention.'} 
+    bodyText={'A timer is a useful tool to stay engaged in learning. We are more inclined to maintain our attention when we set a dedicated time period for studying.'} 
     />
 
     

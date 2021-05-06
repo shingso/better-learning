@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar } from 'react-native-calendars'
 import { formatMinutes2 } from '../helperFunctions';
+import TimeStudiedSwiper from '../UtilComponents/TimeStudiedSwiper'
 
 
 
@@ -21,12 +22,10 @@ function IQScreen(){
 
   const todaysDate = new Date()
   const startOfToday = startOfDay(todaysDate)
-  const endOfToday = endOfDay(todaysDate)
   const currentDayOfWeek = getDay(todaysDate)
   
   const startOfCurrentWeek = startOfWeek(startOfToday)
   const endOfCurrentWeek = endOfWeek(startOfToday)
-  // if its greater than 14 days
 
   const oneWeekAgo = subWeeks(startOfToday, 1)
   const startOfWeekOneWeek = startOfWeek(oneWeekAgo)
@@ -44,19 +43,19 @@ function IQScreen(){
   const datesStudiedPastSeven = studyStatsData.datesStudiedPastSeven
   const userStartDate = userData.timeStamp
 
-
   const allDateStats = studyStatsData.allDates
-
-
   const screenWidth = Dimensions.get('window').width
 
+
+  const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
+  const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
 
 
   const timeStudiedMessage = () =>{
     const textStyle={
       alignSelf:'center', 
       fontFamily:'Poppins-Regular', 
-      fontSize:14,
+      fontSize:12,
       lineHeight:26,
       textAlign:'center'
    
@@ -65,20 +64,20 @@ function IQScreen(){
     const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
     
     if(currentWeekMinutesStudied == 0){
-      return <Text style={{...textStyle}}>You haven't studied yet this week. <Icon name={'alert-circle'} style={{marginBottom:-3}} fill={theme['color-info-300']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>You haven't studied yet this week. <Icon name={'alert-circle'} style={{marginBottom:Platform.OS == 'ios' ? 1 : -3}} fill={theme['color-info-300']} width={16} height={16}/></Text>
     }
 
     if(currentWeekMinutesAverage > lastWeekMinutesAverage + (lastWeekMinutesAverage * .2)){
-      return <Text style={{...textStyle}}>You're studying at a good pace. <Icon name={'trending-up'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>You're studying better this week than last week. <Icon name={'trending-up'} style={{marginBottom:Platform.OS == 'ios' ? 1 : -3}} fill={theme['color-primary-700']} width={16} height={16}/></Text>
     }
 
-    if(currentWeekMinutesAverage > lastWeekMinutesAverage - (lastWeekMinutesAverage * .2)){
-      return <Text style={{...textStyle}}>Your studying at a good pace to match last week. <Icon name={'checkmark-circle-2'} style={{marginBottom:-3}} fill={theme['color-primary-700']} width={18} height={18}/></Text>
+    if(currentWeekMinutesAverage > lastWeekMinutesAverage - (lastWeekMinutesAverage * .3)){
+      return <Text style={{...textStyle}}>You're studying at a good pace. <Icon name={'checkmark-circle-2'} style={{marginBottom:Platform.OS == 'ios' ? 1 : -3}} fill={theme['color-primary-700']} width={16} height={16}/></Text>
     }
 
 
     if(currentWeekMinutesAverage < lastWeekMinutesAverage){
-      return <Text style={{...textStyle}}>Your studying a lot less than last week. Find a pace that is managable. <Icon name={'trending-down'} style={{marginBottom:-3}} fill={theme['color-danger-600']} width={18} height={18}/></Text>
+      return <Text style={{...textStyle}}>You're studying inconsistently. Find a pace that is managable and sustainable for you. <Icon name={'trending-down'} style={{marginBottom:Platform.OS == 'ios' ? 1 : -3}} fill={theme['color-danger-600']} width={16} height={16}/></Text>
     }
   
     
@@ -161,16 +160,53 @@ function IQScreen(){
     return(
     
     <View style={{marginTop:32}}>
-    <Text style={{color:props.titleColor, fontSize:12}} category='h6'>{props.title}</Text>
+    <Text style={{color:props.titleColor, fontSize:13}} category='h6'>{props.title}</Text>
 
-    <View style={{marginTop:0}}>
+    <View style={{marginTop:8}}>
+    <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between'}}>
+    <Text style={{marginBottom:-7}}>{formatMinutes2(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
+    {/*     <Text style={{marginBottom:8, color:theme['color-basic-400']}}>  /  </Text> */}
+    <Text style={{ fontSize:20, fontFamily:'Poppins-SemiBold',color:theme['color-basic-900'], fontWeight:'500'}}>{props.sessionCount} <Text style={{fontSize:10, fontFamily:'Poppins-Regular', color:theme['color-basic-700']}}>sessions</Text></Text>
+    </View>
+    
+    <View style={{flexDirection:'row', alignItems:'center', marginTop:Platform.OS === 'ios' ? 8 : 0,}}>
+    <View style={{height:20, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8,  justifyContent:'center'}}>
+    </View> 
+    <Icon name='clock'  fill={props.barColor} height={22} width={22}/>
+    </View>
+    </View>
+
+    </View>
+  
+    )
+  }
+
+
+  const AverageTimeComponent = (props) => {
+
+    
+
+    const maxBarWidth = screenWidth - 112
+    const maxTimeStudied = Math.max(currentWeekMinutesAverage, lastWeekMinutesAverage)
+    const amountOfBar = props.minutesStudied/maxTimeStudied
+    let barWidth = maxBarWidth * amountOfBar
+    if(!(isFinite(barWidth)) || barWidth < 10){
+      barWidth = 6
+    }
+    console.log((currentWeekCount/(currentDayOfWeek + 1)))
+    return(
+  
+    <View style={{marginTop:32}}>
+    <Text style={{color:props.titleColor, fontSize:13}} category='h6'>{props.title}</Text>
+
+    <View style={{marginTop:8}}>
     <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between' }}>
     <Text style={{marginBottom:-7}}>{formatMinutes2(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
     {/*     <Text style={{marginBottom:8, color:theme['color-basic-400']}}>  /  </Text> */}
     <Text style={{ fontSize:20, fontFamily:'Poppins-SemiBold',color:theme['color-basic-900'], fontWeight:'500'}}>{props.sessionCount} <Text style={{fontSize:10, fontFamily:'Poppins-Regular', color:theme['color-basic-700']}}>sessions</Text></Text>
     </View>
     
-    <View style={{flexDirection:'row', alignItems:'center', marginTop:Platform.OS === 'ios' ? 8 : -4}}>
+    <View style={{flexDirection:'row', alignItems:'center', marginTop:Platform.OS === 'ios' ? 8 : 0}}>
     <View style={{height:20, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8,  justifyContent:'center'}}>
     </View> 
     <Icon name='clock'  fill={props.barColor} height={22} width={22}/>
@@ -409,21 +445,26 @@ function IQScreen(){
     }
 
 
-  <Card style={{marginBottom:12, borderWidth:0, borderRadius:12, elevation:1, paddingVertical:12}}>
+  <Card disabled style={{marginBottom:12, borderWidth:0, borderRadius:12, elevation:1, paddingTop:12}}>
  
 
   <Text style={{alignSelf:'center'}} category='h6'>Time Studied</Text>
   
-  <View style={{marginTop:12, marginBottom:4, alignItems:'center'}}>
+  <View style={{marginTop:8, marginBottom:4, alignItems:'center'}}>
   <Text style={{textAlign:'center'}}>{timeStudiedMessage()}</Text>
   </View>
-  <View style={{borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.9, marginTop:12}}></View> 
 
+
+
+  <View style={{borderBottomColor:theme['color-basic-400'], borderBottomWidth:0.9, marginTop:8}}></View> 
+
+  <TimeStudiedSwiper>
+  <View>
   <TimeComponent
   title={'This week'}
   minutesStudied={currentWeekMinutesStudied}
   barColor={theme['color-primary-400']}
-  titleColor={theme['color-basic-800']}
+  titleColor={theme['color-basic-700']}
   sessionCount={currentWeekCount}
   />
 
@@ -432,32 +473,47 @@ function IQScreen(){
   title={'Last week'}
   minutesStudied={oneWeekAgoMinutesStudied}
   barColor={theme['color-basic-400']}
-  titleColor={theme['color-basic-600']}
+  titleColor={theme['color-basic-500']}
   sessionCount={oneWeekAgoCount}
   />
+  </View>
+
+
+  <View>
+  <AverageTimeComponent
+  title={'Average per day this week'}
+  minutesStudied={Math.round(currentWeekMinutesAverage)}
+  barColor={theme['color-primary-400']}
+  titleColor={theme['color-basic-700']}
+  sessionCount={(currentWeekCount/(currentDayOfWeek + 1)).toFixed(1)}
+  />
+
+
+  <AverageTimeComponent
+  title={'Average per day last week'}
+  minutesStudied={Math.round(lastWeekMinutesAverage)}
+  barColor={theme['color-basic-400']}
+  titleColor={theme['color-basic-500']}
+  sessionCount={(oneWeekAgoCount/7).toFixed(1)}
+  />
+  </View>
+
+
+  </TimeStudiedSwiper>
+
+
+
 
 
   </Card>
 
-
- 
-
-  
-
   <Card disabled={true} style={{marginBottom:12, paddingTop:12, paddingBottom:24, borderWidth:0, borderRadius:12, elevation:1}}>
-  {/* <View style={{ flexDirection:'row', alignItems:'center', marginBottom:4}}>
-  <Icon fill={theme['color-primary-700']} height={20} width={20}  name='calendar'/>
-  <Text category='h6' style={{marginLeft:8,color:theme['color-primary-800'], marginTop:4}}>Calendar</Text>
-  </View>  */}
-    
   <Calendar
 
-  //markingType={'custom'}
   markedDates={returnMarkedDates()}
   current={convertDateToString(new Date())}
   minDate={convertDateToString(startOfMonth(userStartDate.toDate()))}
   maxDate={convertDateToString(endOfMonth(new Date()))}
-
   monthFormat={'MMMM yyyy'}
   renderArrow={(direction) => (direction == 'left' ? <View><Icon fill={theme['text-basic-color']} height={ 15} width={15}  name='arrow-ios-back-outline'/></View> 
   : <View><Icon fill={theme['text-basic-color']} height={15} width={15}  name='arrow-ios-forward-outline'/></View>)}
@@ -486,31 +542,20 @@ function IQScreen(){
     monthTextColor:theme['color-basic-800'],
     textMonthFontWeight: 'bold',
 
-    
-
     textDayHeaderFontSize: 13,
     textDayHeaderFontFamily:'OpenSans-SemiBold',
     //textDayFontFamily:'OpenSans-Regular',
     textDisabledColor:theme['color-basic-400'],
-
 
     textDayStyle:{
       marginTop:Platform.OS ==='ios' ? 7 : 7,
       color: theme['text-basic-color'],//'purple'//theme['text-basic-color']
       fontFamily:'OpenSans-SemiBold',
       fontWeight:'600'
-    }
-  }}
+      }
+    }}
     />
     </Card>
-
-   {/*  {(calculateDaysSinceLastStudy() > 28 && calculateDaysSinceStartedStudy() > 7) &&
-    // for rendering the stats component
-    } */}
-
-  
-
-   
     </Layout>
     </SafeAreaView>
     </ScrollView>

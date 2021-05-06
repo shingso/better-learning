@@ -84,7 +84,7 @@ function SignUp(){
     
     <View style={{marginRight:4, alignItems:'flex-end'}}>
     <Text category='label' style={{fontFamily:'Poppins-SemiBold'}}>Already have an account?</Text>
-    <Text status='info' category='s2' style={{marginTop:-6}}>Go to Login</Text>
+    <Text status='info' category='s2' style={{marginTop:Platform.OS =='ios' ? 0 : -6}}>Go to Login</Text>
     </View>
     <Icon height={30} width={30} name='arrow-ios-forward-outline' fill={'black'}/>
     </View>

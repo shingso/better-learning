@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, Image, Platform } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, Image, Platform, ScrollView } from 'react-native';
 import { Card, List, Text, Button, Layout, Select , IndexPath, SelectItem, Icon, useTheme} from '@ui-kitten/components';
 import { TimerSettingsContext } from '../TimerSettingsContext';
 import TopHeader from '../UtilComponents/TopHeader'
@@ -39,6 +39,7 @@ function TimerSettings(){
       marginTop: Platform.OS == 'ios' ? 2 : 4,
       fontFamily:timerSettings.timeSettings == props.value ? 'Poppins-Bold': 'Poppins-SemiBold',
       fontSize: timerSettings.timeSettings == props.value ? 18: 14,
+      fontWeight:timerSettings.timeSettings == props.value ? '700': '500',
       color:timerSettings.timeSettings == props.value ? theme['color-primary-700']: theme['color-basic-500']}}
 
     >
@@ -53,18 +54,13 @@ function TimerSettings(){
 
 
   return (
-   
+    
     <Layout level='2' style={{ flex: 1 }}>
     <SafeAreaView style={{ flex: 1 }}>
     <TopHeader title={'Session Time'}/>
-    <View style={{flex:1, paddingHorizontal:20, }}>
-    <Text style={{marginBottom:4}} category='h6'>Select a time:</Text>
-   {/*  <View style={{alignItems:'center', flex:1, justifyContent:'flex-end'}}>
-    <Text style={{marginBottom:70}} category='h6'>Current session time</Text>
-    <Text style={{fontSize:100, fontFamily:'Poppins-SemiBold',}}>{timerSettings.timeSettings}</Text> 
-    <Text category='h6' style={{marginTop:-40}}>{'minutes'}</Text> 
-    </View> */}
-        <TimeSettingsComponent value={'0.1'}/>
+    <ScrollView style={{flex:1}}>
+    <View style={{flex:1, paddingHorizontal:20, paddingBottom:100}}>
+    <Text style={{marginVertical:12, textAlign:'center'}} category='h6'>Select a session time</Text>
     <TimeSettingsComponent value={'25'}/>
     <TimeSettingsComponent value={'30'}/>
     <TimeSettingsComponent value={'35'}/>
@@ -73,19 +69,11 @@ function TimerSettings(){
     <TimeSettingsComponent value={'50'}/>
     <TimeSettingsComponent value={'55'}/>
     <TimeSettingsComponent value={'60'}/>
-
-
- 
-
-
-
-    <View style={{flex:1, marginBottom:64, flexDirection:'row', alignItems:'flex-end'}}>
-   {/*  <Button size='large' style={{marginTop:20, marginHorizontal:20,borderRadius:30, flex:1, ...GlobalStyle.ButtonShadow}} onPress={()=>storeData(data[selectedIndex.row].time)}>Change Session Time</Button> */}
     </View>
-
-    </View>
+    </ScrollView>
     </SafeAreaView>
     </Layout>
+  
   
   );
 };

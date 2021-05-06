@@ -36,7 +36,7 @@ function UserInfo(){
       <Card onPress={()=>navigation.navigate(props.path)} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12, elevation:1}}>
       <View style={{flexDirection:'row', alignItems:'center'}}>
       <Icon {...iconStyle} fill={props.iconColor} name={props.iconName}/>
-      <Text style={{marginLeft:16, color:props.iconColor}} category='s1'>{props.title}</Text>
+      <Text style={{marginLeft:16, color:props.iconColor, fontFamily:'Poppins-SemiBold', fontWeight:'500'}}>{props.title}</Text>
       </View>
       </Card>
     )
@@ -62,7 +62,7 @@ function UserInfo(){
     <Card onPress={()=>signOut()} style={{marginTop:8, borderWidth:0, paddingVertical:2, borderRadius:12, elevation:1}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
     <Icon fill={theme['color-danger-600']} width={18} height={18} name='log-out-outline'/>
-    <Text style={{marginLeft:16, color:theme['color-danger-600']}} category='s1'>Sign Out</Text>
+    <Text style={{marginLeft:16, color:theme['color-danger-600'], fontFamily:'Poppins-SemiBold', fontWeight:'500'}} category='s1'>Sign Out</Text>
     </View>
     </Card>
 

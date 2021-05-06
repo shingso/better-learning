@@ -9,7 +9,6 @@ import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import IOSShadowView from '../UtilComponents/IOSShadowView'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { storeSession } from '../helperFunctions';
 
 function HomeScreen(){
 
@@ -17,7 +16,7 @@ function HomeScreen(){
     const theme = useTheme()
     const studyStatsData = useContext(StudyStatsContext)
     const timesStudiedToday = studyStatsData.timesStudiedToday
-    const [visible, setVisible] = useState(false)
+
 
     const markedDatesFunc = date => {
 
@@ -25,7 +24,7 @@ function HomeScreen(){
       let newDateConverted = format(result, 'yyyy-MM-dd')
     
       //if the date is in the dictonary then mark it. 
-      if (studyStatsData.uniqueDates.has(newDateConverted)) { // Thursdays
+      if (studyStatsData.uniqueDates.has(newDateConverted)) {
      
         return {
           dots:[{
@@ -40,17 +39,7 @@ function HomeScreen(){
       
     }
   
-  
-  const resumeSession =() => {
-    setVisible(false)
-    navigation.navigate('Session')
-  }
 
-  const cancelPreviousSession =() => {
-    storeSession(false, null)
-    setVisible(false)
-  }
- 
 
   useEffect(() => {
       
@@ -180,30 +169,7 @@ function HomeScreen(){
     </View>
     </Card>
 
-    <Modal
-    visible={visible}
-    backdropStyle={styles.backdrop}
-    >
 
-    <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginHorizontal:60}}>
-    <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text  category='s1' style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24,}}>You closed the app while a session was running. Would you like to resume?</Text> 
-   
-    <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
-    <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
-    <TouchableOpacity onPress={()=>cancelPreviousSession()} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center' }}>
-    <Text category='s1' style={{ textAlign:"center", color:theme['color-danger-600'] }}>End Session</Text>
-    </TouchableOpacity>
-    <TouchableOpacity  onPress={()=>resumeSession()} style={{flex:1, height:50, justifyContent:'center'}}>
-    <Text category='s1' style={{ textAlign:"center",  color:theme['color-primary-600']}}>Resume Session</Text>
-    </TouchableOpacity>
-    </View>
-    </View>
-
-
-    </View>
-    </Layout>
-    </Modal>
 
 
     </IOSShadowView>

@@ -259,7 +259,7 @@ function Session(){
     pictureFile={require('../assets/images/startstudyv1-01.png')}
     title={'A period of focused study'}
     bodyText={<Text style={{fontFamily:'Poppins-Regular'}}>Press start and a <Text style={{fontFamily:"Poppins-Bold", fontSize:16}}>
-    {timerSettings.timeSettings} minute timer</Text> will begin. While the timer is running, stay focused on studying.</Text>}
+    {timerSettings.timeSettings} minute timer</Text> will begin. Stay focused on studying while the timer is running.</Text>}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -368,7 +368,7 @@ function Session(){
     />
           
     <Input
-    placeholder={'Think about what you just learned and type it out. Everything should be from memory. Do not refer to any materials.'}
+    placeholder={"Think about what you've just learned and type it out. Everything should be from memory. Do not refer to any materials."}
     style={{backgroundColor:theme['background-basic-color-2'], borderColor:theme['background-basic-color-2'], marginTop:12}}
     textAlignVertical={'top'}
     textStyle={{fontSize:15, height:120, lineHeight:20}}
@@ -398,7 +398,7 @@ function Session(){
     <BodyComponent
     pictureFile={require('../assets/images/sessionover.png')}
     title={'Thats it!'}
-    bodyText={"You've just finished a study session."}
+    bodyText={"You've just finished a study session. It's best to take a break."}
     bodyTextColor={theme['color-basic-700']}
     />
 
@@ -418,7 +418,7 @@ function Session(){
 
     <Layout style={{flex:1, paddingTop:20, paddingHorizontal:20, borderRadius:12, marginHorizontal:60}}>
     <View style={{justifyContent:'center', alignItems:'center'}}>
-    <Text  category='s1' style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24,}}>Are you sure you want to end the current study session?</Text> 
+    <Text category='s1' style={{marginVertical:12, marginBottom:16 ,textAlign:'center', lineHeight:24}}>Are you sure you want to end the current study session?</Text> 
    
     <View style={{ borderTopWidth:0.5, borderTopColor:theme['color-basic-400'],height:50, marginHorizontal:-20, borderBottomRightRadius:12, borderBottomLeftRadius:12, width:300, justifyContent:'center', marginTop:16}}>
     <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>

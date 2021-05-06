@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import {  format, formatDistance, differenceInCalendarDays } from 'date-fns'
-import { sessionsToHours, formatMinutes2 } from '../helperFunctions';
+import { formatMinutes2 } from '../helperFunctions';
 
 function LifetimeStats(){
 
@@ -85,9 +85,6 @@ const returnPercentageStudied = ()=>{
     <TopHeader title={'Your Stats'}/>
     <Layout level='2' style={{flex: 1, paddingTop:12, paddingHorizontal:20, paddingBottom:60 }}>
     
-
-
-
     <StatsComponent 
     iconName={'clock-outline'} 
     bodyText={formatMinutes2(timesStudiedStat, theme['color-basic-800'], theme['color-basic-600'], 12, 26)} 
@@ -103,7 +100,7 @@ const returnPercentageStudied = ()=>{
         userStartDate.toDate(),
         new Date(),
         { addSuffix: true }
-      )}
+      ) + '.'}
     />
   
     <StatsComponent 
@@ -116,7 +113,7 @@ const returnPercentageStudied = ()=>{
     iconName={'trending-up-outline'} 
     bodyText={<Text style={{...bodyStatsStyle}}>{studyStatsData.timesStudied}</Text>} 
     headerText={'Total sessions'} 
-    subText={'On days that you study, you study an average of ' + (studyStatsData.timesStudied/studyStatsData.uniqueDates.size).toFixed(1) + " sessions"}
+    subText={'You study an average of ' + (studyStatsData.timesStudied/studyStatsData.uniqueDates.size).toFixed(1) + " sessions on days you study."}
     />
     
 

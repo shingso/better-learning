@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, SafeAreaView, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, SafeAreaView, Image, Dimensions, TouchableOpacity, Platform } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { format } from 'date-fns'
 import { AuthContext } from '../AuthContext'
@@ -186,7 +186,7 @@ function NotesFocused({ route, navigation }){
       />
       <Text category='h6' style={{textAlign:'center', marginTop:32}}>Nothing here yet...</Text>
       <Text style={{textAlign:'center', marginTop:32, lineHeight: 28, marginHorizontal:12, fontSize:15, fontFamily:'Poppins-Regular'}}>Press the
-      <Icon fill={theme['color-primary-700']} style={{marginHorizontal:4, paddingTop:20, marginBottom:-5}} width={24} height={24} name='folder' /> 
+      <Icon fill={theme['color-primary-700']} style={{marginHorizontal:4, paddingTop:20,  marginBottom:Platform.OS == 'ios' ? 0 :-5}} width={24} height={24} name='folder' /> 
       icon when writing a note to select a folder.</Text>
       </View>
       </View>

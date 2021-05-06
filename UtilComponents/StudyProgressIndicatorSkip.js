@@ -9,10 +9,7 @@ function StudyProgressIndicatorSkip(props){
     const theme = useTheme()
 
     const getStepIndicatorIconConfig = ({ position, stepStatus }) => {
-        let skipPosition = position
-        if(position > 3){
-            skipPosition = position - 1
-        }
+       
         const iconConfig = {
           name: null,
           fill: stepStatus === 'finished' ? theme['color-primary-600'] : theme['color-basic-500'],
@@ -47,9 +44,6 @@ function StudyProgressIndicatorSkip(props){
             break;
     
           }
-
-    
-
 
           case 2: {
     
