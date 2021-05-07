@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, } from 'react-native';
+import { StyleSheet, View, SafeAreaView, } from 'react-native';
 import { Text, Layout, useTheme, Card, Icon } from '@ui-kitten/components';
 import TopHeader from '../UtilComponents/TopHeader'
 import { ScrollView } from 'react-native-gesture-handler';
 import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import {  format, formatDistance, differenceInCalendarDays } from 'date-fns'
-import { formatMinutes2 } from '../helperFunctions';
+import { formatMinutes } from '../helperFunctions';
 
 function LifetimeStats(){
 
@@ -20,7 +20,7 @@ function LifetimeStats(){
     color:theme['color-basic-700'],
     fontSize:14,
     fontFamily:'Poppins-SemiBold',
-    fontWeight:'800',
+    fontWeight:'600',
 
    
  }
@@ -38,7 +38,7 @@ function LifetimeStats(){
  const bodyStatsStyle={
    fontSize:22, 
    fontFamily:'Poppins-SemiBold',
-   fontWeight:'800',
+   fontWeight:'600',
 
  }
 
@@ -87,7 +87,7 @@ const returnPercentageStudied = ()=>{
     
     <StatsComponent 
     iconName={'clock-outline'} 
-    bodyText={formatMinutes2(timesStudiedStat, theme['color-basic-800'], theme['color-basic-600'], 12, 26)} 
+    bodyText={formatMinutes(timesStudiedStat, theme['color-basic-800'], theme['color-basic-600'], 12, 26)} 
     headerText={'Total Time Studied'} 
     />
 

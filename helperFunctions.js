@@ -175,7 +175,7 @@ export async function addNote(userID, subject, text, textTheme) {
 
 
 //20 and 10 for label and font size
-export function formatMinutes2(time, numberColor, labelColor, labelSize, numberSize){
+export function formatMinutes(time, numberColor, labelColor, labelSize, numberSize){
   const theme = useTheme()
   const labelStyle = {
     //color:theme['color-basic-700'],

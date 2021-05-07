@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import {  View, SafeAreaView, StyleSheet, ImageBackground, Vibration, Animated, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import {  View, SafeAreaView, StyleSheet, Platform, Animated, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { Button, Icon,  CheckBox, Text, Layout, useTheme, Input, Modal } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -258,7 +258,7 @@ function Session(){
     <BodyComponent
     pictureFile={require('../assets/images/startstudyv1-01.png')}
     title={'A period of focused study'}
-    bodyText={<Text style={{fontFamily:'Poppins-Regular'}}>Press start and a <Text style={{fontFamily:"Poppins-Bold", fontSize:16}}>
+    bodyText={<Text style={{fontFamily:'Poppins-Regular'}}>Press start and a <Text style={{fontFamily:"Poppins-Bold", fontSize:16, fontWeight:'800'}}>
     {timerSettings.timeSettings} minute timer</Text> will begin. Stay focused on studying while the timer is running.</Text>}
     bodyTextColor={theme['color-basic-700']}
     />
@@ -267,7 +267,7 @@ function Session(){
     <View style={{ marginBottom:0, justifyContent:'flex-end', alignItems:'center'}}>
     <View style={{flexDirection:'row',  marginBottom:16, alignItems:'flex-end'}}>
     <Text style={{color:theme['text-hint-color'], fontSize:13}}>People currently studying: </Text>
-    <Text style={{ fontFamily:'Poppins-SemiBold', marginBottom:-5, fontSize:13}}> {activeUsers}</Text>
+    <Text style={{ fontFamily:'Poppins-SemiBold', marginBottom: Platform.OS == 'ios' ? 0 : -5, fontSize:13, fontWeight:'600'}}> {activeUsers}</Text>
     </View>
 
     <View style={{flexDirection:'row', marginBottom:30, paddingHorizontal:16}}>
@@ -317,12 +317,12 @@ function Session(){
     {studySessionPosition == 2 &&
     <View style={{flex:1, justifyContent:'center'}}>
     <CheckBox
-    style={{marginLeft:6, height:10, marginTop:8}}
+    style={{marginLeft:6,  marginTop:8}}
     status='basic'
 
       checked={initialChecked}
       onChange={nextChecked => skipRecallExplain(nextChecked)}>
-      <Text style={{fontSize:12, fontFamily:'Poppins-SemiBold'}}>Don't show this screen again</Text>
+      <Text style={{fontSize:12, fontFamily:'Poppins-SemiBold', fontWeight:'600' }}>Don't show this screen again</Text>
     </CheckBox>
     <BodyComponent pictureFile={require('../assets/images/recallexplainv2-01.png')} 
     title={"Lets think about what we've learned"}

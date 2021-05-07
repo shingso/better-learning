@@ -9,7 +9,7 @@ import { StudyStatsContext } from '../StudyStats'
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
 import { Calendar } from 'react-native-calendars'
-import { formatMinutes2 } from '../helperFunctions';
+import { formatMinutes } from '../helperFunctions';
 import TimeStudiedSwiper from '../UtilComponents/TimeStudiedSwiper'
 
 
@@ -48,7 +48,7 @@ function IQScreen(){
 
 
   const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
-  const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
+  const currentWeekMinutesAverage = currentWeekMinutesStudied/(currentDayOfWeek + 1)
 
 
   const timeStudiedMessage = () =>{
@@ -164,7 +164,7 @@ function IQScreen(){
 
     <View style={{marginTop:8}}>
     <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between'}}>
-    <Text style={{marginBottom:-7}}>{formatMinutes2(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
+    <Text style={{marginBottom:-7}}>{formatMinutes(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
     {/*     <Text style={{marginBottom:8, color:theme['color-basic-400']}}>  /  </Text> */}
     <Text style={{ fontSize:20, fontFamily:'Poppins-SemiBold',color:theme['color-basic-900'], fontWeight:'500'}}>{props.sessionCount} <Text style={{fontSize:10, fontFamily:'Poppins-Regular', color:theme['color-basic-700']}}>sessions</Text></Text>
     </View>
@@ -201,7 +201,7 @@ function IQScreen(){
 
     <View style={{marginTop:8}}>
     <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between' }}>
-    <Text style={{marginBottom:-7}}>{formatMinutes2(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
+    <Text style={{marginBottom:-7}}>{formatMinutes(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
     {/*     <Text style={{marginBottom:8, color:theme['color-basic-400']}}>  /  </Text> */}
     <Text style={{ fontSize:20, fontFamily:'Poppins-SemiBold',color:theme['color-basic-900'], fontWeight:'500'}}>{props.sessionCount} <Text style={{fontSize:10, fontFamily:'Poppins-Regular', color:theme['color-basic-700']}}>sessions</Text></Text>
     </View>

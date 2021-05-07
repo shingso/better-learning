@@ -16,7 +16,7 @@ return (
 <Layout level='2' style={{flex: 1, paddingTop:20, paddingHorizontal:20, paddingBottom:60}}>
 
 
-<Text style={[styles.bodyText, {fontFamily:'Poppins-Bold'}]}>
+<Text style={[styles.bodyText, {fontFamily:'Poppins-Bold', fontWeight:'600'}]}>
 {`By downloading or using this application, these terms and conditions automatically apply to you. You are obligated to read and understand these terms carefully before using this application. `}
 </Text>
 

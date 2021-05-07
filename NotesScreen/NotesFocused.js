@@ -81,7 +81,7 @@ function NotesFocused({ route, navigation }){
         <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center'}}>
 
         <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center' }}>
-        <Text category='s1' style={{textAlign:"center",}}>Close</Text>
+        <Text category='s1' style={{textAlign:"center", color:theme['color-info-500']}}>Close</Text>
         </TouchableOpacity>
 
         <TouchableOpacity  onPress={()=> deleteSubjectFunction(userID, subjectID)} style={{flex:1, height:50, justifyContent:'center'}}>

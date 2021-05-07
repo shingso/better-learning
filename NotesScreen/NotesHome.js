@@ -76,7 +76,7 @@ function NotesHome({ navigation }){
         <View style={{flexDirection:"row"}}>
         
         <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1, height:50, borderRightWidth:0.5, borderRightColor:theme['color-basic-400'], justifyContent:'center'}}>
-        <Text category='s1' style={{textAlign:"center"}}>Close</Text>
+        <Text category='s1' style={{textAlign:"center", color:theme['color-info-500']}}>Close</Text>
         </TouchableOpacity>
         
         <TouchableOpacity  onPress={()=>formikProps.handleSubmit()} disabled={formikProps.errors.folderTitle} style={{flex:1, height:50, justifyContent:'center'}}>
