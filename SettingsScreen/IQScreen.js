@@ -61,9 +61,10 @@ function IQScreen(){
    
     }
     const lastWeekMinutesAverage = oneWeekAgoMinutesStudied/7
-    const currentWeekMinutesAverage = currentWeekMinutesStudied/currentDayOfWeek + 1
+
     
     if(currentWeekMinutesStudied == 0){
+      
       return <Text style={{...textStyle}}>You haven't studied yet this week. <Icon name={'alert-circle'} style={{marginBottom:Platform.OS == 'ios' ? 1 : -3}} fill={theme['color-info-300']} width={16} height={16}/></Text>
     }
 
@@ -193,7 +194,6 @@ function IQScreen(){
     if(!(isFinite(barWidth)) || barWidth < 10){
       barWidth = 6
     }
-    console.log((currentWeekCount/(currentDayOfWeek + 1)))
     return(
   
     <View style={{marginTop:32}}>
@@ -202,14 +202,13 @@ function IQScreen(){
     <View style={{marginTop:8}}>
     <View style={{flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between' }}>
     <Text style={{marginBottom:-7}}>{formatMinutes(props.minutesStudied, theme['color-basic-800'], theme['color-basic-700'], 12, 32)}</Text>
-    {/*     <Text style={{marginBottom:8, color:theme['color-basic-400']}}>  /  </Text> */}
     <Text style={{ fontSize:20, fontFamily:'Poppins-SemiBold',color:theme['color-basic-900'], fontWeight:'500'}}>{props.sessionCount} <Text style={{fontSize:10, fontFamily:'Poppins-Regular', color:theme['color-basic-700']}}>sessions</Text></Text>
     </View>
     
     <View style={{flexDirection:'row', alignItems:'center', marginTop:Platform.OS === 'ios' ? 8 : 0}}>
     <View style={{height:20, backgroundColor:props.barColor, borderRadius:4, width:barWidth, marginRight:8,  justifyContent:'center'}}>
     </View> 
-    <Icon name='clock'  fill={props.barColor} height={22} width={22}/>
+    <Icon name='clock' fill={props.barColor} height={22} width={22}/>
     </View>
     </View>
 
@@ -401,7 +400,7 @@ function IQScreen(){
 
   {(differenceInDays(new Date(), startOfDay(userStartDate.toDate())) < 7) &&
 
-  <Card disabled={true} style={{marginBottom:12, alignItems:'center' , borderWidth:0, borderRadius:12, elevation:1}}>
+  <Card  disabled style={{marginBottom:12, alignItems:'center' , borderWidth:0, borderRadius:12, elevation:1}}>
   <Image
     style={{
       height:120,
@@ -416,7 +415,7 @@ function IQScreen(){
    <Text category={'h6'}>The process of learning</Text>
    <Text 
    style={{marginTop:12, marginBottom:16,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center', marginHorizontal:32}}>
-   It's your first week. Try to study at least once every day
+   It's your first week. To get into the habit of learning, try to study at least once every day.
    </Text>
    </View> 
 
