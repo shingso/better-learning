@@ -37,11 +37,13 @@ function Onboard(){
 
 
     <View style={styles.slide1}>
+    <View style={{flex:1, marginBottom:-120}}>
     <GuideComponent 
     picture={require('../assets/images/becomesmarterv2.png')} 
     headerText={'Learn better'}
     bodyText={"Learn in a way where information is better understood and retained."}
     />
+    </View>
 
     <Button size='large' style={{ marginBottom:100, marginHorizontal:32, borderRadius:30, elevation:1}} onPress={()=>{authContext.setNewUser(false)}}>Let's start learning</Button>
     </View>
