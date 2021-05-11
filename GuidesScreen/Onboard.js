@@ -25,15 +25,9 @@ function Onboard(){
     <GuideComponent 
     picture={require('../assets/images/comfortablestudyv1.png')} 
     headerText={'Become comfortable with learning'}
-    bodyText={'Guided study sessions to help you be more comfortable with the process of learning.'}
+    bodyText={'Guided study sessions to help you get into learning.'}
     bodyText2={'Build confidence in your ability to learn. '}
     />
-
-   {/*  <GuideComponent 
-    picture={require('../assets/images/learnefficiently.png')} 
-    headerText={'Build practical knowledge'}
-    bodyText={'Start learning in a way that builds a deep understanding. Build practical knowledge.'}
-    /> */}
 
 
     <View style={styles.slide1}>

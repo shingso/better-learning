@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, List, Text, Button, Icon, Layout, useTheme , withStyles, Modal} from '@ui-kitten/components';
 import CalendarStrip from 'react-native-calendar-strip'
 import { ScrollView } from 'react-native-gesture-handler';
-import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays, subDays, getDate } from 'date-fns'
+import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays, subDays, getDate, addDays } from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import IOSShadowView from '../UtilComponents/IOSShadowView'
@@ -77,6 +77,8 @@ function HomeScreen(){
     const startDate = userData.timeStamp.toDate()
     const minDateForStrip = subDays(startDate , getDay(startDate))
 
+    const endOfCurrentWeekPlus = subDays(endOfCurrentWeek, 2)
+
 
     const datesBlacklistFunc = date => {
 
@@ -96,16 +98,18 @@ function HomeScreen(){
     <SafeAreaView style={{flex: 1}}>
     <Layout level='2' style={{ flex:1 , paddingVertical:20, paddingHorizontal:16, paddingBottom:100}}>
     
-      <IOSShadowView>
+    <IOSShadowView>
     <Card style={{bodyPaddingHorizontal:-12, borderWidth:0, borderRadius:12, elevation:1}}>
 
     <CalendarStrip
-     
+      maxDate={endOfCurrentWeek}
+      minDate={minDateForStrip}
+      datesBlacklist={datesBlacklistFunc}
+      startingDate={startOfCurrentWeek}
       selectedDate={new Date()}
       highlightDateNumberStyle={{color:theme['color-info-600']}}
       highlightDateNameStyle={{color:theme['color-info-600'], fontWeight:'bold'}}
       showMonth={false}
-      scrollable={true}
       calendarAnimation={{type:"parallel", duration:0}}
       style={{height:80, paddingTop: 0, paddingBottom: 0, marginHorizontal: -16,
         marginVertical: -20, backgroundColor:theme["background-basic-color-1"]}}
@@ -116,12 +120,6 @@ function HomeScreen(){
       disabledDateNumberStyle={{color:theme['text-basic-color']}}
       dateNameStyle={{backgroundColor:theme['color-basic-100']}}
       iconContainer={{flex: .1, height:80, backgroundColor:theme["background-basic-color-1"]}}  
-      maxDate={endOfCurrentWeek}
-      minDate={minDateForStrip}
-      datesBlacklist={datesBlacklistFunc}
-      startingDate={startOfCurrentWeek}
-      
-      
       leftSelector={<View><Icon fill={theme['text-basic-color']} height={20} width={20}  name='arrow-ios-back-outline'/></View>}
       rightSelector={<View><Icon fill={theme['text-basic-color']} height={20} width={20}  name='arrow-ios-forward-outline'/></View>}
       markedDates={markedDatesFunc}
@@ -188,28 +186,3 @@ function HomeScreen(){
 
 export default HomeScreen
 
-const styles = StyleSheet.create({
-  
-  backdrop:{
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-
-  modalView: {
-
-    backgroundColor: "white",
-    borderRadius: 12,
-    width:300,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-
-});
-
-//timesStudiedToday == 0 ? 'You havent studied today' : timesStudiedToday + ' session / 1hr 20 mins'

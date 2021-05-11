@@ -13,19 +13,19 @@ function Welcome(){
   return(
 
     <SafeAreaView style={{flex:1}}>
-    <View style={{ flex: 1, padding:20 }}>
+    <View style={{ flex: 1, padding:20, justifyContent:'center',  }}>
     <View style={{alignItems:'center'}}>
     <Image
-        style={{width: 200, height: 170, marginTop:60}}
+        style={{width: 200, height: 170, marginBottom:40}}
         source={require('../assets/images/studyseshlogo.png')}
         resizeMode={'contain'}
     />  
     </View>
-    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-    <Text style={{marginTop:20, marginLeft:8, fontFamily:'Poppins-Bold', fontSize:32, textAlign:'center', paddingHorizontal:12}}>Welcome to a better way to learn</Text>
+    <View style={{ justifyContent:'center', alignItems:'center', marginBottom:20}}>
+    <Text style={{marginTop:20, marginLeft:8, fontFamily:'Poppins-Bold', fontSize:32, textAlign:'center', paddingHorizontal:12, fontWeight:'800'}}>Welcome to a better way to learn</Text>
     </View>
 
-    <View style={{flex: 1, marginBottom:36, padding:16, }}>
+    <View style={{ marginBottom:36, padding:16, }}>
     <Text category='label' style={{alignSelf:'center', marginVertical:8}}> 
     </Text>
     <Button style={{borderRadius:30, ...GlobalStyle.ButtonShadow}} size='large' onPress={() => navigation.navigate('SignUp')}>
