@@ -415,7 +415,7 @@ function IQScreen(){
    <Text category={'h6'}>The process of learning</Text>
    <Text 
    style={{marginTop:12, marginBottom:16,letterSpacing:0.2, lineHeight:24,color:theme['color-basic-700'], textAlign:'center', marginHorizontal:32}}>
-   It's your first week. To get into the habit of learning, try to study at least once every day.
+   It's your first week. Try to study at least once every day to get into the habit of studying.
    </Text>
    </View> 
 

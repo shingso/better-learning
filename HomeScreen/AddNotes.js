@@ -74,7 +74,6 @@ function AddNotes(){
    onChangeText={formikProps.handleChange('textTheme')}
     />
 
-  {/*  {formikProps.errors.text && formikProps.touched.text ? <Text style={{marginVertical:4}}>{formikProps.errors.text}</Text> : null} */}
 
    <Input
     placeholder={'Write a new note'}

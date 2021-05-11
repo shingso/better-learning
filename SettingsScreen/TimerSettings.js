@@ -61,7 +61,6 @@ function TimerSettings(){
     <ScrollView style={{flex:1}}>
     <View style={{flex:1, paddingHorizontal:20, paddingBottom:100}}>
     <Text style={{marginVertical:12, textAlign:'center'}} category='h6'>Select a session time</Text>
-    <TimeSettingsComponent value={'0.5'}/>
     <TimeSettingsComponent value={'25'}/>
     <TimeSettingsComponent value={'30'}/>
     <TimeSettingsComponent value={'35'}/>

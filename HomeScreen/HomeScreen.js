@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { TextInput, View, SafeAreaView, Dimensions, FlatList, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import {  View, SafeAreaView, Dimensions, Image, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { Card, List, Text, Button, Icon, Layout, useTheme , withStyles, Modal} from '@ui-kitten/components';
+import { Card, List, Text, Button, Icon, Layout, useTheme} from '@ui-kitten/components';
 import CalendarStrip from 'react-native-calendar-strip'
 import { ScrollView } from 'react-native-gesture-handler';
-import { getDay, startOfWeek, endOfWeek, eachDayOfInterval, format, formatDistance, startOfMonth, parseISO, startOfDay, differenceInDays, subDays, getDate, addDays } from 'date-fns'
+import { getDay, startOfWeek, endOfWeek, format, subDays} from 'date-fns'
 import { StudyStatsContext } from '../StudyStats'
 import { UserDataContext } from '../UserDataContext'
 import IOSShadowView from '../UtilComponents/IOSShadowView'
@@ -145,7 +145,7 @@ function HomeScreen(){
     <Text category='h6' style={{color:theme['color-primary-700'], fontSize:18, letterSpacing:0.5}}>Start Study Session</Text>
     <View style={{position:'absolute', right:-12, top:-8, alignItems:'flex-end', backgroundColor:null, paddingBottom:4, paddingHorizontal:8,borderRadius:8}}>
     <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold', fontWeight:'500'}}><Text style={{color:theme['color-basic-100'], fontSize:24, fontFamily:'Poppins-Bold', fontWeight:'700'}}>{timesStudiedToday}</Text>{timesStudiedToday != 1 ? ' sessions' : ' session'}</Text>  
-    <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold', marginTop:-12, fontWeight:'500'}}>{ 'today'}</Text>  
+    <Text style={{color:theme['color-basic-100'], fontSize:20, fontFamily:'Poppins-SemiBold', marginTop:Platform.OS ==='ios' ? -6:-12, fontWeight:'500'}}>{'today'}</Text>  
     </View> 
     <Text category='p1' style={{marginTop:12, marginBottom:28, letterSpacing:0.2,marginHorizontal:16,textAlign:'center', lineHeight:24, color:theme['color-basic-700']}}>Learn more effectively with a guided study session</Text>
     </View>

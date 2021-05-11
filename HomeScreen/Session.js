@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import {  View, SafeAreaView, StyleSheet, Platform, Animated, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import {  View, SafeAreaView, StyleSheet, Platform, Animated, Image, TouchableOpacity, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native'
 import { Button, Icon,  CheckBox, Text, Layout, useTheme, Input, Modal } from '@ui-kitten/components';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -284,8 +284,6 @@ function Session(){
     {!hasEnded &&
 
     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-    
-    {/*  <Text category='h6'>Time left</Text> */}
     <View style={{flex:1, justifyContent:'center'}}>
     <Animated.Text style={{fontSize:70, color:theme['text-basic-color'], fontFamily:'Poppins-SemiBold', }}>
     {timeDifference > 1 ? msToTime(timeDifference) : ''}
@@ -319,10 +317,9 @@ function Session(){
     <CheckBox
     style={{marginLeft:6,  marginTop:8}}
     status='basic'
-
-      checked={initialChecked}
-      onChange={nextChecked => skipRecallExplain(nextChecked)}>
-      <Text style={{fontSize:12, fontFamily:'Poppins-SemiBold', fontWeight:'600' }}>Don't show this screen again</Text>
+    checked={initialChecked}
+    onChange={nextChecked => skipRecallExplain(nextChecked)}>
+    <Text style={{fontSize:12, fontFamily:'Poppins-SemiBold', fontWeight:'600' }}>Don't show this screen again</Text>
     </CheckBox>
     <BodyComponent pictureFile={require('../assets/images/recallexplainv2-01.png')} 
     title={"Lets think about what we've learned"}
@@ -368,7 +365,7 @@ function Session(){
     />
           
     <Input
-    placeholder={"Think about what you've just learned and type it out. Everything should be from memory. Do not refer to any materials."}
+    placeholder={`Think about what you've just learned and type it out. Everything should be from memory. Do not refer to any materials.`}
     style={{backgroundColor:theme['background-basic-color-2'], borderColor:theme['background-basic-color-2'], marginTop:12}}
     textAlignVertical={'top'}
     textStyle={{fontSize:15, height:120, lineHeight:20}}
@@ -377,13 +374,16 @@ function Session(){
     size={'large'}
     onChangeText={formikProps.handleChange('text')}
     />
-    </View>
-    
-    <View style={styles.buttonContainer}>
-    <Button size='large' style={styles.button} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()} >
+
+
+    <Button size='large' style={{marginTop:12,  borderRadius:30, marginHorizontal:16, ...GlobalStyle.ButtonShadow}} disabled={!(formikProps.dirty && formikProps.isValid)} onPress={()=>formikProps.handleSubmit()} >
     Done
     </Button>
     </View>
+    
+
+   
+
     </React.Fragment>
     )}
     </Formik>
@@ -444,8 +444,6 @@ function Session(){
       
     );
 
-      //we need to update state when we add an item
-    
     }
 
 export default Session
