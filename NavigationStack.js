@@ -227,7 +227,7 @@ const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
   
     appearance={'noIndicator'}
-    style={{borderTopWidth:1, borderTopColor:theme['color-basic-300'], paddingBottom:Platform.OS == 'ios' ? 48: 0, paddingTop: Platform.OS == 'ios' ? 20: 0}}
+    style={{borderTopWidth:1, borderTopColor:theme['color-basic-300'], paddingBottom:Platform.OS == 'ios' ? 32: 0, paddingTop: Platform.OS == 'ios' ? 20: 0}}
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
 
