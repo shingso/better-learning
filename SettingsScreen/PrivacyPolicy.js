@@ -21,7 +21,7 @@ return (
 <Layout level='2' style={{ flex: 1, paddingTop:20, paddingHorizontal:20, paddingBottom:60 }}>
 <Text style={[styles.bodyText, {fontFamily:'Poppins-Bold', fontWeight:'600'}]}>
 
-{`Study Sesh is a free application which is provided by at no cost and is intended for use as is. This privacy policy is to inform you regarding the collection, use, and disclosure of Personal Information.
+{`Better Learning is a free application which is provided by at no cost and is intended for use as is. This privacy policy is to inform you regarding the collection, use, and disclosure of Personal Information.
     
 By using this app, you hereby agree to the collection and use of information in relation to this policy. The Personal Information that is collected is used for the functionality and improvement of this app. Your information will not be shared with any being except as described in this Privacy Policy.`}
 </Text>

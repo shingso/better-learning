@@ -31,7 +31,7 @@ return (
 
 
 <Text style={styles.bodyText}>
-{`The Study Sesh app processes and stores personal information that you have provided. Review our privacy policy for more information on how this app handles personal information.`}
+{`Better Learning processes and stores personal information that you have provided. Review our privacy policy for more information on how this app handles personal information.`}
 </Text>
 
 
