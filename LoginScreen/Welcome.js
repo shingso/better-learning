@@ -16,8 +16,8 @@ function Welcome(){
     <View style={{ flex: 1, padding:20, justifyContent:'center',  }}>
     <View style={{alignItems:'center'}}>
     <Image
-        style={{width: 200, height: 170, marginBottom:40}}
-        source={require('../assets/images/studyseshlogo.png')}
+        style={{width:200, height: 200, marginBottom:12}}
+        source={require('../assets/images/studyseshlogov3-01.png')}
         resizeMode={'contain'}
     />  
     </View>

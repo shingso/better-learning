@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="studyseshlogoMAIN-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ie0-KZ-jgo">
-                                <rect key="frame" x="107" y="288" width="200" height="200"/>
+                                <rect key="frame" x="82" y="263" width="250" height="250"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="Xbo-cL-aI9"/>
-                                    <constraint firstAttribute="width" constant="200" id="eL7-R5-TxT"/>
+                                    <constraint firstAttribute="height" constant="250" id="Xbo-cL-aI9"/>
+                                    <constraint firstAttribute="width" constant="250" id="eL7-R5-TxT"/>
                                 </constraints>
                             </imageView>
                         </subviews>

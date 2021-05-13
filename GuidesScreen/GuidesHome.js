@@ -20,7 +20,7 @@ function GuidesHome(){
      {title:'How often should I study?', path:'HowOften', bodyText:'Find out how often you should be studying' , imagePath:require('../assets/images/howoftenv1-01.png')},
      {title:'How you can learn quicker!', path:'LearningTips', bodyText:'Tips on learning better outside of studying', imagePath:require('../assets/images/learnquickerv3-01.png')},
      {title: "Can't get into studying?", path:'Discouraged', bodyText:'Procrastination issues or discouraged?', imagePath:require('../assets/images/discouraged-01.png')},
-    /*  {title:'Some inspiration!', path:'Inspiration', bodyText:'The more often you study the smarter you get!', imagePath:require('../assets/images/inspirationgroup.png')} */
+   
     ]
 
     const renderItem = (info) => (

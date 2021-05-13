@@ -21,7 +21,7 @@ import HowToLearn from './GuidesScreen/HowToLearn'
 import HowOften from './GuidesScreen/HowOften'
 import WhatIsLearning from './GuidesScreen/WhatIsLearning'
 import Discouraged from './GuidesScreen/Discouraged'
-import Inspiration from './GuidesScreen/Inspiration'
+
 import LearningTips from './GuidesScreen/LearningTips'
 
 
@@ -185,7 +185,6 @@ function HomeStack() {
         <Stack.Screen name="HowOften" component={HowOften} />
         <Stack.Screen name="WhatIsLearning" component={WhatIsLearning} />
         <Stack.Screen name="LearningTips" component={LearningTips} />
-        <Stack.Screen name="Inspiration" component={Inspiration} />
         <Stack.Screen name="Discouraged" component={Discouraged} />
         </Stack.Navigator>
     );
